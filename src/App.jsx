@@ -1,8 +1,25 @@
 import { useState } from 'react'
 import Header from './components/Header';
+import usePlanner from './hooks/usePlanner';
+import useTheme from './hooks/useTheme';
 import './App.css'
 
 function App() {
+  const {
+    plan,
+    major,
+    setMajor,
+    studentName,
+    setStudentName,
+    addCourse,
+    removeCourse,
+    clearAll,
+    totalCredits,
+    semesterCredits,
+    requirementProgress,
+    isCourseInPlan,
+  } = usePlanner();
+
   const { theme, toggleTheme } = useTheme();
 
   return (
@@ -18,6 +35,7 @@ function App() {
         toggleTheme={toggleTheme}
        />
     </div>
+
   )
 }
 
