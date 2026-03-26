@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import Header from './components/Header';
 import usePlanner from './hooks/usePlanner';
+import RequirementsSidebar from './components/RequirementsSidebar';
+import SemesterGrid from './components/SemesterGrid';
 import useTheme from './hooks/useTheme';
 import './App.css'
 
