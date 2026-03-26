@@ -21,7 +21,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-#ignore claude.md
 CLAUDE.md
+
 
 .env
