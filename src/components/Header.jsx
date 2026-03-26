@@ -1,11 +1,12 @@
 import { MAJORS, GRADUATION_CREDITS } from '../data/courses';
+import nyuLogo from '../assets/NYU_Short_RGB_Color.png';
 
 export default function Header({ major, setMajor, studentName, setStudentName, totalCredits, onClearAll, theme, toggleTheme }) {
   return (
     <header className="header">
       <div className="header-left">
         <div className="header-brand">
-          <div className="header-logo">CP</div>
+          <img src={nyuLogo} alt="NYU Shanghai" className="header-logo" />
           <div>
             <h1 className="header-title">Course Planner</h1>
             <p className="header-subtitle">NYU Shanghai — 4 Years</p>
