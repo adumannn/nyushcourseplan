@@ -406,7 +406,104 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
-  transition: background 0.2s, border-color 0.2s;
+  transition: width 0.2s ease, padding 0.2s ease, background 0.2s, border-color 0.2s;
+  position: relative;
+}
+
+.requirements-sidebar--collapsed {
+  width: 54px;
+  padding: 20px 6px;
+  align-items: center;
+}
+
+.sidebar-toggle {
+  position: absolute;
+  top: 14px;
+  right: 10px;
+  width: 26px;
+  height: 26px;
+  border: 1px solid var(--border);
+  background: var(--card-bg);
+  color: var(--text-muted);
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s, color 0.15s;
+  z-index: 2;
+  flex-shrink: 0;
+}
+
+.requirements-sidebar--collapsed .sidebar-toggle {
+  position: static;
+  margin-bottom: 8px;
+}
+
+.sidebar-toggle:hover {
+  background: var(--hover);
+  color: var(--text);
+}
+
+.sidebar-collapsed-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.sidebar-collapsed-label {
+  font-size: 9px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+}
+
+.sidebar-collapsed-ring {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 16px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.sidebar-collapsed-ring-sub {
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+/* ── Disclosure Sections ── */
+
+.req-section-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 6px 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--text-muted);
+  transition: color 0.15s;
+}
+
+.req-section-btn:hover {
+  color: var(--text);
+}
+
+.req-section-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-bottom: 4px;
 }
 
 .sidebar-title {
@@ -840,10 +937,14 @@
 
 @media (max-width: 1100px) {
   .app-body { flex-direction: column; }
-  .requirements-sidebar {
+  .requirements-sidebar,
+  .requirements-sidebar--collapsed {
     width: 100%;
     border-left: none;
     border-top: 1px solid var(--border);
+  }
+  .requirements-sidebar--collapsed {
+    padding: 20px 14px;
   }
 }
 
