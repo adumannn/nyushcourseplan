@@ -1,10 +1,11 @@
 {
-  "disabledMcpjsonServers": [
-    "supabase"
-  ],
   "permissions": {
     "allow": [
-      "Bash(supabase:*)"
+      "Bash(supabase:*)",
+      "Bash(git push:*)"
     ]
-  }
+  },
+  "disabledMcpjsonServers": [
+    "supabase"
+  ]
 }
