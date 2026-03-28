@@ -6,7 +6,7 @@ export const CATEGORIES = {
   core: { label: 'Core', color: '#57068c' },
   writing: { label: 'Writing', color: '#1565C0' },
   language: { label: 'Language', color: '#2196F3' },
-  gps: { label: 'GPS', color: '#2E7D32' },
+  gps: { label: 'Social and Cultural Foundations', color: '#2E7D32' },
   major: { label: 'Major', color: '#E65100' },
   elective: { label: 'Elective', color: '#546E7A' },
 };
