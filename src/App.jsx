@@ -12,7 +12,7 @@ import './App.css';
 
 function App() {
   const { theme, toggleTheme } = useTheme();
-  const { user, loading: authLoading, signIn, signUp, signOut, enabled: authEnabled } = useAuth();
+  const { user, loading: authLoading, signIn, signUp, signInWithGoogle, signOut, enabled: authEnabled } = useAuth();
   const [guestMode, setGuestMode] = useState(false);
 
   // If signed in, pass user to planner (cloud mode). Otherwise local-only.
@@ -118,6 +118,7 @@ function App() {
         <AuthGate
           onSignIn={handleSignIn}
           onSignUp={handleSignUp}
+          onSignInWithGoogle={signInWithGoogle}
           onGuest={handleGuest}
           loading={authLoading}
         />

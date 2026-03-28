@@ -1104,6 +1104,22 @@
   border-color: var(--text-muted);
 }
 
+.auth-btn--google {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: var(--card-bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+  font-weight: 500;
+}
+
+.auth-btn--google:hover {
+  background: var(--hover);
+  border-color: var(--text-muted);
+}
+
 .auth-divider {
   display: flex;
   align-items: center;
