@@ -1,7 +1,10 @@
 import { MAJORS, GRADUATION_CREDITS } from '../data/courses';
 import nyuLogo from '../assets/NYU_Short_RGB_Color.png';
 
-export default function Header({ major, setMajor, studentName, setStudentName, totalCredits, onClearAll, theme, toggleTheme }) {
+export default function Header({
+  major, setMajor, studentName, setStudentName, totalCredits, onClearAll,
+  theme, toggleTheme, user, guestMode, onSignOut, onImportLocal,
+}) {
   return (
     <header className="header">
       <div className="header-left">
@@ -49,6 +52,17 @@ export default function Header({ major, setMajor, studentName, setStudentName, t
         <button className="btn-clear-all" onClick={onClearAll} title="Clear all courses">
           Reset
         </button>
+
+        {user && !guestMode ? (
+          <div className="header-auth">
+            <span className="header-user" title={user.email}>
+              {user.email.split('@')[0]}
+            </span>
+            <button className="btn-sign-out" onClick={onSignOut}>Sign Out</button>
+          </div>
+        ) : guestMode ? (
+          <span className="header-guest-badge">Guest</span>
+        ) : null}
       </div>
     </header>
   );

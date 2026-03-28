@@ -933,6 +933,260 @@
   cursor: not-allowed;
 }
 
+/* ── Auth Gate ── */
+
+.auth-gate {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: var(--bg);
+}
+
+.auth-loading {
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+.auth-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 36px 32px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: var(--shadow-lg);
+}
+
+.auth-brand {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.auth-logo {
+  height: 56px;
+  margin-bottom: 14px;
+}
+
+.auth-title {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.auth-subtitle {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.auth-tabs {
+  display: flex;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.auth-tab {
+  flex: 1;
+  padding: 8px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-muted);
+  transition: all 0.15s;
+}
+
+.auth-tab--active {
+  background: var(--accent-soft);
+  color: var(--text);
+  font-weight: 600;
+}
+
+.auth-tab:hover:not(.auth-tab--active) {
+  background: var(--hover);
+}
+
+.auth-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.auth-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.auth-field label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-muted);
+}
+
+.auth-field input {
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  outline: none;
+  background: var(--input-bg);
+  color: var(--text);
+  transition: border-color 0.15s;
+}
+
+.auth-field input:focus {
+  border-color: var(--text-secondary);
+}
+
+.auth-field input::placeholder {
+  color: var(--text-muted);
+}
+
+.auth-error {
+  background: #fbe9e7;
+  color: #c62828;
+  font-size: 12px;
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  font-weight: 500;
+}
+
+[data-theme="dark"] .auth-error {
+  background: #2c1111;
+  color: #ef5350;
+}
+
+.auth-btn {
+  width: 100%;
+  padding: 10px 16px;
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+  border: none;
+}
+
+.auth-btn--primary {
+  background: var(--text);
+  color: var(--card-bg);
+}
+
+.auth-btn--primary:hover {
+  opacity: 0.85;
+}
+
+.auth-btn--primary:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.auth-btn--ghost {
+  background: transparent;
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
+}
+
+.auth-btn--ghost:hover {
+  background: var(--hover);
+  border-color: var(--text-muted);
+}
+
+.auth-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 8px 0;
+  color: var(--text-muted);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.auth-divider::before,
+.auth-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.auth-guest-note {
+  text-align: center;
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 8px;
+}
+
+/* ── Header auth elements ── */
+
+.header-auth {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.header-user {
+  font-size: 11px;
+  color: var(--text-secondary);
+  max-width: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.btn-sign-out {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 500;
+  transition: all 0.15s;
+}
+
+.btn-sign-out:hover {
+  background: var(--hover);
+  border-color: var(--text-muted);
+  color: var(--text);
+}
+
+.header-guest-badge {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--text-muted);
+  background: var(--accent-soft);
+  padding: 3px 10px;
+  border-radius: 50px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* ── Plan loading ── */
+
+.plan-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
 /* ── Responsive ── */
 
 @media (max-width: 1100px) {
