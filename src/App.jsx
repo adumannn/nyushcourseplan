@@ -12,7 +12,7 @@ import './App.css';
 
 function App() {
   const { theme, toggleTheme } = useTheme();
-  const { user, loading: authLoading, signIn, signUp, signInWithGoogle, signOut, enabled: authEnabled } = useAuth();
+  const { user, loading: authLoading, signInWithGoogle, signOut, enabled: authEnabled } = useAuth();
   const [guestMode, setGuestMode] = useState(false);
 
   // If signed in, pass user to planner (cloud mode). Otherwise local-only.
@@ -34,15 +34,6 @@ function App() {
   } = usePlanner(activeUser);
 
   const [pickerSemester, setPickerSemester] = useState(null);
-
-  const handleSignIn = useCallback(async (email, password) => {
-    await signIn(email, password);
-    setGuestMode(false);
-  }, [signIn]);
-
-  const handleSignUp = useCallback(async (email, password) => {
-    await signUp(email, password);
-  }, [signUp]);
 
   const handleSignOut = useCallback(async () => {
     await signOut();
@@ -116,8 +107,6 @@ function App() {
     return (
       <div className="app" data-theme={theme}>
         <AuthGate
-          onSignIn={handleSignIn}
-          onSignUp={handleSignUp}
           onSignInWithGoogle={signInWithGoogle}
           onGuest={handleGuest}
           loading={authLoading}

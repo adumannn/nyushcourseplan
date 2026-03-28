@@ -23,20 +23,6 @@ export default function useAuth() {
     return () => subscription.unsubscribe();
   }, []);
 
-  const signUp = useCallback(async (email, password) => {
-    if (!supabase) throw new Error('Auth is not configured');
-    const { data, error } = await supabase.auth.signUp({ email, password });
-    if (error) throw error;
-    return data;
-  }, []);
-
-  const signIn = useCallback(async (email, password) => {
-    if (!supabase) throw new Error('Auth is not configured');
-    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-    if (error) throw error;
-    return data;
-  }, []);
-
   const signInWithGoogle = useCallback(async () => {
     if (!supabase) throw new Error('Auth is not configured');
     const { error } = await supabase.auth.signInWithOAuth({
@@ -52,5 +38,5 @@ export default function useAuth() {
     if (error) throw error;
   }, []);
 
-  return { user, loading, signUp, signIn, signInWithGoogle, signOut, enabled: !!supabase };
+  return { user, loading, signInWithGoogle, signOut, enabled: !!supabase };
 }

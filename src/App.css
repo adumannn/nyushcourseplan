@@ -980,93 +980,6 @@
   color: var(--text-muted);
 }
 
-.auth-form {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.auth-tabs {
-  display: flex;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  overflow: hidden;
-}
-
-.auth-tab {
-  flex: 1;
-  padding: 8px;
-  border: none;
-  background: transparent;
-  cursor: pointer;
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--text-muted);
-  transition: all 0.15s;
-}
-
-.auth-tab--active {
-  background: var(--accent-soft);
-  color: var(--text);
-  font-weight: 600;
-}
-
-.auth-tab:hover:not(.auth-tab--active) {
-  background: var(--hover);
-}
-
-.auth-fields {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.auth-field {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.auth-field label {
-  font-size: 11px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  color: var(--text-muted);
-}
-
-.auth-field input {
-  padding: 10px 12px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  font-size: 14px;
-  outline: none;
-  background: var(--input-bg);
-  color: var(--text);
-  transition: border-color 0.15s;
-}
-
-.auth-field input:focus {
-  border-color: var(--text-secondary);
-}
-
-.auth-field input::placeholder {
-  color: var(--text-muted);
-}
-
-.auth-error {
-  background: #fbe9e7;
-  color: #c62828;
-  font-size: 12px;
-  padding: 8px 12px;
-  border-radius: var(--radius-sm);
-  font-weight: 500;
-}
-
-[data-theme="dark"] .auth-error {
-  background: #2c1111;
-  color: #ef5350;
-}
 
 .auth-btn {
   width: 100%;
@@ -1079,19 +992,6 @@
   border: none;
 }
 
-.auth-btn--primary {
-  background: var(--text);
-  color: var(--card-bg);
-}
-
-.auth-btn--primary:hover {
-  opacity: 0.85;
-}
-
-.auth-btn--primary:disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
-}
 
 .auth-btn--ghost {
   background: transparent;
