@@ -8,6 +8,20 @@ function createEmptyPlan() {
   return plan;
 }
 
+// Safety net: remove duplicate courses within each semester
+function deduplicatePlan(plan) {
+  const result = {};
+  for (const [semId, courses] of Object.entries(plan)) {
+    const seen = new Set();
+    result[semId] = (courses || []).filter(c => {
+      if (seen.has(c.id)) return false;
+      seen.add(c.id);
+      return true;
+    });
+  }
+  return result;
+}
+
 export default function usePlanner(user) {
   const [plan, setPlan] = useState(createEmptyPlan);
   const [major, setMajor] = useState('cs');
@@ -15,6 +29,8 @@ export default function usePlanner(user) {
   const [planId, setPlanId] = useState(null);
   const [loaded, setLoaded] = useState(false);
   const saveTimeout = useRef(null);
+  const saveInProgress = useRef(false);
+  const skipNextSave = useRef(false);
 
   const isCloud = !!user;
 
@@ -29,7 +45,7 @@ export default function usePlanner(user) {
         const data = await supabasePlan.load(user.id);
         if (cancelled) return;
         if (data) {
-          setPlan(data.plan);
+          setPlan(deduplicatePlan(data.plan));
           setMajor(data.major);
           setStudentName(data.studentName);
           setPlanId(data.planId);
@@ -38,13 +54,15 @@ export default function usePlanner(user) {
         const data = await localStoragePlan.load();
         if (cancelled) return;
         if (data) {
-          setPlan(data.plan || createEmptyPlan());
+          setPlan(deduplicatePlan(data.plan || createEmptyPlan()));
           setMajor(data.major || 'cs');
           setStudentName(data.studentName || '');
         }
         setPlanId(null);
       }
 
+      // Don't save the data we just loaded back to the database
+      skipNextSave.current = true;
       setLoaded(true);
     }
 
@@ -56,13 +74,27 @@ export default function usePlanner(user) {
   useEffect(() => {
     if (!loaded) return;
 
+    // Skip the save triggered by the load itself
+    if (skipNextSave.current) {
+      skipNextSave.current = false;
+      return;
+    }
+
     clearTimeout(saveTimeout.current);
-    saveTimeout.current = setTimeout(() => {
-      if (isCloud && planId) {
-        supabasePlan.save(user.id, { planId, plan, major, studentName });
+    saveTimeout.current = setTimeout(async () => {
+      // Prevent concurrent saves (DELETE+INSERT is not atomic)
+      if (saveInProgress.current) return;
+      saveInProgress.current = true;
+
+      try {
+        if (isCloud && planId) {
+          await supabasePlan.save(user.id, { planId, plan, major, studentName });
+        }
+        // Always write to localStorage as cache
+        localStoragePlan.save({ plan, major, studentName });
+      } finally {
+        saveInProgress.current = false;
       }
-      // Always write to localStorage as cache
-      localStoragePlan.save({ plan, major, studentName });
     }, 500);
 
     return () => clearTimeout(saveTimeout.current);
