@@ -2,9 +2,12 @@ import { MAJORS, GRADUATION_CREDITS } from '../data/courses';
 import nyuLogo from '../assets/NYU_Short_RGB_Color.png';
 
 export default function Header({
-  major, setMajor, studentName, setStudentName, totalCredits, onClearAll,
-  theme, toggleTheme, user, guestMode, onSignOut, onImportLocal,
+  major, setMajor, totalCredits, onClearAll,
+  theme, toggleTheme, user, guestMode, onSignOut,
 }) {
+  const displayName = user?.user_metadata?.full_name || user?.email?.split('@')[0] || null;
+  const avatarUrl = user?.user_metadata?.avatar_url || null;
+
   return (
     <header className="header">
       <div className="header-left">
@@ -29,16 +32,6 @@ export default function Header({
 
       <div className="header-right">
         <div className="header-field">
-          <label htmlFor="student-name">Name</label>
-          <input
-            id="student-name"
-            type="text"
-            placeholder="Your name"
-            value={studentName}
-            onChange={e => setStudentName(e.target.value)}
-          />
-        </div>
-        <div className="header-field">
           <label htmlFor="major-select">Major</label>
           <select id="major-select" value={major} onChange={e => setMajor(e.target.value)}>
             {MAJORS.map(m => (
@@ -55,9 +48,13 @@ export default function Header({
 
         {user && !guestMode ? (
           <div className="header-auth">
-            <span className="header-user" title={user.email}>
-              {user.email.split('@')[0]}
-            </span>
+            {avatarUrl && (
+              <img src={avatarUrl} alt="" className="header-avatar" referrerPolicy="no-referrer" />
+            )}
+            <div className="header-user-info">
+              {displayName && <span className="header-user-name">{displayName}</span>}
+              <span className="header-user-email" title={user.email}>{user.email}</span>
+            </div>
             <button className="btn-sign-out" onClick={onSignOut}>Sign Out</button>
           </div>
         ) : guestMode ? (

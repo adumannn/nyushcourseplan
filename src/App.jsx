@@ -61,8 +61,6 @@ function App() {
         <Header
           major={major}
           setMajor={setMajor}
-          studentName={studentName}
-          setStudentName={setStudentName}
           totalCredits={totalCredits}
           onClearAll={clearAll}
           theme={theme}
