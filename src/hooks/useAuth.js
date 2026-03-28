@@ -37,11 +37,20 @@ export default function useAuth() {
     return data;
   }, []);
 
+  const signInWithGoogle = useCallback(async () => {
+    if (!supabase) throw new Error('Auth is not configured');
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: 'google',
+      options: { redirectTo: window.location.origin },
+    });
+    if (error) throw error;
+  }, []);
+
   const signOut = useCallback(async () => {
     if (!supabase) return;
     const { error } = await supabase.auth.signOut();
     if (error) throw error;
   }, []);
 
-  return { user, loading, signUp, signIn, signOut, enabled: !!supabase };
+  return { user, loading, signUp, signIn, signInWithGoogle, signOut, enabled: !!supabase };
 }
