@@ -1,6 +1,11 @@
 import { supabase } from './supabase';
 import { SEMESTERS, COURSE_CATALOG } from '../data/courses';
 
+function requireSupabase() {
+  if (!supabase) throw new Error('Supabase is not configured');
+  return supabase;
+}
+
 const STORAGE_KEY = 'nyu-shanghai-course-planner';
 
 function createEmptyPlan() {
@@ -55,7 +60,8 @@ export const localStoragePlan = {
 export const supabasePlan = {
   async ensurePlan(userId) {
     // Get existing plan or create one
-    const { data: existing } = await supabase
+    const db = requireSupabase();
+    const { data: existing } = await db
       .from('plans')
       .select('id, major, student_name')
       .eq('user_id', userId)
@@ -65,7 +71,7 @@ export const supabasePlan = {
 
     if (existing) return existing;
 
-    const { data: created, error } = await supabase
+    const { data: created, error } = await db
       .from('plans')
       .insert({ user_id: userId })
       .select('id, major, student_name')
@@ -80,7 +86,8 @@ export const supabasePlan = {
       const planRow = await this.ensurePlan(userId);
       const planId = planRow.id;
 
-      const { data: courses, error } = await supabase
+      const db = requireSupabase();
+      const { data: courses, error } = await db
         .from('plan_courses')
         .select('*')
         .eq('plan_id', planId)
@@ -109,14 +116,15 @@ export const supabasePlan = {
 
   async save(userId, { planId, plan, major, studentName }) {
     try {
+      const db = requireSupabase();
       // Update plan metadata
-      await supabase
+      await db
         .from('plans')
         .update({ major, student_name: studentName })
         .eq('id', planId);
 
       // Replace all courses: delete then insert
-      await supabase
+      await db
         .from('plan_courses')
         .delete()
         .eq('plan_id', planId);
@@ -138,7 +146,7 @@ export const supabasePlan = {
       }
 
       if (rows.length > 0) {
-        const { error } = await supabase
+        const { error } = await db
           .from('plan_courses')
           .insert(rows);
         if (error) throw error;
@@ -159,7 +167,8 @@ export const supabasePlan = {
     const planRow = await this.ensurePlan(userId);
 
     // Update plan metadata from local
-    await supabase
+    const db = requireSupabase();
+    await db
       .from('plans')
       .update({
         major: localData.major || 'cs',

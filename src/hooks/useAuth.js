@@ -6,13 +6,16 @@ export default function useAuth() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Get initial session
+    if (!supabase) {
+      setLoading(false);
+      return;
+    }
+
     supabase.auth.getSession().then(({ data: { session } }) => {
       setUser(session?.user ?? null);
       setLoading(false);
     });
 
-    // Listen for auth changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user ?? null);
     });
@@ -21,21 +24,24 @@ export default function useAuth() {
   }, []);
 
   const signUp = useCallback(async (email, password) => {
+    if (!supabase) throw new Error('Auth is not configured');
     const { data, error } = await supabase.auth.signUp({ email, password });
     if (error) throw error;
     return data;
   }, []);
 
   const signIn = useCallback(async (email, password) => {
+    if (!supabase) throw new Error('Auth is not configured');
     const { data, error } = await supabase.auth.signInWithPassword({ email, password });
     if (error) throw error;
     return data;
   }, []);
 
   const signOut = useCallback(async () => {
+    if (!supabase) return;
     const { error } = await supabase.auth.signOut();
     if (error) throw error;
   }, []);
 
-  return { user, loading, signUp, signIn, signOut };
+  return { user, loading, signUp, signIn, signOut, enabled: !!supabase };
 }
