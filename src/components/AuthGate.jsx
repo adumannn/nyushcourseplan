@@ -1,17 +1,26 @@
 import nyuLogo from '../assets/NYU_Short_RGB_Color.png';
+import { DottedGlowBackground } from './ui/dotted-glow-background';
 
 export default function AuthGate({ onSignInWithGoogle, onGuest, loading }) {
   if (loading) {
     return (
-      <div className="auth-gate">
-        <div className="auth-loading">Loading...</div>
+      <div className="auth-gate" style={{ position: 'relative', overflow: 'hidden' }}>
+        <DottedGlowBackground
+          color="rgba(87, 6, 140, 0.3)"
+          glowColor="rgba(87, 6, 140, 0.85)"
+        />
+        <div className="auth-loading" style={{ position: 'relative', zIndex: 1 }}>Loading...</div>
       </div>
     );
   }
 
   return (
-    <div className="auth-gate">
-      <div className="auth-card">
+    <div className="auth-gate" style={{ position: 'relative', overflow: 'hidden' }}>
+      <DottedGlowBackground
+        color="rgba(87, 6, 140, 0.3)"
+        glowColor="rgba(87, 6, 140, 0.85)"
+      />
+      <div className="auth-card" style={{ position: 'relative', zIndex: 1 }}>
         <div className="auth-brand">
           <img src={nyuLogo} alt="NYU Shanghai" className="auth-logo" />
           <h1 className="auth-title">Course Planner</h1>
