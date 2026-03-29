@@ -28,16 +28,17 @@ export default function AuthGate({ onSignInWithGoogle, onGuest, loading }) {
           Continue with Google
         </button>
 
-        <div className="auth-divider">
+        {/* <div className="auth-divider">
           <span>or</span>
-        </div>
+        </div> */}
 
-        <button className="auth-btn auth-btn--ghost" onClick={onGuest}>
+        {/* later guest mode is disabled for now since it doesn't sync to the cloud and can lead to confusion, but i will add it later if there is demand */}
+        {/* <button className="auth-btn auth-btn--ghost" onClick={onGuest}>
           Continue as Guest
-        </button>
-        <p className="auth-guest-note">
+        </button> */}
+        {/* <p className="auth-guest-note">
           Guest plans are saved locally on this device only
-        </p>
+        </p> */}
       </div>
     </div>
   );

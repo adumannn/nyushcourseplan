@@ -1,3 +1,6 @@
+Keep looking to this file whenever I ask to do some tasks.
+
+
 # NYU Shanghai Course Planner
 
 ## Project Overview

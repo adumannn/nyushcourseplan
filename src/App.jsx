@@ -41,7 +41,7 @@ function App() {
   }, [signOut]);
 
   const handleGuest = useCallback(() => {
-    setGuestMode(true);
+    setGuestMode(false); // for now false, but could add a "guest" mode that still uses supabase but doesn't require sign in
   }, []);
 
   const handleImportLocal = useCallback(async () => {
