@@ -1,4 +1,5 @@
 import { useState, useCallback } from 'react';
+import { Analytics } from '@vercel/analytics/react';
 import useTheme from './hooks/useTheme';
 import useAuth from './hooks/useAuth';
 import usePlanner from './hooks/usePlanner';
@@ -97,6 +98,7 @@ function App() {
             major={major}
           />
         )}
+        <Analytics />
       </div>
     );
   }
@@ -109,6 +111,7 @@ function App() {
           onGuest={handleGuest}
           loading={authLoading}
         />
+        <Analytics />
       </div>
     );
   }
@@ -159,6 +162,7 @@ function App() {
           major={major}
         />
       )}
+      <Analytics />
     </div>
   );
 }
