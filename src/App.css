@@ -250,39 +250,218 @@
   background: rgba(239, 68, 68, 0.1);
 }
 
-/* ── Semester Grid ── */
+/* ── Year Grid ── */
 
-.semester-grid {
+.year-grid {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 10px;
 }
 
-.year-row {
-  display: flex;
-  gap: 12px;
-  align-items: stretch;
+/* ── Year Card ── */
+
+.year-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  transition: border-color 0.2s, box-shadow 0.2s, background 0.3s;
+  overflow: hidden;
 }
 
-.year-label {
-  writing-mode: vertical-lr;
-  transform: rotate(180deg);
-  font-size: 10px;
-  font-weight: 700;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 2.5px;
+.year-card:hover {
+  border-color: var(--border-strong);
+}
+
+.year-card--expanded {
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow);
+}
+
+.year-card-header {
   display: flex;
   align-items: center;
-  justify-content: center;
-  min-width: 24px;
+  justify-content: space-between;
+  gap: 16px;
+  width: 100%;
+  padding: 14px 18px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  text-align: left;
+  color: var(--text);
+  font-family: inherit;
+  transition: background 0.15s;
 }
 
-.year-semesters {
-  flex: 1;
+.year-card-header:hover {
+  background: var(--hover);
+}
+
+.year-card-header:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+  border-radius: 14px;
+}
+
+.year-card-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.year-card-number {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--accent);
+  background: var(--accent-soft);
+  padding: 4px 8px;
+  border-radius: 6px;
+  letter-spacing: 0.3px;
+  flex-shrink: 0;
+}
+
+.year-card-title-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.year-card-label {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: -0.2px;
+}
+
+.year-card-badge {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--text-muted);
+  background: var(--hover);
+  padding: 3px 8px;
+  border-radius: 5px;
+}
+
+.year-card-right {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.year-card-stats {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  text-align: right;
+}
+
+.year-card-sem-summary {
+  display: flex;
+  gap: 10px;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+.year-card-sem--warn {
+  color: var(--danger);
+  font-weight: 600;
+}
+
+.year-card-totals {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.year-card-credits {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+
+.year-card-courses {
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+.year-card-empty-hint {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+.year-card-chevron {
+  color: var(--text-muted);
+  transition: transform 0.25s ease;
+  flex-shrink: 0;
+}
+
+.year-card--expanded .year-card-chevron {
+  transform: rotate(180deg);
+}
+
+/* Category bar (below header when collapsed with courses) */
+.year-card-bar-wrapper {
+  padding: 0 18px 14px;
+}
+
+.category-bar {
+  height: 4px;
+  border-radius: 2px;
+  display: flex;
+  overflow: hidden;
+  background: var(--border);
+}
+
+.category-bar--empty {
+  height: 4px;
+  border-radius: 2px;
+  background: var(--border);
+}
+
+.category-bar-segment {
+  height: 100%;
+  transition: width 0.4s ease;
+}
+
+.category-bar-segment:first-child {
+  border-radius: 2px 0 0 2px;
+}
+
+.category-bar-segment:last-child {
+  border-radius: 0 2px 2px 0;
+}
+
+/* Expand/collapse body */
+.year-card-body-wrapper {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.3s ease;
+}
+
+.year-card--expanded .year-card-body-wrapper {
+  grid-template-rows: 1fr;
+}
+
+.year-card-body {
+  overflow: hidden;
+}
+
+.year-card-semesters {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 12px;
+  padding: 0 18px 18px;
+}
+
+.year-card--expanded .year-card-body .year-card-semesters .semester-card {
+  border: 1px solid var(--border);
 }
 
 /* ── Semester Card ── */
@@ -1200,6 +1379,12 @@
   .spinner {
     animation-duration: 1.5s;
   }
+  .year-card-body-wrapper {
+    transition: none;
+  }
+  .year-card-chevron {
+    transition: none;
+  }
 }
 
 /* ── Header auth elements ── */
@@ -1308,14 +1493,10 @@
     padding-top: 8px;
     border-top: 1px solid var(--border);
   }
-  .year-row { flex-direction: column; }
-  .year-label {
-    writing-mode: horizontal-tb;
-    transform: none;
-    min-width: unset;
-    font-size: 11px;
-  }
-  .year-semesters { grid-template-columns: 1fr; }
+  .year-card-semesters { grid-template-columns: 1fr; }
+  .year-card-stats { flex-direction: column; align-items: flex-end; gap: 4px; }
+  .year-card-sem-summary { gap: 6px; }
+  .year-card-badge { display: none; }
   .modal { max-height: 90vh; border-radius: 12px; }
   .app-main { padding: 16px; }
   .auth-card { max-width: 100%; }
