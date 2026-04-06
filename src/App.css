@@ -22,22 +22,43 @@
 .header {
   background: var(--header-bg);
   border-bottom: 1px solid var(--border);
-  padding: 0 24px;
-  height: 52px;
+  position: relative;
+  z-index: 10;
+  transition: background 0.25s, border-color 0.25s;
+}
+
+.header-inner {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  position: relative;
-  z-index: 10;
-  transition: background 0.3s, border-color 0.3s;
+  padding: 0 20px;
+  height: 56px;
+  max-width: 100%;
 }
 
 .header-left {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
   flex-shrink: 0;
+}
+
+.header-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.header-logo {
+  color: var(--accent);
+  flex-shrink: 0;
+}
+
+.header-brand-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.15;
 }
 
 .header-title {
@@ -47,21 +68,48 @@
   color: var(--text);
 }
 
+.header-subtitle {
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--text-muted);
+  letter-spacing: 0.2px;
+}
+
 .header-sep {
   width: 1px;
-  height: 18px;
+  height: 24px;
   background: var(--border);
+  flex-shrink: 0;
+}
+
+.header-major-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.header-field-label {
+  font-size: 9px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--text-muted);
 }
 
 .header-select {
   background: transparent;
   border: none;
-  padding: 4px 2px;
+  padding: 0;
   font-size: 13px;
-  font-weight: 500;
+  font-weight: 600;
   color: var(--text-secondary);
   outline: none;
   cursor: pointer;
+  transition: color 0.15s;
+}
+
+.header-select:hover {
+  color: var(--text);
 }
 
 .header-select option {
@@ -72,30 +120,50 @@
 .header-center {
   display: flex;
   align-items: center;
-  gap: 10px;
   flex: 0 1 auto;
 }
 
-.credit-count {
+.credit-progress {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 140px;
+}
+
+.credit-progress-top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.credit-label {
+  font-size: 9px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--text-muted);
+}
+
+.credit-numbers {
   font-size: 13px;
-  font-weight: 500;
   font-variant-numeric: tabular-nums;
   color: var(--text);
   white-space: nowrap;
 }
 
-.credit-count strong {
+.credit-numbers strong {
   font-weight: 700;
 }
 
-.credit-count-sep {
+.credit-of {
+  font-weight: 400;
   color: var(--text-muted);
-  margin: 0 1px;
 }
 
 .credit-bar {
-  width: 80px;
-  height: 4px;
+  width: 100%;
+  height: 3px;
   background: var(--border);
   border-radius: 2px;
   overflow: hidden;
@@ -110,22 +178,23 @@
 }
 
 .credit-remaining {
-  font-size: 11px;
+  font-size: 10px;
   color: var(--text-muted);
   font-weight: 500;
   white-space: nowrap;
+  text-align: right;
 }
 
 .header-right {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 4px;
   flex-shrink: 0;
 }
 
 .header-icon-btn {
-  width: 32px;
-  height: 32px;
+  width: 34px;
+  height: 34px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -134,7 +203,7 @@
   color: var(--text-muted);
   border-radius: 8px;
   cursor: pointer;
-  transition: all 0.15s;
+  transition: background 0.15s, color 0.15s;
 }
 
 .header-icon-btn:hover {
@@ -142,16 +211,24 @@
   color: var(--text);
 }
 
+.header-icon-btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
 .header-text-btn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
   background: none;
   border: none;
   color: var(--text-muted);
   font-size: 12px;
   font-weight: 500;
   cursor: pointer;
-  padding: 4px 8px;
-  border-radius: 6px;
-  transition: all 0.15s;
+  padding: 6px 10px;
+  border-radius: 7px;
+  transition: background 0.15s, color 0.15s;
 }
 
 .header-text-btn:hover {
@@ -159,8 +236,18 @@
   color: var(--text);
 }
 
+.header-text-btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
 .header-text-btn--danger:hover {
   color: var(--danger);
+  background: rgba(201, 42, 42, 0.06);
+}
+
+[data-theme="dark"] .header-text-btn--danger:hover {
+  background: rgba(239, 68, 68, 0.1);
 }
 
 /* ── Semester Grid ── */
@@ -1121,8 +1208,6 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  padding-left: 8px;
-  border-left: 1px solid var(--border);
 }
 
 .header-avatar {
@@ -1130,6 +1215,22 @@
   height: 28px;
   border-radius: 50%;
   flex-shrink: 0;
+  border: 1.5px solid var(--border);
+}
+
+.header-avatar-placeholder {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1.5px solid var(--accent-muted);
 }
 
 .header-user-info {
@@ -1139,19 +1240,9 @@
 }
 
 .header-user-name {
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 600;
   color: var(--text);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 120px;
-}
-
-.header-user-email {
-  font-size: 10px;
-  color: var(--text-muted);
-  font-weight: 500;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -1163,8 +1254,9 @@
   font-weight: 600;
   color: var(--text-muted);
   background: var(--hover);
-  padding: 4px 10px;
+  padding: 5px 12px;
   border-radius: 6px;
+  border: 1px solid var(--border);
 }
 
 /* ── Plan loading ── */
@@ -1196,23 +1288,25 @@
 }
 
 @media (max-width: 768px) {
-  .header {
+  .header-inner {
     flex-direction: column;
     gap: 10px;
     padding: 12px 16px;
     height: auto;
   }
+  .header-subtitle { display: none; }
+  .header-field-label { display: none; }
+  .credit-label { display: none; }
+  .credit-progress { min-width: 110px; }
   .header-right {
     flex-wrap: wrap;
     justify-content: center;
   }
   .header-auth {
-    border-left: none;
-    padding-left: 0;
-    border-top: 1px solid var(--border);
-    padding-top: 8px;
     width: 100%;
     justify-content: center;
+    padding-top: 8px;
+    border-top: 1px solid var(--border);
   }
   .year-row { flex-direction: column; }
   .year-label {
