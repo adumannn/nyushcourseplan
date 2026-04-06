@@ -73,7 +73,7 @@ function App() {
         <div className="app-body">
           <main className="app-main">
             {!loaded ? (
-              <div className="plan-loading">Loading your plan...</div>
+              <div className="plan-loading"><div className="spinner" /><span>Loading your plan...</span></div>
             ) : (
               <SemesterGrid
                 plan={plan}
@@ -132,7 +132,7 @@ function App() {
       <div className="app-body">
         <main className="app-main">
           {!loaded ? (
-            <div className="plan-loading">Loading your plan...</div>
+            <div className="plan-loading"><div className="spinner" /><span>Loading your plan...</span></div>
           ) : (
             <SemesterGrid
               plan={plan}
