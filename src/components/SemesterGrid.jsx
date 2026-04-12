@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { SEMESTERS } from '../data/courses';
 import SemesterCard from './SemesterCard';
 
@@ -45,6 +45,7 @@ export default function SemesterGrid({
 }) {
   const [dragState, setDragState] = useState(createEmptyDragState);
   const [isTouchDevice, setIsTouchDevice] = useState(false);
+  const dragMetaRef = useRef({ courseId: null, fromSemester: null });
 
   useEffect(() => {
     if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') {
@@ -68,8 +69,32 @@ export default function SemesterGrid({
   }, []);
 
   const resetDragState = useCallback(() => {
+    dragMetaRef.current = { courseId: null, fromSemester: null };
     setDragState(createEmptyDragState());
   }, []);
+
+  const getActiveDragMeta = useCallback((event) => {
+    const payload = readDragPayload(event);
+    if (payload?.courseId && payload?.fromSemester) {
+      return payload;
+    }
+
+    if (dragMetaRef.current.courseId && dragMetaRef.current.fromSemester) {
+      return {
+        courseId: dragMetaRef.current.courseId,
+        fromSemester: dragMetaRef.current.fromSemester,
+      };
+    }
+
+    if (dragState.courseId && dragState.fromSemester) {
+      return {
+        courseId: dragState.courseId,
+        fromSemester: dragState.fromSemester,
+      };
+    }
+
+    return null;
+  }, [dragState.courseId, dragState.fromSemester]);
 
   const selectedCourseName = useMemo(() => {
     if (!dragState.courseId) return null;
@@ -89,6 +114,8 @@ export default function SemesterGrid({
       event.dataTransfer.setData('text/plain', payload);
     }
 
+    dragMetaRef.current = { courseId, fromSemester };
+
     setDragState({
       courseId,
       fromSemester,
@@ -98,32 +125,45 @@ export default function SemesterGrid({
   }, []);
 
   const handleDragOverIndex = useCallback((event, semesterId, index) => {
-    if (!dragState.courseId) return;
+    const payload = getActiveDragMeta(event);
+    if (!payload?.courseId || !payload?.fromSemester) return;
 
     event.preventDefault();
     if (event.dataTransfer) event.dataTransfer.dropEffect = 'move';
 
     setDragState(prev => {
-      if (!prev.courseId) return prev;
-      if (prev.overSemester === semesterId && prev.overIndex === index) return prev;
-      return { ...prev, overSemester: semesterId, overIndex: index };
+      const nextCourseId = prev.courseId || payload.courseId;
+      const nextFromSemester = prev.fromSemester || payload.fromSemester;
+
+      if (
+        prev.courseId === nextCourseId
+        && prev.fromSemester === nextFromSemester
+        && prev.overSemester === semesterId
+        && prev.overIndex === index
+      ) {
+        return prev;
+      }
+
+      return {
+        courseId: nextCourseId,
+        fromSemester: nextFromSemester,
+        overSemester: semesterId,
+        overIndex: index,
+      };
     });
-  }, [dragState.courseId]);
+  }, [getActiveDragMeta]);
 
   const handleDropAtIndex = useCallback((event, semesterId, index) => {
     event.preventDefault();
 
-    const payload = readDragPayload(event)
-      || (dragState.courseId && dragState.fromSemester
-        ? { courseId: dragState.courseId, fromSemester: dragState.fromSemester }
-        : null);
+    const payload = getActiveDragMeta(event);
 
     if (payload?.courseId && payload?.fromSemester) {
       onMoveCourse(payload.fromSemester, semesterId, payload.courseId, index);
     }
 
     resetDragState();
-  }, [dragState.courseId, dragState.fromSemester, onMoveCourse, resetDragState]);
+  }, [getActiveDragMeta, onMoveCourse, resetDragState]);
 
   const handleCourseDragEnd = useCallback(() => {
     resetDragState();

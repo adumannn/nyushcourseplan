@@ -98,7 +98,11 @@ export default function SemesterCard({
           ) : (
             <div className="space-y-2">
               {courses.map((course, index) => (
-                <div key={course.id}>
+                  <div
+                    key={course.id}
+                    onDragOver={(event) => onDragOverIndex(event, semesterKey, index)}
+                    onDrop={(event) => onDropAtIndex(event, semesterKey, index)}
+                  >
                   {renderDropZone(index)}
                   <CourseCard
                     course={course}
