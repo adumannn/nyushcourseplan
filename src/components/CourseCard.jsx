@@ -14,7 +14,7 @@ export default function CourseCard({
       onDragStart={(event) => onDragStart?.(event, course.id)}
       onDragEnd={onDragEnd}
       aria-grabbed={isDragging}
-      className={`group relative flex items-center gap-3 px-4 py-3 bg-accent/10 border rounded-md transition-all cursor-grab active:cursor-grabbing ${
+      className={`planner-course-card group relative flex items-center gap-3 px-4 py-3 bg-accent/10 border rounded-md transition-all cursor-grab active:cursor-grabbing ${
         isDragging
           ? 'opacity-45 border-[#57068c]/50 ring-1 ring-[#57068c]/30'
           : 'border-border/30 hover:bg-accent/20 hover:border-border/50'
