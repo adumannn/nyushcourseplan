@@ -1,4 +1,26 @@
 import { GripVertical, X } from 'lucide-react';
+import { CATEGORIES } from '../data/courses';
+
+function withAlpha(color, alpha) {
+  if (typeof color !== 'string' || !color.startsWith('#')) {
+    return `rgba(84, 110, 122, ${alpha})`;
+  }
+
+  const raw = color.slice(1);
+  const hex = raw.length === 3
+    ? raw.split('').map((char) => `${char}${char}`).join('')
+    : raw;
+
+  if (hex.length !== 6) {
+    return `rgba(84, 110, 122, ${alpha})`;
+  }
+
+  const value = Number.parseInt(hex, 16);
+  const r = (value >> 16) & 255;
+  const g = (value >> 8) & 255;
+  const b = value & 255;
+  return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+}
 
 export default function CourseCard({
   course,
@@ -8,12 +30,28 @@ export default function CourseCard({
   onDragEnd,
   isDragging = false,
 }) {
+  const categoryKey = typeof course.category === 'string'
+    ? course.category.toLowerCase()
+    : 'elective';
+  const categoryColor = CATEGORIES[categoryKey]?.color || CATEGORIES.elective.color;
+  const cardStyle = {
+    borderLeftWidth: '3px',
+    borderLeftColor: categoryColor,
+    backgroundImage: `linear-gradient(90deg, ${withAlpha(categoryColor, 0.18)} 0%, ${withAlpha(categoryColor, 0.06)} 42%, transparent 100%)`,
+  };
+  const categoryBadgeStyle = {
+    backgroundColor: withAlpha(categoryColor, 0.14),
+    borderColor: withAlpha(categoryColor, 0.36),
+    color: categoryColor,
+  };
+
   return (
     <div
       draggable
       onDragStart={(event) => onDragStart?.(event, course.id)}
       onDragEnd={onDragEnd}
       aria-grabbed={isDragging}
+      style={cardStyle}
       className={`planner-course-card group relative flex items-center gap-3 px-4 py-3 bg-accent/10 border rounded-md transition-all cursor-grab active:cursor-grabbing ${
         isDragging
           ? 'opacity-45 border-[#57068c]/50 ring-1 ring-[#57068c]/30'
@@ -30,8 +68,17 @@ export default function CourseCard({
           </span>
         </div>
         {course.category && (
-          <div className="text-xs text-muted-foreground/60 mt-0.5">
-            {course.category}
+          <div className="mt-1.5">
+            <span
+              className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full border text-[10px] font-medium uppercase tracking-wide"
+              style={categoryBadgeStyle}
+            >
+              <span
+                className="h-1.5 w-1.5 rounded-full"
+                style={{ backgroundColor: categoryColor }}
+              />
+              {course.category}
+            </span>
           </div>
         )}
       </div>
