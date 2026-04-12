@@ -38,5 +38,13 @@ export default function useAuth() {
     if (error) throw error;
   }, []);
 
-  return { user, loading, signInWithGoogle, signOut, enabled: !!supabase };
+  const resetPassword = useCallback(async (email) => {
+    if (!supabase) throw new Error('Auth is not configured');
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: `${window.location.origin}/reset-password`,
+    });
+    if (error) throw error;
+  }, []);
+
+  return { user, loading, signInWithGoogle, signOut, resetPassword, enabled: !!supabase };
 }

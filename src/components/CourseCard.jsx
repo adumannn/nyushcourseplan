@@ -1,34 +1,35 @@
-import { CATEGORIES } from '../data/courses';
+import { GripVertical, X } from 'lucide-react';
 
-export default function CourseCard({ course, onRemove, semesterId, compact }) {
-  const cat = CATEGORIES[course.category] || CATEGORIES.elective;
-
+export default function CourseCard({ course, semesterKey, onRemove }) {
   return (
-    <div
-      className={`course-card ${compact ? 'course-card--compact' : ''}`}
-      style={{ '--cat-color': cat.color }}
-    >
-      <div className="course-card-color" style={{ backgroundColor: cat.color }} />
-      <div className="course-card-content">
-        <div className="course-card-header">
-          <span className="course-card-code">{course.code}</span>
-          <span className="course-card-credits">{course.credits} cr</span>
+    <div className="group relative flex items-center gap-3 px-4 py-3 bg-accent/10 border border-border/30 rounded-md hover:bg-accent/20 hover:border-border/50 transition-all cursor-move">
+      <GripVertical className="h-4 w-4 text-muted-foreground/40 shrink-0" />
+
+      <div className="flex-1 min-w-0">
+        <div className="flex items-baseline gap-2">
+          <span className="text-sm">{course.name}</span>
+          <span className="text-xs text-muted-foreground/60 font-mono">
+            {course.code}
+          </span>
         </div>
-        <div className="course-card-name">{course.name}</div>
-        <span className="course-card-badge" style={{ backgroundColor: cat.color }}>
-          {cat.label}
-        </span>
+        {course.category && (
+          <div className="text-xs text-muted-foreground/60 mt-0.5">
+            {course.category}
+          </div>
+        )}
       </div>
-      {onRemove && (
+
+      <div className="flex items-center gap-3">
+        <span className="text-sm tabular-nums text-muted-foreground">
+          {course.credits} cr
+        </span>
         <button
-          className="course-card-remove"
-          onClick={() => onRemove(semesterId, course.id)}
-          title="Remove course"
-          aria-label={`Remove ${course.name}`}
+          onClick={() => onRemove(semesterKey, course.id)}
+          className="opacity-0 group-hover:opacity-100 p-1 hover:bg-destructive/10 rounded transition-all"
         >
-          ×
+          <X className="h-3.5 w-3.5 text-muted-foreground hover:text-destructive" />
         </button>
-      )}
+      </div>
     </div>
   );
 }
