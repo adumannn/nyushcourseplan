@@ -2,13 +2,48 @@ import { useState } from 'react';
 import { ChevronDown, Plus } from 'lucide-react';
 import CourseCard from './CourseCard';
 
-export default function SemesterCard({ semesterKey, year, semester, courses, credits, onRemoveCourse, onAddClick }) {
+export default function SemesterCard({
+  semesterKey,
+  year,
+  semester,
+  courses,
+  credits,
+  onRemoveCourse,
+  onAddClick,
+  onCourseDragStart,
+  onCourseDragEnd,
+  onDragOverIndex,
+  onDropAtIndex,
+  dragState,
+}) {
   const [isExpanded, setIsExpanded] = useState(true);
+  const isDragActive = Boolean(dragState?.courseId);
+
+  const renderDropZone = (index) => {
+    if (!isDragActive) return null;
+
+    const isTarget = dragState.overSemester === semesterKey && dragState.overIndex === index;
+    return (
+      <div
+        onDragOver={(event) => onDragOverIndex(event, semesterKey, index)}
+        onDrop={(event) => onDropAtIndex(event, semesterKey, index)}
+        className="h-3 -my-0.5 flex items-center"
+      >
+        <div
+          className={`w-full rounded-full transition-all ${
+            isTarget ? 'h-0.5 bg-[#57068c]/70' : 'h-px bg-transparent'
+          }`}
+        />
+      </div>
+    );
+  };
 
   return (
     <div className="border-b border-border/40 last:border-b-0">
       <button
         onClick={() => setIsExpanded(!isExpanded)}
+        onDragOver={(event) => onDragOverIndex(event, semesterKey, courses.length)}
+        onDrop={(event) => onDropAtIndex(event, semesterKey, courses.length)}
         className="w-full flex items-center justify-between px-6 py-4 hover:bg-accent/5 transition-colors"
       >
         <div className="flex items-center gap-3">
@@ -35,21 +70,36 @@ export default function SemesterCard({ semesterKey, year, semester, courses, cre
           {courses.length === 0 ? (
             <button
               onClick={() => onAddClick(semesterKey)}
-              className="w-full py-8 border border-dashed border-border/40 rounded-lg hover:border-border/60 hover:bg-accent/5 transition-colors flex items-center justify-center gap-2 text-sm text-muted-foreground"
+              onDragOver={(event) => onDragOverIndex(event, semesterKey, 0)}
+              onDrop={(event) => onDropAtIndex(event, semesterKey, 0)}
+              className={`w-full py-8 border border-dashed rounded-lg transition-colors flex items-center justify-center gap-2 text-sm ${
+                isDragActive && dragState.overSemester === semesterKey && dragState.overIndex === 0
+                  ? 'border-[#57068c]/70 bg-[#57068c]/8 text-foreground'
+                  : 'border-border/40 hover:border-border/60 hover:bg-accent/5 text-muted-foreground'
+              }`}
             >
               <Plus className="h-4 w-4" />
               Click to add courses
             </button>
           ) : (
             <div className="space-y-2">
-              {courses.map(course => (
-                <CourseCard
-                  key={course.id}
-                  course={course}
-                  semesterKey={semesterKey}
-                  onRemove={onRemoveCourse}
-                />
+              {courses.map((course, index) => (
+                <div key={course.id}>
+                  {renderDropZone(index)}
+                  <CourseCard
+                    course={course}
+                    semesterKey={semesterKey}
+                    onRemove={onRemoveCourse}
+                    onDragStart={(event, courseId) => onCourseDragStart(event, semesterKey, courseId)}
+                    onDragEnd={onCourseDragEnd}
+                    isDragging={
+                      dragState.fromSemester === semesterKey
+                      && dragState.courseId === course.id
+                    }
+                  />
+                </div>
               ))}
+              {renderDropZone(courses.length)}
               <button
                 onClick={() => onAddClick(semesterKey)}
                 className="w-full py-3 border border-dashed border-border/30 rounded-md hover:border-border/60 hover:bg-accent/5 transition-colors flex items-center justify-center gap-2 text-sm text-muted-foreground"
