@@ -114,7 +114,7 @@ export default function CoursePicker({ semesterId, onAdd, onClose, isCourseInPla
               </div>
             </div>
 
-            <div className="modal-course-list">
+            <div className="modal-course-list scrollbar-hidden">
               {filtered.length === 0 ? (
                 <div className="modal-empty">No courses match your filters.</div>
               ) : (
