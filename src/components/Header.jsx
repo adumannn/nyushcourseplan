@@ -25,14 +25,14 @@ export default function Header({
   }, []);
 
   return (
-    <header className="planner-header border-b border-border/40 px-6 py-4">
-      <div className="flex items-center justify-between">
+    <header className="planner-header border-b border-border/40 px-4 sm:px-6 py-3 sm:py-4">
+      <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
         {/* Left — branding + major */}
-        <div className="flex items-center gap-4">
+        <div className="flex min-w-0 items-center gap-3 sm:gap-4">
           <h1 className="text-lg">Course Planner</h1>
-          <div className="h-4 w-px bg-border/60" />
+          <div className="hidden sm:block h-4 w-px bg-border/60" />
           <select
-            className="text-sm text-muted-foreground bg-transparent border-none outline-none cursor-pointer appearance-none pr-4"
+            className="min-w-0 max-w-44 sm:max-w-none text-sm text-muted-foreground bg-transparent border-none outline-none cursor-pointer appearance-none pr-4"
             value={major}
             onChange={e => setMajor(e.target.value)}
             aria-label="Select major"
@@ -44,9 +44,9 @@ export default function Header({
         </div>
 
         {/* Right — credits + theme + account */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center justify-between md:justify-end gap-2 sm:gap-3">
           <div className="flex items-baseline gap-2">
-            <span className="text-2xl tabular-nums">{totalCredits}</span>
+            <span className="text-xl sm:text-2xl tabular-nums">{totalCredits}</span>
             <span className="text-sm text-muted-foreground">credits</span>
           </div>
 
@@ -85,7 +85,7 @@ export default function Header({
 
               {/* Dropdown */}
               {menuOpen && (
-                <div className="absolute right-0 top-full mt-2 w-64 bg-card border border-border rounded-lg shadow-lg z-50 overflow-hidden">
+                <div className="absolute right-0 top-full mt-2 w-56 sm:w-64 bg-card border border-border rounded-lg shadow-lg z-50 overflow-hidden">
                   {/* User info */}
                   <div className="px-4 py-3 border-b border-border/40">
                     <div className="flex items-center gap-3">

@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState } from 'react';
 import { Analytics } from '@vercel/analytics/react';
 import useTheme from './hooks/useTheme';
 import useAuth from './hooks/useAuth';
@@ -21,7 +21,6 @@ function App() {
     addCourse,
     removeCourse,
     moveCourse,
-    clearAll: _clearAll,
     totalCredits,
     semesterCredits,
     requirementProgress,
@@ -31,10 +30,6 @@ function App() {
   } = usePlanner(user);
 
   const [pickerSemester, setPickerSemester] = useState(null);
-
-  const handleSignOut = useCallback(async () => {
-    await signOut();
-  }, [signOut]);
 
   // Auth gate — must sign in with Google
   if (authEnabled && !authLoading && !user) {
@@ -47,7 +42,7 @@ function App() {
   }
 
   return (
-    <div className="planner-shell h-screen flex flex-col bg-background text-foreground">
+    <div className="planner-shell h-dvh min-h-screen flex flex-col bg-background text-foreground">
       <Header
         major={major}
         setMajor={setMajor}
@@ -55,11 +50,11 @@ function App() {
         theme={theme}
         toggleTheme={toggleTheme}
         user={user}
-        onSignOut={handleSignOut}
+        onSignOut={signOut}
       />
 
-      <div className="planner-main flex-1 flex min-h-0">
-        <div className="planner-board flex-1 overflow-y-auto">
+      <div className="planner-main flex-1 min-h-0 flex flex-col lg:flex-row">
+        <div className="planner-board flex-1 min-h-[45vh] lg:min-h-0 overflow-y-auto">
           {!loaded ? (
             <div className="plan-loading">
               <div className="spinner" />
@@ -70,13 +65,13 @@ function App() {
               plan={plan}
               semesterCredits={semesterCredits}
               onRemoveCourse={removeCourse}
-              onAddClick={(semId) => setPickerSemester(semId)}
+              onAddClick={setPickerSemester}
               onMoveCourse={moveCourse}
             />
           )}
         </div>
 
-        <div className="planner-sidebar w-80 shrink-0">
+        <div className="planner-sidebar w-full max-h-[44vh] lg:max-h-none lg:w-80 lg:shrink-0">
           <RequirementsSidebar
             requirementProgress={requirementProgress}
             totalCredits={totalCredits}
@@ -89,7 +84,7 @@ function App() {
       {pickerSemester && (
         <CoursePicker
           semesterId={pickerSemester}
-          onAdd={(semId, course) => { addCourse(semId, course); }}
+          onAdd={addCourse}
           onClose={() => setPickerSemester(null)}
           isCourseInPlan={isCourseInPlan}
           major={major}
