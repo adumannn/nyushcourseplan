@@ -115,15 +115,43 @@ export default function usePlanner(user) {
     }));
   }, []);
 
-  const moveCourse = useCallback((fromSemester, toSemester, courseId) => {
+  const moveCourse = useCallback((fromSemester, toSemester, courseId, targetIndex = null) => {
     setPlan(prev => {
-      const course = (prev[fromSemester] || []).find(c => c.id === courseId);
-      if (!course) return prev;
-      if ((prev[toSemester] || []).some(c => c.id === courseId)) return prev;
+      const fromCourses = [...(prev[fromSemester] || [])];
+      const sourceIndex = fromCourses.findIndex(c => c.id === courseId);
+      if (sourceIndex === -1) return prev;
+
+      const [course] = fromCourses.splice(sourceIndex, 1);
+
+      if (fromSemester === toSemester) {
+        let insertionIndex =
+          targetIndex == null ? fromCourses.length : Math.max(0, Math.min(targetIndex, prev[fromSemester].length));
+
+        // Adjust insertion index because we already removed the dragged item.
+        if (sourceIndex < insertionIndex) {
+          insertionIndex -= 1;
+        }
+
+        if (insertionIndex === sourceIndex) return prev;
+
+        fromCourses.splice(insertionIndex, 0, course);
+        return {
+          ...prev,
+          [fromSemester]: fromCourses,
+        };
+      }
+
+      const toCourses = [...(prev[toSemester] || [])];
+      if (toCourses.some(c => c.id === courseId)) return prev;
+
+      const insertionIndex =
+        targetIndex == null ? toCourses.length : Math.max(0, Math.min(targetIndex, toCourses.length));
+      toCourses.splice(insertionIndex, 0, course);
+
       return {
         ...prev,
-        [fromSemester]: prev[fromSemester].filter(c => c.id !== courseId),
-        [toSemester]: [...(prev[toSemester] || []), course],
+        [fromSemester]: fromCourses,
+        [toSemester]: toCourses,
       };
     });
   }, []);

@@ -1,8 +1,25 @@
 import { GripVertical, X } from 'lucide-react';
 
-export default function CourseCard({ course, semesterKey, onRemove }) {
+export default function CourseCard({
+  course,
+  semesterKey,
+  onRemove,
+  onDragStart,
+  onDragEnd,
+  isDragging = false,
+}) {
   return (
-    <div className="group relative flex items-center gap-3 px-4 py-3 bg-accent/10 border border-border/30 rounded-md hover:bg-accent/20 hover:border-border/50 transition-all cursor-move">
+    <div
+      draggable
+      onDragStart={(event) => onDragStart?.(event, course.id)}
+      onDragEnd={onDragEnd}
+      aria-grabbed={isDragging}
+      className={`group relative flex items-center gap-3 px-4 py-3 bg-accent/10 border rounded-md transition-all cursor-grab active:cursor-grabbing ${
+        isDragging
+          ? 'opacity-45 border-[#57068c]/50 ring-1 ring-[#57068c]/30'
+          : 'border-border/30 hover:bg-accent/20 hover:border-border/50'
+      }`}
+    >
       <GripVertical className="h-4 w-4 text-muted-foreground/40 shrink-0" />
 
       <div className="flex-1 min-w-0">
