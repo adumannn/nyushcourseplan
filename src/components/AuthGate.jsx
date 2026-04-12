@@ -10,9 +10,9 @@ export default function AuthGate({ onSignInWithGoogle, loading }) {
   }
 
   return (
-    <div className="min-h-screen flex">
+    <div className="auth-shell min-h-screen flex">
       {/* Left side - Hero */}
-      <div className="hidden lg:flex lg:flex-1 bg-linear-to-br from-[#57068c] to-[#8900e1] relative overflow-hidden">
+      <div className="auth-hero hidden lg:flex lg:flex-1 bg-linear-to-br from-[#57068c] to-[#8900e1] relative overflow-hidden">
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-white rounded-full blur-3xl" />
           <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-white rounded-full blur-3xl" />
@@ -51,8 +51,8 @@ export default function AuthGate({ onSignInWithGoogle, loading }) {
       </div>
 
       {/* Right side - Login */}
-      <div className="flex-1 flex items-center justify-center p-8 bg-background">
-        <div className="w-full max-w-md space-y-8">
+      <div className="auth-pane flex-1 flex items-center justify-center p-8 bg-background">
+        <div className="auth-card w-full max-w-md space-y-8">
           {/* Mobile logo */}
           <div className="lg:hidden flex items-center gap-3 text-foreground mb-8">
             <img
@@ -74,7 +74,7 @@ export default function AuthGate({ onSignInWithGoogle, loading }) {
           <button
             type="button"
             onClick={onSignInWithGoogle}
-            className="w-full h-12 rounded-lg border border-border hover:bg-accent font-medium text-sm flex items-center justify-center gap-3 transition-colors cursor-pointer"
+            className="auth-google-btn w-full h-12 rounded-lg border border-border hover:bg-accent font-medium text-sm flex items-center justify-center gap-3 transition-colors cursor-pointer"
           >
             <svg width="20" height="20" viewBox="0 0 48 48">
               <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
@@ -87,7 +87,7 @@ export default function AuthGate({ onSignInWithGoogle, loading }) {
 
           {/* Info */}
           <div className="pt-4">
-            <div className="bg-accent/20 border border-border/40 rounded-lg p-4">
+            <div className="auth-info bg-accent/20 border border-border/40 rounded-lg p-4">
               <div className="flex gap-3">
                 <div className="shrink-0 mt-0.5">
                   <svg

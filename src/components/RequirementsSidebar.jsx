@@ -218,8 +218,8 @@ export default function RequirementsSidebar({
   );
 
   return (
-    <div className="flex flex-col h-full border-l border-border/40">
-      <div className="px-6 py-5 border-b border-border/40">
+    <div className="planner-requirements flex flex-col h-full border-l border-border/40">
+      <div className="planner-requirements-header px-6 py-5 border-b border-border/40">
         <h2 className="text-xs tracking-wider uppercase text-muted-foreground mb-4">
           Requirements
         </h2>
@@ -242,7 +242,7 @@ export default function RequirementsSidebar({
         </div>
       </div>
 
-      <div className="flex-1 overflow-y-auto">
+      <div className="planner-requirements-scroll flex-1 overflow-y-auto">
         <div className="p-6 space-y-8">
           {requirements.map((requirement, index) => (
             <RequirementCategory key={index} requirement={requirement} />

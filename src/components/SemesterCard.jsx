@@ -39,12 +39,12 @@ export default function SemesterCard({
   };
 
   return (
-    <div className="border-b border-border/40 last:border-b-0">
+    <div className="planner-semester-row border-b border-border/40 last:border-b-0">
       <button
         onClick={() => setIsExpanded(!isExpanded)}
         onDragOver={(event) => onDragOverIndex(event, semesterKey, courses.length)}
         onDrop={(event) => onDropAtIndex(event, semesterKey, courses.length)}
-        className="w-full flex items-center justify-between px-6 py-4 hover:bg-accent/5 transition-colors"
+        className="planner-semester-toggle w-full flex items-center justify-between px-6 py-4 hover:bg-accent/5 transition-colors"
       >
         <div className="flex items-center gap-3">
           <span className="text-xs tracking-wider uppercase text-muted-foreground">
@@ -66,13 +66,13 @@ export default function SemesterCard({
       </button>
 
       {isExpanded && (
-        <div className="px-6 pb-4 min-h-24">
+        <div className="planner-semester-body px-6 pb-4 min-h-24">
           {courses.length === 0 ? (
             <button
               onClick={() => onAddClick(semesterKey)}
               onDragOver={(event) => onDragOverIndex(event, semesterKey, 0)}
               onDrop={(event) => onDropAtIndex(event, semesterKey, 0)}
-              className={`w-full py-8 border border-dashed rounded-lg transition-colors flex items-center justify-center gap-2 text-sm ${
+              className={`planner-semester-empty w-full py-8 border border-dashed rounded-lg transition-colors flex items-center justify-center gap-2 text-sm ${
                 isDragActive && dragState.overSemester === semesterKey && dragState.overIndex === 0
                   ? 'border-[#57068c]/70 bg-[#57068c]/8 text-foreground'
                   : 'border-border/40 hover:border-border/60 hover:bg-accent/5 text-muted-foreground'
@@ -102,7 +102,7 @@ export default function SemesterCard({
               {renderDropZone(courses.length)}
               <button
                 onClick={() => onAddClick(semesterKey)}
-                className="w-full py-3 border border-dashed border-border/30 rounded-md hover:border-border/60 hover:bg-accent/5 transition-colors flex items-center justify-center gap-2 text-sm text-muted-foreground"
+                className="planner-semester-add w-full py-3 border border-dashed border-border/30 rounded-md hover:border-border/60 hover:bg-accent/5 transition-colors flex items-center justify-center gap-2 text-sm text-muted-foreground"
               >
                 <Plus className="h-4 w-4" />
                 Add course

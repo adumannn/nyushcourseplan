@@ -7,43 +7,43 @@
 
 :root {
   --font-size: 16px;
-  --background: #ffffff;
-  --foreground: oklch(0.145 0 0);
+  --background: #f4f7ff;
+  --foreground: #111a2e;
   --card: #ffffff;
-  --card-foreground: oklch(0.145 0 0);
+  --card-foreground: #111a2e;
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: #030213;
-  --primary-foreground: oklch(1 0 0);
-  --secondary: oklch(0.95 0.0058 264.53);
-  --secondary-foreground: #030213;
-  --muted: #ececf0;
-  --muted-foreground: #717182;
-  --accent: #e9ebef;
-  --accent-foreground: #030213;
+  --popover-foreground: #111a2e;
+  --primary: #57068c;
+  --primary-foreground: #ffffff;
+  --secondary: #ecf1fb;
+  --secondary-foreground: #1f2a44;
+  --muted: #e8eef9;
+  --muted-foreground: #5f6d85;
+  --accent: #e3ebf9;
+  --accent-foreground: #1c2740;
   --destructive: #d4183d;
   --destructive-foreground: #ffffff;
-  --border: rgba(0, 0, 0, 0.1);
+  --border: rgba(63, 81, 116, 0.2);
   --input: transparent;
-  --input-background: #f3f3f5;
-  --switch-background: #cbced4;
+  --input-background: #f7f9ff;
+  --switch-background: #bdc8dd;
   --font-weight-medium: 500;
   --font-weight-normal: 400;
-  --ring: oklch(0.708 0 0);
+  --ring: #7f59b5;
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
   --chart-4: oklch(0.828 0.189 84.429);
   --chart-5: oklch(0.769 0.188 70.08);
   --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: #030213;
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  --sidebar: #f7faff;
+  --sidebar-foreground: #1a2541;
+  --sidebar-primary: #57068c;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #edf2fb;
+  --sidebar-accent-foreground: #1f2a44;
+  --sidebar-border: rgba(67, 84, 117, 0.16);
+  --sidebar-ring: #7f59b5;
 }
 
 .dark {
