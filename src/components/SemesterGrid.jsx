@@ -101,7 +101,7 @@ export default function SemesterGrid({
     <div className="planner-grid">
       {years.map(year => (
         <div key={year.id} className="planner-year-block border-b border-border/40 last:border-b-0">
-          <div className="planner-year-heading px-6 py-3 bg-accent/5 border-b border-border/30">
+          <div className="planner-year-heading px-4 sm:px-6 py-2.5 sm:py-3 bg-accent/5 border-b border-border/30">
             <div className="flex items-center gap-3">
               <span className="text-xs tracking-wider uppercase text-muted-foreground font-medium">
                 {year.label}

@@ -51,8 +51,8 @@ export default function AuthGate({ onSignInWithGoogle, loading }) {
       </div>
 
       {/* Right side - Login */}
-      <div className="auth-pane flex-1 flex items-center justify-center p-8 bg-background">
-        <div className="auth-card w-full max-w-md space-y-8">
+      <div className="auth-pane flex-1 flex items-center justify-center p-5 sm:p-8 bg-background">
+        <div className="auth-card w-full max-w-md space-y-6 sm:space-y-8">
           {/* Mobile logo */}
           <div className="lg:hidden flex items-center gap-3 text-foreground mb-8">
             <img

@@ -218,13 +218,13 @@ export default function RequirementsSidebar({
   );
 
   return (
-    <div className="planner-requirements flex flex-col h-full border-l border-border/40">
-      <div className="planner-requirements-header px-6 py-5 border-b border-border/40">
+    <div className="planner-requirements flex flex-col h-full border-t border-border/40 lg:border-t-0 lg:border-l">
+      <div className="planner-requirements-header px-4 sm:px-6 py-4 sm:py-5 border-b border-border/40">
         <h2 className="text-xs tracking-wider uppercase text-muted-foreground mb-4">
           Requirements
         </h2>
         <div className="flex items-baseline gap-2">
-          <span className="text-3xl tabular-nums">{totalCredits}</span>
+          <span className="text-2xl sm:text-3xl tabular-nums">{totalCredits}</span>
           <span className="text-muted-foreground">
             / {GRADUATION_CREDITS} credits
           </span>
@@ -243,7 +243,7 @@ export default function RequirementsSidebar({
       </div>
 
       <div className="planner-requirements-scroll flex-1 overflow-y-auto">
-        <div className="p-6 space-y-8">
+        <div className="p-4 sm:p-6 space-y-6 sm:space-y-8">
           {requirements.map((requirement, index) => (
             <RequirementCategory key={index} requirement={requirement} />
           ))}

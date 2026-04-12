@@ -468,6 +468,72 @@
 
 /* ── Responsive ── */
 
+@media (max-width: 1024px) {
+  .modal {
+    max-width: min(560px, 96vw);
+    max-height: 88vh;
+  }
+
+  .modal-course-list {
+    max-height: 52vh;
+  }
+}
+
 @media (max-width: 768px) {
-  .modal { max-height: 90vh; border-radius: 12px; }
+  .modal-overlay {
+    align-items: flex-end;
+    padding: 12px;
+  }
+
+  .modal {
+    max-height: 90vh;
+    border-radius: 14px;
+  }
+
+  .modal-header {
+    padding: 14px;
+  }
+
+  .modal-header h2 {
+    font-size: 14px;
+  }
+
+  .modal-tab {
+    font-size: 12px;
+    padding: 10px 8px;
+  }
+
+  .modal-filters {
+    padding: 10px 12px;
+  }
+
+  .modal-filter-row {
+    flex-direction: column;
+  }
+
+  .modal-search,
+  .modal-filter-row select,
+  .custom-field input,
+  .custom-field select {
+    min-height: 40px;
+    font-size: 13px;
+  }
+
+  .modal-course-item {
+    padding: 9px 12px;
+  }
+
+  .modal-custom {
+    padding: 16px 12px;
+  }
+
+  .custom-field-row {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .btn-primary {
+    width: 100%;
+    min-height: 42px;
+  }
 }
