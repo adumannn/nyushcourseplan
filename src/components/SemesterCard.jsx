@@ -1,40 +1,66 @@
+import { useState } from 'react';
+import { ChevronDown, Plus } from 'lucide-react';
 import CourseCard from './CourseCard';
-import { MAX_CREDITS_PER_SEMESTER } from '../data/courses';
 
-export default function SemesterCard({ semester, courses, credits, onRemoveCourse, onAddClick }) {
-  const overloaded = credits > MAX_CREDITS_PER_SEMESTER;
+export default function SemesterCard({ semesterKey, year, semester, courses, credits, onRemoveCourse, onAddClick }) {
+  const [isExpanded, setIsExpanded] = useState(true);
 
   return (
-    <div className={`semester-card ${overloaded ? 'semester-card--overloaded' : ''}`}>
-      <div className="semester-card-header">
-        <h3 className="semester-card-title">{semester.label}</h3>
-        <span className={`semester-card-credits ${overloaded ? 'credits--warning' : ''}`}>
-          {credits} credits
-          {overloaded && <span className="credits-warning-icon" title={`Exceeds ${MAX_CREDITS_PER_SEMESTER} credit limit`}> ⚠</span>}
-        </span>
-      </div>
-
-      <div className="semester-card-courses">
-        {courses.length === 0 ? (
-          <div className="semester-card-empty">
-            <span>No courses added yet</span>
+    <div className="border-b border-border/40 last:border-b-0">
+      <button
+        onClick={() => setIsExpanded(!isExpanded)}
+        className="w-full flex items-center justify-between px-6 py-4 hover:bg-accent/5 transition-colors"
+      >
+        <div className="flex items-center gap-3">
+          <span className="text-xs tracking-wider uppercase text-muted-foreground">
+            {year}
+          </span>
+          <span className="text-sm text-muted-foreground/60">{semester}</span>
+        </div>
+        <div className="flex items-center gap-4">
+          <div className="flex items-baseline gap-1.5">
+            <span className="text-sm tabular-nums">{credits}</span>
+            <span className="text-xs text-muted-foreground">credits</span>
           </div>
-        ) : (
-          courses.map(course => (
-            <CourseCard
-              key={course.id}
-              course={course}
-              semesterId={semester.id}
-              onRemove={onRemoveCourse}
-              compact
-            />
-          ))
-        )}
-      </div>
-
-      <button className="semester-add-btn" onClick={() => onAddClick(semester.id)}>
-        + Add Course
+          <ChevronDown
+            className={`h-4 w-4 text-muted-foreground transition-transform ${
+              isExpanded ? 'rotate-180' : ''
+            }`}
+          />
+        </div>
       </button>
+
+      {isExpanded && (
+        <div className="px-6 pb-4 min-h-24">
+          {courses.length === 0 ? (
+            <button
+              onClick={() => onAddClick(semesterKey)}
+              className="w-full py-8 border border-dashed border-border/40 rounded-lg hover:border-border/60 hover:bg-accent/5 transition-colors flex items-center justify-center gap-2 text-sm text-muted-foreground"
+            >
+              <Plus className="h-4 w-4" />
+              Click to add courses
+            </button>
+          ) : (
+            <div className="space-y-2">
+              {courses.map(course => (
+                <CourseCard
+                  key={course.id}
+                  course={course}
+                  semesterKey={semesterKey}
+                  onRemove={onRemoveCourse}
+                />
+              ))}
+              <button
+                onClick={() => onAddClick(semesterKey)}
+                className="w-full py-3 border border-dashed border-border/30 rounded-md hover:border-border/60 hover:bg-accent/5 transition-colors flex items-center justify-center gap-2 text-sm text-muted-foreground"
+              >
+                <Plus className="h-4 w-4" />
+                Add course
+              </button>
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 }
