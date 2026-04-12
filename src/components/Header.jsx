@@ -25,7 +25,7 @@ export default function Header({
   }, []);
 
   return (
-    <header className="planner-header border-b border-border/40 px-4 sm:px-6 py-3 sm:py-4">
+    <header className="planner-header relative z-40 border-b border-border/40 px-4 sm:px-6 py-3 sm:py-4">
       <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
         {/* Left — branding + major */}
         <div className="flex min-w-0 items-center gap-3 sm:gap-4">
@@ -63,7 +63,7 @@ export default function Header({
 
           {/* Account */}
           {user ? (
-            <div className="relative" ref={menuRef}>
+            <div className="relative z-50" ref={menuRef}>
               <button
                 onClick={() => setMenuOpen(!menuOpen)}
                 className="flex items-center gap-2 p-1 rounded-md hover:bg-accent transition-colors cursor-pointer"
@@ -85,7 +85,7 @@ export default function Header({
 
               {/* Dropdown */}
               {menuOpen && (
-                <div className="absolute right-0 top-full mt-2 w-56 sm:w-64 bg-card border border-border rounded-lg shadow-lg z-50 overflow-hidden">
+                <div className="absolute right-0 top-full mt-2 w-56 sm:w-64 bg-card border border-border rounded-lg shadow-lg z-70 overflow-hidden">
                   {/* User info */}
                   <div className="px-4 py-3 border-b border-border/40">
                     <div className="flex items-center gap-3">
