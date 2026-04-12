@@ -300,6 +300,38 @@
   cursor: not-allowed;
 }
 
+/* ── Dark mode: course picker polish ── */
+
+.dark .modal {
+  background: linear-gradient(180deg, rgba(28, 30, 36, 0.96), rgba(20, 22, 27, 0.96));
+  border-color: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 20px 52px rgba(0, 0, 0, 0.52), 0 8px 18px rgba(0, 0, 0, 0.28);
+}
+
+.dark .modal-header,
+.dark .modal-tabs,
+.dark .modal-filters {
+  border-bottom-color: rgba(255, 255, 255, 0.08);
+}
+
+.dark .modal-search,
+.dark .modal-filter-row select,
+.dark .custom-field input,
+.dark .custom-field select {
+  background: var(--input-background);
+  border-color: rgba(255, 255, 255, 0.1);
+  color: var(--foreground);
+}
+
+.dark .modal-search::placeholder,
+.dark .custom-field input::placeholder {
+  color: color-mix(in oklab, var(--muted-foreground) 84%, transparent);
+}
+
+.dark .modal-course-item:hover {
+  background: color-mix(in oklab, var(--accent) 62%, transparent);
+}
+
 /* ── Spinner ── */
 
 .spinner {
