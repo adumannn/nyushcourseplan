@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { SEMESTERS } from '../data/courses';
 import SemesterCard from './SemesterCard';
 
@@ -44,10 +44,42 @@ export default function SemesterGrid({
   onMoveCourse,
 }) {
   const [dragState, setDragState] = useState(createEmptyDragState);
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
+
+  useEffect(() => {
+    if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') {
+      return undefined;
+    }
+
+    const mediaQuery = window.matchMedia('(pointer: coarse)');
+    const updateTouchMode = () => {
+      setIsTouchDevice(mediaQuery.matches || window.navigator.maxTouchPoints > 0);
+    };
+
+    updateTouchMode();
+
+    if (typeof mediaQuery.addEventListener === 'function') {
+      mediaQuery.addEventListener('change', updateTouchMode);
+      return () => mediaQuery.removeEventListener('change', updateTouchMode);
+    }
+
+    mediaQuery.addListener(updateTouchMode);
+    return () => mediaQuery.removeListener(updateTouchMode);
+  }, []);
 
   const resetDragState = useCallback(() => {
     setDragState(createEmptyDragState());
   }, []);
+
+  const selectedCourseName = useMemo(() => {
+    if (!dragState.courseId) return null;
+
+    const selectedCourse = Object.values(plan)
+      .flat()
+      .find((course) => course.id === dragState.courseId);
+
+    return selectedCourse?.name || 'Selected course';
+  }, [dragState.courseId, plan]);
 
   const handleCourseDragStart = useCallback((event, fromSemester, courseId) => {
     const payload = JSON.stringify({ courseId, fromSemester });
@@ -97,8 +129,63 @@ export default function SemesterGrid({
     resetDragState();
   }, [resetDragState]);
 
+  const activateMobileMove = useCallback((fromSemester, courseId) => {
+    setDragState({
+      courseId,
+      fromSemester,
+      overSemester: fromSemester,
+      overIndex: null,
+    });
+  }, []);
+
+  const commitMobileMove = useCallback((toSemester, index) => {
+    if (!dragState.courseId || !dragState.fromSemester) return false;
+
+    onMoveCourse(dragState.fromSemester, toSemester, dragState.courseId, index);
+    resetDragState();
+    return true;
+  }, [dragState.courseId, dragState.fromSemester, onMoveCourse, resetDragState]);
+
+  const handleCourseTap = useCallback((semesterId, courseId, index) => {
+    if (!isTouchDevice) return;
+
+    if (!dragState.courseId || !dragState.fromSemester) {
+      activateMobileMove(semesterId, courseId);
+      return;
+    }
+
+    if (dragState.courseId === courseId && dragState.fromSemester === semesterId) {
+      resetDragState();
+      return;
+    }
+
+    commitMobileMove(semesterId, index);
+  }, [activateMobileMove, commitMobileMove, dragState.courseId, dragState.fromSemester, isTouchDevice, resetDragState]);
+
+  const handleTapAtIndex = useCallback((semesterId, index) => {
+    if (!isTouchDevice || !dragState.courseId || !dragState.fromSemester) {
+      return false;
+    }
+
+    return commitMobileMove(semesterId, index);
+  }, [commitMobileMove, dragState.courseId, dragState.fromSemester, isTouchDevice]);
+
   return (
     <div className="planner-grid">
+      {isTouchDevice && dragState.courseId && (
+        <div className="mx-4 sm:mx-6 my-3 flex items-center justify-between gap-3 rounded-md border border-[#57068c]/35 bg-[#57068c]/12 px-3 py-2">
+          <span className="text-xs text-muted-foreground truncate">
+            Moving {selectedCourseName}. Tap a course or add area to place it.
+          </span>
+          <button
+            type="button"
+            onClick={resetDragState}
+            className="shrink-0 rounded-md px-2 py-1 text-xs text-muted-foreground hover:bg-accent/30"
+          >
+            Cancel
+          </button>
+        </div>
+      )}
       {years.map(year => (
         <div key={year.id} className="planner-year-block border-b border-border/40 last:border-b-0">
           <div className="planner-year-heading px-4 sm:px-6 py-2.5 sm:py-3 bg-accent/5 border-b border-border/30">
@@ -130,6 +217,9 @@ export default function SemesterGrid({
                 onDragOverIndex={handleDragOverIndex}
                 onDropAtIndex={handleDropAtIndex}
                 dragState={dragState}
+                isTouchDevice={isTouchDevice}
+                onCourseTap={handleCourseTap}
+                onTapAtIndex={handleTapAtIndex}
               />
             );
           })}
