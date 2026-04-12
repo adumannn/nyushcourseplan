@@ -362,6 +362,18 @@
   font-weight: 500;
 }
 
+/* ── Scrollbars ── */
+
+.scrollbar-hidden {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hidden::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
 /* ── Light mode polish ── */
 
 [data-theme='light'] body {

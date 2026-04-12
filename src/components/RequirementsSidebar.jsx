@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { ChevronDown, CheckCircle2, Circle } from 'lucide-react';
+import { ChevronDown, CheckCircle2, Circle, ChevronsLeft, ChevronsRight } from 'lucide-react';
 import { CORE_REQUIREMENTS, MAJOR_REQUIREMENTS, GRADUATION_CREDITS } from '../data/courses';
 
 function RequirementCategory({ requirement }) {
@@ -211,44 +211,84 @@ export default function RequirementsSidebar({
   totalCredits,
   allPlannedCourses,
   major,
+  collapsed = false,
+  onToggleCollapsed,
 }) {
   const requirements = useMemo(
     () => buildRequirements(requirementProgress, allPlannedCourses, major),
     [requirementProgress, allPlannedCourses, major]
   );
 
+  const completionPercent = Math.min(
+    (totalCredits / GRADUATION_CREDITS) * 100,
+    100
+  );
+
   return (
     <div className="planner-requirements flex flex-col h-full border-t border-border/40 lg:border-t-0 lg:border-l">
-      <div className="planner-requirements-header px-4 sm:px-6 py-4 sm:py-5 border-b border-border/40">
-        <h2 className="text-xs tracking-wider uppercase text-muted-foreground mb-4">
-          Requirements
-        </h2>
-        <div className="flex items-baseline gap-2">
-          <span className="text-2xl sm:text-3xl tabular-nums">{totalCredits}</span>
-          <span className="text-muted-foreground">
-            / {GRADUATION_CREDITS} credits
-          </span>
-        </div>
-        <div className="mt-3 h-1.5 bg-accent/20 rounded-full overflow-hidden">
-          <div
-            className="h-full bg-chart-1 transition-all duration-500"
-            style={{
-              width: `${Math.min(
-                (totalCredits / GRADUATION_CREDITS) * 100,
-                100
-              )}%`,
-            }}
-          />
-        </div>
+      <div
+        className={`planner-requirements-header ${
+          collapsed
+            ? 'px-1 py-2 border-b-0 flex items-start justify-center'
+            : 'px-4 sm:px-6 py-4 sm:py-5 border-b border-border/40'
+        }`}
+      >
+        {collapsed ? (
+          typeof onToggleCollapsed === 'function' ? (
+            <button
+              type="button"
+              onClick={onToggleCollapsed}
+              aria-label="Expand sidebar"
+              aria-expanded="false"
+              className="planner-sidebar-toggle inline-flex h-11 w-11 items-center justify-center rounded-md text-muted-foreground hover:bg-accent transition-colors cursor-pointer"
+            >
+              <ChevronsLeft className="h-4 w-4" />
+            </button>
+          ) : null
+        ) : (
+          <>
+            <div className="flex items-center justify-between gap-3">
+              <h2 className="text-xs tracking-wider uppercase text-muted-foreground">
+                Requirements
+              </h2>
+              {typeof onToggleCollapsed === 'function' ? (
+                <button
+                  type="button"
+                  onClick={onToggleCollapsed}
+                  aria-label="Collapse sidebar"
+                  aria-expanded="true"
+                  className="planner-sidebar-toggle inline-flex h-11 w-11 items-center justify-center rounded-md text-muted-foreground hover:bg-accent transition-colors cursor-pointer"
+                >
+                  <ChevronsRight className="h-4 w-4" />
+                </button>
+              ) : null}
+            </div>
+
+            <div className="mt-3 flex items-baseline gap-2">
+              <span className="text-2xl sm:text-3xl tabular-nums">{totalCredits}</span>
+              <span className="text-muted-foreground">
+                / {GRADUATION_CREDITS} credits
+              </span>
+            </div>
+            <div className="mt-3 h-1.5 bg-accent/20 rounded-full overflow-hidden">
+              <div
+                className="h-full bg-chart-1 transition-all duration-500"
+                style={{ width: `${completionPercent}%` }}
+              />
+            </div>
+          </>
+        )}
       </div>
 
-      <div className="planner-requirements-scroll flex-1 overflow-y-auto">
-        <div className="p-4 sm:p-6 space-y-6 sm:space-y-8">
-          {requirements.map((requirement, index) => (
-            <RequirementCategory key={index} requirement={requirement} />
-          ))}
+      {!collapsed && (
+        <div className="planner-requirements-scroll scrollbar-hidden flex-1 overflow-y-auto">
+          <div className="p-4 sm:p-6 space-y-6 sm:space-y-8">
+            {requirements.map((requirement, index) => (
+              <RequirementCategory key={index} requirement={requirement} />
+            ))}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }

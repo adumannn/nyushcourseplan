@@ -30,6 +30,7 @@ function App() {
   } = usePlanner(user);
 
   const [pickerSemester, setPickerSemester] = useState(null);
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
 
   // Auth gate — must sign in with Google
   if (authEnabled && !authLoading && !user) {
@@ -54,7 +55,7 @@ function App() {
       />
 
       <div className="planner-main flex-1 min-h-0 flex flex-col lg:flex-row">
-        <div className="planner-board flex-1 min-h-[45vh] lg:min-h-0 overflow-y-auto">
+        <div className="planner-board scrollbar-hidden flex-1 min-h-[45vh] lg:min-h-0 overflow-y-auto">
           {!loaded ? (
             <div className="plan-loading">
               <div className="spinner" />
@@ -71,12 +72,20 @@ function App() {
           )}
         </div>
 
-        <div className="planner-sidebar w-full max-h-[44vh] lg:max-h-none lg:w-80 lg:shrink-0">
+        <div
+          className={`planner-sidebar overflow-hidden transition-all duration-200 w-full lg:shrink-0 ${
+            isSidebarCollapsed
+              ? 'max-h-24 lg:max-h-none lg:w-14'
+              : 'max-h-[44vh] lg:max-h-none lg:w-80'
+          }`}
+        >
           <RequirementsSidebar
             requirementProgress={requirementProgress}
             totalCredits={totalCredits}
             allPlannedCourses={allPlannedCourses}
             major={major}
+            collapsed={isSidebarCollapsed}
+            onToggleCollapsed={() => setIsSidebarCollapsed((prev) => !prev)}
           />
         </div>
       </div>
