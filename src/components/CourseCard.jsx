@@ -28,6 +28,8 @@ export default function CourseCard({
   onRemove,
   onDragStart,
   onDragEnd,
+  onTap,
+  touchMode = false,
   isDragging = false,
 }) {
   const categoryKey = typeof course.category === 'string'
@@ -47,12 +49,15 @@ export default function CourseCard({
 
   return (
     <div
-      draggable
+      draggable={!touchMode}
       onDragStart={(event) => onDragStart?.(event, course.id)}
       onDragEnd={onDragEnd}
+      onClick={touchMode ? () => onTap?.() : undefined}
       aria-grabbed={isDragging}
       style={cardStyle}
-      className={`planner-course-card group relative flex items-center gap-3 px-4 py-3 bg-accent/10 border rounded-md transition-all cursor-grab active:cursor-grabbing ${
+      className={`planner-course-card group relative flex items-center gap-3 px-4 py-3 bg-accent/10 border rounded-md transition-all ${
+        touchMode ? 'cursor-pointer' : 'cursor-grab active:cursor-grabbing'
+      } ${
         isDragging
           ? 'opacity-45 border-[#57068c]/50 ring-1 ring-[#57068c]/30'
           : 'border-border/30 hover:bg-accent/20 hover:border-border/50'
@@ -88,8 +93,11 @@ export default function CourseCard({
           {course.credits} cr
         </span>
         <button
-          onClick={() => onRemove(semesterKey, course.id)}
-          className="opacity-0 group-hover:opacity-100 p-1 hover:bg-destructive/10 rounded transition-all"
+          onClick={(event) => {
+            event.stopPropagation();
+            onRemove(semesterKey, course.id);
+          }}
+          className={`${touchMode ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'} p-2 hover:bg-destructive/10 rounded transition-all`}
         >
           <X className="h-3.5 w-3.5 text-muted-foreground hover:text-destructive" />
         </button>
