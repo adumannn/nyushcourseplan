@@ -54,7 +54,7 @@ function App() {
         onSignOut={signOut}
       />
 
-      <div className="planner-main flex-1 min-h-0 flex flex-col lg:flex-row">
+      <div className="planner-main relative z-0 flex-1 min-h-0 flex flex-col lg:flex-row">
         <div className="planner-board scrollbar-hidden flex-1 min-h-[45vh] lg:min-h-0 overflow-y-auto">
           {!loaded ? (
             <div className="plan-loading">
