@@ -8,6 +8,8 @@ import {
 } from '../data/courses';
 import { localStoragePlan, supabasePlan } from '../lib/planStorage';
 
+const EAP_COURSE_IDS = new Set(['ENGL-SHU-100', 'ENGL-SHU-101']);
+
 function createEmptyPlan() {
   const plan = {};
   SEMESTERS.forEach(s => { plan[s.id] = []; });
@@ -93,11 +95,11 @@ export default function usePlanner(user) {
       let shouldSkipInitialSave = true;
 
       if (isCloud) {
-        const data = await supabasePlan.load(user.id);
+        const profileStudentName = getUserProfileName(user);
+        const data = await supabasePlan.load(user.id, profileStudentName);
         if (cancelled) return;
         if (data) {
           const storedStudentName = typeof data.studentName === 'string' ? data.studentName.trim() : '';
-          const profileStudentName = getUserProfileName(user);
           const resolvedStudentName = storedStudentName || profileStudentName;
           const didAutoFillName = !storedStudentName && !!profileStudentName;
 
@@ -349,14 +351,66 @@ export default function usePlanner(user) {
     const progress = {};
 
     CORE_REQUIREMENTS.forEach(req => {
-      const courses = allPlannedCourses.filter(c => c.category === req.category);
+      const courses = allPlannedCourses.filter((course) => {
+        if (req.id === 'social-and-cultural-foundations' && course.id === 'WRIT-SHU-201') {
+          return true;
+        }
+        return course.category === req.category;
+      });
+      const creditsTaken = courses.reduce((sum, c) => sum + c.credits, 0);
       progress[req.id] = {
         ...req,
         coursesTaken: courses.length,
-        creditsTaken: courses.reduce((sum, c) => sum + c.credits, 0),
+        creditsTaken,
         fulfilled: courses.length >= req.coursesNeeded,
       };
     });
+
+    const languageProgress = progress.language;
+    if (languageProgress) {
+      const languageCourses = allPlannedCourses.filter((course) => course.category === 'language');
+      const isEapCourse = (course) => EAP_COURSE_IDS.has(course.id);
+
+      const eapCredits = languageCourses
+        .filter(isEapCourse)
+        .reduce((sum, course) => sum + course.credits, 0);
+
+      const nonEapCredits = languageCourses
+        .filter((course) => !isEapCourse(course))
+        .reduce((sum, course) => sum + course.credits, 0);
+
+      const chineseCreditsNeeded = typeof languageProgress.chineseCreditsNeeded === 'number'
+        ? languageProgress.chineseCreditsNeeded
+        : 8;
+      const internationalCreditsMin = typeof languageProgress.internationalCreditsMin === 'number'
+        ? languageProgress.internationalCreditsMin
+        : 0;
+      const internationalCreditsMax = typeof languageProgress.internationalCreditsMax === 'number'
+        ? languageProgress.internationalCreditsMax
+        : 16;
+
+      const track = eapCredits > 0 ? 'chinese' : 'international';
+      const creditsTaken = track === 'chinese'
+        ? Math.min(eapCredits, chineseCreditsNeeded)
+        : Math.min(nonEapCredits, internationalCreditsMax);
+
+      progress.language = {
+        ...languageProgress,
+        coursesTaken: track === 'chinese'
+          ? languageCourses.filter(isEapCourse).length
+          : languageCourses.filter((course) => !isEapCourse(course)).length,
+        creditsTaken,
+        creditsNeeded: track === 'chinese' ? chineseCreditsNeeded : internationalCreditsMin,
+        maxCreditsNeeded: track === 'chinese' ? chineseCreditsNeeded : internationalCreditsMax,
+        creditsNeededLabel: track === 'chinese'
+          ? `${chineseCreditsNeeded}`
+          : `${internationalCreditsMin}-${internationalCreditsMax}`,
+        track,
+        fulfilled: track === 'chinese'
+          ? creditsTaken >= chineseCreditsNeeded
+          : creditsTaken >= internationalCreditsMin,
+      };
+    }
 
     const majorReq = MAJOR_REQUIREMENTS[major] || MAJOR_REQUIREMENTS.custom;
     const majorCourses = allPlannedCourses.filter(c => c.category === 'major-required' || c.category === 'major-elective');
