@@ -1,17 +1,26 @@
 # NYU Shanghai Course Planner
 
 A course planning tool for NYU Shanghai students. Plan your 4-year journey, pick a major, add courses into 8 semester slots, and track progress toward 128 graduation credits and requirement fulfillment.
-Fow now, only available major is cs.
 
 **Live:** [nyushplanner.app](https://nyushplanner.app)
+
+## Supported Majors
+
+- Computer Science
+- Business and Finance
 
 ## Features
 
 - **8-semester grid** — Organize courses across 4 years (Fall & Spring)
-- **Course catalog** — Browse 60+ NYU Shanghai courses, filter by department and category
+- **Course catalog** — Browse 70+ NYU Shanghai courses, filter by department and category (Major Required, Major Elective, Core, etc.)
 - **Custom courses** — Add courses not in the catalog
-- **Requirements tracker** — Track core, major, and elective progress with visual progress bars
-- **Credit warnings** — Alerts when a semester exceeds 18 credits
+- **Requirements tracker** — Track core, major, writing, language, and elective progress with visual progress bars
+- **Select-N progress** — Requirement groups like "Business Core Electives (select 2)" show "1/2 selected" progress
+- **Prerequisite info** — Course cards display prerequisite requirements inline
+- **Credit warnings** — Alerts when a semester exceeds 18 or falls below 12 credits
+- **Category legend** — Color-coded legend in the sidebar explains what each course color means
+- **Drag & drop** — Reorder and move courses between semesters (desktop and mobile touch support)
+- **Study away planning** — Mark semesters as study away with location selection
 - **Google sign-in** — Plans sync to the cloud across devices
 - **Guest mode** — Use without an account (saved locally)
 - **Dark/light theme** — System-aware with manual toggle
