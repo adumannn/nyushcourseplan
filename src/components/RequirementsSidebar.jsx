@@ -1,9 +1,16 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { ChevronDown, CheckCircle2, Circle, ChevronsLeft, ChevronsRight } from 'lucide-react';
-import { CORE_REQUIREMENTS, MAJOR_REQUIREMENTS, GRADUATION_CREDITS } from '../data/courses';
+import { CORE_REQUIREMENTS, MAJOR_REQUIREMENTS, GRADUATION_CREDITS, CATEGORIES } from '../data/courses';
 
 function RequirementCategory({ requirement }) {
-  const [isExpanded, setIsExpanded] = useState(true);
+  const hasItems = Array.isArray(requirement.items) && requirement.items.length > 0;
+  const [isExpanded, setIsExpanded] = useState(hasItems);
+
+  useEffect(() => {
+    if (!hasItems) {
+      setIsExpanded(false);
+    }
+  }, [hasItems]);
 
   const percentage = Math.min(
     (requirement.completed / requirement.required) * 100,
@@ -14,29 +21,49 @@ function RequirementCategory({ requirement }) {
 
   return (
     <div>
-      <button
-        onClick={() => setIsExpanded(!isExpanded)}
-        className="w-full flex items-start justify-between gap-3 mb-3 group"
-      >
-        <div className="flex-1 text-left">
-          <div className="flex items-center gap-2 mb-1.5">
-            <h3 className="text-xs tracking-wider uppercase text-muted-foreground">
-              {requirement.category}
-            </h3>
-            <ChevronDown
-              className={`h-3.5 w-3.5 text-muted-foreground/60 transition-transform ${
-                isExpanded ? 'rotate-180' : ''
-              }`}
-            />
+      {hasItems ? (
+        <button
+          type="button"
+          onClick={() => setIsExpanded((prev) => !prev)}
+          aria-expanded={isExpanded}
+          className="w-full flex items-start justify-between gap-3 mb-3 group"
+        >
+          <div className="flex-1 text-left">
+            <div className="flex items-center gap-2 mb-1.5">
+              <h3 className="text-xs tracking-wider uppercase text-muted-foreground">
+                {requirement.category}
+              </h3>
+              <ChevronDown
+                className={`h-3.5 w-3.5 text-muted-foreground/60 transition-transform ${
+                  isExpanded ? 'rotate-180' : ''
+                }`}
+              />
+            </div>
+            <div className="flex items-baseline gap-2">
+              <span className="text-sm tabular-nums">{requirement.completed}</span>
+              <span className="text-xs text-muted-foreground">
+                / {requirement.required} credits
+              </span>
+            </div>
           </div>
-          <div className="flex items-baseline gap-2">
-            <span className="text-sm tabular-nums">{requirement.completed}</span>
-            <span className="text-xs text-muted-foreground">
-              / {requirement.required} credits
-            </span>
+        </button>
+      ) : (
+        <div className="w-full flex items-start justify-between gap-3 mb-3">
+          <div className="flex-1 text-left">
+            <div className="flex items-center gap-2 mb-1.5">
+              <h3 className="text-xs tracking-wider uppercase text-muted-foreground">
+                {requirement.category}
+              </h3>
+            </div>
+            <div className="flex items-baseline gap-2">
+              <span className="text-sm tabular-nums">{requirement.completed}</span>
+              <span className="text-xs text-muted-foreground">
+                / {requirement.required} credits
+              </span>
+            </div>
           </div>
         </div>
-      </button>
+      )}
 
       <div className="mb-4 h-1 bg-accent/20 rounded-full overflow-hidden">
         <div
@@ -47,7 +74,7 @@ function RequirementCategory({ requirement }) {
         />
       </div>
 
-      {isExpanded && requirement.items && (
+      {hasItems && isExpanded && (
         <div className="space-y-2 ml-1">
           {requirement.items.map((item, index) => (
             <div
@@ -67,6 +94,11 @@ function RequirementCategory({ requirement }) {
                 >
                   {item.name}
                 </div>
+                {item.progress && (
+                  <div className={`text-xs mt-0.5 ${item.completed ? 'text-chart-2/70' : 'text-muted-foreground/60'}`}>
+                    {item.progress} selected
+                  </div>
+                )}
                 {item.credits !== undefined && (
                   <div className="text-xs text-muted-foreground/60 mt-0.5">
                     {item.credits} credits
@@ -143,6 +175,7 @@ function buildRequirements(requirementProgress, allPlannedCourses, major) {
       majorItems.push({
         name: group.label,
         completed: matchedCount >= needed,
+        progress: needed > 1 ? `${matchedCount}/${needed}` : undefined,
       });
     }
     if (majorDef.capstone) {
@@ -288,6 +321,25 @@ export default function RequirementsSidebar({
             {requirements.map((requirement, index) => (
               <RequirementCategory key={index} requirement={requirement} />
             ))}
+
+            <div className="pt-2 border-t border-border/30">
+              <h3 className="text-xs tracking-wider uppercase text-muted-foreground mb-3">
+                Category Legend
+              </h3>
+              <div className="grid grid-cols-2 gap-x-3 gap-y-2">
+                {Object.entries(CATEGORIES).map(([key, cat]) => (
+                  <div key={key} className="flex items-center gap-2">
+                    <span
+                      className="h-2.5 w-2.5 rounded-full shrink-0"
+                      style={{ backgroundColor: cat.color }}
+                    />
+                    <span className="text-[11px] text-muted-foreground truncate">
+                      {cat.label}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       )}
