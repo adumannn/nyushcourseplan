@@ -437,6 +437,7 @@ export const COURSE_CATALOG = [
     credits: 4,
     category: 'core',
     department: 'Mathematics',
+    requirementIds: ['mathematics'],
     prerequisites: ['MATH-SHU-131'],
     prerequisiteNote: 'Grade C or better in Calculus',
   },
@@ -447,6 +448,7 @@ export const COURSE_CATALOG = [
     credits: 4,
     category: 'core',
     department: 'Mathematics',
+    requirementIds: ['mathematics'],
   },
 
   // ═══ CORE — ALGORITHMIC THINKING (CS prerequisite) ═══

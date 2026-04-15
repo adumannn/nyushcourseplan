@@ -1,20 +1,26 @@
-import { useState } from 'react';
-import { Analytics } from '@vercel/analytics/react';
-import useTheme from './hooks/useTheme';
-import useAuth from './hooks/useAuth';
-import usePlanner from './hooks/usePlanner';
-import Header from './components/Header';
-import SemesterGrid from './components/SemesterGrid';
-import RequirementsSidebar from './components/RequirementsSidebar';
-import CoursePicker from './components/CoursePicker';
-import StudyAwayPicker from './components/StudyAwayPicker';
-import CourseDetailModal from './components/CourseDetailModal';
-import AuthGate from './components/AuthGate';
-import './App.css';
+import { useMemo, useState } from "react";
+import { Analytics } from "@vercel/analytics/react";
+import useTheme from "./hooks/useTheme";
+import useAuth from "./hooks/useAuth";
+import usePlanner from "./hooks/usePlanner";
+import Header from "./components/Header";
+import SemesterGrid from "./components/SemesterGrid";
+import RequirementsSidebar from "./components/RequirementsSidebar";
+import CoursePicker from "./components/CoursePicker";
+import StudyAwayPicker from "./components/StudyAwayPicker";
+import CourseDetailModal from "./components/CourseDetailModal";
+import AuthGate from "./components/AuthGate";
+import "./App.css";
 
 function App() {
   const { theme, toggleTheme } = useTheme();
-  const { user, loading: authLoading, signInWithGoogle, signOut, enabled: authEnabled } = useAuth();
+  const {
+    user,
+    loading: authLoading,
+    signInWithGoogle,
+    signOut,
+    enabled: authEnabled,
+  } = useAuth();
 
   const {
     plan,
@@ -38,16 +44,31 @@ function App() {
 
   const [pickerSemester, setPickerSemester] = useState(null);
   const [studyAwayPickerOpen, setStudyAwayPickerOpen] = useState(false);
+  const [studyAwayFocusSemester, setStudyAwayFocusSemester] = useState(null);
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [detailCourse, setDetailCourse] = useState(null);
+
+  const hasIncompleteStudyAway =
+    studyAway.selectedSemesters.length === 0 ||
+    studyAway.selectedSemesters.some(
+      (semesterId) => !studyAway.locations[semesterId],
+    );
+
+  const studyAwayWarningsBySemester = useMemo(() => {
+    return studyAwayWarnings.reduce((acc, warning) => {
+      const semesterId = warning.semesterId;
+
+      if (!semesterId) return acc;
+      if (!acc[semesterId]) acc[semesterId] = [];
+      acc[semesterId].push(warning);
+      return acc;
+    }, {});
+  }, [studyAwayWarnings]);
 
   // Auth gate — must sign in with Google
   if (authEnabled && !authLoading && !user) {
     return (
-      <AuthGate
-        onSignInWithGoogle={signInWithGoogle}
-        loading={authLoading}
-      />
+      <AuthGate onSignInWithGoogle={signInWithGoogle} loading={authLoading} />
     );
   }
 
@@ -59,8 +80,14 @@ function App() {
         totalCredits={totalCredits}
         theme={theme}
         toggleTheme={toggleTheme}
-        onOpenStudyAway={() => setStudyAwayPickerOpen(true)}
+        onOpenStudyAway={() => {
+          setStudyAwayFocusSemester(null);
+          setStudyAwayPickerOpen(true);
+        }}
         studyAwayCount={studyAway.selectedSemesters.length}
+        studyAwayWarningCount={studyAwayWarnings.length}
+        hasIncompleteStudyAway={hasIncompleteStudyAway}
+        isStudyAwayOpen={studyAwayPickerOpen}
         user={user}
         onSignOut={signOut}
       />
@@ -80,8 +107,13 @@ function App() {
               onAddClick={setPickerSemester}
               onMoveCourse={moveCourse}
               studyAway={studyAway}
+              studyAwayWarnings={studyAwayWarningsBySemester}
               prereqWarnings={prereqWarnings}
               onCourseClick={setDetailCourse}
+              onOpenStudyAway={(semesterId) => {
+                setStudyAwayFocusSemester(semesterId);
+                setStudyAwayPickerOpen(true);
+              }}
             />
           )}
         </div>
@@ -89,8 +121,8 @@ function App() {
         <div
           className={`planner-sidebar overflow-hidden transition-all duration-200 w-full lg:shrink-0 ${
             isSidebarCollapsed
-              ? 'max-h-24 lg:max-h-none lg:w-14'
-              : 'max-h-[44vh] lg:max-h-none lg:w-80'
+              ? "max-h-24 lg:max-h-none lg:w-14"
+              : "max-h-[44vh] lg:max-h-none lg:w-80"
           }`}
         >
           <RequirementsSidebar
@@ -127,7 +159,11 @@ function App() {
           major={major}
           studyAway={studyAway}
           warnings={studyAwayWarnings}
-          onClose={() => setStudyAwayPickerOpen(false)}
+          initialSemester={studyAwayFocusSemester}
+          onClose={() => {
+            setStudyAwayPickerOpen(false);
+            setStudyAwayFocusSemester(null);
+          }}
           onToggleSemester={toggleStudyAwaySemester}
           onSetLocation={setStudyAwayLocation}
         />

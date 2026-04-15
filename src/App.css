@@ -1,985 +1,1359 @@
 /* ── Modal / Course Picker ── */
 
 .modal-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(6px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 100;
-  padding: 20px;
-  animation: fadeIn 0.15s ease;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(6px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    padding: 20px;
+    animation: fadeIn 0.15s ease;
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
 
 .modal {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  width: 100%;
-  max-width: 520px;
-  max-height: 80vh;
-  display: flex;
-  flex-direction: column;
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08), 0 4px 12px rgba(0, 0, 0, 0.04);
-  animation: slideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    width: 100%;
+    max-width: 520px;
+    max-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow:
+        0 12px 40px rgba(0, 0, 0, 0.08),
+        0 4px 12px rgba(0, 0, 0, 0.04);
+    animation: slideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 @keyframes slideUp {
-  from { opacity: 0; transform: translateY(12px) scale(0.98); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
+    from {
+        opacity: 0;
+        transform: translateY(12px) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
 }
 
 .modal-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 16px 20px;
-  border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border);
 }
 
 .modal-header h2 {
-  font-size: 15px;
-  font-weight: 600;
+    font-size: 15px;
+    font-weight: 600;
 }
 
 .modal-close {
-  width: 28px;
-  height: 28px;
-  border: none;
-  background: none;
-  font-size: 18px;
-  cursor: pointer;
-  color: var(--muted-foreground);
-  border-radius: 6px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.15s;
+    width: 28px;
+    height: 28px;
+    border: none;
+    background: none;
+    font-size: 18px;
+    cursor: pointer;
+    color: var(--muted-foreground);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s;
 }
 
 .modal-close:hover {
-  background: var(--accent);
-  color: var(--foreground);
+    background: var(--accent);
+    color: var(--foreground);
 }
 
 .modal-tabs {
-  display: flex;
-  gap: 0;
-  border-bottom: 1px solid var(--border);
+    display: flex;
+    gap: 0;
+    border-bottom: 1px solid var(--border);
 }
 
 .modal-tab {
-  flex: 1;
-  padding: 10px;
-  border: none;
-  background: none;
-  cursor: pointer;
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--muted-foreground);
-  border-bottom: 2px solid transparent;
-  transition: all 0.15s;
+    flex: 1;
+    padding: 10px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--muted-foreground);
+    border-bottom: 2px solid transparent;
+    transition: all 0.15s;
 }
 
 .modal-tab--active {
-  color: var(--foreground);
-  border-bottom-color: var(--foreground);
+    color: var(--foreground);
+    border-bottom-color: var(--foreground);
 }
 
 .modal-tab:hover:not(.modal-tab--active) {
-  color: var(--foreground);
+    color: var(--foreground);
 }
 
 .modal-filters {
-  padding: 12px 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  border-bottom: 1px solid var(--border);
+    padding: 12px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    border-bottom: 1px solid var(--border);
 }
 
 .modal-search {
-  width: 100%;
-  padding: 9px 12px;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  font-size: 13px;
-  font-weight: 500;
-  outline: none;
-  background: var(--input-background);
-  color: var(--foreground);
-  transition: border-color 0.2s;
+    width: 100%;
+    padding: 9px 12px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    outline: none;
+    background: var(--input-background);
+    color: var(--foreground);
+    transition: border-color 0.2s;
 }
 
 .modal-search:focus {
-  border-color: var(--ring);
+    border-color: var(--ring);
 }
 
 .modal-filter-row {
-  display: flex;
-  gap: 8px;
+    display: flex;
+    gap: 8px;
 }
 
 .modal-filter-row select {
-  flex: 1;
-  padding: 7px 10px;
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  font-size: 11px;
-  font-weight: 500;
-  color: var(--muted-foreground);
-  background: var(--input-background);
-  outline: none;
-  transition: border-color 0.15s;
+    flex: 1;
+    padding: 7px 10px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--muted-foreground);
+    background: var(--input-background);
+    outline: none;
+    transition: border-color 0.15s;
 }
 
 .modal-filter-row select:focus {
-  border-color: var(--ring);
+    border-color: var(--ring);
 }
 
 .modal-course-list {
-  flex: 1;
-  overflow-y: auto;
-  padding: 4px 0;
-  max-height: 380px;
+    flex: 1;
+    overflow-y: auto;
+    padding: 4px 0;
+    max-height: 380px;
 }
 
 .modal-empty {
-  padding: 40px 20px;
-  text-align: center;
-  color: var(--muted-foreground);
-  font-size: 13px;
-  font-weight: 500;
+    padding: 40px 20px;
+    text-align: center;
+    color: var(--muted-foreground);
+    font-size: 13px;
+    font-weight: 500;
 }
 
 .modal-course-item {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 8px 16px;
-  cursor: pointer;
-  transition: background 0.1s;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: background 0.1s;
 }
 
 .modal-course-item:hover {
-  background: var(--accent);
+    background: var(--accent);
 }
 
 .modal-course-item--disabled {
-  opacity: 0.3;
-  cursor: default;
+    opacity: 0.3;
+    cursor: default;
 }
 
 .modal-course-item--disabled:hover {
-  background: transparent;
+    background: transparent;
 }
 
 .modal-course-color {
-  width: 3px;
-  height: 28px;
-  border-radius: 2px;
-  flex-shrink: 0;
+    width: 3px;
+    height: 28px;
+    border-radius: 2px;
+    flex-shrink: 0;
 }
 
 .modal-course-info {
-  flex: 1;
-  min-width: 0;
+    flex: 1;
+    min-width: 0;
 }
 
 .modal-course-code {
-  display: block;
-  font-size: 10px;
-  font-weight: 600;
-  color: var(--muted-foreground);
-  letter-spacing: 0.2px;
+    display: block;
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--muted-foreground);
+    letter-spacing: 0.2px;
 }
 
 .modal-course-name {
-  display: block;
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--foreground);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+    display: block;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--foreground);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .modal-course-credits {
-  font-size: 10px;
-  color: var(--muted-foreground);
-  font-weight: 600;
+    font-size: 10px;
+    color: var(--muted-foreground);
+    font-weight: 600;
 }
 
 .modal-course-add-icon {
-  font-size: 16px;
-  font-weight: 700;
-  color: var(--primary);
-  width: 22px;
-  text-align: center;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--primary);
+    width: 22px;
+    text-align: center;
 }
 
 .modal-course-added {
-  font-size: 9px;
-  font-weight: 600;
-  color: var(--chart-2);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+    font-size: 9px;
+    font-weight: 600;
+    color: var(--chart-2);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 /* ── Custom course form ── */
 
 .modal-custom {
-  padding: 20px 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+    padding: 20px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
 }
 
 .custom-field {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
 }
 
 .custom-field label {
-  font-size: 10px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.6px;
-  color: var(--muted-foreground);
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    color: var(--muted-foreground);
 }
 
 .custom-field input,
 .custom-field select {
-  padding: 8px 12px;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  font-size: 13px;
-  font-weight: 500;
-  outline: none;
-  background: var(--input-background);
-  transition: border-color 0.15s;
+    padding: 8px 12px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    outline: none;
+    background: var(--input-background);
+    transition: border-color 0.15s;
 }
 
 .custom-field input:focus,
 .custom-field select:focus {
-  border-color: var(--ring);
+    border-color: var(--ring);
 }
 
 .custom-field-row {
-  display: flex;
-  gap: 10px;
+    display: flex;
+    gap: 10px;
 }
 
-.custom-field-row .custom-field { flex: 1; }
+.custom-field-row .custom-field {
+    flex: 1;
+}
 
 .btn-primary {
-  background: var(--primary);
-  color: var(--primary-foreground);
-  border: none;
-  padding: 10px 18px;
-  border-radius: 10px;
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: opacity 0.15s, transform 0.1s;
+    background: var(--primary);
+    color: var(--primary-foreground);
+    border: none;
+    padding: 10px 18px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition:
+        opacity 0.15s,
+        transform 0.1s;
 }
 
-.btn-primary:hover { opacity: 0.88; }
-.btn-primary:active { transform: scale(0.98); }
+.btn-primary:hover {
+    opacity: 0.88;
+}
+.btn-primary:active {
+    transform: scale(0.98);
+}
 
 .btn-primary:disabled {
-  opacity: 0.3;
-  cursor: not-allowed;
+    opacity: 0.3;
+    cursor: not-allowed;
 }
 
 /* ── Dark mode: course picker polish ── */
 
 .dark .modal {
-  background: linear-gradient(180deg, rgba(28, 30, 36, 0.96), rgba(20, 22, 27, 0.96));
-  border-color: rgba(255, 255, 255, 0.08);
-  box-shadow: 0 20px 52px rgba(0, 0, 0, 0.52), 0 8px 18px rgba(0, 0, 0, 0.28);
+    background: linear-gradient(
+        180deg,
+        rgba(28, 30, 36, 0.96),
+        rgba(20, 22, 27, 0.96)
+    );
+    border-color: rgba(255, 255, 255, 0.08);
+    box-shadow:
+        0 20px 52px rgba(0, 0, 0, 0.52),
+        0 8px 18px rgba(0, 0, 0, 0.28);
 }
 
 .dark .modal-header,
 .dark .modal-tabs,
 .dark .modal-filters {
-  border-bottom-color: rgba(255, 255, 255, 0.08);
+    border-bottom-color: rgba(255, 255, 255, 0.08);
 }
 
 .dark .modal-search,
 .dark .modal-filter-row select,
 .dark .custom-field input,
 .dark .custom-field select {
-  background: var(--input-background);
-  border-color: rgba(255, 255, 255, 0.1);
-  color: var(--foreground);
+    background: var(--input-background);
+    border-color: rgba(255, 255, 255, 0.1);
+    color: var(--foreground);
 }
 
 .dark .modal-search::placeholder,
 .dark .custom-field input::placeholder {
-  color: color-mix(in oklab, var(--muted-foreground) 84%, transparent);
+    color: color-mix(in oklab, var(--muted-foreground) 84%, transparent);
 }
 
 .dark .modal-course-item:hover {
-  background: color-mix(in oklab, var(--accent) 62%, transparent);
+    background: color-mix(in oklab, var(--accent) 62%, transparent);
 }
 
 /* ── Study Away Picker ── */
 
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
 .study-away-modal {
-  max-width: 640px;
+    max-width: 960px;
+    max-height: min(88vh, 860px);
+}
+
+.study-away-header-copy {
+    margin-top: 4px;
+    font-size: 12px;
+    line-height: 1.45;
+    color: var(--muted-foreground);
 }
 
 .study-away-intro {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  padding: 12px 16px;
-  border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border);
 }
 
 .study-away-intro-content {
-  flex: 1;
-  min-width: 0;
+    flex: 1;
+    min-width: 0;
 }
 
 .study-away-intro-icon {
-  width: 28px;
-  height: 28px;
-  border-radius: 999px;
-  background: color-mix(in oklab, var(--primary) 18%, transparent);
-  color: var(--primary);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
+    width: 34px;
+    height: 34px;
+    border-radius: 999px;
+    background: color-mix(in oklab, var(--primary) 18%, transparent);
+    color: var(--primary);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-shadow: inset 0 0 0 1px
+        color-mix(in oklab, var(--primary) 22%, transparent);
 }
 
 .study-away-intro-title {
-  font-size: 13px;
-  font-weight: 600;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.35;
 }
 
 .study-away-intro-subtitle {
-  margin-top: 2px;
-  font-size: 11px;
-  color: var(--muted-foreground);
+    margin-top: 4px;
+    font-size: 12px;
+    color: var(--muted-foreground);
+    line-height: 1.45;
 }
 
 .study-away-progress {
-  margin-top: 8px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
+    margin-top: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
 .study-away-progress-bar {
-  flex: 1;
-  height: 5px;
-  border-radius: 999px;
-  background: color-mix(in oklab, var(--accent) 58%, transparent);
-  overflow: hidden;
+    flex: 1;
+    height: 7px;
+    border-radius: 999px;
+    background: color-mix(in oklab, var(--accent) 58%, transparent);
+    overflow: hidden;
 }
 
 .study-away-progress-bar span {
-  display: block;
-  height: 100%;
-  border-radius: 999px;
-  background: linear-gradient(90deg, #57068c, #2f6be0);
-  transition: width 0.2s ease;
+    display: block;
+    height: 100%;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #57068c, #2f6be0);
+    transition: width 0.2s ease;
 }
 
 .study-away-progress-label {
-  font-size: 10px;
-  color: var(--muted-foreground);
-  text-transform: uppercase;
-  letter-spacing: 0.4px;
-  white-space: nowrap;
+    font-size: 11px;
+    color: var(--muted-foreground);
+    text-transform: uppercase;
+    letter-spacing: 0.45px;
+    white-space: nowrap;
+    font-weight: 600;
 }
 
-.study-away-selected-strip {
-  padding: 10px 16px;
-  border-bottom: 1px solid var(--border);
+.study-away-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.65fr) minmax(280px, 0.95fr);
+    min-height: 0;
+    overflow: hidden;
 }
 
-.study-away-selected-title {
-  display: block;
-  font-size: 10px;
-  text-transform: uppercase;
-  letter-spacing: 0.7px;
-  color: var(--muted-foreground);
-  font-weight: 700;
+.study-away-main {
+    min-width: 0;
+    overflow-y: auto;
+    padding: 16px 20px 20px;
 }
 
-.study-away-selected-pills {
-  margin-top: 8px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
+.study-away-sidebar {
+    min-width: 0;
+    border-left: 1px solid var(--border);
+    background: color-mix(in oklab, var(--accent) 18%, transparent);
+    overflow-y: auto;
+    padding: 16px;
 }
 
-.study-away-selected-empty {
-  font-size: 11px;
-  color: var(--muted-foreground);
+.study-away-overview {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+    margin-bottom: 16px;
 }
 
-.study-away-selected-pill {
-  border: 1px solid color-mix(in oklab, var(--primary) 35%, var(--border));
-  background: color-mix(in oklab, var(--primary) 7%, transparent);
-  border-radius: 999px;
-  padding: 3px 8px;
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  font-size: 11px;
-  color: var(--foreground);
-  cursor: pointer;
+.study-away-summary-headline {
+    margin-top: 6px;
+    font-size: 16px;
+    line-height: 1.35;
+    font-weight: 700;
+    color: var(--foreground);
+}
+
+.study-away-stat-card {
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: color-mix(in oklab, var(--card) 88%, transparent);
+    padding: 12px;
+}
+
+.study-away-stat-label {
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.7px;
+    color: var(--muted-foreground);
+}
+
+.study-away-stat-value {
+    display: block;
+    margin-top: 8px;
+    font-size: 22px;
+    line-height: 1;
+    font-weight: 700;
+    color: var(--foreground);
+}
+
+.study-away-stat-meta {
+    margin-top: 6px;
+    font-size: 12px;
+    line-height: 1.45;
+    color: var(--muted-foreground);
+}
+
+.study-away-stat-card--warning {
+    border-color: color-mix(in oklab, #f59e0b 38%, var(--border));
+    background: color-mix(in oklab, #f59e0b 12%, transparent);
+}
+
+.study-away-stat-card--success {
+    border-color: color-mix(in oklab, #16a34a 28%, var(--border));
+    background: color-mix(in oklab, #16a34a 10%, transparent);
 }
 
 .study-away-semester-list {
-  padding: 12px 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  max-height: 280px;
-  overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
 }
 
 .study-away-semester-row {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  gap: 10px;
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 10px;
-  transition: border-color 0.15s, background-color 0.15s;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 14px;
+    background: color-mix(in oklab, var(--card) 92%, transparent);
+    transition:
+        border-color 0.15s,
+        background-color 0.15s,
+        box-shadow 0.15s;
 }
 
 .study-away-semester-row--active {
-  border-color: color-mix(in oklab, var(--primary) 35%, var(--border));
-  background: color-mix(in oklab, var(--primary) 7%, transparent);
+    border-color: color-mix(in oklab, var(--primary) 35%, var(--border));
+    background: color-mix(in oklab, var(--primary) 7%, transparent);
+    box-shadow: inset 0 0 0 1px
+        color-mix(in oklab, var(--primary) 10%, transparent);
 }
 
-.study-away-semester-toggle {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  border: none;
-  background: none;
-  cursor: pointer;
-  color: var(--foreground);
-  min-width: 0;
-  padding: 2px;
-}
-
-.study-away-semester-check {
-  width: 20px;
-  height: 20px;
-  color: var(--primary);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-
-.study-away-semester-label {
-  font-size: 13px;
-  font-weight: 500;
+.study-away-semester-row--disabled {
+    opacity: 0.68;
 }
 
 .study-away-semester-main {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.study-away-semester-info {
+    min-width: 0;
+    flex: 1;
+}
+
+.study-away-semester-details {
+    min-width: 0;
+    flex: 1;
+}
+
+.study-away-semester-helper {
+    margin-top: 4px;
+    font-size: 12px;
+    line-height: 1.45;
+    color: var(--muted-foreground);
+}
+
+.study-away-semester-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    color: var(--foreground);
+    min-width: 0;
+    padding: 2px;
+    text-align: left;
+}
+
+.study-away-semester-toggle:disabled {
+    cursor: not-allowed;
+}
+
+.study-away-semester-toggle:focus-visible,
+.study-away-location-group select:focus-visible,
+.study-away-quick-pick:focus-visible,
+.study-away-selected-pill:focus-visible,
+.study-away-action-btn:focus-visible {
+    outline: 2px solid color-mix(in oklab, var(--ring) 75%, transparent);
+    outline-offset: 2px;
+}
+
+.study-away-semester-check {
+    width: 24px;
+    height: 24px;
+    color: var(--primary);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border-radius: 999px;
+    background: color-mix(in oklab, var(--primary) 10%, transparent);
+}
+
+.study-away-semester-label {
+    font-size: 14px;
+    font-weight: 650;
+    line-height: 1.35;
+}
+
+.study-away-semester-meta {
+    margin-top: 4px;
+    font-size: 12px;
+    color: var(--muted-foreground);
+    line-height: 1.45;
 }
 
 .study-away-status {
-  border-radius: 999px;
-  border: 1px dashed color-mix(in oklab, var(--muted-foreground) 35%, transparent);
-  color: var(--muted-foreground);
-  font-size: 10px;
-  text-transform: uppercase;
-  letter-spacing: 0.6px;
-  padding: 2px 8px;
+    border-radius: 999px;
+    border: 1px dashed
+        color-mix(in oklab, var(--muted-foreground) 35%, transparent);
+    color: var(--muted-foreground);
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    padding: 5px 10px;
+    white-space: nowrap;
+    flex-shrink: 0;
 }
 
 .study-away-status--active {
-  border-style: solid;
-  border-color: color-mix(in oklab, var(--primary) 35%, var(--border));
-  color: var(--primary);
-  background: color-mix(in oklab, var(--primary) 8%, transparent);
+    border-style: solid;
+    border-color: color-mix(in oklab, var(--primary) 35%, var(--border));
+    color: var(--primary);
+    background: color-mix(in oklab, var(--primary) 8%, transparent);
 }
 
 .study-away-location-stack {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 .study-away-location-group {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  color: var(--muted-foreground);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--muted-foreground);
+    width: fit-content;
+    max-width: 100%;
 }
 
 .study-away-location-group select {
-  border: 1px solid var(--border);
-  background: var(--input-background);
-  color: var(--foreground);
-  border-radius: 8px;
-  padding: 6px 8px;
-  font-size: 12px;
-  min-width: 126px;
-  outline: none;
-}
-
-.study-away-quick-picks {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-}
-
-.study-away-quick-pick {
-  border: 1px solid var(--border);
-  background: transparent;
-  color: var(--muted-foreground);
-  border-radius: 999px;
-  padding: 3px 10px;
-  font-size: 11px;
-  cursor: pointer;
-  transition: all 0.15s;
-}
-
-.study-away-quick-pick:hover {
-  border-color: color-mix(in oklab, var(--primary) 35%, var(--border));
-  color: var(--foreground);
-}
-
-.study-away-quick-pick--active {
-  background: color-mix(in oklab, var(--primary) 12%, transparent);
-  border-color: color-mix(in oklab, var(--primary) 38%, var(--border));
-  color: var(--foreground);
-}
-
-.study-away-inline-note {
-  font-size: 11px;
-  color: var(--muted-foreground);
-  line-height: 1.35;
+    border: 1px solid var(--border);
+    background: var(--input-background);
+    color: var(--foreground);
+    border-radius: 10px;
+    padding: 9px 11px;
+    font-size: 13px;
+    min-width: 180px;
+    outline: none;
+    transition:
+        border-color 0.15s,
+        box-shadow 0.15s,
+        background-color 0.15s;
 }
 
 .study-away-location-group select:disabled {
-  opacity: 0.45;
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
+.study-away-quick-picks {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.study-away-quick-pick {
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--muted-foreground);
+    border-radius: 999px;
+    padding: 6px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+}
+
+.study-away-quick-pick:hover {
+    border-color: color-mix(in oklab, var(--primary) 35%, var(--border));
+    color: var(--foreground);
+}
+
+.study-away-quick-pick--active {
+    background: color-mix(in oklab, var(--primary) 12%, transparent);
+    border-color: color-mix(in oklab, var(--primary) 38%, var(--border));
+    color: var(--foreground);
+}
+
+.study-away-quick-pick:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
+.study-away-inline-note {
+    font-size: 12px;
+    color: var(--muted-foreground);
+    line-height: 1.45;
+}
+
+.study-away-inline-warning {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    border: 1px solid color-mix(in oklab, #f59e0b 42%, var(--border));
+    background: color-mix(in oklab, #f59e0b 12%, transparent);
+    color: var(--foreground);
+    border-radius: 10px;
+    padding: 10px 11px;
+    font-size: 12px;
+    line-height: 1.45;
+}
+
+.study-away-inline-warning svg {
+    color: #f59e0b;
+    flex-shrink: 0;
+    margin-top: 1px;
+}
+
+.study-away-selected-strip {
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: color-mix(in oklab, var(--card) 90%, transparent);
+    padding: 14px;
+}
+
+.study-away-selected-title {
+    display: block;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.7px;
+    color: var(--muted-foreground);
+    font-weight: 700;
+}
+
+.study-away-selected-pills {
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.study-away-selected-empty {
+    font-size: 12px;
+    color: var(--muted-foreground);
+    line-height: 1.45;
+}
+
+.study-away-selected-pill {
+    border: 1px solid color-mix(in oklab, var(--primary) 35%, var(--border));
+    background: color-mix(in oklab, var(--primary) 7%, transparent);
+    border-radius: 999px;
+    padding: 6px 10px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--foreground);
+    cursor: pointer;
+}
+
+.study-away-selected-pill:hover {
+    border-color: color-mix(in oklab, var(--primary) 45%, var(--border));
+    background: color-mix(in oklab, var(--primary) 10%, transparent);
+}
+
+.study-away-selected-pill-location {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--muted-foreground);
 }
 
 .study-away-summary {
-  margin: 4px 16px 12px;
-  padding: 10px 12px;
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  background: color-mix(in oklab, var(--accent) 35%, transparent);
+    margin-top: 14px;
+    padding: 14px;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: color-mix(in oklab, var(--accent) 32%, transparent);
 }
 
 .study-away-summary-label {
-  display: block;
-  font-size: 10px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.7px;
-  color: var(--muted-foreground);
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.7px;
+    color: var(--muted-foreground);
 }
 
 .study-away-summary p {
-  margin-top: 4px;
-  font-size: 12px;
-  line-height: 1.45;
-  color: var(--foreground);
+    margin-top: 6px;
+    font-size: 12px;
+    line-height: 1.5;
+    color: var(--foreground);
 }
 
 .study-away-summary-tip {
-  color: var(--muted-foreground);
-  font-size: 11px;
-}
-
-.study-away-actions {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 8px;
-  margin: 0 16px 12px;
-}
-
-.study-away-action-btn {
-  border-radius: 8px;
-  padding: 7px 12px;
-  font-size: 12px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.15s;
-}
-
-.study-away-action-btn--secondary {
-  border: 1px solid var(--border);
-  color: var(--muted-foreground);
-  background: transparent;
-}
-
-.study-away-action-btn--secondary:hover {
-  color: var(--foreground);
-  border-color: color-mix(in oklab, var(--primary) 25%, var(--border));
-}
-
-.study-away-action-btn--secondary:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-.study-away-action-btn--primary {
-  border: 1px solid color-mix(in oklab, var(--primary) 45%, transparent);
-  color: var(--primary-foreground);
-  background: var(--primary);
-}
-
-.study-away-action-btn--primary:hover {
-  opacity: 0.9;
+    color: var(--muted-foreground);
 }
 
 .study-away-warnings {
-  margin: 0 16px 12px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+    margin-top: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
 }
 
 .study-away-warning-item {
-  display: flex;
-  align-items: flex-start;
-  gap: 8px;
-  border: 1px solid color-mix(in oklab, #f59e0b 45%, var(--border));
-  background: color-mix(in oklab, #f59e0b 12%, transparent);
-  color: var(--foreground);
-  border-radius: 8px;
-  padding: 8px 10px;
-  font-size: 12px;
-  line-height: 1.4;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    border: 1px solid color-mix(in oklab, #f59e0b 45%, var(--border));
+    background: color-mix(in oklab, #f59e0b 12%, transparent);
+    color: var(--foreground);
+    border-radius: 10px;
+    padding: 10px 11px;
+    font-size: 12px;
+    line-height: 1.45;
 }
 
 .study-away-warning-item svg {
-  color: #f59e0b;
-  flex-shrink: 0;
-  margin-top: 1px;
+    color: #f59e0b;
+    flex-shrink: 0;
+    margin-top: 1px;
+}
+
+.study-away-row-warnings {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.study-away-actions {
+    position: sticky;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 16px;
+    padding-top: 12px;
+    background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0),
+        color-mix(in oklab, var(--card) 96%, transparent) 28%
+    );
+}
+
+.study-away-action-btn {
+    border-radius: 10px;
+    padding: 9px 14px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.15s;
+}
+
+.study-away-action-btn--secondary {
+    border: 1px solid var(--border);
+    color: var(--muted-foreground);
+    background: var(--card);
+}
+
+.study-away-action-btn--secondary:hover {
+    color: var(--foreground);
+    border-color: color-mix(in oklab, var(--primary) 25%, var(--border));
+}
+
+.study-away-action-btn--secondary:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.study-away-action-btn--primary {
+    border: 1px solid color-mix(in oklab, var(--primary) 45%, transparent);
+    color: var(--primary-foreground);
+    background: var(--primary);
+}
+
+.study-away-action-btn--primary:hover {
+    opacity: 0.92;
 }
 
 .study-away-notes {
-  margin: 0 16px 16px;
-  padding: 12px;
-  border-radius: 10px;
-  border: 1px solid var(--border);
-  background: color-mix(in oklab, var(--card) 85%, transparent);
-  overflow-y: auto;
+    padding: 14px;
+    border-radius: 14px;
+    border: 1px solid var(--border);
+    background: color-mix(in oklab, var(--card) 92%, transparent);
+}
+
+.study-away-notes + .study-away-notes {
+    margin-top: 12px;
 }
 
 .study-away-notes h3 {
-  font-size: 11px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.7px;
-  color: var(--muted-foreground);
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.7px;
+    color: var(--muted-foreground);
 }
 
 .study-away-subheading {
-  margin-top: 12px;
+    margin-top: 14px;
 }
 
 .study-away-notes p {
-  margin-top: 8px;
-  font-size: 12px;
-  line-height: 1.5;
-  color: var(--foreground);
+    margin-top: 8px;
+    font-size: 12px;
+    line-height: 1.55;
+    color: var(--foreground);
 }
 
 .study-away-notes ul {
-  margin-top: 8px;
-  padding-left: 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
+    margin-top: 8px;
+    padding-left: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
 }
 
 .study-away-notes li {
-  font-size: 12px;
-  line-height: 1.45;
-  color: var(--muted-foreground);
+    font-size: 12px;
+    line-height: 1.5;
+    color: var(--muted-foreground);
 }
 
 .planner-study-away-badge {
-  display: inline-flex;
-  align-items: center;
-  border-radius: 999px;
-  border: 1px solid rgba(87, 6, 140, 0.38);
-  padding: 2px 8px;
-  font-size: 10px;
-  font-weight: 600;
-  color: #57068c;
-  background: rgba(87, 6, 140, 0.1);
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    border-radius: 999px;
+    border: 1px solid rgba(87, 6, 140, 0.38);
+    padding: 4px 10px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #57068c;
+    background: rgba(87, 6, 140, 0.1);
+}
+
+.planner-study-away-badge--warning {
+    border-color: color-mix(in oklab, #f59e0b 42%, var(--border));
+    background: color-mix(in oklab, #f59e0b 14%, transparent);
+    color: #b45309;
 }
 
 .planner-study-away-hint {
-  display: inline-flex;
-  align-items: center;
-  border-radius: 999px;
-  border: 1px dashed color-mix(in oklab, var(--muted-foreground) 38%, transparent);
-  padding: 2px 8px;
-  font-size: 10px;
-  color: var(--muted-foreground);
+    display: inline-flex;
+    align-items: center;
+    border-radius: 999px;
+    border: 1px dashed
+        color-mix(in oklab, var(--muted-foreground) 38%, transparent);
+    padding: 4px 10px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--muted-foreground);
+}
+
+.planner-study-away-card-action {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 10px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--muted-foreground);
+    border-radius: 10px;
+    padding: 7px 10px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+}
+
+.planner-study-away-card-action:hover {
+    color: var(--foreground);
+    border-color: color-mix(in oklab, var(--primary) 26%, var(--border));
+    background: color-mix(in oklab, var(--accent) 28%, transparent);
+}
+
+.planner-study-away-card-action:focus-visible {
+    outline: 2px solid color-mix(in oklab, var(--ring) 75%, transparent);
+    outline-offset: 2px;
+}
+
+@media (max-width: 900px) {
+    .study-away-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .study-away-sidebar {
+        border-left: none;
+        border-top: 1px solid var(--border);
+    }
+}
+
+@media (max-width: 640px) {
+    .study-away-modal {
+        max-height: 92vh;
+    }
+
+    .study-away-intro,
+    .study-away-main,
+    .study-away-sidebar {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .study-away-overview {
+        grid-template-columns: 1fr;
+    }
+
+    .study-away-semester-main {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .study-away-status {
+        width: fit-content;
+    }
+
+    .study-away-location-group {
+        width: 100%;
+    }
+
+    .study-away-location-group select {
+        min-width: 0;
+        width: 100%;
+    }
+
+    .study-away-actions {
+        flex-direction: column-reverse;
+        align-items: stretch;
+    }
+
+    .study-away-action-btn {
+        width: 100%;
+    }
 }
 
 /* ── Spinner ── */
 
 .spinner {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  border-style: solid;
-  border-width: 3px;
-  border-color: var(--border) var(--border) var(--border) var(--primary);
-  animation: spin 0.65s linear infinite;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border-style: solid;
+    border-width: 3px;
+    border-color: var(--border) var(--border) var(--border) var(--primary);
+    animation: spin 0.65s linear infinite;
 }
 
 @keyframes spin {
-  0%   { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 /* ── Plan loading ── */
 
 .plan-loading {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  min-height: 300px;
-  color: var(--muted-foreground);
-  font-size: 13px;
-  font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    min-height: 300px;
+    color: var(--muted-foreground);
+    font-size: 13px;
+    font-weight: 500;
 }
 
 /* ── Scrollbars ── */
 
 .scrollbar-hidden {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 }
 
 .scrollbar-hidden::-webkit-scrollbar {
-  width: 0;
-  height: 0;
+    width: 0;
+    height: 0;
 }
 
 /* ── Light mode polish ── */
 
-[data-theme='light'] body {
-  background:
-    radial-gradient(1080px 600px at -10% -25%, rgba(92, 112, 226, 0.16), transparent 58%),
-    radial-gradient(860px 520px at 110% -20%, rgba(70, 160, 255, 0.1), transparent 60%),
-    linear-gradient(180deg, #f5f7ff 0%, #eef3fb 100%);
-  background-attachment: fixed;
+[data-theme="light"] body {
+    background:
+        radial-gradient(
+            1080px 600px at -10% -25%,
+            rgba(92, 112, 226, 0.16),
+            transparent 58%
+        ),
+        radial-gradient(
+            860px 520px at 110% -20%,
+            rgba(70, 160, 255, 0.1),
+            transparent 60%
+        ),
+        linear-gradient(180deg, #f5f7ff 0%, #eef3fb 100%);
+    background-attachment: fixed;
 }
 
-[data-theme='light'] .planner-shell {
-  background: transparent;
+[data-theme="light"] .planner-shell {
+    background: transparent;
 }
 
-[data-theme='light'] .planner-header {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.82), rgba(248, 251, 255, 0.76));
-  border-bottom-color: rgba(68, 87, 122, 0.24);
-  box-shadow: 0 10px 22px -28px rgba(20, 35, 63, 0.45);
-  backdrop-filter: blur(8px);
+[data-theme="light"] .planner-header {
+    background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.82),
+        rgba(248, 251, 255, 0.76)
+    );
+    border-bottom-color: rgba(68, 87, 122, 0.24);
+    box-shadow: 0 10px 22px -28px rgba(20, 35, 63, 0.45);
+    backdrop-filter: blur(8px);
 }
 
-[data-theme='light'] .planner-board,
-[data-theme='light'] .planner-sidebar {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.7), rgba(248, 251, 255, 0.82));
+[data-theme="light"] .planner-board,
+[data-theme="light"] .planner-sidebar {
+    background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.7),
+        rgba(248, 251, 255, 0.82)
+    );
 }
 
-[data-theme='light'] .planner-requirements-header {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(245, 249, 255, 0.86));
+[data-theme="light"] .planner-requirements-header {
+    background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.9),
+        rgba(245, 249, 255, 0.86)
+    );
 }
 
-[data-theme='light'] .planner-year-heading {
-  background: linear-gradient(90deg, rgba(87, 6, 140, 0.09), rgba(87, 6, 140, 0.02));
-  border-bottom-color: rgba(75, 92, 126, 0.2);
+[data-theme="light"] .planner-year-heading {
+    background: linear-gradient(
+        90deg,
+        rgba(87, 6, 140, 0.09),
+        rgba(87, 6, 140, 0.02)
+    );
+    border-bottom-color: rgba(75, 92, 126, 0.2);
 }
 
-[data-theme='light'] .planner-semester-row {
-  box-shadow: inset 0 -1px 0 rgba(75, 92, 126, 0.1);
+[data-theme="light"] .planner-semester-row {
+    box-shadow: inset 0 -1px 0 rgba(75, 92, 126, 0.1);
 }
 
-[data-theme='light'] .planner-semester-toggle:hover {
-  background: linear-gradient(90deg, rgba(87, 6, 140, 0.07), rgba(87, 6, 140, 0.016));
+[data-theme="light"] .planner-semester-toggle:hover {
+    background: linear-gradient(
+        90deg,
+        rgba(87, 6, 140, 0.07),
+        rgba(87, 6, 140, 0.016)
+    );
 }
 
-[data-theme='light'] .planner-semester-empty,
-[data-theme='light'] .planner-semester-add {
-  background: rgba(251, 253, 255, 0.92);
-  border-color: rgba(79, 96, 128, 0.2);
+[data-theme="light"] .planner-semester-empty,
+[data-theme="light"] .planner-semester-add {
+    background: rgba(251, 253, 255, 0.92);
+    border-color: rgba(79, 96, 128, 0.2);
 }
 
-[data-theme='light'] .planner-course-card {
-  background: rgba(255, 255, 255, 0.94);
-  border-color: rgba(74, 92, 126, 0.22);
-  box-shadow: 0 12px 24px -24px rgba(20, 35, 64, 0.5);
+[data-theme="light"] .planner-course-card {
+    background: rgba(255, 255, 255, 0.94);
+    border-color: rgba(74, 92, 126, 0.22);
+    box-shadow: 0 12px 24px -24px rgba(20, 35, 64, 0.5);
 }
 
-[data-theme='light'] .planner-course-card:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 15px 28px -22px rgba(20, 35, 64, 0.46);
+[data-theme="light"] .planner-course-card:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 15px 28px -22px rgba(20, 35, 64, 0.46);
 }
 
-[data-theme='light'] .auth-shell {
-  background:
-    radial-gradient(940px 540px at -12% -22%, rgba(96, 115, 228, 0.15), transparent 60%),
-    radial-gradient(760px 450px at 115% -25%, rgba(64, 168, 255, 0.1), transparent 58%),
-    linear-gradient(180deg, #f5f7ff 0%, #eef3fb 100%);
+[data-theme="light"] .auth-shell {
+    background:
+        radial-gradient(
+            940px 540px at -12% -22%,
+            rgba(96, 115, 228, 0.15),
+            transparent 60%
+        ),
+        radial-gradient(
+            760px 450px at 115% -25%,
+            rgba(64, 168, 255, 0.1),
+            transparent 58%
+        ),
+        linear-gradient(180deg, #f5f7ff 0%, #eef3fb 100%);
 }
 
-[data-theme='light'] .auth-pane {
-  background: transparent;
+[data-theme="light"] .auth-pane {
+    background: transparent;
 }
 
-[data-theme='light'] .auth-card {
-  padding: 0;
-  border: none;
-  border-radius: 0;
-  background: transparent;
-  backdrop-filter: none;
-  box-shadow: none;
+[data-theme="light"] .auth-card {
+    padding: 0;
+    border: none;
+    border-radius: 0;
+    background: transparent;
+    backdrop-filter: none;
+    box-shadow: none;
 }
 
-[data-theme='light'] .auth-google-btn {
-  background: rgba(255, 255, 255, 0.94);
-  border-color: rgba(76, 93, 125, 0.24);
-  box-shadow: 0 14px 22px -24px rgba(20, 35, 63, 0.48);
+[data-theme="light"] .auth-google-btn {
+    background: rgba(255, 255, 255, 0.94);
+    border-color: rgba(76, 93, 125, 0.24);
+    box-shadow: 0 14px 22px -24px rgba(20, 35, 63, 0.48);
 }
 
-[data-theme='light'] .auth-google-btn:hover {
-  background: rgba(255, 255, 255, 1);
-  border-color: rgba(67, 84, 116, 0.36);
+[data-theme="light"] .auth-google-btn:hover {
+    background: rgba(255, 255, 255, 1);
+    border-color: rgba(67, 84, 116, 0.36);
 }
 
-[data-theme='light'] .auth-info {
-  background: rgba(246, 250, 255, 0.86);
-  border-color: rgba(77, 96, 128, 0.2);
+[data-theme="light"] .auth-info {
+    background: rgba(246, 250, 255, 0.86);
+    border-color: rgba(77, 96, 128, 0.2);
 }
 
 /* ── Reduced motion ── */
 
 @media (prefers-reduced-motion: reduce) {
-  .spinner {
-    animation-duration: 1.5s;
-  }
+    .spinner {
+        animation-duration: 1.5s;
+    }
 }
 
 /* ── Responsive ── */
 
 @media (max-width: 1024px) {
-  .modal {
-    max-width: min(560px, 96vw);
-    max-height: 88vh;
-  }
+    .modal {
+        max-width: min(560px, 96vw);
+        max-height: 88vh;
+    }
 
-  .modal-course-list {
-    max-height: 52vh;
-  }
+    .modal-course-list {
+        max-height: 52vh;
+    }
 }
 
 @media (max-width: 768px) {
-  .modal-overlay {
-    align-items: flex-end;
-    padding: 12px;
-  }
+    .modal-overlay {
+        align-items: flex-end;
+        padding: 12px;
+    }
 
-  .modal {
-    max-height: 90vh;
-    border-radius: 14px;
-  }
+    .modal {
+        max-height: 90vh;
+        border-radius: 14px;
+    }
 
-  .modal-header {
-    padding: 14px;
-  }
+    .modal-header {
+        padding: 14px;
+    }
 
-  .modal-header h2 {
-    font-size: 14px;
-  }
+    .modal-header h2 {
+        font-size: 14px;
+    }
 
-  .modal-tab {
-    font-size: 12px;
-    padding: 10px 8px;
-  }
+    .modal-tab {
+        font-size: 12px;
+        padding: 10px 8px;
+    }
 
-  .modal-filters {
-    padding: 10px 12px;
-  }
+    .modal-filters {
+        padding: 10px 12px;
+    }
 
-  .modal-filter-row {
-    flex-direction: column;
-  }
+    .modal-filter-row {
+        flex-direction: column;
+    }
 
-  .modal-search,
-  .modal-filter-row select,
-  .custom-field input,
-  .custom-field select {
-    min-height: 40px;
-    font-size: 13px;
-  }
+    .modal-search,
+    .modal-filter-row select,
+    .custom-field input,
+    .custom-field select {
+        min-height: 40px;
+        font-size: 13px;
+    }
 
-  .modal-course-item {
-    padding: 9px 12px;
-  }
+    .modal-course-item {
+        padding: 9px 12px;
+    }
 
-  .modal-custom {
-    padding: 16px 12px;
-  }
+    .modal-custom {
+        padding: 16px 12px;
+    }
 
-  .custom-field-row {
-    flex-direction: column;
-    gap: 8px;
-  }
+    .custom-field-row {
+        flex-direction: column;
+        gap: 8px;
+    }
 
-  .study-away-progress {
-    flex-direction: column;
-    align-items: flex-start;
-  }
+    .study-away-progress {
+        flex-direction: column;
+        align-items: flex-start;
+    }
 
-  .study-away-location-group {
-    width: 100%;
-  }
+    .study-away-location-group {
+        width: 100%;
+    }
 
-  .study-away-location-group select {
-    width: 100%;
-  }
+    .study-away-location-group select {
+        width: 100%;
+    }
 
-  .study-away-actions {
-    flex-direction: column-reverse;
-    align-items: stretch;
-  }
+    .study-away-actions {
+        flex-direction: column-reverse;
+        align-items: stretch;
+    }
 
-  .study-away-action-btn {
-    width: 100%;
-  }
+    .study-away-action-btn {
+        width: 100%;
+    }
 
-  .btn-primary {
-    width: 100%;
-    min-height: 42px;
-  }
+    .btn-primary {
+        width: 100%;
+        min-height: 42px;
+    }
 }
