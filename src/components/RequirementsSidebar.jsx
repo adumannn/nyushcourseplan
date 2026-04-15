@@ -139,9 +139,17 @@ function buildRequirements(requirementProgress, allPlannedCourses, major) {
     coreCompleted += progress.creditsTaken;
     coreRequired += progress.creditsNeeded;
     for (const sub of req.subcourses || []) {
+      // For subcourses with a specific code, check if that course is planned.
+      // For generic subcourses (code: null), check if any planned course
+      // fulfills this requirement via requirementIds.
+      const completed = sub.code
+        ? isSubcourseCompleted(sub)
+        : planned.some(
+            (c) => c.requirementIds && c.requirementIds.includes(id)
+          );
       coreItems.push({
         name: sub.name,
-        completed: isSubcourseCompleted(sub),
+        completed,
         credits: typeof sub.credits === 'number' ? sub.credits : undefined,
       });
     }

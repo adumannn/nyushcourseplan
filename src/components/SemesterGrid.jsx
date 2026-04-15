@@ -1,12 +1,12 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { SEMESTERS } from '../data/courses';
-import SemesterCard from './SemesterCard';
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { SEMESTERS } from "../data/courses";
+import SemesterCard from "./SemesterCard";
 
 const years = [
-  { id: 'y1', label: 'Y1', name: 'Freshman', semesters: ['Fall', 'Spring'] },
-  { id: 'y2', label: 'Y2', name: 'Sophomore', semesters: ['Fall', 'Spring'] },
-  { id: 'y3', label: 'Y3', name: 'Junior', semesters: ['Fall', 'Spring'] },
-  { id: 'y4', label: 'Y4', name: 'Senior', semesters: ['Fall', 'Spring'] },
+  { id: "y1", label: "Y1", name: "Freshman", semesters: ["Fall", "Spring"] },
+  { id: "y2", label: "Y2", name: "Sophomore", semesters: ["Fall", "Spring"] },
+  { id: "y3", label: "Y3", name: "Junior", semesters: ["Fall", "Spring"] },
+  { id: "y4", label: "Y4", name: "Senior", semesters: ["Fall", "Spring"] },
 ];
 
 function createEmptyDragState() {
@@ -22,12 +22,17 @@ function readDragPayload(event) {
   const transfer = event.dataTransfer;
   if (!transfer) return null;
 
-  const raw = transfer.getData('application/x-nyu-course') || transfer.getData('text/plain');
+  const raw =
+    transfer.getData("application/x-nyu-course") ||
+    transfer.getData("text/plain");
   if (!raw) return null;
 
   try {
     const data = JSON.parse(raw);
-    if (typeof data?.courseId === 'string' && typeof data?.fromSemester === 'string') {
+    if (
+      typeof data?.courseId === "string" &&
+      typeof data?.fromSemester === "string"
+    ) {
       return { courseId: data.courseId, fromSemester: data.fromSemester };
     }
     return null;
@@ -43,6 +48,8 @@ export default function SemesterGrid({
   onAddClick,
   onMoveCourse,
   studyAway,
+  studyAwayWarnings = {},
+  onOpenStudyAway,
   prereqWarnings = {},
   onCourseClick,
 }) {
@@ -51,20 +58,25 @@ export default function SemesterGrid({
   const dragMetaRef = useRef({ courseId: null, fromSemester: null });
 
   useEffect(() => {
-    if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') {
+    if (
+      typeof window === "undefined" ||
+      typeof window.matchMedia !== "function"
+    ) {
       return undefined;
     }
 
-    const mediaQuery = window.matchMedia('(pointer: coarse)');
+    const mediaQuery = window.matchMedia("(pointer: coarse)");
     const updateTouchMode = () => {
-      setIsTouchDevice(mediaQuery.matches || window.navigator.maxTouchPoints > 0);
+      setIsTouchDevice(
+        mediaQuery.matches || window.navigator.maxTouchPoints > 0,
+      );
     };
 
     updateTouchMode();
 
-    if (typeof mediaQuery.addEventListener === 'function') {
-      mediaQuery.addEventListener('change', updateTouchMode);
-      return () => mediaQuery.removeEventListener('change', updateTouchMode);
+    if (typeof mediaQuery.addEventListener === "function") {
+      mediaQuery.addEventListener("change", updateTouchMode);
+      return () => mediaQuery.removeEventListener("change", updateTouchMode);
     }
 
     mediaQuery.addListener(updateTouchMode);
@@ -76,28 +88,31 @@ export default function SemesterGrid({
     setDragState(createEmptyDragState());
   }, []);
 
-  const getActiveDragMeta = useCallback((event) => {
-    const payload = readDragPayload(event);
-    if (payload?.courseId && payload?.fromSemester) {
-      return payload;
-    }
+  const getActiveDragMeta = useCallback(
+    (event) => {
+      const payload = readDragPayload(event);
+      if (payload?.courseId && payload?.fromSemester) {
+        return payload;
+      }
 
-    if (dragMetaRef.current.courseId && dragMetaRef.current.fromSemester) {
-      return {
-        courseId: dragMetaRef.current.courseId,
-        fromSemester: dragMetaRef.current.fromSemester,
-      };
-    }
+      if (dragMetaRef.current.courseId && dragMetaRef.current.fromSemester) {
+        return {
+          courseId: dragMetaRef.current.courseId,
+          fromSemester: dragMetaRef.current.fromSemester,
+        };
+      }
 
-    if (dragState.courseId && dragState.fromSemester) {
-      return {
-        courseId: dragState.courseId,
-        fromSemester: dragState.fromSemester,
-      };
-    }
+      if (dragState.courseId && dragState.fromSemester) {
+        return {
+          courseId: dragState.courseId,
+          fromSemester: dragState.fromSemester,
+        };
+      }
 
-    return null;
-  }, [dragState.courseId, dragState.fromSemester]);
+      return null;
+    },
+    [dragState.courseId, dragState.fromSemester],
+  );
 
   const selectedCourseName = useMemo(() => {
     if (!dragState.courseId) return null;
@@ -106,15 +121,15 @@ export default function SemesterGrid({
       .flat()
       .find((course) => course.id === dragState.courseId);
 
-    return selectedCourse?.name || 'Selected course';
+    return selectedCourse?.name || "Selected course";
   }, [dragState.courseId, plan]);
 
   const handleCourseDragStart = useCallback((event, fromSemester, courseId) => {
     const payload = JSON.stringify({ courseId, fromSemester });
     if (event.dataTransfer) {
-      event.dataTransfer.effectAllowed = 'move';
-      event.dataTransfer.setData('application/x-nyu-course', payload);
-      event.dataTransfer.setData('text/plain', payload);
+      event.dataTransfer.effectAllowed = "move";
+      event.dataTransfer.setData("application/x-nyu-course", payload);
+      event.dataTransfer.setData("text/plain", payload);
     }
 
     dragMetaRef.current = { courseId, fromSemester };
@@ -127,46 +142,52 @@ export default function SemesterGrid({
     });
   }, []);
 
-  const handleDragOverIndex = useCallback((event, semesterId, index) => {
-    const payload = getActiveDragMeta(event);
-    if (!payload?.courseId || !payload?.fromSemester) return;
+  const handleDragOverIndex = useCallback(
+    (event, semesterId, index) => {
+      const payload = getActiveDragMeta(event);
+      if (!payload?.courseId || !payload?.fromSemester) return;
 
-    event.preventDefault();
-    if (event.dataTransfer) event.dataTransfer.dropEffect = 'move';
+      event.preventDefault();
+      if (event.dataTransfer) event.dataTransfer.dropEffect = "move";
 
-    setDragState(prev => {
-      const nextCourseId = prev.courseId || payload.courseId;
-      const nextFromSemester = prev.fromSemester || payload.fromSemester;
+      setDragState((prev) => {
+        const nextCourseId = prev.courseId || payload.courseId;
+        const nextFromSemester = prev.fromSemester || payload.fromSemester;
 
-      if (
-        prev.courseId === nextCourseId
-        && prev.fromSemester === nextFromSemester
-        && prev.overSemester === semesterId
-        && prev.overIndex === index
-      ) {
-        return prev;
+        if (
+          prev.courseId === nextCourseId &&
+          prev.fromSemester === nextFromSemester &&
+          prev.overSemester === semesterId &&
+          prev.overIndex === index
+        ) {
+          return prev;
+        }
+
+        return {
+          courseId: nextCourseId,
+          fromSemester: nextFromSemester,
+          overSemester: semesterId,
+          overIndex: index,
+        };
+      });
+    },
+    [getActiveDragMeta],
+  );
+
+  const handleDropAtIndex = useCallback(
+    (event, semesterId, index) => {
+      event.preventDefault();
+
+      const payload = getActiveDragMeta(event);
+
+      if (payload?.courseId && payload?.fromSemester) {
+        onMoveCourse(payload.fromSemester, semesterId, payload.courseId, index);
       }
 
-      return {
-        courseId: nextCourseId,
-        fromSemester: nextFromSemester,
-        overSemester: semesterId,
-        overIndex: index,
-      };
-    });
-  }, [getActiveDragMeta]);
-
-  const handleDropAtIndex = useCallback((event, semesterId, index) => {
-    event.preventDefault();
-
-    const payload = getActiveDragMeta(event);
-
-    if (payload?.courseId && payload?.fromSemester) {
-      onMoveCourse(payload.fromSemester, semesterId, payload.courseId, index);
-    }
-
-    resetDragState();
-  }, [getActiveDragMeta, onMoveCourse, resetDragState]);
+      resetDragState();
+    },
+    [getActiveDragMeta, onMoveCourse, resetDragState],
+  );
 
   const handleCourseDragEnd = useCallback(() => {
     resetDragState();
@@ -181,37 +202,66 @@ export default function SemesterGrid({
     });
   }, []);
 
-  const commitMobileMove = useCallback((toSemester, index) => {
-    if (!dragState.courseId || !dragState.fromSemester) return false;
+  const commitMobileMove = useCallback(
+    (toSemester, index) => {
+      if (!dragState.courseId || !dragState.fromSemester) return false;
 
-    onMoveCourse(dragState.fromSemester, toSemester, dragState.courseId, index);
-    resetDragState();
-    return true;
-  }, [dragState.courseId, dragState.fromSemester, onMoveCourse, resetDragState]);
-
-  const handleCourseTap = useCallback((semesterId, courseId, index) => {
-    if (!isTouchDevice) return;
-
-    if (!dragState.courseId || !dragState.fromSemester) {
-      activateMobileMove(semesterId, courseId);
-      return;
-    }
-
-    if (dragState.courseId === courseId && dragState.fromSemester === semesterId) {
+      onMoveCourse(
+        dragState.fromSemester,
+        toSemester,
+        dragState.courseId,
+        index,
+      );
       resetDragState();
-      return;
-    }
+      return true;
+    },
+    [dragState.courseId, dragState.fromSemester, onMoveCourse, resetDragState],
+  );
 
-    commitMobileMove(semesterId, index);
-  }, [activateMobileMove, commitMobileMove, dragState.courseId, dragState.fromSemester, isTouchDevice, resetDragState]);
+  const handleCourseTap = useCallback(
+    (semesterId, courseId, index) => {
+      if (!isTouchDevice) return;
 
-  const handleTapAtIndex = useCallback((semesterId, index) => {
-    if (!isTouchDevice || !dragState.courseId || !dragState.fromSemester) {
-      return false;
-    }
+      if (!dragState.courseId || !dragState.fromSemester) {
+        activateMobileMove(semesterId, courseId);
+        return;
+      }
 
-    return commitMobileMove(semesterId, index);
-  }, [commitMobileMove, dragState.courseId, dragState.fromSemester, isTouchDevice]);
+      if (
+        dragState.courseId === courseId &&
+        dragState.fromSemester === semesterId
+      ) {
+        resetDragState();
+        return;
+      }
+
+      commitMobileMove(semesterId, index);
+    },
+    [
+      activateMobileMove,
+      commitMobileMove,
+      dragState.courseId,
+      dragState.fromSemester,
+      isTouchDevice,
+      resetDragState,
+    ],
+  );
+
+  const handleTapAtIndex = useCallback(
+    (semesterId, index) => {
+      if (!isTouchDevice || !dragState.courseId || !dragState.fromSemester) {
+        return false;
+      }
+
+      return commitMobileMove(semesterId, index);
+    },
+    [
+      commitMobileMove,
+      dragState.courseId,
+      dragState.fromSemester,
+      isTouchDevice,
+    ],
+  );
 
   return (
     <div className="planner-grid">
@@ -229,8 +279,11 @@ export default function SemesterGrid({
           </button>
         </div>
       )}
-      {years.map(year => (
-        <div key={year.id} className="planner-year-block border-b border-border/40 last:border-b-0">
+      {years.map((year) => (
+        <div
+          key={year.id}
+          className="planner-year-block border-b border-border/40 last:border-b-0"
+        >
           <div className="planner-year-heading px-4 sm:px-6 py-2.5 sm:py-3 bg-accent/5 border-b border-border/30">
             <div className="flex items-center gap-3">
               <span className="text-xs tracking-wider uppercase text-muted-foreground font-medium">
@@ -241,9 +294,9 @@ export default function SemesterGrid({
               </span>
             </div>
           </div>
-          {year.semesters.map(semester => {
+          {year.semesters.map((semester) => {
             const semesterKey = `Y${year.id.slice(1)}-${semester}`;
-            const semObj = SEMESTERS.find(s => s.id === semesterKey);
+            const semObj = SEMESTERS.find((s) => s.id === semesterKey);
             if (!semObj) return null;
             return (
               <SemesterCard
@@ -254,8 +307,13 @@ export default function SemesterGrid({
                 courses={plan[semesterKey] || []}
                 credits={semesterCredits[semesterKey] || 0}
                 isStudyAway={studyAway.selectedSemesters.includes(semesterKey)}
-                studyAwayLocation={studyAway.locations[semesterKey] || ''}
+                studyAwayLocation={studyAway.locations[semesterKey] || ""}
                 studyAwayEligible={Boolean(semObj.studyAwayEligible)}
+                studyAwayIssueCount={
+                  (studyAwayWarnings[semesterKey] || []).length
+                }
+                studyAwayWarnings={studyAwayWarnings[semesterKey] || []}
+                onOpenStudyAway={onOpenStudyAway}
                 onRemoveCourse={onRemoveCourse}
                 onAddClick={onAddClick}
                 onCourseDragStart={handleCourseDragStart}

@@ -1,37 +1,41 @@
-import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
+import { useState, useEffect, useCallback, useMemo, useRef } from "react";
 import {
   SEMESTERS,
   COURSE_CATALOG,
   CORE_REQUIREMENTS,
   MAJOR_REQUIREMENTS,
   STUDY_AWAY,
-} from '../data/courses';
-import { localStoragePlan, supabasePlan } from '../lib/planStorage';
+} from "../data/courses";
+import { localStoragePlan, supabasePlan } from "../lib/planStorage";
 
-const EAP_COURSE_IDS = new Set(['ENGL-SHU-100', 'ENGL-SHU-101']);
+const EAP_COURSE_IDS = new Set(["ENGL-SHU-100", "ENGL-SHU-101"]);
 
 function createEmptyPlan() {
   const plan = {};
-  SEMESTERS.forEach(s => { plan[s.id] = []; });
+  SEMESTERS.forEach((s) => {
+    plan[s.id] = [];
+  });
   return plan;
 }
 
 // Safety net: remove duplicate courses within each semester
 // Also refreshes course metadata from the catalog (e.g. category renames)
 function deduplicatePlan(plan) {
-  const catalogById = new Map(COURSE_CATALOG.map(c => [c.id, c]));
+  const catalogById = new Map(COURSE_CATALOG.map((c) => [c.id, c]));
   const result = {};
   for (const [semId, courses] of Object.entries(plan)) {
     const seen = new Set();
-    result[semId] = (courses || []).filter(c => {
-      if (seen.has(c.id)) return false;
-      seen.add(c.id);
-      return true;
-    }).map(c => {
-      const catalogCourse = catalogById.get(c.id);
-      if (catalogCourse) return { ...c, category: catalogCourse.category };
-      return c;
-    });
+    result[semId] = (courses || [])
+      .filter((c) => {
+        if (seen.has(c.id)) return false;
+        seen.add(c.id);
+        return true;
+      })
+      .map((c) => {
+        const catalogCourse = catalogById.get(c.id);
+        if (catalogCourse) return { ...c, category: catalogCourse.category };
+        return c;
+      });
   }
   return result;
 }
@@ -47,19 +51,26 @@ function normalizeStudyAway(studyAway) {
   const defaults = createDefaultStudyAway();
   const semesterSet = new Set(STUDY_AWAY.eligibleSemesters || []);
   const locationSet = new Set(STUDY_AWAY.locations || []);
+  const semesterOrder = STUDY_AWAY.eligibleSemesters || [];
 
-  if (!studyAway || typeof studyAway !== 'object') {
+  if (!studyAway || typeof studyAway !== "object") {
     return defaults;
   }
 
   const selectedSemesters = Array.from(
-    new Set((studyAway.selectedSemesters || []).filter((semesterId) => semesterSet.has(semesterId)))
-  );
+    new Set(
+      (studyAway.selectedSemesters || []).filter((semesterId) =>
+        semesterSet.has(semesterId),
+      ),
+    ),
+  )
+    .sort((a, b) => semesterOrder.indexOf(a) - semesterOrder.indexOf(b))
+    .slice(0, STUDY_AWAY.maxSemesters);
 
   const locations = {};
   selectedSemesters.forEach((semesterId) => {
     const value = studyAway.locations?.[semesterId];
-    locations[semesterId] = locationSet.has(value) ? value : '';
+    locations[semesterId] = locationSet.has(value) ? value : "";
   });
 
   return {
@@ -69,14 +80,15 @@ function normalizeStudyAway(studyAway) {
 }
 
 function getUserProfileName(user) {
-  const rawName = user?.user_metadata?.full_name || user?.user_metadata?.name || '';
-  return typeof rawName === 'string' ? rawName.trim() : '';
+  const rawName =
+    user?.user_metadata?.full_name || user?.user_metadata?.name || "";
+  return typeof rawName === "string" ? rawName.trim() : "";
 }
 
 export default function usePlanner(user) {
   const [plan, setPlan] = useState(createEmptyPlan);
-  const [major, setMajor] = useState('cs');
-  const [studentName, setStudentName] = useState('');
+  const [major, setMajor] = useState("cs");
+  const [studentName, setStudentName] = useState("");
   const [studyAway, setStudyAway] = useState(createDefaultStudyAway);
   const [planId, setPlanId] = useState(null);
   const [loaded, setLoaded] = useState(false);
@@ -99,7 +111,8 @@ export default function usePlanner(user) {
         const data = await supabasePlan.load(user.id, profileStudentName);
         if (cancelled) return;
         if (data) {
-          const storedStudentName = typeof data.studentName === 'string' ? data.studentName.trim() : '';
+          const storedStudentName =
+            typeof data.studentName === "string" ? data.studentName.trim() : "";
           const resolvedStudentName = storedStudentName || profileStudentName;
           const didAutoFillName = !storedStudentName && !!profileStudentName;
 
@@ -117,8 +130,8 @@ export default function usePlanner(user) {
         if (cancelled) return;
         if (data) {
           setPlan(deduplicatePlan(data.plan || createEmptyPlan()));
-          setMajor(data.major || 'cs');
-          setStudentName(data.studentName || '');
+          setMajor(data.major || "cs");
+          setStudentName(data.studentName || "");
           setStudyAway(normalizeStudyAway(data.studyAway));
         }
         setPlanId(null);
@@ -130,7 +143,9 @@ export default function usePlanner(user) {
     }
 
     load();
-    return () => { cancelled = true; };
+    return () => {
+      cancelled = true;
+    };
   }, [user, isCloud]);
 
   // Debounced save on changes
@@ -170,63 +185,70 @@ export default function usePlanner(user) {
   }, [plan, major, studentName, studyAway, isCloud, planId, user, loaded]);
 
   const addCourse = useCallback((semesterId, course) => {
-    setPlan(prev => {
+    setPlan((prev) => {
       const semCourses = prev[semesterId] || [];
-      if (semCourses.some(c => c.id === course.id)) return prev;
+      if (semCourses.some((c) => c.id === course.id)) return prev;
       return { ...prev, [semesterId]: [...semCourses, course] };
     });
   }, []);
 
   const removeCourse = useCallback((semesterId, courseId) => {
-    setPlan(prev => ({
+    setPlan((prev) => ({
       ...prev,
-      [semesterId]: (prev[semesterId] || []).filter(c => c.id !== courseId),
+      [semesterId]: (prev[semesterId] || []).filter((c) => c.id !== courseId),
     }));
   }, []);
 
-  const moveCourse = useCallback((fromSemester, toSemester, courseId, targetIndex = null) => {
-    setPlan(prev => {
-      const fromCourses = [...(prev[fromSemester] || [])];
-      const sourceIndex = fromCourses.findIndex(c => c.id === courseId);
-      if (sourceIndex === -1) return prev;
+  const moveCourse = useCallback(
+    (fromSemester, toSemester, courseId, targetIndex = null) => {
+      setPlan((prev) => {
+        const fromCourses = [...(prev[fromSemester] || [])];
+        const sourceIndex = fromCourses.findIndex((c) => c.id === courseId);
+        if (sourceIndex === -1) return prev;
 
-      const [course] = fromCourses.splice(sourceIndex, 1);
+        const [course] = fromCourses.splice(sourceIndex, 1);
 
-      if (fromSemester === toSemester) {
-        let insertionIndex =
-          targetIndex == null ? fromCourses.length : Math.max(0, Math.min(targetIndex, prev[fromSemester].length));
+        if (fromSemester === toSemester) {
+          let insertionIndex =
+            targetIndex == null
+              ? fromCourses.length
+              : Math.max(0, Math.min(targetIndex, prev[fromSemester].length));
 
-        // Adjust insertion index because we already removed the dragged item.
-        if (sourceIndex < insertionIndex) {
-          insertionIndex -= 1;
+          // Adjust insertion index because we already removed the dragged item.
+          if (sourceIndex < insertionIndex) {
+            insertionIndex -= 1;
+          }
+
+          if (insertionIndex === sourceIndex) return prev;
+
+          fromCourses.splice(insertionIndex, 0, course);
+          return {
+            ...prev,
+            [fromSemester]: fromCourses,
+          };
         }
 
-        if (insertionIndex === sourceIndex) return prev;
+        const toCourses = [...(prev[toSemester] || [])];
+        if (toCourses.some((c) => c.id === courseId)) return prev;
 
-        fromCourses.splice(insertionIndex, 0, course);
+        const insertionIndex =
+          targetIndex == null
+            ? toCourses.length
+            : Math.max(0, Math.min(targetIndex, toCourses.length));
+        toCourses.splice(insertionIndex, 0, course);
+
         return {
           ...prev,
           [fromSemester]: fromCourses,
+          [toSemester]: toCourses,
         };
-      }
-
-      const toCourses = [...(prev[toSemester] || [])];
-      if (toCourses.some(c => c.id === courseId)) return prev;
-
-      const insertionIndex =
-        targetIndex == null ? toCourses.length : Math.max(0, Math.min(targetIndex, toCourses.length));
-      toCourses.splice(insertionIndex, 0, course);
-
-      return {
-        ...prev,
-        [fromSemester]: fromCourses,
-        [toSemester]: toCourses,
-      };
-    });
-  }, []);
+      });
+    },
+    [],
+  );
 
   const clearSemester = useCallback((semesterId) => {
-    setPlan(prev => ({ ...prev, [semesterId]: [] }));
+    setPlan((prev) => ({ ...prev, [semesterId]: [] }));
   }, []);
 
   const clearAll = useCallback(() => {
@@ -240,20 +262,33 @@ export default function usePlanner(user) {
 
     setStudyAway((prev) => {
       const selected = prev.selectedSemesters.includes(semesterId);
+
       if (selected) {
         const nextLocations = { ...prev.locations };
         delete nextLocations[semesterId];
         return {
-          selectedSemesters: prev.selectedSemesters.filter((id) => id !== semesterId),
+          selectedSemesters: prev.selectedSemesters.filter(
+            (id) => id !== semesterId,
+          ),
           locations: nextLocations,
         };
       }
 
+      if (prev.selectedSemesters.length >= STUDY_AWAY.maxSemesters) {
+        return prev;
+      }
+
+      const selectedSemesters = [...prev.selectedSemesters, semesterId].sort(
+        (a, b) =>
+          STUDY_AWAY.eligibleSemesters.indexOf(a) -
+          STUDY_AWAY.eligibleSemesters.indexOf(b),
+      );
+
       return {
-        selectedSemesters: [...prev.selectedSemesters, semesterId],
+        selectedSemesters,
         locations: {
           ...prev.locations,
-          [semesterId]: prev.locations[semesterId] || '',
+          [semesterId]: prev.locations[semesterId] || "",
         },
       };
     });
@@ -263,14 +298,41 @@ export default function usePlanner(user) {
     if (!STUDY_AWAY.eligibleSemesters.includes(semesterId)) {
       return;
     }
-    if (!STUDY_AWAY.locations.includes(location)) {
+    if (location !== "" && !STUDY_AWAY.locations.includes(location)) {
       return;
     }
 
     setStudyAway((prev) => {
-      const selectedSemesters = prev.selectedSemesters.includes(semesterId)
+      const alreadySelected = prev.selectedSemesters.includes(semesterId);
+
+      if (location === "") {
+        if (!alreadySelected) {
+          return prev;
+        }
+
+        return {
+          selectedSemesters: prev.selectedSemesters,
+          locations: {
+            ...prev.locations,
+            [semesterId]: "",
+          },
+        };
+      }
+
+      if (
+        !alreadySelected &&
+        prev.selectedSemesters.length >= STUDY_AWAY.maxSemesters
+      ) {
+        return prev;
+      }
+
+      const selectedSemesters = alreadySelected
         ? prev.selectedSemesters
-        : [...prev.selectedSemesters, semesterId];
+        : [...prev.selectedSemesters, semesterId].sort(
+            (a, b) =>
+              STUDY_AWAY.eligibleSemesters.indexOf(a) -
+              STUDY_AWAY.eligibleSemesters.indexOf(b),
+          );
 
       return {
         selectedSemesters,
@@ -284,45 +346,52 @@ export default function usePlanner(user) {
 
   const studyAwayWarnings = useMemo(() => {
     const warnings = [];
-    const isCsDsMajor = major === 'cs' || major === 'ds';
+    const isCsDsMajor = major === "cs" || major === "ds";
 
     if (studyAway.selectedSemesters.length > STUDY_AWAY.maxSemesters) {
       warnings.push({
-        id: 'too-many-study-away-semesters',
+        id: "too-many-study-away-semesters",
         message: `You selected ${studyAway.selectedSemesters.length} study-away semesters. The recommended maximum is ${STUDY_AWAY.maxSemesters}.`,
       });
     }
 
     studyAway.selectedSemesters.forEach((semesterId) => {
-      const semesterLabel = SEMESTERS.find((semester) => semester.id === semesterId)?.label || semesterId;
-      const selectedLocation = studyAway.locations[semesterId] || '';
+      const semesterLabel =
+        SEMESTERS.find((semester) => semester.id === semesterId)?.label ||
+        semesterId;
+      const selectedLocation = studyAway.locations[semesterId] || "";
 
       if (!selectedLocation) {
         warnings.push({
           id: `missing-location-${semesterId}`,
+          semesterId,
           message: `${semesterLabel}: choose a study-away site for this semester.`,
         });
       }
 
       if (
-        semesterId === 'Y2-Spring'
-        && (selectedLocation === 'New York' || selectedLocation === 'Abu Dhabi')
+        semesterId === "Y2-Spring" &&
+        (selectedLocation === "New York" || selectedLocation === "Abu Dhabi")
       ) {
         warnings.push({
           id: `site-restriction-${semesterId}`,
+          semesterId,
           message: `${semesterLabel}: New York and Abu Dhabi are not available during sophomore spring.`,
         });
       }
 
       if (!isCsDsMajor) return;
 
-      const majorCourseCount = (plan[semesterId] || [])
-        .filter((course) => course.category === 'major-required' || course.category === 'major-elective')
-        .length;
+      const majorCourseCount = (plan[semesterId] || []).filter(
+        (course) =>
+          course.category === "major-required" ||
+          course.category === "major-elective",
+      ).length;
 
       if (majorCourseCount > STUDY_AWAY.maxMajorCoursesPerSemester) {
         warnings.push({
           id: `major-overload-${semesterId}`,
+          semesterId,
           message: `${semesterLabel}: ${majorCourseCount} major courses planned. Recommended maximum during study away is ${STUDY_AWAY.maxMajorCoursesPerSemester} for CS/DS.`,
         });
       }
@@ -341,7 +410,7 @@ export default function usePlanner(user) {
 
   const semesterCredits = useMemo(() => {
     const credits = {};
-    SEMESTERS.forEach(s => {
+    SEMESTERS.forEach((s) => {
       credits[s.id] = (plan[s.id] || []).reduce((sum, c) => sum + c.credits, 0);
     });
     return credits;
@@ -350,11 +419,13 @@ export default function usePlanner(user) {
   const requirementProgress = useMemo(() => {
     const progress = {};
 
-    CORE_REQUIREMENTS.forEach(req => {
+    CORE_REQUIREMENTS.forEach((req) => {
       const courses = allPlannedCourses.filter((course) => {
-        if (req.id === 'social-and-cultural-foundations' && course.id === 'WRIT-SHU-201') {
-          return true;
+        // Use requirementIds when available for precise matching
+        if (course.requirementIds && course.requirementIds.length > 0) {
+          return course.requirementIds.includes(req.id);
         }
+        // Fall back to category matching only for courses without requirementIds
         return course.category === req.category;
       });
       const creditsTaken = courses.reduce((sum, c) => sum + c.credits, 0);
@@ -368,7 +439,9 @@ export default function usePlanner(user) {
 
     const languageProgress = progress.language;
     if (languageProgress) {
-      const languageCourses = allPlannedCourses.filter((course) => course.category === 'language');
+      const languageCourses = allPlannedCourses.filter(
+        (course) => course.category === "language",
+      );
       const isEapCourse = (course) => EAP_COURSE_IDS.has(course.id);
 
       const eapCredits = languageCourses
@@ -379,43 +452,54 @@ export default function usePlanner(user) {
         .filter((course) => !isEapCourse(course))
         .reduce((sum, course) => sum + course.credits, 0);
 
-      const chineseCreditsNeeded = typeof languageProgress.chineseCreditsNeeded === 'number'
-        ? languageProgress.chineseCreditsNeeded
-        : 8;
-      const internationalCreditsMin = typeof languageProgress.internationalCreditsMin === 'number'
-        ? languageProgress.internationalCreditsMin
-        : 0;
-      const internationalCreditsMax = typeof languageProgress.internationalCreditsMax === 'number'
-        ? languageProgress.internationalCreditsMax
-        : 16;
+      const chineseCreditsNeeded =
+        typeof languageProgress.chineseCreditsNeeded === "number"
+          ? languageProgress.chineseCreditsNeeded
+          : 8;
+      const internationalCreditsMin =
+        typeof languageProgress.internationalCreditsMin === "number"
+          ? languageProgress.internationalCreditsMin
+          : 0;
+      const internationalCreditsMax =
+        typeof languageProgress.internationalCreditsMax === "number"
+          ? languageProgress.internationalCreditsMax
+          : 16;
 
-      const track = eapCredits > 0 ? 'chinese' : 'international';
-      const creditsTaken = track === 'chinese'
-        ? Math.min(eapCredits, chineseCreditsNeeded)
-        : Math.min(nonEapCredits, internationalCreditsMax);
+      const track = eapCredits > 0 ? "chinese" : "international";
+      const creditsTaken =
+        track === "chinese"
+          ? Math.min(eapCredits, chineseCreditsNeeded)
+          : Math.min(nonEapCredits, internationalCreditsMax);
 
       progress.language = {
         ...languageProgress,
-        coursesTaken: track === 'chinese'
-          ? languageCourses.filter(isEapCourse).length
-          : languageCourses.filter((course) => !isEapCourse(course)).length,
+        coursesTaken:
+          track === "chinese"
+            ? languageCourses.filter(isEapCourse).length
+            : languageCourses.filter((course) => !isEapCourse(course)).length,
         creditsTaken,
-        creditsNeeded: track === 'chinese' ? chineseCreditsNeeded : internationalCreditsMin,
-        maxCreditsNeeded: track === 'chinese' ? chineseCreditsNeeded : internationalCreditsMax,
-        creditsNeededLabel: track === 'chinese'
-          ? `${chineseCreditsNeeded}`
-          : `${internationalCreditsMin}-${internationalCreditsMax}`,
+        creditsNeeded:
+          track === "chinese" ? chineseCreditsNeeded : internationalCreditsMin,
+        maxCreditsNeeded:
+          track === "chinese" ? chineseCreditsNeeded : internationalCreditsMax,
+        creditsNeededLabel:
+          track === "chinese"
+            ? `${chineseCreditsNeeded}`
+            : `${internationalCreditsMin}-${internationalCreditsMax}`,
         track,
-        fulfilled: track === 'chinese'
-          ? creditsTaken >= chineseCreditsNeeded
-          : creditsTaken >= internationalCreditsMin,
+        fulfilled:
+          track === "chinese"
+            ? creditsTaken >= chineseCreditsNeeded
+            : creditsTaken >= internationalCreditsMin,
       };
     }
 
     const majorReq = MAJOR_REQUIREMENTS[major] || MAJOR_REQUIREMENTS.custom;
-    const majorCourses = allPlannedCourses.filter(c => c.category === 'major-required' || c.category === 'major-elective');
-    progress['major'] = {
-      id: 'major',
+    const majorCourses = allPlannedCourses.filter(
+      (c) => c.category === "major-required" || c.category === "major-elective",
+    );
+    progress["major"] = {
+      id: "major",
       label: majorReq.label,
       coursesNeeded: majorReq.coursesNeeded,
       creditsNeeded: majorReq.creditsNeeded,
@@ -424,10 +508,12 @@ export default function usePlanner(user) {
       fulfilled: majorCourses.length >= majorReq.coursesNeeded,
     };
 
-    const electiveCourses = allPlannedCourses.filter(c => c.category === 'elective');
-    progress['electives'] = {
-      id: 'electives',
-      label: 'Free Electives',
+    const electiveCourses = allPlannedCourses.filter(
+      (c) => c.category === "elective",
+    );
+    progress["electives"] = {
+      id: "electives",
+      label: "Free Electives",
       coursesTaken: electiveCourses.length,
       creditsTaken: electiveCourses.reduce((sum, c) => sum + c.credits, 0),
     };
@@ -435,14 +521,17 @@ export default function usePlanner(user) {
     return progress;
   }, [allPlannedCourses, major]);
 
-  const isCourseInPlan = useCallback((courseId) => {
-    return allPlannedCourses.some(c => c.id === courseId);
-  }, [allPlannedCourses]);
+  const isCourseInPlan = useCallback(
+    (courseId) => {
+      return allPlannedCourses.some((c) => c.id === courseId);
+    },
+    [allPlannedCourses],
+  );
 
   // Build a map of courseId → list of unmet prerequisite IDs
   // A prerequisite is "met" if it appears in a semester that comes before the course's semester
   const prereqWarnings = useMemo(() => {
-    const semesterOrder = SEMESTERS.map(s => s.id);
+    const semesterOrder = SEMESTERS.map((s) => s.id);
     const warnings = {};
 
     for (const [semId, courses] of Object.entries(plan)) {
@@ -450,14 +539,17 @@ export default function usePlanner(user) {
       // Collect all courseIds placed in earlier semesters
       const priorCourseIds = new Set();
       for (let i = 0; i < semIndex; i++) {
-        for (const c of (plan[semesterOrder[i]] || [])) {
+        for (const c of plan[semesterOrder[i]] || []) {
           priorCourseIds.add(c.id);
         }
       }
 
       for (const course of courses) {
-        if (!course.prerequisites || course.prerequisites.length === 0) continue;
-        const unmet = course.prerequisites.filter(preId => !priorCourseIds.has(preId));
+        if (!course.prerequisites || course.prerequisites.length === 0)
+          continue;
+        const unmet = course.prerequisites.filter(
+          (preId) => !priorCourseIds.has(preId),
+        );
         if (unmet.length > 0) {
           warnings[course.id] = unmet;
         }

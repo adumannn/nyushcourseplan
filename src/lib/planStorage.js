@@ -1,47 +1,85 @@
-import { supabase } from './supabase';
-import { SEMESTERS, COURSE_CATALOG } from '../data/courses';
+import { supabase } from "./supabase";
+import { SEMESTERS, COURSE_CATALOG } from "../data/courses";
 
 function requireSupabase() {
-  if (!supabase) throw new Error('Supabase is not configured');
+  if (!supabase) throw new Error("Supabase is not configured");
   return supabase;
 }
 
-const STORAGE_KEY = 'nyu-shanghai-course-planner';
+const STORAGE_KEY = "nyu-shanghai-course-planner";
 
 function normalizeStudentName(studentName) {
-  return typeof studentName === 'string' ? studentName.trim() : '';
+  return typeof studentName === "string" ? studentName.trim() : "";
 }
 
 function buildPlanName(studentName) {
   const cleanedName = normalizeStudentName(studentName);
-  return cleanedName ? `${cleanedName}'s Plan` : 'My Plan';
+  return cleanedName ? `${cleanedName}'s Plan` : "My Plan";
 }
 
 function createEmptyPlan() {
   const plan = {};
-  SEMESTERS.forEach(s => { plan[s.id] = []; });
+  SEMESTERS.forEach((s) => {
+    plan[s.id] = [];
+  });
   return plan;
 }
 
-// Look up full course object from catalog by ID
+// Look up full course object from catalog by ID.
+// Fall back to a stored snapshot so plans remain usable while the runtime
+// catalog source transitions away from the local hardcoded dataset.
 function resolveCourse(row) {
-  const catalogCourse = COURSE_CATALOG.find(c => c.id === row.course_id);
+  const catalogCourse = COURSE_CATALOG.find((c) => c.id === row.course_id);
   if (catalogCourse) return catalogCourse;
+
+  if (row.course_snapshot && typeof row.course_snapshot === "object") {
+    const snapshot = row.course_snapshot;
+    const selectedCredits = Number.isFinite(row.selected_credits)
+      ? row.selected_credits
+      : snapshot.credits;
+
+    return {
+      ...snapshot,
+      credits: Number.isFinite(selectedCredits) ? selectedCredits : 4,
+    };
+  }
+
   // Custom course — reconstruct from stored fields
   return {
     id: row.course_id,
     code: row.course_id,
-    name: row.custom_name || 'Custom Course',
+    name: row.custom_name || "Custom Course",
     credits: row.custom_credits || 4,
-    category: row.custom_category || 'elective',
-    department: 'Custom',
+    category: row.custom_category || "elective",
+    department: "Custom",
+  };
+}
+
+function buildCourseSnapshot(course) {
+  if (!course || typeof course !== "object") return null;
+
+  return {
+    id: course.id,
+    code: course.code,
+    name: course.name,
+    credits: course.credits,
+    category: course.category,
+    department: course.department,
+    requirementIds: Array.isArray(course.requirementIds)
+      ? course.requirementIds
+      : [],
+    prerequisites: Array.isArray(course.prerequisites)
+      ? course.prerequisites
+      : [],
+    prerequisiteNote: course.prerequisiteNote || "",
+    majors: Array.isArray(course.majors) ? course.majors : [],
   };
 }
 
 // ─── localStorage implementation ───
 
 function normalizeStudyAwayPayload(studyAway) {
-  if (!studyAway || typeof studyAway !== 'object') {
+  if (!studyAway || typeof studyAway !== "object") {
     return {
       selectedSemesters: [],
       locations: {},
@@ -52,10 +90,29 @@ function normalizeStudyAwayPayload(studyAway) {
     selectedSemesters: Array.isArray(studyAway.selectedSemesters)
       ? studyAway.selectedSemesters
       : [],
-    locations: studyAway.locations && typeof studyAway.locations === 'object'
-      ? studyAway.locations
-      : {},
+    locations:
+      studyAway.locations && typeof studyAway.locations === "object"
+        ? studyAway.locations
+        : {},
   };
+}
+
+// Re-resolve stored course objects against the current catalog so that
+// newly-added fields (e.g. requirementIds) are picked up even for plans
+// saved before those fields existed.
+function refreshPlanCourses(plan) {
+  if (!plan || typeof plan !== "object") return plan;
+  const refreshed = {};
+  for (const [semId, courses] of Object.entries(plan)) {
+    refreshed[semId] = (courses || []).map((stored) => {
+      if (stored.id && !stored.id.startsWith("custom-")) {
+        const catalogCourse = COURSE_CATALOG.find((c) => c.id === stored.id);
+        if (catalogCourse) return catalogCourse;
+      }
+      return stored;
+    });
+  }
+  return refreshed;
 }
 
 export const localStoragePlan = {
@@ -66,25 +123,29 @@ export const localStoragePlan = {
         const parsed = JSON.parse(data);
         return {
           ...parsed,
+          plan: refreshPlanCourses(parsed.plan),
           studyAway: normalizeStudyAwayPayload(parsed.studyAway),
         };
       }
     } catch (e) {
-      console.error('Failed to load from localStorage:', e);
+      console.error("Failed to load from localStorage:", e);
     }
     return null;
   },
 
   async save({ plan, major, studentName, studyAway }) {
     try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify({
-        plan,
-        major,
-        studentName,
-        studyAway: normalizeStudyAwayPayload(studyAway),
-      }));
+      localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify({
+          plan,
+          major,
+          studentName,
+          studyAway: normalizeStudyAwayPayload(studyAway),
+        }),
+      );
     } catch (e) {
-      console.error('Failed to save to localStorage:', e);
+      console.error("Failed to save to localStorage:", e);
     }
   },
 
@@ -96,23 +157,25 @@ export const localStoragePlan = {
 // ─── Supabase implementation ───
 
 export const supabasePlan = {
-  async ensurePlan(userId, profileStudentName = '') {
+  async ensurePlan(userId, profileStudentName = "") {
     // Get existing plan or create one
     const db = requireSupabase();
     const normalizedProfileName = normalizeStudentName(profileStudentName);
     const { data: existing } = await db
-      .from('plans')
-      .select('id, name, major, student_name, study_away_semesters, study_away_locations')
-      .eq('user_id', userId)
-      .order('created_at', { ascending: true })
+      .from("plans")
+      .select(
+        "id, name, major, student_name, study_away_semesters, study_away_locations",
+      )
+      .eq("user_id", userId)
+      .order("created_at", { ascending: true })
       .limit(1)
       .single();
 
     if (existing) {
       // Backfill legacy default plan name once; preserve any custom plan names.
       if (
-        normalizedProfileName
-        && (!existing.name || existing.name === 'My Plan')
+        normalizedProfileName &&
+        (!existing.name || existing.name === "My Plan")
       ) {
         const updatePayload = {
           name: buildPlanName(normalizedProfileName),
@@ -123,9 +186,9 @@ export const supabasePlan = {
         }
 
         const { error: updateError } = await db
-          .from('plans')
+          .from("plans")
           .update(updatePayload)
-          .eq('id', existing.id);
+          .eq("id", existing.id);
 
         if (updateError) throw updateError;
 
@@ -139,35 +202,37 @@ export const supabasePlan = {
     }
 
     const { data: created, error } = await db
-      .from('plans')
+      .from("plans")
       .insert({
         user_id: userId,
         name: buildPlanName(normalizedProfileName),
-        student_name: normalizedProfileName || '',
+        student_name: normalizedProfileName || "",
       })
-      .select('id, name, major, student_name, study_away_semesters, study_away_locations')
+      .select(
+        "id, name, major, student_name, study_away_semesters, study_away_locations",
+      )
       .single();
 
     if (error) throw error;
     return created;
   },
 
-  async load(userId, profileStudentName = '') {
+  async load(userId, profileStudentName = "") {
     try {
       const planRow = await this.ensurePlan(userId, profileStudentName);
       const planId = planRow.id;
 
       const db = requireSupabase();
       const { data: courses, error } = await db
-        .from('plan_courses')
-        .select('*')
-        .eq('plan_id', planId)
-        .order('position', { ascending: true });
+        .from("plan_courses")
+        .select("*")
+        .eq("plan_id", planId)
+        .order("position", { ascending: true });
 
       if (error) throw error;
 
       const plan = createEmptyPlan();
-      (courses || []).forEach(row => {
+      (courses || []).forEach((row) => {
         if (plan[row.semester_id]) {
           plan[row.semester_id].push(resolveCourse(row));
         }
@@ -176,15 +241,15 @@ export const supabasePlan = {
       return {
         planId,
         plan,
-        major: planRow.major || 'cs',
-        studentName: planRow.student_name || '',
+        major: planRow.major || "cs",
+        studentName: planRow.student_name || "",
         studyAway: normalizeStudyAwayPayload({
           selectedSemesters: planRow.study_away_semesters || [],
           locations: planRow.study_away_locations || {},
         }),
       };
     } catch (e) {
-      console.error('Failed to load from Supabase:', e);
+      console.error("Failed to load from Supabase:", e);
       return null;
     }
   },
@@ -195,30 +260,31 @@ export const supabasePlan = {
       const normalizedStudyAway = normalizeStudyAwayPayload(studyAway);
       // Update plan metadata
       await db
-        .from('plans')
+        .from("plans")
         .update({
           major,
           student_name: studentName,
           study_away_semesters: normalizedStudyAway.selectedSemesters,
           study_away_locations: normalizedStudyAway.locations,
         })
-        .eq('id', planId);
+        .eq("id", planId);
 
       // Replace all courses: delete then insert
-      await db
-        .from('plan_courses')
-        .delete()
-        .eq('plan_id', planId);
+      await db.from("plan_courses").delete().eq("plan_id", planId);
 
       const rows = [];
       for (const [semesterId, courses] of Object.entries(plan)) {
         courses.forEach((course, i) => {
-          const isCustom = course.id.startsWith('custom-');
+          const isCustom = course.id.startsWith("custom-");
           rows.push({
             plan_id: planId,
             semester_id: semesterId,
             course_id: course.id,
             position: i,
+            selected_credits: Number.isFinite(course.credits)
+              ? course.credits
+              : null,
+            course_snapshot: isCustom ? null : buildCourseSnapshot(course),
             custom_name: isCustom ? course.name : null,
             custom_credits: isCustom ? course.credits : null,
             custom_category: isCustom ? course.category : null,
@@ -227,13 +293,11 @@ export const supabasePlan = {
       }
 
       if (rows.length > 0) {
-        const { error } = await db
-          .from('plan_courses')
-          .insert(rows);
+        const { error } = await db.from("plan_courses").insert(rows);
         if (error) throw error;
       }
     } catch (e) {
-      console.error('Failed to save to Supabase:', e);
+      console.error("Failed to save to Supabase:", e);
     }
   },
 
@@ -242,7 +306,7 @@ export const supabasePlan = {
     if (!localData || !localData.plan) return false;
 
     // Check if there are any courses in the local plan
-    const hasCourses = Object.values(localData.plan).some(s => s.length > 0);
+    const hasCourses = Object.values(localData.plan).some((s) => s.length > 0);
     if (!hasCourses) return false;
 
     const localStudentName = normalizeStudentName(localData.studentName);
@@ -251,22 +315,22 @@ export const supabasePlan = {
     // Update plan metadata from local
     const db = requireSupabase();
     await db
-      .from('plans')
+      .from("plans")
       .update({
         name: buildPlanName(localStudentName),
-        major: localData.major || 'cs',
-        student_name: localData.studentName || '',
+        major: localData.major || "cs",
+        student_name: localData.studentName || "",
         study_away_semesters: localData.studyAway?.selectedSemesters || [],
         study_away_locations: localData.studyAway?.locations || {},
       })
-      .eq('id', planRow.id);
+      .eq("id", planRow.id);
 
     // Import courses
     await this.save(userId, {
       planId: planRow.id,
       plan: localData.plan,
-      major: localData.major || 'cs',
-      studentName: localData.studentName || '',
+      major: localData.major || "cs",
+      studentName: localData.studentName || "",
       studyAway: normalizeStudyAwayPayload(localData.studyAway),
     });
 

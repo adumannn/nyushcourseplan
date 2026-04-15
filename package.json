@@ -7,7 +7,9 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "validate:catalog": "node scripts/validate-scraped-data.mjs",
+    "import:catalog": "node scripts/import-scraped-to-supabase.mjs"
   },
   "dependencies": {
     "@fontsource-variable/geist": "^5.2.8",
