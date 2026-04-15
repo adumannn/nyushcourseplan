@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { ChevronDown, Plus } from 'lucide-react';
+import { ChevronDown, Plus, AlertTriangle } from 'lucide-react';
+import { MAX_CREDITS_PER_SEMESTER, MIN_CREDITS_PER_SEMESTER } from '../data/courses';
 import CourseCard from './CourseCard';
 
 export default function SemesterCard({
@@ -8,6 +9,9 @@ export default function SemesterCard({
   semester,
   courses,
   credits,
+  isStudyAway = false,
+  studyAwayLocation = '',
+  studyAwayEligible = false,
   onRemoveCourse,
   onAddClick,
   onCourseDragStart,
@@ -22,6 +26,14 @@ export default function SemesterCard({
   const [isExpanded, setIsExpanded] = useState(true);
   const isDragActive = Boolean(dragState?.courseId);
   const isTouchMoveActive = isTouchDevice && isDragActive;
+
+  const creditWarning = courses.length > 0
+    ? credits > MAX_CREDITS_PER_SEMESTER
+      ? `Over ${MAX_CREDITS_PER_SEMESTER} credit limit`
+      : credits < MIN_CREDITS_PER_SEMESTER
+        ? `Under ${MIN_CREDITS_PER_SEMESTER} credit minimum`
+        : null
+    : null;
 
   const handleAddOrMove = (index) => {
     if (isTouchMoveActive && onTapAtIndex?.(semesterKey, index)) {
@@ -63,10 +75,23 @@ export default function SemesterCard({
             {year}
           </span>
           <span className="text-sm text-muted-foreground/60">{semester}</span>
+          {isStudyAway ? (
+            <span className="planner-study-away-badge">
+              Study Away: {studyAwayLocation || 'Site pending'}
+            </span>
+          ) : studyAwayEligible ? (
+            <span className="planner-study-away-hint">Eligible</span>
+          ) : null}
         </div>
         <div className="flex items-center gap-2 sm:gap-4">
+          {creditWarning && (
+            <div className="flex items-center gap-1 text-amber-500" title={creditWarning}>
+              <AlertTriangle className="h-3.5 w-3.5" />
+              <span className="text-[11px] hidden sm:inline">{creditWarning}</span>
+            </div>
+          )}
           <div className="flex items-baseline gap-1.5">
-            <span className="text-sm tabular-nums">{credits}</span>
+            <span className={`text-sm tabular-nums ${creditWarning ? 'text-amber-500' : ''}`}>{credits}</span>
             <span className="text-xs text-muted-foreground">credits</span>
           </div>
           <ChevronDown

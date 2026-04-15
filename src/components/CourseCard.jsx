@@ -1,4 +1,4 @@
-import { GripVertical, X } from 'lucide-react';
+import { GripVertical, X, Info } from 'lucide-react';
 import { CATEGORIES } from '../data/courses';
 
 function withAlpha(color, alpha) {
@@ -84,6 +84,12 @@ export default function CourseCard({
               />
               {course.category}
             </span>
+          </div>
+        )}
+        {course.prerequisiteNote && (
+          <div className="mt-1.5 flex items-start gap-1.5 text-[11px] text-muted-foreground/70">
+            <Info className="h-3 w-3 shrink-0 mt-0.5" />
+            <span>Prereq: {course.prerequisiteNote}</span>
           </div>
         )}
       </div>
