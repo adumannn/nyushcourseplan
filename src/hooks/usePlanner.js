@@ -1,5 +1,11 @@
 import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
-import { SEMESTERS, COURSE_CATALOG, CORE_REQUIREMENTS, MAJOR_REQUIREMENTS } from '../data/courses';
+import {
+  SEMESTERS,
+  COURSE_CATALOG,
+  CORE_REQUIREMENTS,
+  MAJOR_REQUIREMENTS,
+  STUDY_AWAY,
+} from '../data/courses';
 import { localStoragePlan, supabasePlan } from '../lib/planStorage';
 
 function createEmptyPlan() {
@@ -9,7 +15,9 @@ function createEmptyPlan() {
 }
 
 // Safety net: remove duplicate courses within each semester
+// Also refreshes course metadata from the catalog (e.g. category renames)
 function deduplicatePlan(plan) {
+  const catalogById = new Map(COURSE_CATALOG.map(c => [c.id, c]));
   const result = {};
   for (const [semId, courses] of Object.entries(plan)) {
     const seen = new Set();
@@ -17,15 +25,52 @@ function deduplicatePlan(plan) {
       if (seen.has(c.id)) return false;
       seen.add(c.id);
       return true;
+    }).map(c => {
+      const catalogCourse = catalogById.get(c.id);
+      if (catalogCourse) return { ...c, category: catalogCourse.category };
+      return c;
     });
   }
   return result;
+}
+
+function createDefaultStudyAway() {
+  return {
+    selectedSemesters: [],
+    locations: {},
+  };
+}
+
+function normalizeStudyAway(studyAway) {
+  const defaults = createDefaultStudyAway();
+  const semesterSet = new Set(STUDY_AWAY.eligibleSemesters || []);
+  const locationSet = new Set(STUDY_AWAY.locations || []);
+
+  if (!studyAway || typeof studyAway !== 'object') {
+    return defaults;
+  }
+
+  const selectedSemesters = Array.from(
+    new Set((studyAway.selectedSemesters || []).filter((semesterId) => semesterSet.has(semesterId)))
+  );
+
+  const locations = {};
+  selectedSemesters.forEach((semesterId) => {
+    const value = studyAway.locations?.[semesterId];
+    locations[semesterId] = locationSet.has(value) ? value : 'Shanghai';
+  });
+
+  return {
+    selectedSemesters,
+    locations,
+  };
 }
 
 export default function usePlanner(user) {
   const [plan, setPlan] = useState(createEmptyPlan);
   const [major, setMajor] = useState('cs');
   const [studentName, setStudentName] = useState('');
+  const [studyAway, setStudyAway] = useState(createDefaultStudyAway);
   const [planId, setPlanId] = useState(null);
   const [loaded, setLoaded] = useState(false);
   const saveTimeout = useRef(null);
@@ -48,6 +93,7 @@ export default function usePlanner(user) {
           setPlan(deduplicatePlan(data.plan));
           setMajor(data.major);
           setStudentName(data.studentName);
+          setStudyAway(normalizeStudyAway(data.studyAway));
           setPlanId(data.planId);
         }
       } else {
@@ -57,6 +103,7 @@ export default function usePlanner(user) {
           setPlan(deduplicatePlan(data.plan || createEmptyPlan()));
           setMajor(data.major || 'cs');
           setStudentName(data.studentName || '');
+          setStudyAway(normalizeStudyAway(data.studyAway));
         }
         setPlanId(null);
       }
@@ -88,17 +135,23 @@ export default function usePlanner(user) {
 
       try {
         if (isCloud && planId) {
-          await supabasePlan.save(user.id, { planId, plan, major, studentName });
+          await supabasePlan.save(user.id, {
+            planId,
+            plan,
+            major,
+            studentName,
+            studyAway,
+          });
         }
         // Always write to localStorage as cache
-        localStoragePlan.save({ plan, major, studentName });
+        localStoragePlan.save({ plan, major, studentName, studyAway });
       } finally {
         saveInProgress.current = false;
       }
     }, 500);
 
     return () => clearTimeout(saveTimeout.current);
-  }, [plan, major, studentName, isCloud, planId, user, loaded]);
+  }, [plan, major, studentName, studyAway, isCloud, planId, user, loaded]);
 
   const addCourse = useCallback((semesterId, course) => {
     setPlan(prev => {
@@ -164,6 +217,79 @@ export default function usePlanner(user) {
     setPlan(createEmptyPlan());
   }, []);
 
+  const toggleStudyAwaySemester = useCallback((semesterId) => {
+    if (!STUDY_AWAY.eligibleSemesters.includes(semesterId)) {
+      return;
+    }
+
+    setStudyAway((prev) => {
+      const selected = prev.selectedSemesters.includes(semesterId);
+      if (selected) {
+        const nextLocations = { ...prev.locations };
+        delete nextLocations[semesterId];
+        return {
+          selectedSemesters: prev.selectedSemesters.filter((id) => id !== semesterId),
+          locations: nextLocations,
+        };
+      }
+
+      return {
+        selectedSemesters: [...prev.selectedSemesters, semesterId],
+        locations: {
+          ...prev.locations,
+          [semesterId]: prev.locations[semesterId] || 'Shanghai',
+        },
+      };
+    });
+  }, []);
+
+  const setStudyAwayLocation = useCallback((semesterId, location) => {
+    if (!STUDY_AWAY.eligibleSemesters.includes(semesterId)) {
+      return;
+    }
+    if (!STUDY_AWAY.locations.includes(location)) {
+      return;
+    }
+
+    setStudyAway((prev) => {
+      if (!prev.selectedSemesters.includes(semesterId)) {
+        return prev;
+      }
+
+      return {
+        ...prev,
+        locations: {
+          ...prev.locations,
+          [semesterId]: location,
+        },
+      };
+    });
+  }, []);
+
+  const studyAwayWarnings = useMemo(() => {
+    const warnings = [];
+
+    if (studyAway.selectedSemesters.length > STUDY_AWAY.maxSemesters) {
+      warnings.push({
+        id: 'too-many-study-away-semesters',
+        message: `You selected ${studyAway.selectedSemesters.length} study-away semesters. The recommended maximum is ${STUDY_AWAY.maxSemesters}.`,
+      });
+    }
+
+    studyAway.selectedSemesters.forEach((semesterId) => {
+      const majorCourseCount = (plan[semesterId] || []).filter((course) => course.category === 'major-required' || course.category === 'major-elective').length;
+      if (majorCourseCount > STUDY_AWAY.maxMajorCoursesPerSemester) {
+        const semesterLabel = SEMESTERS.find((semester) => semester.id === semesterId)?.label || semesterId;
+        warnings.push({
+          id: `major-overload-${semesterId}`,
+          message: `${semesterLabel}: ${majorCourseCount} major courses planned. Recommended maximum during study away is ${STUDY_AWAY.maxMajorCoursesPerSemester}.`,
+        });
+      }
+    });
+
+    return warnings;
+  }, [plan, studyAway]);
+
   const allPlannedCourses = useMemo(() => {
     return Object.values(plan).flat();
   }, [plan]);
@@ -194,7 +320,7 @@ export default function usePlanner(user) {
     });
 
     const majorReq = MAJOR_REQUIREMENTS[major] || MAJOR_REQUIREMENTS.custom;
-    const majorCourses = allPlannedCourses.filter(c => c.category === 'major');
+    const majorCourses = allPlannedCourses.filter(c => c.category === 'major-required' || c.category === 'major-elective');
     progress['major'] = {
       id: 'major',
       label: majorReq.label,
@@ -226,6 +352,10 @@ export default function usePlanner(user) {
     setMajor,
     studentName,
     setStudentName,
+    studyAway,
+    toggleStudyAwaySemester,
+    setStudyAwayLocation,
+    studyAwayWarnings,
     addCourse,
     removeCourse,
     moveCourse,
