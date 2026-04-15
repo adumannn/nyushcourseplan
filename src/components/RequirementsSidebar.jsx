@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import { ChevronDown, CheckCircle2, Circle, ChevronsLeft, ChevronsRight } from 'lucide-react';
-import { CORE_REQUIREMENTS, MAJOR_REQUIREMENTS, GRADUATION_CREDITS, CATEGORIES } from '../data/courses';
+import { CORE_REQUIREMENTS, GRADUATION_CREDITS, CATEGORIES, getMajorRequirement } from '../data/courses';
 
 function RequirementCategory({ requirement }) {
   const hasItems = Array.isArray(requirement.items) && requirement.items.length > 0;
@@ -163,7 +163,7 @@ function buildRequirements(requirementProgress, allPlannedCourses, major) {
   });
 
   // Major
-  const majorDef = MAJOR_REQUIREMENTS[major] || MAJOR_REQUIREMENTS[Object.keys(MAJOR_REQUIREMENTS)[0]];
+  const majorDef = getMajorRequirement(major);
   const majorProgress = requirementProgress['major'];
   if (majorDef && majorProgress) {
     const majorItems = [];
@@ -188,11 +188,20 @@ function buildRequirements(requirementProgress, allPlannedCourses, major) {
         completed: planned.some((c) => c.id === majorDef.capstone.courseId),
       });
     }
+    if (!majorDef.isConfigured) {
+      majorItems.push({
+        name: majorDef.notes,
+        completed: false,
+      });
+    }
 
     requirements.push({
       category: `Major — ${majorDef.label}`,
       completed: majorProgress.creditsTaken,
       required: majorProgress.creditsNeeded,
+      requiredLabel: majorDef.isConfigured ? majorProgress.creditsNeeded : 'TBD',
+      progressDenominator: majorDef.isConfigured ? majorProgress.creditsNeeded : 1,
+      fulfilled: majorDef.isConfigured ? majorProgress.fulfilled : false,
       items: majorItems,
     });
   }
