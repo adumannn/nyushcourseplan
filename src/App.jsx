@@ -8,6 +8,7 @@ import SemesterGrid from './components/SemesterGrid';
 import RequirementsSidebar from './components/RequirementsSidebar';
 import CoursePicker from './components/CoursePicker';
 import StudyAwayPicker from './components/StudyAwayPicker';
+import CourseDetailModal from './components/CourseDetailModal';
 import AuthGate from './components/AuthGate';
 import './App.css';
 
@@ -31,12 +32,14 @@ function App() {
     requirementProgress,
     allPlannedCourses,
     isCourseInPlan,
+    prereqWarnings,
     loaded,
   } = usePlanner(user);
 
   const [pickerSemester, setPickerSemester] = useState(null);
   const [studyAwayPickerOpen, setStudyAwayPickerOpen] = useState(false);
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
+  const [detailCourse, setDetailCourse] = useState(null);
 
   // Auth gate — must sign in with Google
   if (authEnabled && !authLoading && !user) {
@@ -77,6 +80,8 @@ function App() {
               onAddClick={setPickerSemester}
               onMoveCourse={moveCourse}
               studyAway={studyAway}
+              prereqWarnings={prereqWarnings}
+              onCourseClick={setDetailCourse}
             />
           )}
         </div>
@@ -106,6 +111,14 @@ function App() {
           onClose={() => setPickerSemester(null)}
           isCourseInPlan={isCourseInPlan}
           major={major}
+        />
+      )}
+
+      {detailCourse && (
+        <CourseDetailModal
+          course={detailCourse}
+          prereqWarnings={prereqWarnings}
+          onClose={() => setDetailCourse(null)}
         />
       )}
 

@@ -66,6 +66,11 @@ function normalizeStudyAway(studyAway) {
   };
 }
 
+function getUserProfileName(user) {
+  const rawName = user?.user_metadata?.full_name || user?.user_metadata?.name || '';
+  return typeof rawName === 'string' ? rawName.trim() : '';
+}
+
 export default function usePlanner(user) {
   const [plan, setPlan] = useState(createEmptyPlan);
   const [major, setMajor] = useState('cs');
@@ -85,16 +90,25 @@ export default function usePlanner(user) {
 
     async function load() {
       setLoaded(false);
+      let shouldSkipInitialSave = true;
 
       if (isCloud) {
         const data = await supabasePlan.load(user.id);
         if (cancelled) return;
         if (data) {
+          const storedStudentName = typeof data.studentName === 'string' ? data.studentName.trim() : '';
+          const profileStudentName = getUserProfileName(user);
+          const resolvedStudentName = storedStudentName || profileStudentName;
+          const didAutoFillName = !storedStudentName && !!profileStudentName;
+
           setPlan(deduplicatePlan(data.plan));
           setMajor(data.major);
-          setStudentName(data.studentName);
+          setStudentName(resolvedStudentName);
           setStudyAway(normalizeStudyAway(data.studyAway));
           setPlanId(data.planId);
+
+          // Allow one save so the first cloud sign-in persists profile name into plans.student_name.
+          shouldSkipInitialSave = !didAutoFillName;
         }
       } else {
         const data = await localStoragePlan.load();
@@ -109,7 +123,7 @@ export default function usePlanner(user) {
       }
 
       // Don't save the data we just loaded back to the database
-      skipNextSave.current = true;
+      skipNextSave.current = shouldSkipInitialSave;
       setLoaded(true);
     }
 
@@ -371,6 +385,34 @@ export default function usePlanner(user) {
     return allPlannedCourses.some(c => c.id === courseId);
   }, [allPlannedCourses]);
 
+  // Build a map of courseId → list of unmet prerequisite IDs
+  // A prerequisite is "met" if it appears in a semester that comes before the course's semester
+  const prereqWarnings = useMemo(() => {
+    const semesterOrder = SEMESTERS.map(s => s.id);
+    const warnings = {};
+
+    for (const [semId, courses] of Object.entries(plan)) {
+      const semIndex = semesterOrder.indexOf(semId);
+      // Collect all courseIds placed in earlier semesters
+      const priorCourseIds = new Set();
+      for (let i = 0; i < semIndex; i++) {
+        for (const c of (plan[semesterOrder[i]] || [])) {
+          priorCourseIds.add(c.id);
+        }
+      }
+
+      for (const course of courses) {
+        if (!course.prerequisites || course.prerequisites.length === 0) continue;
+        const unmet = course.prerequisites.filter(preId => !priorCourseIds.has(preId));
+        if (unmet.length > 0) {
+          warnings[course.id] = unmet;
+        }
+      }
+    }
+
+    return warnings;
+  }, [plan]);
+
   return {
     plan,
     major,
@@ -391,6 +433,7 @@ export default function usePlanner(user) {
     requirementProgress,
     isCourseInPlan,
     allPlannedCourses,
+    prereqWarnings,
     loaded,
   };
 }
