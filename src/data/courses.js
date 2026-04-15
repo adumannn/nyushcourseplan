@@ -69,13 +69,34 @@ export const STUDY_AWAY = {
 };
 
 export const MAJORS = [
-  { id: 'cs', label: 'Computer Science' },
-  // ↓ Uncomment or add new majors here. Then define their requirements
-  //   in MAJOR_REQUIREMENTS and tag courses with majorRoles: { id: 'required'|'elective' }
-  // { id: 'ds',       label: 'Data Science' },
-  // { id: 'econ',     label: 'Economics' },
-  { id: 'business', label: 'Business and Finance' },
-  // { id: 'math',     label: 'Honors Mathematics' },
+  { id: 'cs', label: 'Computer Science (BS)' },
+  { id: 'business', label: 'Business and Finance (BS)' },
+  { id: 'business-marketing', label: 'Business and Marketing (BS)' },
+  { id: 'biology', label: 'Biology (BS)' },
+  { id: 'chemistry', label: 'Chemistry (BS)' },
+  {
+    id: 'computer-systems-engineering',
+    label: 'Computer Systems Engineering (BS)',
+  },
+  { id: 'data-science', label: 'Data Science (BS)' },
+  { id: 'economics', label: 'Economics (BA)' },
+  {
+    id: 'electrical-systems-engineering',
+    label: 'Electrical and Systems Engineering (BS)',
+  },
+  { id: 'global-china-studies', label: 'Global China Studies (BA)' },
+  { id: 'honors-mathematics', label: 'Honors Mathematics (BS)' },
+  { id: 'humanities', label: 'Humanities (BA)' },
+  { id: 'interactive-media-arts', label: 'Interactive Media Arts (BS)' },
+  {
+    id: 'interactive-media-business',
+    label: 'Interactive Media + Business (BS)',
+  },
+  { id: 'mathematics', label: 'Mathematics (BS)' },
+  { id: 'neural-science', label: 'Neural Science (BS)' },
+  { id: 'physics', label: 'Physics (BS)' },
+  { id: 'self-designed-honors', label: 'Self-Designed Honors (BA)' },
+  { id: 'social-science', label: 'Social Science (BA)' },
 ];
 
 
@@ -284,6 +305,40 @@ export const MAJOR_REQUIREMENTS = {
       'Non-Finance Electives must be from Accounting, Business Analytics, Management, Marketing, Operations, or Information Systems areas. Use custom courses for options not listed in the catalog.',
   },
 };
+
+const DEFAULT_MAJOR_REQUIREMENT = {
+  bulletin: 'AY 2025-26',
+  coursesNeeded: 0,
+  creditsNeeded: 0,
+  requiredCourses: [],
+  selectOneCourses: [],
+  capstone: null,
+  electivesNeeded: 0,
+  electiveCreditsNeeded: 0,
+  otherElectiveCredits: '',
+  notes:
+    'Detailed major requirement mapping is not configured in the planner yet.',
+};
+
+export function getMajorLabel(majorId) {
+  return MAJORS.find((major) => major.id === majorId)?.label || 'Selected Major';
+}
+
+export function getMajorRequirement(majorId) {
+  const configured = MAJOR_REQUIREMENTS[majorId];
+  if (configured) {
+    return {
+      ...configured,
+      isConfigured: true,
+    };
+  }
+
+  return {
+    ...DEFAULT_MAJOR_REQUIREMENT,
+    label: getMajorLabel(majorId),
+    isConfigured: false,
+  };
+}
 
 // ─── Course Catalog ───
 export const COURSE_CATALOG = [

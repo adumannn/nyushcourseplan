@@ -3,7 +3,7 @@ import {
   SEMESTERS,
   COURSE_CATALOG,
   CORE_REQUIREMENTS,
-  MAJOR_REQUIREMENTS,
+  getMajorRequirement,
   STUDY_AWAY,
 } from "../data/courses";
 import { localStoragePlan, supabasePlan } from "../lib/planStorage";
@@ -494,7 +494,7 @@ export default function usePlanner(user) {
       };
     }
 
-    const majorReq = MAJOR_REQUIREMENTS[major] || MAJOR_REQUIREMENTS.custom;
+    const majorReq = getMajorRequirement(major);
     const majorCourses = allPlannedCourses.filter(
       (c) => c.category === "major-required" || c.category === "major-elective",
     );
@@ -505,7 +505,9 @@ export default function usePlanner(user) {
       creditsNeeded: majorReq.creditsNeeded,
       coursesTaken: majorCourses.length,
       creditsTaken: majorCourses.reduce((sum, c) => sum + c.credits, 0),
-      fulfilled: majorCourses.length >= majorReq.coursesNeeded,
+      fulfilled: majorReq.isConfigured
+        ? majorCourses.length >= majorReq.coursesNeeded
+        : false,
     };
 
     const electiveCourses = allPlannedCourses.filter(
