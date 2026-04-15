@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo } from 'react';
 import { ChevronDown, CheckCircle2, Circle, ChevronsLeft, ChevronsRight } from 'lucide-react';
 import { CORE_REQUIREMENTS, MAJOR_REQUIREMENTS, GRADUATION_CREDITS, CATEGORIES } from '../data/courses';
 
@@ -6,18 +6,14 @@ function RequirementCategory({ requirement }) {
   const hasItems = Array.isArray(requirement.items) && requirement.items.length > 0;
   const [isExpanded, setIsExpanded] = useState(hasItems);
 
-  useEffect(() => {
-    if (!hasItems) {
-      setIsExpanded(false);
-    }
-  }, [hasItems]);
-
-  const percentage = Math.min(
-    (requirement.completed / requirement.required) * 100,
-    100
-  );
-
-  const isComplete = requirement.completed >= requirement.required;
+  const isComplete = typeof requirement.fulfilled === 'boolean'
+    ? requirement.fulfilled
+    : requirement.completed >= requirement.required;
+  const progressDenominator = requirement.progressDenominator ?? requirement.required;
+  const percentage = progressDenominator > 0
+    ? Math.min((requirement.completed / progressDenominator) * 100, 100)
+    : (isComplete ? 100 : 0);
+  const requiredLabel = requirement.requiredLabel ?? requirement.required;
 
   return (
     <div>
@@ -42,7 +38,7 @@ function RequirementCategory({ requirement }) {
             <div className="flex items-baseline gap-2">
               <span className="text-sm tabular-nums">{requirement.completed}</span>
               <span className="text-xs text-muted-foreground">
-                / {requirement.required} credits
+                / {requiredLabel} credits
               </span>
             </div>
           </div>
@@ -58,7 +54,7 @@ function RequirementCategory({ requirement }) {
             <div className="flex items-baseline gap-2">
               <span className="text-sm tabular-nums">{requirement.completed}</span>
               <span className="text-xs text-muted-foreground">
-                / {requirement.required} credits
+                / {requiredLabel} credits
               </span>
             </div>
           </div>
@@ -216,6 +212,9 @@ function buildRequirements(requirementProgress, allPlannedCourses, major) {
       category: 'Language',
       completed: langProgress.creditsTaken,
       required: langProgress.creditsNeeded,
+      requiredLabel: langProgress.creditsNeededLabel,
+      progressDenominator: langProgress.maxCreditsNeeded || langProgress.creditsNeeded,
+      fulfilled: langProgress.fulfilled,
     });
   }
 

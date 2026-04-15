@@ -346,6 +346,11 @@
   border-bottom: 1px solid var(--border);
 }
 
+.study-away-intro-content {
+  flex: 1;
+  min-width: 0;
+}
+
 .study-away-intro-icon {
   width: 28px;
   height: 28px;
@@ -369,6 +374,76 @@
   color: var(--muted-foreground);
 }
 
+.study-away-progress {
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.study-away-progress-bar {
+  flex: 1;
+  height: 5px;
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--accent) 58%, transparent);
+  overflow: hidden;
+}
+
+.study-away-progress-bar span {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #57068c, #2f6be0);
+  transition: width 0.2s ease;
+}
+
+.study-away-progress-label {
+  font-size: 10px;
+  color: var(--muted-foreground);
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  white-space: nowrap;
+}
+
+.study-away-selected-strip {
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.study-away-selected-title {
+  display: block;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.7px;
+  color: var(--muted-foreground);
+  font-weight: 700;
+}
+
+.study-away-selected-pills {
+  margin-top: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.study-away-selected-empty {
+  font-size: 11px;
+  color: var(--muted-foreground);
+}
+
+.study-away-selected-pill {
+  border: 1px solid color-mix(in oklab, var(--primary) 35%, var(--border));
+  background: color-mix(in oklab, var(--primary) 7%, transparent);
+  border-radius: 999px;
+  padding: 3px 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  color: var(--foreground);
+  cursor: pointer;
+}
+
 .study-away-semester-list {
   padding: 12px 16px;
   display: flex;
@@ -380,12 +455,12 @@
 
 .study-away-semester-row {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  flex-direction: column;
+  align-items: stretch;
   gap: 10px;
   border: 1px solid var(--border);
   border-radius: 10px;
-  padding: 8px;
+  padding: 10px;
   transition: border-color 0.15s, background-color 0.15s;
 }
 
@@ -421,6 +496,36 @@
   font-weight: 500;
 }
 
+.study-away-semester-main {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.study-away-status {
+  border-radius: 999px;
+  border: 1px dashed color-mix(in oklab, var(--muted-foreground) 35%, transparent);
+  color: var(--muted-foreground);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  padding: 2px 8px;
+}
+
+.study-away-status--active {
+  border-style: solid;
+  border-color: color-mix(in oklab, var(--primary) 35%, var(--border));
+  color: var(--primary);
+  background: color-mix(in oklab, var(--primary) 8%, transparent);
+}
+
+.study-away-location-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
 .study-away-location-group {
   display: inline-flex;
   align-items: center;
@@ -437,6 +542,40 @@
   font-size: 12px;
   min-width: 126px;
   outline: none;
+}
+
+.study-away-quick-picks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.study-away-quick-pick {
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--muted-foreground);
+  border-radius: 999px;
+  padding: 3px 10px;
+  font-size: 11px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.study-away-quick-pick:hover {
+  border-color: color-mix(in oklab, var(--primary) 35%, var(--border));
+  color: var(--foreground);
+}
+
+.study-away-quick-pick--active {
+  background: color-mix(in oklab, var(--primary) 12%, transparent);
+  border-color: color-mix(in oklab, var(--primary) 38%, var(--border));
+  color: var(--foreground);
+}
+
+.study-away-inline-note {
+  font-size: 11px;
+  color: var(--muted-foreground);
+  line-height: 1.35;
 }
 
 .study-away-location-group select:disabled {
@@ -470,6 +609,49 @@
 .study-away-summary-tip {
   color: var(--muted-foreground);
   font-size: 11px;
+}
+
+.study-away-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  margin: 0 16px 12px;
+}
+
+.study-away-action-btn {
+  border-radius: 8px;
+  padding: 7px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.study-away-action-btn--secondary {
+  border: 1px solid var(--border);
+  color: var(--muted-foreground);
+  background: transparent;
+}
+
+.study-away-action-btn--secondary:hover {
+  color: var(--foreground);
+  border-color: color-mix(in oklab, var(--primary) 25%, var(--border));
+}
+
+.study-away-action-btn--secondary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.study-away-action-btn--primary {
+  border: 1px solid color-mix(in oklab, var(--primary) 45%, transparent);
+  color: var(--primary-foreground);
+  background: var(--primary);
+}
+
+.study-away-action-btn--primary:hover {
+  opacity: 0.9;
 }
 
 .study-away-warnings {
@@ -774,9 +956,9 @@
     gap: 8px;
   }
 
-  .study-away-semester-row {
-    align-items: flex-start;
+  .study-away-progress {
     flex-direction: column;
+    align-items: flex-start;
   }
 
   .study-away-location-group {
@@ -784,6 +966,15 @@
   }
 
   .study-away-location-group select {
+    width: 100%;
+  }
+
+  .study-away-actions {
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+
+  .study-away-action-btn {
     width: 100%;
   }
 
