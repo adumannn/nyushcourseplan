@@ -30,3 +30,4 @@ CLAUDE.md
 /.mcp.json
 scraped-data/reports/
 /scraped-data/*.json
+/scripts/
