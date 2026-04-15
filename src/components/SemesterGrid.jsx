@@ -42,6 +42,7 @@ export default function SemesterGrid({
   onRemoveCourse,
   onAddClick,
   onMoveCourse,
+  studyAway,
 }) {
   const [dragState, setDragState] = useState(createEmptyDragState);
   const [isTouchDevice, setIsTouchDevice] = useState(false);
@@ -250,6 +251,9 @@ export default function SemesterGrid({
                 semester={semester}
                 courses={plan[semesterKey] || []}
                 credits={semesterCredits[semesterKey] || 0}
+                isStudyAway={studyAway.selectedSemesters.includes(semesterKey)}
+                studyAwayLocation={studyAway.locations[semesterKey] || ''}
+                studyAwayEligible={Boolean(semObj.studyAwayEligible)}
                 onRemoveCourse={onRemoveCourse}
                 onAddClick={onAddClick}
                 onCourseDragStart={handleCourseDragStart}

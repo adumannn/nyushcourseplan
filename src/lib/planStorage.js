@@ -31,20 +31,49 @@ function resolveCourse(row) {
 
 // ─── localStorage implementation ───
 
+function normalizeStudyAwayPayload(studyAway) {
+  if (!studyAway || typeof studyAway !== 'object') {
+    return {
+      selectedSemesters: [],
+      locations: {},
+    };
+  }
+
+  return {
+    selectedSemesters: Array.isArray(studyAway.selectedSemesters)
+      ? studyAway.selectedSemesters
+      : [],
+    locations: studyAway.locations && typeof studyAway.locations === 'object'
+      ? studyAway.locations
+      : {},
+  };
+}
+
 export const localStoragePlan = {
   async load() {
     try {
       const data = localStorage.getItem(STORAGE_KEY);
-      if (data) return JSON.parse(data);
+      if (data) {
+        const parsed = JSON.parse(data);
+        return {
+          ...parsed,
+          studyAway: normalizeStudyAwayPayload(parsed.studyAway),
+        };
+      }
     } catch (e) {
       console.error('Failed to load from localStorage:', e);
     }
     return null;
   },
 
-  async save({ plan, major, studentName }) {
+  async save({ plan, major, studentName, studyAway }) {
     try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify({ plan, major, studentName }));
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({
+        plan,
+        major,
+        studentName,
+        studyAway: normalizeStudyAwayPayload(studyAway),
+      }));
     } catch (e) {
       console.error('Failed to save to localStorage:', e);
     }
@@ -63,7 +92,7 @@ export const supabasePlan = {
     const db = requireSupabase();
     const { data: existing } = await db
       .from('plans')
-      .select('id, major, student_name')
+      .select('id, major, student_name, study_away_semesters, study_away_locations')
       .eq('user_id', userId)
       .order('created_at', { ascending: true })
       .limit(1)
@@ -74,7 +103,7 @@ export const supabasePlan = {
     const { data: created, error } = await db
       .from('plans')
       .insert({ user_id: userId })
-      .select('id, major, student_name')
+      .select('id, major, student_name, study_away_semesters, study_away_locations')
       .single();
 
     if (error) throw error;
@@ -107,6 +136,10 @@ export const supabasePlan = {
         plan,
         major: planRow.major || 'cs',
         studentName: planRow.student_name || '',
+        studyAway: normalizeStudyAwayPayload({
+          selectedSemesters: planRow.study_away_semesters || [],
+          locations: planRow.study_away_locations || {},
+        }),
       };
     } catch (e) {
       console.error('Failed to load from Supabase:', e);
@@ -114,13 +147,19 @@ export const supabasePlan = {
     }
   },
 
-  async save(userId, { planId, plan, major, studentName }) {
+  async save(userId, { planId, plan, major, studentName, studyAway }) {
     try {
       const db = requireSupabase();
+      const normalizedStudyAway = normalizeStudyAwayPayload(studyAway);
       // Update plan metadata
       await db
         .from('plans')
-        .update({ major, student_name: studentName })
+        .update({
+          major,
+          student_name: studentName,
+          study_away_semesters: normalizedStudyAway.selectedSemesters,
+          study_away_locations: normalizedStudyAway.locations,
+        })
         .eq('id', planId);
 
       // Replace all courses: delete then insert
@@ -173,6 +212,8 @@ export const supabasePlan = {
       .update({
         major: localData.major || 'cs',
         student_name: localData.studentName || '',
+        study_away_semesters: localData.studyAway?.selectedSemesters || [],
+        study_away_locations: localData.studyAway?.locations || {},
       })
       .eq('id', planRow.id);
 
@@ -182,6 +223,7 @@ export const supabasePlan = {
       plan: localData.plan,
       major: localData.major || 'cs',
       studentName: localData.studentName || '',
+      studyAway: normalizeStudyAwayPayload(localData.studyAway),
     });
 
     return true;

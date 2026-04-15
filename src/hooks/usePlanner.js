@@ -57,7 +57,7 @@ function normalizeStudyAway(studyAway) {
   const locations = {};
   selectedSemesters.forEach((semesterId) => {
     const value = studyAway.locations?.[semesterId];
-    locations[semesterId] = locationSet.has(value) ? value : 'Shanghai';
+    locations[semesterId] = locationSet.has(value) ? value : '';
   });
 
   return {
@@ -237,7 +237,7 @@ export default function usePlanner(user) {
         selectedSemesters: [...prev.selectedSemesters, semesterId],
         locations: {
           ...prev.locations,
-          [semesterId]: prev.locations[semesterId] || 'Shanghai',
+          [semesterId]: prev.locations[semesterId] || '',
         },
       };
     });
@@ -252,12 +252,12 @@ export default function usePlanner(user) {
     }
 
     setStudyAway((prev) => {
-      if (!prev.selectedSemesters.includes(semesterId)) {
-        return prev;
-      }
+      const selectedSemesters = prev.selectedSemesters.includes(semesterId)
+        ? prev.selectedSemesters
+        : [...prev.selectedSemesters, semesterId];
 
       return {
-        ...prev,
+        selectedSemesters,
         locations: {
           ...prev.locations,
           [semesterId]: location,
@@ -268,6 +268,7 @@ export default function usePlanner(user) {
 
   const studyAwayWarnings = useMemo(() => {
     const warnings = [];
+    const isCsDsMajor = major === 'cs' || major === 'ds';
 
     if (studyAway.selectedSemesters.length > STUDY_AWAY.maxSemesters) {
       warnings.push({
@@ -277,18 +278,42 @@ export default function usePlanner(user) {
     }
 
     studyAway.selectedSemesters.forEach((semesterId) => {
-      const majorCourseCount = (plan[semesterId] || []).filter((course) => course.category === 'major-required' || course.category === 'major-elective').length;
+      const semesterLabel = SEMESTERS.find((semester) => semester.id === semesterId)?.label || semesterId;
+      const selectedLocation = studyAway.locations[semesterId] || '';
+
+      if (!selectedLocation) {
+        warnings.push({
+          id: `missing-location-${semesterId}`,
+          message: `${semesterLabel}: choose a study-away site for this semester.`,
+        });
+      }
+
+      if (
+        semesterId === 'Y2-Spring'
+        && (selectedLocation === 'New York' || selectedLocation === 'Abu Dhabi')
+      ) {
+        warnings.push({
+          id: `site-restriction-${semesterId}`,
+          message: `${semesterLabel}: New York and Abu Dhabi are not available during sophomore spring.`,
+        });
+      }
+
+      if (!isCsDsMajor) return;
+
+      const majorCourseCount = (plan[semesterId] || [])
+        .filter((course) => course.category === 'major-required' || course.category === 'major-elective')
+        .length;
+
       if (majorCourseCount > STUDY_AWAY.maxMajorCoursesPerSemester) {
-        const semesterLabel = SEMESTERS.find((semester) => semester.id === semesterId)?.label || semesterId;
         warnings.push({
           id: `major-overload-${semesterId}`,
-          message: `${semesterLabel}: ${majorCourseCount} major courses planned. Recommended maximum during study away is ${STUDY_AWAY.maxMajorCoursesPerSemester}.`,
+          message: `${semesterLabel}: ${majorCourseCount} major courses planned. Recommended maximum during study away is ${STUDY_AWAY.maxMajorCoursesPerSemester} for CS/DS.`,
         });
       }
     });
 
     return warnings;
-  }, [plan, studyAway]);
+  }, [major, plan, studyAway]);
 
   const allPlannedCourses = useMemo(() => {
     return Object.values(plan).flat();

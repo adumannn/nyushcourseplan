@@ -1,10 +1,12 @@
 import { useState, useRef, useEffect } from 'react';
-import { Moon, Sun, LogOut, ChevronDown } from 'lucide-react';
+import { Moon, Sun, LogOut, ChevronDown, PlaneTakeoff } from 'lucide-react';
 import { MAJORS } from '../data/courses';
 
 export default function Header({
   major, setMajor, totalCredits,
   theme, toggleTheme,
+  onOpenStudyAway,
+  studyAwayCount,
   user, onSignOut,
 }) {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -49,6 +51,22 @@ export default function Header({
             <span className="text-xl sm:text-2xl tabular-nums">{totalCredits}</span>
             <span className="text-sm text-muted-foreground">credits</span>
           </div>
+
+          <div className="h-4 w-px bg-border/60" />
+
+          <button
+            onClick={onOpenStudyAway}
+            className="relative inline-flex items-center gap-1.5 rounded-md border border-border/60 px-2.5 py-1.5 text-xs text-muted-foreground transition-colors hover:bg-accent hover:text-foreground cursor-pointer"
+            title="Open study away picker"
+          >
+            <PlaneTakeoff className="h-3.5 w-3.5" />
+            Study Away
+            {studyAwayCount > 0 && (
+              <span className="inline-flex min-w-5 justify-center rounded-full bg-[#57068c] px-1.5 py-0.5 text-[10px] text-white">
+                {studyAwayCount}
+              </span>
+            )}
+          </button>
 
           <div className="h-4 w-px bg-border/60" />
 

@@ -7,6 +7,7 @@ import Header from './components/Header';
 import SemesterGrid from './components/SemesterGrid';
 import RequirementsSidebar from './components/RequirementsSidebar';
 import CoursePicker from './components/CoursePicker';
+import StudyAwayPicker from './components/StudyAwayPicker';
 import AuthGate from './components/AuthGate';
 import './App.css';
 
@@ -21,6 +22,10 @@ function App() {
     addCourse,
     removeCourse,
     moveCourse,
+    studyAway,
+    toggleStudyAwaySemester,
+    setStudyAwayLocation,
+    studyAwayWarnings,
     totalCredits,
     semesterCredits,
     requirementProgress,
@@ -30,6 +35,7 @@ function App() {
   } = usePlanner(user);
 
   const [pickerSemester, setPickerSemester] = useState(null);
+  const [studyAwayPickerOpen, setStudyAwayPickerOpen] = useState(false);
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
 
   // Auth gate — must sign in with Google
@@ -50,6 +56,8 @@ function App() {
         totalCredits={totalCredits}
         theme={theme}
         toggleTheme={toggleTheme}
+        onOpenStudyAway={() => setStudyAwayPickerOpen(true)}
+        studyAwayCount={studyAway.selectedSemesters.length}
         user={user}
         onSignOut={signOut}
       />
@@ -68,6 +76,7 @@ function App() {
               onRemoveCourse={removeCourse}
               onAddClick={setPickerSemester}
               onMoveCourse={moveCourse}
+              studyAway={studyAway}
             />
           )}
         </div>
@@ -97,6 +106,17 @@ function App() {
           onClose={() => setPickerSemester(null)}
           isCourseInPlan={isCourseInPlan}
           major={major}
+        />
+      )}
+
+      {studyAwayPickerOpen && (
+        <StudyAwayPicker
+          major={major}
+          studyAway={studyAway}
+          warnings={studyAwayWarnings}
+          onClose={() => setStudyAwayPickerOpen(false)}
+          onToggleSemester={toggleStudyAwaySemester}
+          onSetLocation={setStudyAwayLocation}
         />
       )}
       <Analytics />
