@@ -22,6 +22,8 @@ export default function SemesterCard({
   isTouchDevice = false,
   onCourseTap,
   onTapAtIndex,
+  prereqWarnings = {},
+  onCourseClick,
 }) {
   const [isExpanded, setIsExpanded] = useState(true);
   const isDragActive = Boolean(dragState?.courseId);
@@ -141,6 +143,8 @@ export default function SemesterCard({
                       dragState.fromSemester === semesterKey
                       && dragState.courseId === course.id
                     }
+                    hasPrereqWarning={Boolean(prereqWarnings[course.id])}
+                    onClick={() => onCourseClick?.(course)}
                   />
                 </div>
               ))}

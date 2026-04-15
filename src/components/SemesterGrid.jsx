@@ -43,6 +43,8 @@ export default function SemesterGrid({
   onAddClick,
   onMoveCourse,
   studyAway,
+  prereqWarnings = {},
+  onCourseClick,
 }) {
   const [dragState, setDragState] = useState(createEmptyDragState);
   const [isTouchDevice, setIsTouchDevice] = useState(false);
@@ -264,6 +266,8 @@ export default function SemesterGrid({
                 isTouchDevice={isTouchDevice}
                 onCourseTap={handleCourseTap}
                 onTapAtIndex={handleTapAtIndex}
+                prereqWarnings={prereqWarnings}
+                onCourseClick={onCourseClick}
               />
             );
           })}
