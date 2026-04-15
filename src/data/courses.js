@@ -48,7 +48,7 @@ export const MAJORS = [
   //   in MAJOR_REQUIREMENTS and tag courses with majorRoles: { id: 'required'|'elective' }
   // { id: 'ds',       label: 'Data Science' },
   // { id: 'econ',     label: 'Economics' },
-  // { id: 'business', label: 'Business and Finance' },
+  { id: 'business', label: 'Business and Finance' },
   // { id: 'math',     label: 'Honors Mathematics' },
 ];
 
@@ -203,6 +203,48 @@ export const MAJOR_REQUIREMENTS = {
       'To officially declare CS, students must have a final grade of C, or be currently enrolled in MATH-SHU 131 Calculus (or pass the "Place out of Calculus" exam) and CSCI-SHU 11 Introduction to Computer Programming (or CSCI-SHU 101 or pass the "Place Into Introduction to Computer and Data Science" Exam). Some CS Elective courses are considered "soft" CS courses — students can only take a maximum of one such course to fulfill the CS Elective requirement (e.g. INTM-SHU 231 Developing Web).',
     studyAwayNotes:
       'Before studying abroad, students should complete: ICS, Data Structures, Probability & Statistics, Computer Architecture, and ideally Algorithms.',
+  },
+  business: {
+    label: 'Business and Finance',
+    bulletin: 'AY 2025-26',
+    coursesNeeded: 13,
+    creditsNeeded: 52,
+    requiredCourses: [
+      { courseId: 'BUSF-SHU-101', label: 'Statistics for Business and Economics' },
+      { courseId: 'BUSF-SHU-202', label: 'Foundations of Finance' },
+      { courseId: 'BUSF-SHU-250', label: 'Principles of Financial Accounting' },
+      { courseId: 'ECON-SHU-3', label: 'Microeconomics' },
+      { courseId: 'ECON-SHU-251', label: 'Economics of Global Business' },
+      { courseId: 'BUSF-SHU-303', label: 'Corporate Finance' },
+    ],
+    selectOneCourses: [
+      {
+        label: 'Business Core Electives (select 2)',
+        courseIds: ['BUSF-SHU-142', 'BUSF-SHU-210', 'BUSF-SHU-351', 'MGMT-SHU-301', 'MKTG-SHU-1'],
+        count: 2,
+      },
+      {
+        label: 'Finance Electives (select 2)',
+        courseIds: ['BUSF-SHU-304', 'BUSF-SHU-305', 'BUSF-SHU-321', 'BUSF-SHU-361', 'BUSF-SHU-420-BF', 'BUSF-SHU-441'],
+        count: 2,
+      },
+      {
+        label: 'Non-Finance Electives (select 2)',
+        courseIds: [],
+        count: 2,
+        note: 'Select 2 courses from: Accounting, Business Analytics, Management, Marketing, Operations, or Information Systems.',
+      },
+      {
+        label: 'China Business Studies (select 1)',
+        courseIds: ['BUSF-SHU-200D', 'BUSF-SHU-286', 'BUSF-SHU-288'],
+      },
+    ],
+    capstone: null,
+    electivesNeeded: 0,
+    electiveCreditsNeeded: 0,
+    otherElectiveCredits: '24-32',
+    notes:
+      'Non-Finance Electives must be from Accounting, Business Analytics, Management, Marketing, Operations, or Information Systems areas. Use custom courses for options not listed in the catalog.',
   },
 };
 
@@ -518,6 +560,7 @@ export const COURSE_CATALOG = [
     category: 'major',
     department: 'Business and Finance',
     csRole: 'required',
+    majors: ['business'],
   },
 
   // ═══ CS MAJOR — SELECT ONE (Architecture) ═══
@@ -655,6 +698,189 @@ export const COURSE_CATALOG = [
     prerequisites: ['CSCI-SHU-360'],
     prerequisiteNote:
       'CSCI-SHU 360 Machine Learning or MATH-SHU 235 Probability and Statistics',
+  },
+
+  // ═══ BUSINESS AND FINANCE MAJOR — BUSINESS CORE ═══
+  {
+    id: 'BUSF-SHU-202',
+    code: 'BUSF-SHU 202',
+    name: 'Foundations of Finance',
+    credits: 4,
+    category: 'major',
+    department: 'Business and Finance',
+    majors: ['business'],
+  },
+  {
+    id: 'BUSF-SHU-250',
+    code: 'BUSF-SHU 250',
+    name: 'Principles of Financial Accounting',
+    credits: 4,
+    category: 'major',
+    department: 'Business and Finance',
+    majors: ['business'],
+  },
+  {
+    id: 'ECON-SHU-3',
+    code: 'ECON-SHU 3',
+    name: 'Microeconomics',
+    credits: 4,
+    category: 'major',
+    department: 'Economics',
+    majors: ['business'],
+  },
+  {
+    id: 'ECON-SHU-251',
+    code: 'ECON-SHU 251',
+    name: 'Economics of Global Business',
+    credits: 4,
+    category: 'major',
+    department: 'Economics',
+    majors: ['business'],
+  },
+
+  // ═══ BUSINESS AND FINANCE MAJOR — FINANCE CORE ═══
+  {
+    id: 'BUSF-SHU-303',
+    code: 'BUSF-SHU 303',
+    name: 'Corporate Finance',
+    credits: 4,
+    category: 'major',
+    department: 'Business and Finance',
+    majors: ['business'],
+    prerequisites: ['BUSF-SHU-202'],
+    prerequisiteNote: 'BUSF-SHU 202 Foundations of Finance',
+  },
+
+  // ═══ BUSINESS AND FINANCE MAJOR — BUSINESS CORE ELECTIVES ═══
+  {
+    id: 'BUSF-SHU-142',
+    code: 'BUSF-SHU 142',
+    name: 'Information Technology in Business & Society',
+    credits: 4,
+    category: 'major',
+    department: 'Business and Finance',
+    majors: ['business'],
+  },
+  {
+    id: 'BUSF-SHU-210',
+    code: 'BUSF-SHU 210',
+    name: 'Business Analytics',
+    credits: 4,
+    category: 'major',
+    department: 'Business and Finance',
+    majors: ['business'],
+  },
+  {
+    id: 'BUSF-SHU-351',
+    code: 'BUSF-SHU 351',
+    name: 'Operations Management',
+    credits: 4,
+    category: 'major',
+    department: 'Business and Finance',
+    majors: ['business'],
+  },
+  {
+    id: 'MGMT-SHU-301',
+    code: 'MGMT-SHU 301',
+    name: 'Management and Organizations',
+    credits: 4,
+    category: 'major',
+    department: 'Management',
+    majors: ['business'],
+  },
+  {
+    id: 'MKTG-SHU-1',
+    code: 'MKTG-SHU 1',
+    name: 'Introduction to Marketing',
+    credits: 4,
+    category: 'major',
+    department: 'Marketing',
+    majors: ['business'],
+  },
+
+  // ═══ BUSINESS AND FINANCE MAJOR — FINANCE ELECTIVES ═══
+  {
+    id: 'BUSF-SHU-304',
+    code: 'BUSF-SHU 304',
+    name: 'Futures and Options',
+    credits: 4,
+    category: 'major',
+    department: 'Business and Finance',
+    majors: ['business'],
+  },
+  {
+    id: 'BUSF-SHU-305',
+    code: 'BUSF-SHU 305',
+    name: 'Debt Instruments and Markets',
+    credits: 4,
+    category: 'major',
+    department: 'Business and Finance',
+    majors: ['business'],
+  },
+  {
+    id: 'BUSF-SHU-321',
+    code: 'BUSF-SHU 321',
+    name: 'Equity Valuation',
+    credits: 4,
+    category: 'major',
+    department: 'Business and Finance',
+    majors: ['business'],
+  },
+  {
+    id: 'BUSF-SHU-361',
+    code: 'BUSF-SHU 361',
+    name: 'Entrepreneurial Finance',
+    credits: 4,
+    category: 'major',
+    department: 'Business and Finance',
+    majors: ['business'],
+  },
+  {
+    id: 'BUSF-SHU-420-BF',
+    code: 'BUSF-SHU 420',
+    name: 'Business Topics Course: Financial Market Volatility Modeling',
+    credits: 4,
+    category: 'major',
+    department: 'Business and Finance',
+    majors: ['business'],
+  },
+  {
+    id: 'BUSF-SHU-441',
+    code: 'BUSF-SHU 441',
+    name: 'Private Equity & Venture Capital in Asia and Emerging Markets',
+    credits: 4,
+    category: 'major',
+    department: 'Business and Finance',
+    majors: ['business'],
+  },
+
+  // ═══ BUSINESS AND FINANCE MAJOR — CHINA BUSINESS STUDIES ═══
+  {
+    id: 'BUSF-SHU-200D',
+    code: 'BUSF-SHU 200D',
+    name: 'Business Consulting in China',
+    credits: 4,
+    category: 'major',
+    department: 'Business and Finance',
+    majors: ['business'],
+  },
+  {
+    id: 'BUSF-SHU-286',
+    code: 'BUSF-SHU 286',
+    name: 'Chinese Financial Markets',
+    credits: 4,
+    category: 'major',
+    department: 'Business and Finance',
+    majors: ['business'],
+  },
+  {
+    id: 'BUSF-SHU-288',
+    code: 'BUSF-SHU 288',
+    name: 'Doing Business with China',
+    credits: 4,
+    category: 'major',
+    department: 'Business and Finance',
+    majors: ['business'],
   },
 ];
 

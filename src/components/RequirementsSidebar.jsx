@@ -138,9 +138,11 @@ function buildRequirements(requirementProgress, allPlannedCourses, major) {
       });
     }
     for (const group of majorDef.selectOneCourses || []) {
+      const needed = group.count || 1;
+      const matchedCount = planned.filter((c) => group.courseIds.includes(c.id)).length;
       majorItems.push({
         name: group.label,
-        completed: planned.some((c) => group.courseIds.includes(c.id)),
+        completed: matchedCount >= needed,
       });
     }
     if (majorDef.capstone) {
