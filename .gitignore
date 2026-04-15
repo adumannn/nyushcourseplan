@@ -26,4 +26,7 @@ dist-ssr
 .env
 .claude/
 CLAUDE.md
+/fallow/
+/.mcp.json
 scraped-data/reports/
+/scraped-data/*.json
