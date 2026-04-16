@@ -137,11 +137,15 @@
 .modal-filter-row {
     display: flex;
     gap: 8px;
+    min-width: 0;
 }
 
 .modal-filter-row select {
-    flex: 1;
-    padding: 7px 10px;
+    flex: 1 1 0;
+    min-width: 0;
+    max-width: 100%;
+    width: 100%;
+    padding: 7px 28px 7px 10px;
     border: 1px solid var(--border);
     border-radius: 6px;
     font-size: 11px;
@@ -150,10 +154,23 @@
     background: var(--input-background);
     outline: none;
     transition: border-color 0.15s;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .modal-filter-row select:focus {
     border-color: var(--ring);
+}
+
+@media (max-width: 560px) {
+    .modal-filter-row {
+        flex-direction: column;
+    }
+
+    .modal-filter-row select {
+        width: 100%;
+    }
 }
 
 .modal-course-list {
