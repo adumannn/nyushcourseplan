@@ -25,11 +25,37 @@ export default function useAuth() {
 
   const signInWithGoogle = useCallback(async () => {
     if (!supabase) throw new Error('Auth is not configured');
-    const { error } = await supabase.auth.signInWithOAuth({
+
+    // Detect if we're running inside an iframe (e.g. the v0 preview).
+    // Google OAuth refuses to render in iframes, so we need to break out
+    // to the top-level window before kicking off the OAuth redirect.
+    let inIframe = false;
+    try {
+      inIframe = window.self !== window.top;
+    } catch {
+      inIframe = true; // cross-origin access throws -> we're definitely framed
+    }
+
+    const redirectTo =
+      (inIframe && document.referrer) ? document.referrer : window.location.origin;
+
+    const { data, error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
-      options: { redirectTo: window.location.origin },
+      options: {
+        redirectTo,
+        skipBrowserRedirect: inIframe,
+      },
     });
     if (error) throw error;
+
+    if (inIframe && data?.url) {
+      // Try to navigate the top window; fall back to a new tab if blocked.
+      try {
+        window.top.location.href = data.url;
+      } catch {
+        window.open(data.url, '_blank', 'noopener,noreferrer');
+      }
+    }
   }, []);
 
   const signOut = useCallback(async () => {
