@@ -31,3 +31,7 @@ CLAUDE.md
 scraped-data/reports/
 /scraped-data/*.json
 /scripts/
+
+/.fallow/*.bin
+.mcp.json
+.fallow/cache.bin
