@@ -29,8 +29,6 @@ CLAUDE.md
 /fallow/
 /.mcp.json
 scraped-data/reports/
-/scraped-data/*.json
-/scripts/
 
 /.fallow/*.bin
 .mcp.json
