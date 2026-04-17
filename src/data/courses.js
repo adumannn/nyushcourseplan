@@ -1,4 +1,4 @@
-
+import {getMajorRequirement} from '../utils/ '
 // All data sourced from the NYU Shanghai Academic Bulletin.
 // ────────────────────────────────────────────────────────────
 
