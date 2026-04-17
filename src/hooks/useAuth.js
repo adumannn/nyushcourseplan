@@ -36,8 +36,11 @@ export default function useAuth() {
       inIframe = true; // cross-origin access throws -> we're definitely framed
     }
 
-    const redirectTo =
-      (inIframe && document.referrer) ? document.referrer : window.location.origin;
+    // window.location.origin is the real app origin even inside an iframe
+    // (e.g. https://vm-*.vusercontent.net in the v0 preview, localhost in dev,
+    // the production domain in prod). document.referrer would be v0.app, which
+    // Supabase rejects and falls back to the configured Site URL.
+    const redirectTo = window.location.origin;
 
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
