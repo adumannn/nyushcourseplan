@@ -100,10 +100,6 @@ export default function AuthGate({ onSignInWithGoogle, loading }) {
               </p>
             ) : null}
           </div>
-
-          <p className="auth-legal">
-            By signing in, you agree to our Terms and Privacy Policy.
-          </p>
         </section>
 
         <aside className="auth-showcase" aria-hidden="true">
@@ -118,14 +114,14 @@ export default function AuthGate({ onSignInWithGoogle, loading }) {
               Build your 4-year path with real credit progress, requirement checks,
               and study-away planning in one place.
             </p>
-
+{/* 
             <div className="auth-showcase-schools">
               {SHOWCASE_SCHOOLS.map((school) => (
                 <span key={school} className="auth-showcase-school">
                   {school}
                 </span>
               ))}
-            </div>
+            </div>*/}
           </div>
         </aside>
       </main>

@@ -1095,7 +1095,7 @@ export function getMajorLabel(majorId) {
   return MAJORS.find((major) => major.id === majorId)?.label || 'Selected Major';
 }
 
-export function getMajorRequirement(majorId) {
+function getMajorRequirement(majorId) {
   const configured = MAJOR_REQUIREMENTS[majorId];
   if (configured) {
     return {
