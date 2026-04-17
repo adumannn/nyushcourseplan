@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import nyuShortLogo from '../assets/NYU_Short_RGB_Color.png';
+import authHero from '../assets/auth-hero.jpg';
 
 export default function AuthGate({ onSignInWithGoogle, loading }) {
   const [isSigningIn, setIsSigningIn] = useState(false);
@@ -91,116 +92,11 @@ export default function AuthGate({ onSignInWithGoogle, loading }) {
           </footer>
         </section>
 
-        {/* ─── Right: product preview ─── */}
-        <aside className="auth-preview" aria-hidden="true">
-          <div className="auth-preview-stage">
-            <PlannerPreviewMock />
-          </div>
-
-          <div className="auth-preview-caption">
-            <span className="auth-preview-caption-dot" />
-            A live view of your degree progress &mdash; updated as you plan.
-          </div>
+        {/* ─── Right: full-bleed visual ─── */}
+        <aside className="auth-visual" aria-hidden="true">
+          <img src={authHero} alt="" className="auth-visual-img" />
         </aside>
       </main>
-    </div>
-  );
-}
-
-/* ─── Static, styled preview of the planner board ─── */
-
-function PlannerPreviewMock() {
-  return (
-    <div className="preview-window" role="presentation">
-      {/* Window chrome */}
-      <div className="preview-chrome">
-        <div className="preview-dots">
-          <span />
-          <span />
-          <span />
-        </div>
-        <div className="preview-chrome-title">course-planner.nyu.edu</div>
-        <div className="preview-chrome-spacer" />
-      </div>
-
-      {/* App header */}
-      <div className="preview-header">
-        <div className="preview-header-left">
-          <div className="preview-logo-mark" />
-          <div>
-            <div className="preview-header-title">My 4-Year Plan</div>
-            <div className="preview-header-sub">Computer Science, B.S.</div>
-          </div>
-        </div>
-        <div className="preview-header-right">
-          <div className="preview-chip preview-chip--ok">
-            <span className="preview-chip-dot" /> On track
-          </div>
-          <div className="preview-chip">128 / 128 cr</div>
-        </div>
-      </div>
-
-      {/* Year heading */}
-      <div className="preview-year">
-        <span className="preview-year-label">Year 2</span>
-        <span className="preview-year-meta">32 credits &middot; 8 courses</span>
-      </div>
-
-      {/* Fall semester */}
-      <div className="preview-semester">
-        <div className="preview-semester-head">
-          <span className="preview-semester-name">Fall 2026</span>
-          <span className="preview-semester-credits">16 cr</span>
-        </div>
-        <div className="preview-courses">
-          <CourseCard code="CSCI-SHU 210" title="Data Structures" credits="4" tag="Core" />
-          <CourseCard code="MATH-SHU 140" title="Linear Algebra" credits="4" tag="Math" tagTone="violet" />
-          <CourseCard code="WRIT-SHU 101" title="Writing as Inquiry" credits="4" tag="Core" />
-          <CourseCard code="EAP-SHU 201" title="Intermediate Mandarin" credits="4" tag="Lang" tagTone="muted" />
-        </div>
-      </div>
-
-      {/* Spring semester */}
-      <div className="preview-semester">
-        <div className="preview-semester-head">
-          <span className="preview-semester-name">Spring 2027</span>
-          <span className="preview-semester-credits">16 cr</span>
-        </div>
-        <div className="preview-courses">
-          <CourseCard code="CSCI-SHU 220" title="Algorithms" credits="4" tag="Core" />
-          <CourseCard code="CSCI-SHU 360" title="Machine Learning" credits="4" tag="Elective" tagTone="violet" />
-          <CourseCard
-            code="BUSF-SHU 250"
-            title="Statistics for Business"
-            credits="4"
-            tag="Quant"
-            tagTone="muted"
-          />
-          <CourseCard
-            code="—"
-            title="Study Away: NYU Prague"
-            credits="4"
-            tag="Away"
-            tagTone="violet"
-            muted
-          />
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function CourseCard({ code, title, credits, tag, tagTone = 'neutral', muted = false }) {
-  return (
-    <div className={`preview-course${muted ? ' preview-course--muted' : ''}`}>
-      <div className="preview-course-top">
-        <span className="preview-course-code">{code}</span>
-        <span className={`preview-course-tag preview-course-tag--${tagTone}`}>{tag}</span>
-      </div>
-      <div className="preview-course-title">{title}</div>
-      <div className="preview-course-bottom">
-        <span className="preview-course-credits">{credits} credits</span>
-      </div>
     </div>
   );
 }
