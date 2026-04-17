@@ -27,19 +27,18 @@ export default function useAuth() {
     if (!supabase) throw new Error('Auth is not configured');
 
     // Detect if we're running inside an iframe (e.g. the v0 preview).
-    // Google OAuth refuses to render in iframes, so we need to break out
-    // to the top-level window before kicking off the OAuth redirect.
+    // Google OAuth refuses to render in iframes, so we must do the flow
+    // outside the iframe. Supabase's session is stored in localStorage on
+    // our origin, which is shared between the iframe and any popup/new tab
+    // on the same origin — so onAuthStateChange in the iframe will pick up
+    // the session automatically once the outer flow completes.
     let inIframe = false;
     try {
       inIframe = window.self !== window.top;
     } catch {
-      inIframe = true; // cross-origin access throws -> we're definitely framed
+      inIframe = true;
     }
 
-    // window.location.origin is the real app origin even inside an iframe
-    // (e.g. https://vm-*.vusercontent.net in the v0 preview, localhost in dev,
-    // the production domain in prod). document.referrer would be v0.app, which
-    // Supabase rejects and falls back to the configured Site URL.
     const redirectTo = window.location.origin;
 
     const { data, error } = await supabase.auth.signInWithOAuth({
@@ -52,10 +51,14 @@ export default function useAuth() {
     if (error) throw error;
 
     if (inIframe && data?.url) {
-      // Try to navigate the top window; fall back to a new tab if blocked.
-      try {
-        window.top.location.href = data.url;
-      } catch {
+      // Prefer a popup window so the user stays in v0 and can close it
+      // when done. Fall back to a new tab if popups are blocked.
+      const popup = window.open(
+        data.url,
+        'supabase-oauth',
+        'popup=yes,width=500,height=650,left=200,top=100,noopener=no'
+      );
+      if (!popup) {
         window.open(data.url, '_blank', 'noopener,noreferrer');
       }
     }
