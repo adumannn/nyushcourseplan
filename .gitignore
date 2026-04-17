@@ -33,3 +33,9 @@ scraped-data/reports/
 /.fallow/*.bin
 .mcp.json
 .fallow/cache.bin
+
+# Local generated artifacts
+.github/agents/
+scraped-data/*.json
+!scraped-data/all-courses.json
+!scraped-data/shanghai.json
