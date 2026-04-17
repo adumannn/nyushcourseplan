@@ -39,3 +39,4 @@ scraped-data/reports/
 scraped-data/*.json
 !scraped-data/all-courses.json
 !scraped-data/shanghai.json
+nothing-design-skill/
