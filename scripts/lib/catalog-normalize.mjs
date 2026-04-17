@@ -454,10 +454,6 @@ export function resolveSchoolSlug(flags = {}) {
   return cleanString(flags.school || "shanghai").toLowerCase();
 }
 
-export function getScrapedFilePath(schoolSlug) {
-  return path.join(SCRAPED_DATA_DIR, `${schoolSlug}.json`);
-}
-
 export function getDefaultValidationReportPath(schoolSlug) {
   return path.join(REPORTS_DIR, `${schoolSlug}.validation.json`);
 }
