@@ -1,4 +1,3 @@
-import {getMajorRequirement} from '../utils/ '
 // All data sourced from the NYU Shanghai Academic Bulletin.
 // ────────────────────────────────────────────────────────────
 
@@ -1095,7 +1094,7 @@ export function getMajorLabel(majorId) {
   return MAJORS.find((major) => major.id === majorId)?.label || 'Selected Major';
 }
 
-function getMajorRequirement(majorId) {
+export function getMajorRequirement(majorId) {
   const configured = MAJOR_REQUIREMENTS[majorId];
   if (configured) {
     return {
