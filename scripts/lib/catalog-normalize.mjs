@@ -516,7 +516,7 @@ export function buildImportSummary(normalized) {
   };
 }
 
-export function loadEnvFile(filePath) {
+function loadEnvFile(filePath) {
   if (!fs.existsSync(filePath)) return;
 
   const raw = fs.readFileSync(filePath, "utf8");
@@ -543,19 +543,19 @@ export function loadEnvFile(filePath) {
   }
 }
 
-export function loadProjectEnv() {
+function loadProjectEnv() {
   loadEnvFile(path.join(PROJECT_ROOT, ".env"));
   loadEnvFile(path.join(PROJECT_ROOT, ".env.local"));
 }
 
-export function getProjectRoot() {
+function getProjectRoot() {
   return PROJECT_ROOT;
 }
 
-export function getReportsDir() {
+function getReportsDir() {
   return REPORTS_DIR;
 }
 
-export function getScrapedDataDir() {
+function getScrapedDataDir() {
   return SCRAPED_DATA_DIR;
 }

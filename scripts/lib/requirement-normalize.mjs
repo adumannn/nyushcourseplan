@@ -34,11 +34,11 @@ const PROGRAM_SLUG_TO_MAJOR = Object.fromEntries(
   Object.entries(MAJOR_TO_PROGRAM_SLUG).map(([k, v]) => [v, k]),
 );
 
-export function getProgramSlugForMajor(majorId) {
+function getProgramSlugForMajor(majorId) {
   return MAJOR_TO_PROGRAM_SLUG[majorId] || null;
 }
 
-export function getMajorIdForProgramSlug(slug) {
+function getMajorIdForProgramSlug(slug) {
   return PROGRAM_SLUG_TO_MAJOR[slug] || null;
 }
 
@@ -265,7 +265,7 @@ function processEntries(entries, sectionRole, subsectionName) {
 
 // ─── Main normalizer ───
 
-export function normalizeProgramRequirements(
+function normalizeProgramRequirements(
   majorId,
   majorLabel,
   curriculum,
@@ -460,7 +460,7 @@ export function normalizeProgramRequirements(
 
 // ─── Batch processing ───
 
-export function normalizeAllMajors(shanghaiData) {
+function normalizeAllMajors(shanghaiData) {
   const programs = shanghaiData.programs || {};
   const results = {};
   const warnings = [];
@@ -610,7 +610,7 @@ function formatMajorEntry(majorId, req) {
   return lines.join("\n");
 }
 
-export function generateMajorRequirementsSource(normalizedMajors) {
+function generateMajorRequirementsSource(normalizedMajors) {
   const lines = [];
   lines.push("export const MAJOR_REQUIREMENTS = {");
   for (const [majorId, req] of Object.entries(normalizedMajors)) {
