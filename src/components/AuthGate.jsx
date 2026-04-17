@@ -1,10 +1,16 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import nyuShortLogo from '../assets/NYU_Short_RGB_Color.png';
 import authHero from '../assets/auth-hero.jpg';
 
-export default function AuthGate({ onSignInWithGoogle, loading }) {
+export default function AuthGate({ onSignInWithGoogle, loading, authError = '' }) {
   const [isSigningIn, setIsSigningIn] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+
+  useEffect(() => {
+    if (authError) {
+      setErrorMessage(authError);
+    }
+  }, [authError]);
 
   const handleSignIn = async () => {
     if (isSigningIn) return;
