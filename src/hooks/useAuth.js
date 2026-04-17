@@ -71,6 +71,57 @@ export default function useAuth() {
     if (error) throw error;
   }, []);
 
+  const signInWithEmail = useCallback(async (email, password) => {
+    if (!supabase) throw new Error('Auth is not configured');
+
+    const trimmed = typeof email === 'string' ? email.trim() : '';
+    if (!isAllowedNyuEmail(trimmed)) {
+      throw new Error('Please use your NYU email address (@nyu.edu).');
+    }
+    if (!password) {
+      throw new Error('Please enter your password.');
+    }
+
+    setAuthError('');
+    const { error } = await supabase.auth.signInWithPassword({
+      email: trimmed,
+      password,
+    });
+    if (error) {
+      // Normalize Supabase's generic message for better UX
+      if (/invalid login credentials/i.test(error.message)) {
+        throw new Error('Email or password is incorrect.');
+      }
+      throw error;
+    }
+  }, []);
+
+  const signUpWithEmail = useCallback(async (email, password) => {
+    if (!supabase) throw new Error('Auth is not configured');
+
+    const trimmed = typeof email === 'string' ? email.trim() : '';
+    if (!isAllowedNyuEmail(trimmed)) {
+      throw new Error('Sign-up is restricted to NYU email addresses (@nyu.edu).');
+    }
+    if (!password || password.length < 8) {
+      throw new Error('Password must be at least 8 characters.');
+    }
+
+    setAuthError('');
+    const { data, error } = await supabase.auth.signUp({
+      email: trimmed,
+      password,
+      options: {
+        emailRedirectTo: window.location.origin,
+      },
+    });
+    if (error) throw error;
+
+    // If email confirmation is required, there will be no active session yet.
+    const needsConfirmation = !data?.session;
+    return { needsConfirmation };
+  }, []);
+
   const signOut = useCallback(async () => {
     if (!supabase) return;
     const { error } = await supabase.auth.signOut();
@@ -94,6 +145,8 @@ export default function useAuth() {
     user,
     loading,
     signInWithGoogle,
+    signInWithEmail,
+    signUpWithEmail,
     signOut,
     resetPassword,
     authError,
