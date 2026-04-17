@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '../lib/supabase';
 
-const NYU_EMAIL_DOMAIN_REGEX = /@(nyu\.edu|nyu\.edu\.cn)$/i;
+const NYU_EMAIL_DOMAIN_REGEX = /@(nyu\.edu)$/i;
 
 function isAllowedNyuEmail(email) {
   return typeof email === 'string' && NYU_EMAIL_DOMAIN_REGEX.test(email.trim());
