@@ -19,6 +19,7 @@ function App() {
     loading: authLoading,
     signInWithGoogle,
     signOut,
+    authError,
     enabled: authEnabled,
   } = useAuth();
 
@@ -68,7 +69,11 @@ function App() {
   // Auth gate — must sign in with Google
   if (authEnabled && !authLoading && !user) {
     return (
-      <AuthGate onSignInWithGoogle={signInWithGoogle} loading={authLoading} />
+      <AuthGate
+        onSignInWithGoogle={signInWithGoogle}
+        loading={authLoading}
+        authError={authError}
+      />
     );
   }
 
