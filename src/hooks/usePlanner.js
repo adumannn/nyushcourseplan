@@ -255,6 +255,23 @@ export default function usePlanner(user) {
     setPlan(createEmptyPlan());
   }, []);
 
+  const replacePlan = useCallback((incoming) => {
+    if (!incoming || typeof incoming !== "object") return;
+    if (incoming.plan && typeof incoming.plan === "object") {
+      const merged = { ...createEmptyPlan(), ...incoming.plan };
+      setPlan(deduplicatePlan(merged));
+    }
+    if (typeof incoming.major === "string" && incoming.major) {
+      setMajor(incoming.major);
+    }
+    if (typeof incoming.studentName === "string") {
+      setStudentName(incoming.studentName);
+    }
+    if (incoming.studyAway !== undefined) {
+      setStudyAway(normalizeStudyAway(incoming.studyAway));
+    }
+  }, []);
+
   const toggleStudyAwaySemester = useCallback((semesterId) => {
     if (!STUDY_AWAY.eligibleSemesters.includes(semesterId)) {
       return;
@@ -576,6 +593,7 @@ export default function usePlanner(user) {
     moveCourse,
     clearSemester,
     clearAll,
+    replacePlan,
     totalCredits,
     semesterCredits,
     requirementProgress,

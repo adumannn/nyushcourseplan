@@ -8,6 +8,7 @@ import {
   AlertTriangle,
 } from "lucide-react";
 import { MAJORS } from "../data/courses";
+import PlanMenu from "./PlanMenu";
 
 export default function Header({
   major,
@@ -22,6 +23,11 @@ export default function Header({
   isStudyAwayOpen = false,
   user,
   onSignOut,
+  plan,
+  studentName,
+  studyAway,
+  semesterCredits,
+  onImportPlan,
 }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef(null);
@@ -113,6 +119,18 @@ export default function Header({
               {studyAwayLabel}
             </span>
           </button>
+
+          <div className="h-4 w-px bg-border/60" />
+
+          <PlanMenu
+            plan={plan}
+            major={major}
+            studentName={studentName}
+            studyAway={studyAway}
+            totalCredits={totalCredits}
+            semesterCredits={semesterCredits}
+            onImport={onImportPlan}
+          />
 
           <div className="h-4 w-px bg-border/60" />
 
