@@ -30,9 +30,11 @@ function App() {
     plan,
     major,
     setMajor,
+    studentName,
     addCourse,
     removeCourse,
     moveCourse,
+    replacePlan,
     studyAway,
     toggleStudyAwaySemester,
     setStudyAwayLocation,
@@ -101,6 +103,11 @@ function App() {
         isStudyAwayOpen={studyAwayPickerOpen}
         user={user}
         onSignOut={signOut}
+        plan={plan}
+        studentName={studentName}
+        studyAway={studyAway}
+        semesterCredits={semesterCredits}
+        onImportPlan={replacePlan}
       />
 
       <div className="planner-main relative z-0 flex-1 min-h-0 flex flex-col lg:flex-row">
