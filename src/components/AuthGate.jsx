@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import nyuShortLogo from '../assets/NYU_Short_RGB_Color.png';
-import authHero from '../assets/auth-hero.jpg';
 
 const DEFAULT_SIGNIN_ERROR = 'Could not sign you in. Please try again.';
 const DEFAULT_SIGNUP_ERROR = 'Could not create your account. Please try again.';
@@ -120,15 +119,17 @@ export default function AuthGate({
 
   return (
     <div className="auth-shell">
-      <main className="auth-layout">
-        {/* ─── Left: form pane ─── */}
-        <section className="auth-pane" aria-label="Sign in to Course Planner">
-          <header className="auth-brand">
-            <img src={nyuShortLogo} alt="NYU" className="auth-logo" />
-            <span className="auth-brand-name">Course Planner</span>
-          </header>
+      <div className="auth-mesh" aria-hidden="true" />
+      <nav className="auth-topbar">
+        <header className="auth-brand">
+          <img src={nyuShortLogo} alt="NYU" className="auth-logo" />
+          <span className="auth-brand-name">Course Planner</span>
+        </header>
+        <span className="auth-topbar-meta">Restricted to NYU accounts</span>
+      </nav>
 
-          <div className="auth-card">
+      <main className="auth-main">
+        <section className="auth-card" aria-label="Sign in to Course Planner">
             <span className="auth-eyebrow">NYU Shanghai</span>
             <h1 className="auth-title text-balance">
               {isSignUp
@@ -249,19 +250,13 @@ export default function AuthGate({
                 {errorMessage}
               </p>
             ) : null}
-          </div>
-
-          <footer className="auth-footer">
-            <span>Restricted to nyu.edu accounts.</span>
-            <span className="auth-footer-dot" aria-hidden="true">&middot;</span>
-            <span>Your data stays in your account.</span>
-          </footer>
         </section>
 
-        {/* ─── Right: full-bleed visual ─── */}
-        <aside className="auth-visual" aria-hidden="true">
-          <img src={authHero} alt="" className="auth-visual-img" />
-        </aside>
+        <footer className="auth-footer">
+          <span>Restricted to nyu.edu &amp; nyu.edu.cn accounts.</span>
+          <span className="auth-footer-dot" aria-hidden="true">&middot;</span>
+          <span>Your data stays in your account.</span>
+        </footer>
       </main>
     </div>
   );
