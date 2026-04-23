@@ -59,8 +59,47 @@ export default function Header({
     <header className="planner-header relative z-40 border-b border-border/40 px-4 sm:px-6 py-3 sm:py-4">
       <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
         {/* Left — branding + major */}
-        <div className="flex min-w-0 items-center gap-3 sm:gap-4">
-          <h1 className="text-lg">Course Planner</h1>
+        <div className="flex min-w-0 flex-wrap items-center gap-3 sm:gap-4">
+          <div className="planner-brand" aria-label="Course Planner">
+            <span className="planner-logo-mark" aria-hidden="true">
+              <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+                <rect width="64" height="64" rx="12" fill="#0b0e17" />
+                <rect
+                  x="10"
+                  y="44"
+                  width="20"
+                  height="10"
+                  rx="2.5"
+                  fill="#57068c"
+                />
+                <rect
+                  x="18"
+                  y="32"
+                  width="20"
+                  height="10"
+                  rx="2.5"
+                  fill="#7f28b8"
+                />
+                <rect
+                  x="26"
+                  y="20"
+                  width="20"
+                  height="10"
+                  rx="2.5"
+                  fill="#a371ff"
+                />
+                <rect
+                  x="34"
+                  y="8"
+                  width="20"
+                  height="10"
+                  rx="2.5"
+                  fill="#c8a2ff"
+                />
+              </svg>
+            </span>
+            <h1 className="planner-brand-name text-lg">Course Planner</h1>
+          </div>
           <div className="hidden sm:block h-4 w-px bg-border/60" />
           <select
             className="min-w-0 max-w-44 sm:max-w-none text-sm text-muted-foreground bg-transparent border-none outline-none cursor-pointer appearance-none pr-4"
