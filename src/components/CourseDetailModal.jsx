@@ -10,6 +10,7 @@ import { CATEGORIES, CORE_REQUIREMENTS } from "../data/courses";
 import useCatalog from "../hooks/useCatalog";
 import { LOCAL_CATALOG_BY_ID } from "../lib/localCatalog";
 import { serializePrerequisiteGroup } from "../lib/prerequisites";
+import ReviewSummary from "./ReviewSummary";
 
 export default function CourseDetailModal({
   course: passedCourse,
@@ -187,6 +188,8 @@ export default function CourseDetailModal({
               )}
             </div>
           )}
+
+          <ReviewSummary courseId={course.id} />
 
           {/* Majors */}
           {course.majors && course.majors.length > 0 && (
