@@ -1,12 +1,128 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { supabase } from "../lib/supabase";
-import { COURSE_CATALOG } from "../data/courses";
+import { LOCAL_CATALOG_COURSES } from "../lib/localCatalog";
+import { hydrateCoursePrerequisites } from "../lib/prerequisites";
 
-const LOCAL_COURSES = COURSE_CATALOG.map((course) => ({ ...course }));
+const LOCAL_COURSES = LOCAL_CATALOG_COURSES.map((course) => ({ ...course }));
 
 const LOCAL_COURSES_BY_ID = new Map(
   LOCAL_COURSES.map((course) => [course.id, course]),
 );
+
+function getCoursePrefix(value) {
+  if (typeof value !== "string") return "";
+
+  const trimmed = value.trim().toUpperCase();
+  if (!trimmed) return "";
+
+  const dashIndex = trimmed.indexOf("-");
+  if (dashIndex > 0) return trimmed.slice(0, dashIndex);
+
+  const spaceIndex = trimmed.indexOf(" ");
+  if (spaceIndex > 0) return trimmed.slice(0, spaceIndex);
+
+  return trimmed;
+}
+
+const CATEGORY_BY_PREFIX = (() => {
+  const categoriesByPrefix = new Map();
+
+  for (const course of LOCAL_COURSES) {
+    const prefix = getCoursePrefix(course.id || course.code);
+    if (!prefix || !course.category) continue;
+
+    if (!categoriesByPrefix.has(prefix)) {
+      categoriesByPrefix.set(prefix, new Set());
+    }
+    categoriesByPrefix.get(prefix).add(course.category);
+  }
+
+  const resolved = new Map();
+  for (const [prefix, categories] of categoriesByPrefix.entries()) {
+    if (categories.size === 1) {
+      resolved.set(prefix, [...categories][0]);
+    }
+  }
+
+  return resolved;
+})();
+
+const LANGUAGE_PREFIX_HINTS = new Set([
+  "ARAB",
+  "ARBC",
+  "CHIN",
+  "FREN",
+  "GERM",
+  "HEBR",
+  "HIND",
+  "ITAL",
+  "JAPN",
+  "KORE",
+  "PERS",
+  "PORT",
+  "RUSS",
+  "SPAN",
+  "SWED",
+  "TURK",
+]);
+
+const LANGUAGE_NAME_HINTS = [
+  "arabic",
+  "chinese",
+  "english for academic purposes",
+  "french",
+  "german",
+  "hebrew",
+  "hindi",
+  "italian",
+  "japanese",
+  "korean",
+  "language",
+  "persian",
+  "portuguese",
+  "russian",
+  "spanish",
+  "swedish",
+  "turkish",
+];
+
+function hasLanguageKeyword(value) {
+  if (!value) return false;
+  return LANGUAGE_NAME_HINTS.some((keyword) => value.includes(keyword));
+}
+
+function inferCategory(remoteCourse, localCourse, subject) {
+  if (localCourse?.category) return localCourse.category;
+
+  const subjectPrefix = getCoursePrefix(subject?.code || remoteCourse?.code);
+  if (CATEGORY_BY_PREFIX.has(subjectPrefix)) {
+    return CATEGORY_BY_PREFIX.get(subjectPrefix);
+  }
+
+  const normalizedName =
+    typeof remoteCourse?.name === "string"
+      ? remoteCourse.name.trim().toLowerCase()
+      : "";
+  const normalizedSubjectName =
+    typeof subject?.name === "string" ? subject.name.toLowerCase() : "";
+  const startsWithLanguageLevel =
+    /^(elementary|intermediate|advanced|beginning|intensive)\b/.test(
+      normalizedName,
+    );
+  const languageKeywordInName = hasLanguageKeyword(normalizedName);
+  const languageKeywordInSubject = hasLanguageKeyword(normalizedSubjectName);
+
+  if (
+    LANGUAGE_PREFIX_HINTS.has(subjectPrefix) ||
+    languageKeywordInSubject ||
+    (startsWithLanguageLevel && languageKeywordInName) ||
+    (subjectPrefix === "ENGL" && normalizedName.includes("academic purposes"))
+  ) {
+    return "language";
+  }
+
+  return "elective";
+}
 
 function normalizeSubject(subject) {
   if (!subject) return null;
@@ -28,7 +144,9 @@ function buildPrerequisiteMap(relationships) {
     if (!courseId || !relatedCourseId) continue;
 
     const existing = map.get(courseId) || [];
-    existing.push(relatedCourseId);
+    if (!existing.includes(relatedCourseId)) {
+      existing.push(relatedCourseId);
+    }
     map.set(courseId, existing);
   }
 
@@ -50,12 +168,7 @@ function toRuntimeCourse(remoteCourse, prerequisiteMap) {
   const resolvedCredits =
     creditsMin ?? creditsMax ?? localCourse?.credits ?? 4;
 
-  const prerequisites =
-    prerequisiteMap.get(remoteCourse.id) ||
-    localCourse?.prerequisites ||
-    [];
-
-  return {
+  return hydrateCoursePrerequisites({
     id: remoteCourse.id,
     code: remoteCourse.code || localCourse?.code || remoteCourse.id,
     name: remoteCourse.name || localCourse?.name || remoteCourse.id,
@@ -63,11 +176,14 @@ function toRuntimeCourse(remoteCourse, prerequisiteMap) {
     creditsMin: creditsMin ?? resolvedCredits,
     creditsMax: creditsMax ?? resolvedCredits,
     isVariableCredit: Boolean(remoteCourse.is_variable_credit),
-    category: localCourse?.category || "elective",
+    category: inferCategory(remoteCourse, localCourse, subject),
     department:
       localCourse?.department || subject?.name || subject?.code || "General",
     description: remoteCourse.description || localCourse?.description || "",
-    prerequisites,
+    prerequisites:
+      prerequisiteMap.get(remoteCourse.id) ||
+      localCourse?.prerequisites ||
+      [],
     prerequisiteNote:
       remoteCourse.prerequisite_note || localCourse?.prerequisiteNote || "",
     requirementIds: localCourse?.requirementIds || [],
@@ -76,7 +192,7 @@ function toRuntimeCourse(remoteCourse, prerequisiteMap) {
     offeringTerms: Array.isArray(remoteCourse.offering_terms)
       ? remoteCourse.offering_terms
       : [],
-  };
+  });
 }
 
 function buildCatalogIndexes(courses) {
@@ -147,15 +263,22 @@ async function fetchPublishedCatalog(schoolSlug) {
 export default function useCatalog(options = {}) {
   const schoolSlug = options.schoolSlug || "shanghai";
   const localFallback = options.localFallback || LOCAL_COURSES;
+  const resolvedLocalFallback = useMemo(
+    () =>
+      (localFallback || []).map((course) =>
+        hydrateCoursePrerequisites({ ...course }),
+      ),
+    [localFallback],
+  );
 
-  const [courses, setCourses] = useState(localFallback);
+  const [courses, setCourses] = useState(resolvedLocalFallback);
   const [source, setSource] = useState("local");
   const [loading, setLoading] = useState(Boolean(supabase));
   const [error, setError] = useState(null);
 
   const loadCatalog = useCallback(async () => {
     if (!supabase) {
-      setCourses(localFallback);
+      setCourses(resolvedLocalFallback);
       setSource("local");
       setError(null);
       setLoading(false);
@@ -169,7 +292,7 @@ export default function useCatalog(options = {}) {
         await fetchPublishedCatalog(schoolSlug);
 
       if (!remoteCourses.length) {
-        setCourses(localFallback);
+        setCourses(resolvedLocalFallback);
         setSource("local");
         setError(null);
         return;
@@ -184,7 +307,7 @@ export default function useCatalog(options = {}) {
         mergedRemoteCourses.map((course) => [course.id, course]),
       );
 
-      for (const localCourse of localFallback) {
+      for (const localCourse of resolvedLocalFallback) {
         if (!mergedById.has(localCourse.id)) {
           mergedById.set(localCourse.id, localCourse);
         }
@@ -200,13 +323,13 @@ export default function useCatalog(options = {}) {
       setSource("supabase");
       setError(null);
     } catch (err) {
-      setCourses(localFallback);
+      setCourses(resolvedLocalFallback);
       setSource("local");
       setError(err);
     } finally {
       setLoading(false);
     }
-  }, [localFallback, schoolSlug]);
+  }, [resolvedLocalFallback, schoolSlug]);
 
   useEffect(() => {
     let cancelled = false;
@@ -214,7 +337,7 @@ export default function useCatalog(options = {}) {
     async function load() {
       if (!supabase) {
         if (!cancelled) {
-          setCourses(localFallback);
+          setCourses(resolvedLocalFallback);
           setSource("local");
           setError(null);
           setLoading(false);
@@ -233,7 +356,7 @@ export default function useCatalog(options = {}) {
         if (cancelled) return;
 
         if (!remoteCourses.length) {
-          setCourses(localFallback);
+          setCourses(resolvedLocalFallback);
           setSource("local");
           setError(null);
           return;
@@ -248,7 +371,7 @@ export default function useCatalog(options = {}) {
           mergedRemoteCourses.map((course) => [course.id, course]),
         );
 
-        for (const localCourse of localFallback) {
+        for (const localCourse of resolvedLocalFallback) {
           if (!mergedById.has(localCourse.id)) {
             mergedById.set(localCourse.id, localCourse);
           }
@@ -265,7 +388,7 @@ export default function useCatalog(options = {}) {
         setError(null);
       } catch (err) {
         if (cancelled) return;
-        setCourses(localFallback);
+        setCourses(resolvedLocalFallback);
         setSource("local");
         setError(err);
       } finally {
@@ -280,7 +403,7 @@ export default function useCatalog(options = {}) {
     return () => {
       cancelled = true;
     };
-  }, [localFallback, schoolSlug]);
+  }, [resolvedLocalFallback, schoolSlug]);
 
   const indexes = useMemo(() => buildCatalogIndexes(courses), [courses]);
 

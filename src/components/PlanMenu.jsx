@@ -1,11 +1,17 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useMemo, useCallback } from "react";
 import {
+  AlertTriangle,
+  CheckCircle2,
+  Combine,
   Download,
+  FileUp,
   Upload,
   FileJson,
   FileSpreadsheet,
   Printer,
   ChevronDown,
+  LoaderCircle,
+  RefreshCw,
 } from "lucide-react";
 import {
   exportPlanAsJSON,
@@ -14,6 +20,55 @@ import {
   importPlanFromJSON,
   importPlanFromCSV,
 } from "../lib/planTransfer";
+import { SEMESTERS, getMajorLabel } from "../data/courses";
+
+function pluralize(count, singular, plural = `${singular}s`) {
+  return `${count} ${count === 1 ? singular : plural}`;
+}
+
+function summarizePlan(plan) {
+  const bySemester = {};
+  let courseCount = 0;
+  let customCourseCount = 0;
+
+  SEMESTERS.forEach((semester) => {
+    const courses = Array.isArray(plan?.[semester.id]) ? plan[semester.id] : [];
+    bySemester[semester.id] = courses.length;
+    courseCount += courses.length;
+    customCourseCount += courses.filter((course) =>
+      String(course?.id || "").startsWith("custom-"),
+    ).length;
+  });
+
+  return {
+    courseCount,
+    customCourseCount,
+    bySemester,
+  };
+}
+
+function resolveImportParser(file) {
+  const filename = (file?.name || "").toLowerCase();
+  const mimeType = (file?.type || "").toLowerCase();
+
+  if (
+    filename.endsWith(".json") ||
+    mimeType.includes("application/json") ||
+    mimeType.includes("text/json")
+  ) {
+    return { parser: importPlanFromJSON, label: "JSON" };
+  }
+
+  if (
+    filename.endsWith(".csv") ||
+    mimeType.includes("text/csv") ||
+    mimeType.includes("application/csv")
+  ) {
+    return { parser: importPlanFromCSV, label: "CSV" };
+  }
+
+  throw new Error("Unsupported file type. Please import a .json or .csv file.");
+}
 
 export default function PlanMenu({
   plan,
@@ -25,9 +80,14 @@ export default function PlanMenu({
   onImport,
 }) {
   const [open, setOpen] = useState(false);
+  const [status, setStatus] = useState(null);
+  const [importOpen, setImportOpen] = useState(false);
+  const [importLoading, setImportLoading] = useState(false);
+  const [importError, setImportError] = useState("");
+  const [importPreview, setImportPreview] = useState(null);
+  const [dragActive, setDragActive] = useState(false);
   const menuRef = useRef(null);
-  const jsonInputRef = useRef(null);
-  const csvInputRef = useRef(null);
+  const fileInputRef = useRef(null);
 
   useEffect(() => {
     const handleClick = (e) => {
@@ -39,30 +99,68 @@ export default function PlanMenu({
     return () => document.removeEventListener("mousedown", handleClick);
   }, []);
 
+  useEffect(() => {
+    if (!status) return;
+    const timeout = window.setTimeout(() => setStatus(null), 4500);
+    return () => window.clearTimeout(timeout);
+  }, [status]);
+
+  useEffect(() => {
+    if (!importOpen) return;
+
+    const onKeyDown = (event) => {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        setImportOpen(false);
+        setDragActive(false);
+      }
+    };
+
+    document.addEventListener("keydown", onKeyDown);
+    return () => document.removeEventListener("keydown", onKeyDown);
+  }, [importOpen]);
+
   const closeMenu = () => setOpen(false);
+
+  const announceStatus = useCallback((tone, message) => {
+    setStatus({ tone, message });
+  }, []);
 
   const handleExportJSON = () => {
     closeMenu();
     try {
-      exportPlanAsJSON({ plan, major, studentName, studyAway });
+      const result = exportPlanAsJSON({
+        plan,
+        major,
+        studentName,
+        studyAway,
+      });
+      announceStatus(
+        "success",
+        `Exported ${pluralize(result.courseCount, "course")} to ${result.filename}.`,
+      );
     } catch (err) {
-      alert(err?.message || "Failed to export JSON.");
+      announceStatus("error", err?.message || "Failed to export JSON.");
     }
   };
 
   const handleExportCSV = () => {
     closeMenu();
     try {
-      exportPlanAsCSV({ plan, studentName });
+      const result = exportPlanAsCSV({ plan, studentName });
+      announceStatus(
+        "success",
+        `Exported ${pluralize(result.courseCount, "course")} to ${result.filename}.`,
+      );
     } catch (err) {
-      alert(err?.message || "Failed to export CSV.");
+      announceStatus("error", err?.message || "Failed to export CSV.");
     }
   };
 
   const handleExportPDF = () => {
     closeMenu();
     try {
-      exportPlanAsPDF({
+      const result = exportPlanAsPDF({
         plan,
         major,
         studentName,
@@ -70,39 +168,115 @@ export default function PlanMenu({
         totalCredits,
         semesterCredits,
       });
+      announceStatus(
+        "success",
+        `Opened print preview for ${pluralize(result.courseCount, "course")}.`,
+      );
     } catch (err) {
-      alert(err?.message || "Failed to export PDF.");
+      announceStatus("error", err?.message || "Failed to export PDF.");
     }
   };
 
-  const runImport = async (file, parser, label) => {
+  const resetImportState = () => {
+    setImportError("");
+    setImportPreview(null);
+    setImportLoading(false);
+    setDragActive(false);
+  };
+
+  const openImportModal = () => {
+    closeMenu();
+    resetImportState();
+    setImportOpen(true);
+  };
+
+  const runImportPreview = async (file) => {
     if (!file) return;
+
+    setImportLoading(true);
+    setImportError("");
+    setImportPreview(null);
+
     try {
+      const { parser, label } = resolveImportParser(file);
       const result = await parser(file);
-      const courseCount = Object.values(result.plan || {}).reduce(
-        (sum, arr) => sum + (arr?.length || 0),
-        0,
-      );
-      const confirmed = window.confirm(
-        `Import ${courseCount} course${courseCount === 1 ? "" : "s"} from ${label}?\n\nThis will replace your current plan.`,
-      );
-      if (!confirmed) return;
-      onImport(result);
+      const summary = result?.summary || summarizePlan(result?.plan);
+      const warnings = Array.isArray(result?.warnings) ? result.warnings : [];
+
+      setImportPreview({
+        fileName: file.name,
+        label,
+        result,
+        summary,
+        warnings,
+      });
     } catch (err) {
-      alert(err?.message || `Failed to import ${label}.`);
+      setImportError(err?.message || "Failed to import file.");
+    } finally {
+      setImportLoading(false);
+      setDragActive(false);
     }
   };
 
-  const handleJSONSelected = async (e) => {
+  const handleFileSelected = async (e) => {
     const file = e.target.files?.[0];
     e.target.value = "";
-    await runImport(file, importPlanFromJSON, "JSON");
+    await runImportPreview(file);
   };
 
-  const handleCSVSelected = async (e) => {
-    const file = e.target.files?.[0];
-    e.target.value = "";
-    await runImport(file, importPlanFromCSV, "CSV");
+  const applyImport = (mode) => {
+    if (!importPreview?.result) return;
+
+    onImport(importPreview.result, mode);
+
+    const importedCount = importPreview.summary?.courseCount ?? 0;
+    announceStatus(
+      "success",
+      `${mode === "merge" ? "Merged" : "Replaced with"} ${pluralize(importedCount, "course")} from ${importPreview.fileName}.`,
+    );
+
+    setImportOpen(false);
+    resetImportState();
+  };
+
+  const populatedSemesters = useMemo(() => {
+    if (!importPreview?.summary?.bySemester) return [];
+
+    return SEMESTERS.map((semester) => ({
+      id: semester.id,
+      label: semester.label,
+      count: importPreview.summary.bySemester[semester.id] || 0,
+    })).filter((semester) => semester.count > 0);
+  }, [importPreview]);
+
+  const importMajorLabel =
+    importPreview?.result?.major && typeof importPreview.result.major === "string"
+      ? getMajorLabel(importPreview.result.major)
+      : "";
+
+  const importStudentName =
+    typeof importPreview?.result?.studentName === "string"
+      ? importPreview.result.studentName.trim()
+      : "";
+
+  const statusToneClass =
+    status?.tone === "error"
+      ? "plan-transfer-status--error"
+      : "plan-transfer-status--success";
+
+  const statusIcon =
+    status?.tone === "error" ? (
+      <AlertTriangle className="h-3.5 w-3.5" />
+    ) : (
+      <CheckCircle2 className="h-3.5 w-3.5" />
+    );
+
+  const handleDrop = async (event) => {
+    event.preventDefault();
+    setDragActive(false);
+
+    const file = event.dataTransfer?.files?.[0];
+    await runImportPreview(file);
   };
 
   return (
@@ -126,18 +300,11 @@ export default function PlanMenu({
       </button>
 
       <input
-        ref={jsonInputRef}
+        ref={fileInputRef}
         type="file"
-        accept="application/json,.json"
+        accept="application/json,text/json,text/csv,application/csv,.json,.csv"
         className="hidden"
-        onChange={handleJSONSelected}
-      />
-      <input
-        ref={csvInputRef}
-        type="file"
-        accept="text/csv,.csv"
-        className="hidden"
-        onChange={handleCSVSelected}
+        onChange={handleFileSelected}
       />
 
       {open && (
@@ -150,25 +317,11 @@ export default function PlanMenu({
           </div>
           <button
             role="menuitem"
-            onClick={() => {
-              closeMenu();
-              jsonInputRef.current?.click();
-            }}
+            onClick={openImportModal}
             className="w-full flex items-center gap-3 px-4 py-2 text-sm text-muted-foreground hover:bg-accent hover:text-foreground transition-colors cursor-pointer"
           >
             <Upload className="h-4 w-4" />
-            From JSON
-          </button>
-          <button
-            role="menuitem"
-            onClick={() => {
-              closeMenu();
-              csvInputRef.current?.click();
-            }}
-            className="w-full flex items-center gap-3 px-4 py-2 text-sm text-muted-foreground hover:bg-accent hover:text-foreground transition-colors cursor-pointer"
-          >
-            <Upload className="h-4 w-4" />
-            From CSV
+            Import File
           </button>
 
           <div className="border-t border-border/40 my-1" />
@@ -199,6 +352,166 @@ export default function PlanMenu({
             <Printer className="h-4 w-4" />
             As PDF (Print)
           </button>
+        </div>
+      )}
+
+      {status && (
+        <div
+          className={`plan-transfer-status ${statusToneClass}`}
+          role="status"
+          aria-live="polite"
+        >
+          {statusIcon}
+          <span>{status.message}</span>
+        </div>
+      )}
+
+      {importOpen && (
+        <div className="modal-overlay" onClick={() => setImportOpen(false)}>
+          <div
+            className="modal plan-transfer-modal"
+            onClick={(event) => event.stopPropagation()}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="plan-transfer-title"
+          >
+            <div className="modal-header">
+              <div>
+                <h2 id="plan-transfer-title">Import Plan</h2>
+                <p className="plan-transfer-header-copy">
+                  Upload a JSON or CSV export, preview it, then merge or replace
+                  your current plan.
+                </p>
+              </div>
+              <button
+                className="modal-close"
+                onClick={() => setImportOpen(false)}
+                aria-label="Close import dialog"
+              >
+                ×
+              </button>
+            </div>
+
+            <div className="plan-transfer-body">
+              <div
+                className={`plan-transfer-dropzone ${dragActive ? "plan-transfer-dropzone--active" : ""} ${importLoading ? "plan-transfer-dropzone--busy" : ""}`}
+                onDragOver={(event) => {
+                  event.preventDefault();
+                  setDragActive(true);
+                }}
+                onDragLeave={() => setDragActive(false)}
+                onDrop={handleDrop}
+              >
+                <FileUp className="h-5 w-5" />
+                <div className="plan-transfer-dropzone-copy">
+                  <p>Drop a plan file here</p>
+                  <span>or</span>
+                  <button
+                    type="button"
+                    className="plan-transfer-link-btn"
+                    onClick={() => fileInputRef.current?.click()}
+                    disabled={importLoading}
+                  >
+                    choose a file
+                  </button>
+                </div>
+                <small>Supported: .json and .csv</small>
+              </div>
+
+              {importLoading && (
+                <div className="plan-transfer-feedback" role="status">
+                  <LoaderCircle className="h-4 w-4 animate-spin" />
+                  <span>Reading and validating your file...</span>
+                </div>
+              )}
+
+              {importError && (
+                <div className="plan-transfer-feedback plan-transfer-feedback--error">
+                  <AlertTriangle className="h-4 w-4" />
+                  <span>{importError}</span>
+                </div>
+              )}
+
+              {importPreview && (
+                <div className="plan-transfer-preview">
+                  <div className="plan-transfer-preview-head">
+                    <h3>{importPreview.fileName}</h3>
+                    <span className="plan-transfer-badge">
+                      {importPreview.label}
+                    </span>
+                  </div>
+
+                  <div className="plan-transfer-metrics">
+                    <div className="plan-transfer-metric">
+                      <span>Courses</span>
+                      <strong>
+                        {importPreview.summary?.courseCount ?? 0}
+                      </strong>
+                    </div>
+                    <div className="plan-transfer-metric">
+                      <span>Custom</span>
+                      <strong>
+                        {importPreview.summary?.customCourseCount ?? 0}
+                      </strong>
+                    </div>
+                    <div className="plan-transfer-metric">
+                      <span>Semesters</span>
+                      <strong>{populatedSemesters.length}</strong>
+                    </div>
+                  </div>
+
+                  {(importMajorLabel || importStudentName) && (
+                    <div className="plan-transfer-meta">
+                      {importMajorLabel && <span>Major: {importMajorLabel}</span>}
+                      {importStudentName && (
+                        <span>Student: {importStudentName}</span>
+                      )}
+                    </div>
+                  )}
+
+                  {populatedSemesters.length > 0 && (
+                    <div className="plan-transfer-semesters">
+                      {populatedSemesters.map((semester) => (
+                        <span key={semester.id} className="plan-transfer-chip">
+                          {semester.label}: {semester.count}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+
+                  {importPreview.warnings?.length > 0 && (
+                    <div className="plan-transfer-warnings">
+                      {importPreview.warnings.map((warning) => (
+                        <div key={warning} className="plan-transfer-warning-item">
+                          <AlertTriangle className="h-3.5 w-3.5" />
+                          <span>{warning}</span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  <div className="plan-transfer-actions">
+                    <button
+                      type="button"
+                      className="plan-transfer-action-btn plan-transfer-action-btn--merge"
+                      onClick={() => applyImport("merge")}
+                    >
+                      <Combine className="h-4 w-4" />
+                      Merge Into Current Plan
+                    </button>
+                    <button
+                      type="button"
+                      className="plan-transfer-action-btn plan-transfer-action-btn--replace"
+                      onClick={() => applyImport("replace")}
+                    >
+                      <RefreshCw className="h-4 w-4" />
+                      Replace Current Plan
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
         </div>
       )}
     </div>

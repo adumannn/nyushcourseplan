@@ -1,12 +1,16 @@
-import { COURSE_CATALOG, SEMESTERS, STUDY_AWAY } from "../data/courses";
+import { SEMESTERS, STUDY_AWAY } from "../data/courses.js";
+import {
+  LOCAL_CATALOG_BY_ID,
+  mergeCourseWithLocalCatalog,
+} from "./localCatalog.js";
 
-const PLAN_EXPORT_VERSION = 1;
+const PLAN_EXPORT_VERSION = 2;
 const PLAN_EXPORT_KIND = "nyu-shanghai-course-plan";
 
 const SEMESTER_IDS = new Set(SEMESTERS.map((s) => s.id));
 const STUDY_AWAY_SEMESTER_IDS = new Set(STUDY_AWAY.eligibleSemesters);
 const STUDY_AWAY_LOCATIONS = new Set(STUDY_AWAY.locations);
-const CATALOG_BY_ID = new Map(COURSE_CATALOG.map((c) => [c.id, c]));
+const CATALOG_BY_ID = LOCAL_CATALOG_BY_ID;
 
 function buildEmptyPlan() {
   const plan = {};
@@ -23,6 +27,69 @@ function timestampSlug() {
 function filenameBase(studentName) {
   const clean = (studentName || "").trim().replace(/[^\w]+/g, "_");
   return clean ? `${clean}-course-plan` : "course-plan";
+}
+
+function countCoursesInPlan(plan) {
+  return Object.values(plan || {}).reduce(
+    (sum, courses) => sum + (Array.isArray(courses) ? courses.length : 0),
+    0,
+  );
+}
+
+function summarizePlan(plan) {
+  const bySemester = {};
+  let courseCount = 0;
+  let customCourseCount = 0;
+
+  for (const semester of SEMESTERS) {
+    const courses = Array.isArray(plan?.[semester.id]) ? plan[semester.id] : [];
+    bySemester[semester.id] = courses.length;
+    courseCount += courses.length;
+    customCourseCount += courses.filter((course) =>
+      String(course?.id || "").startsWith("custom-"),
+    ).length;
+  }
+
+  return {
+    courseCount,
+    customCourseCount,
+    bySemester,
+  };
+}
+
+function pluralize(count, singular, plural = `${singular}s`) {
+  return `${count} ${count === 1 ? singular : plural}`;
+}
+
+function buildImportWarnings(stats) {
+  const warnings = [];
+
+  if (stats.invalidSemesterRows > 0) {
+    warnings.push(
+      `Skipped ${pluralize(stats.invalidSemesterRows, "row")} with unknown semester IDs.`,
+    );
+  }
+
+  if (stats.duplicateCourses > 0) {
+    warnings.push(
+      `Skipped ${pluralize(stats.duplicateCourses, "duplicate course")} already present in this file.`,
+    );
+  }
+
+  if (stats.missingCourseIds > 0) {
+    warnings.push(
+      `Skipped ${pluralize(stats.missingCourseIds, "row")} without a course ID.`,
+    );
+  }
+
+  if (stats.unknownCatalogCourses > 0) {
+    const verb = stats.unknownCatalogCourses === 1 ? "was" : "were";
+    warnings.push(
+      `${pluralize(stats.unknownCatalogCourses, "course")} not found in the catalog ${verb} imported with fallback details.`,
+    );
+  }
+
+  return warnings;
 }
 
 function triggerDownload(blob, filename) {
@@ -63,7 +130,9 @@ function normalizeStudyAwayPayload(studyAway) {
 
 function resolveCourse(courseId, fallback) {
   const catalogCourse = CATALOG_BY_ID.get(courseId);
-  if (catalogCourse) return catalogCourse;
+  if (catalogCourse) {
+    return mergeCourseWithLocalCatalog(fallback || {}, { courseId });
+  }
 
   if (!courseId) return null;
   const rawCredits = fallback?.credits;
@@ -84,7 +153,13 @@ function resolveCourse(courseId, fallback) {
 
 // ─── Export ───
 
-export function exportPlanAsJSON({ plan, major, studentName, studyAway }) {
+export function exportPlanAsJSON({
+  plan,
+  major,
+  studentName,
+  studyAway,
+}) {
+  const filename = `${filenameBase(studentName)}-${timestampSlug()}.json`;
   const payload = {
     kind: PLAN_EXPORT_KIND,
     version: PLAN_EXPORT_VERSION,
@@ -109,7 +184,12 @@ export function exportPlanAsJSON({ plan, major, studentName, studyAway }) {
   const blob = new Blob([JSON.stringify(payload, null, 2)], {
     type: "application/json",
   });
-  triggerDownload(blob, `${filenameBase(studentName)}-${timestampSlug()}.json`);
+  triggerDownload(blob, filename);
+
+  return {
+    filename,
+    courseCount: countCoursesInPlan(payload.semesters),
+  };
 }
 
 function csvCell(value) {
@@ -119,6 +199,7 @@ function csvCell(value) {
 }
 
 export function exportPlanAsCSV({ plan, studentName }) {
+  const filename = `${filenameBase(studentName)}-${timestampSlug()}.csv`;
   const headers = [
     "Semester",
     "Code",
@@ -138,10 +219,15 @@ export function exportPlanAsCSV({ plan, studentName }) {
     }
   }
 
-  const blob = new Blob([lines.join("\n")], {
+  const blob = new Blob([`\uFEFF${lines.join("\n")}`], {
     type: "text/csv;charset=utf-8",
   });
-  triggerDownload(blob, `${filenameBase(studentName)}-${timestampSlug()}.csv`);
+  triggerDownload(blob, filename);
+
+  return {
+    filename,
+    courseCount: countCoursesInPlan(plan),
+  };
 }
 
 function escapeHtml(value) {
@@ -255,6 +341,10 @@ ${
   w.document.open();
   w.document.write(html);
   w.document.close();
+
+  return {
+    courseCount: countCoursesInPlan(plan),
+  };
 }
 
 // ─── Import ───
@@ -285,13 +375,46 @@ export async function importPlanFromJSON(file) {
 
   const plan = buildEmptyPlan();
   const seen = new Set();
+  const stats = {
+    invalidSemesterRows: 0,
+    duplicateCourses: 0,
+    missingCourseIds: 0,
+    unknownCatalogCourses: 0,
+  };
+
   for (const [semId, rawCourses] of Object.entries(semestersSrc)) {
-    if (!SEMESTER_IDS.has(semId) || !Array.isArray(rawCourses)) continue;
+    if (!Array.isArray(rawCourses)) continue;
+
+    if (!SEMESTER_IDS.has(semId)) {
+      stats.invalidSemesterRows += rawCourses.length;
+      continue;
+    }
+
     for (const raw of rawCourses) {
-      const courseId = raw?.id;
-      if (!courseId || seen.has(courseId)) continue;
+      const courseId =
+        typeof raw?.id === "string"
+          ? raw.id.trim()
+          : typeof raw?.courseId === "string"
+            ? raw.courseId.trim()
+            : "";
+
+      if (!courseId) {
+        stats.missingCourseIds += 1;
+        continue;
+      }
+
+      if (seen.has(courseId)) {
+        stats.duplicateCourses += 1;
+        continue;
+      }
+
       const course = resolveCourse(courseId, raw);
       if (!course) continue;
+
+      if (!CATALOG_BY_ID.has(courseId) && !courseId.startsWith("custom-")) {
+        stats.unknownCatalogCourses += 1;
+      }
+
       plan[semId].push(course);
       seen.add(courseId);
     }
@@ -301,8 +424,17 @@ export async function importPlanFromJSON(file) {
   const studentName =
     typeof parsed.studentName === "string" ? parsed.studentName : "";
   const studyAway = normalizeStudyAwayPayload(parsed.studyAway);
+  const summary = summarizePlan(plan);
+  const warnings = buildImportWarnings(stats);
 
-  return { plan, major, studentName, studyAway };
+  return {
+    plan,
+    major,
+    studentName,
+    studyAway,
+    summary,
+    warnings,
+  };
 }
 
 function parseCSVLine(line) {
@@ -340,7 +472,9 @@ export async function importPlanFromCSV(file) {
   const rawLines = text.split(/\r?\n/).filter((l) => l.trim() !== "");
   if (rawLines.length === 0) throw new Error("CSV file is empty.");
 
-  const header = parseCSVLine(rawLines[0]).map((h) => h.trim().toLowerCase());
+  const header = parseCSVLine(rawLines[0].replace(/^\uFEFF/, "")).map((h) =>
+    h.trim().toLowerCase(),
+  );
   const idx = {
     semester: header.indexOf("semester"),
     code: header.indexOf("code"),
@@ -358,16 +492,33 @@ export async function importPlanFromCSV(file) {
 
   const plan = buildEmptyPlan();
   const seen = new Set();
+  const stats = {
+    invalidSemesterRows: 0,
+    duplicateCourses: 0,
+    missingCourseIds: 0,
+    unknownCatalogCourses: 0,
+  };
 
   for (let i = 1; i < rawLines.length; i++) {
     const cols = parseCSVLine(rawLines[i]);
     const semesterId = cols[idx.semester]?.trim();
-    if (!SEMESTER_IDS.has(semesterId)) continue;
+    if (!SEMESTER_IDS.has(semesterId)) {
+      stats.invalidSemesterRows += 1;
+      continue;
+    }
 
     const courseId =
       (idx.courseId >= 0 ? cols[idx.courseId]?.trim() : "") ||
       (idx.code >= 0 ? cols[idx.code]?.trim() : "");
-    if (!courseId || seen.has(courseId)) continue;
+    if (!courseId) {
+      stats.missingCourseIds += 1;
+      continue;
+    }
+
+    if (seen.has(courseId)) {
+      stats.duplicateCourses += 1;
+      continue;
+    }
 
     const fallback = {
       code: idx.code >= 0 ? cols[idx.code]?.trim() : undefined,
@@ -377,9 +528,18 @@ export async function importPlanFromCSV(file) {
     };
     const course = resolveCourse(courseId, fallback);
     if (!course) continue;
+
+    if (!CATALOG_BY_ID.has(courseId) && !courseId.startsWith("custom-")) {
+      stats.unknownCatalogCourses += 1;
+    }
+
     plan[semesterId].push(course);
     seen.add(courseId);
   }
 
-  return { plan };
+  return {
+    plan,
+    summary: summarizePlan(plan),
+    warnings: buildImportWarnings(stats),
+  };
 }

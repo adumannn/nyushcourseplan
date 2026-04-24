@@ -7,6 +7,7 @@ import {
   STUDY_AWAY,
 } from "../data/courses";
 import { localStoragePlan, supabasePlan } from "../lib/planStorage";
+import { buildPrerequisiteWarnings } from "../lib/prerequisites";
 
 const EAP_COURSE_IDS = new Set(["ENGL-SHU-100", "ENGL-SHU-101"]);
 
@@ -33,7 +34,9 @@ function deduplicatePlan(plan) {
       })
       .map((c) => {
         const catalogCourse = catalogById.get(c.id);
-        if (catalogCourse) return { ...c, category: catalogCourse.category };
+        if (catalogCourse) {
+          return { ...c, category: catalogCourse.category };
+        }
         return c;
       });
   }
@@ -175,20 +178,37 @@ export default function usePlanner(user) {
           });
         }
         // Always write to localStorage as cache
-        localStoragePlan.save({ plan, major, studentName, studyAway });
+        localStoragePlan.save({
+          plan,
+          major,
+          studentName,
+          studyAway,
+        });
       } finally {
         saveInProgress.current = false;
       }
     }, 500);
 
     return () => clearTimeout(saveTimeout.current);
-  }, [plan, major, studentName, studyAway, isCloud, planId, user, loaded]);
+  }, [
+    plan,
+    major,
+    studentName,
+    studyAway,
+    isCloud,
+    planId,
+    user,
+    loaded,
+  ]);
 
   const addCourse = useCallback((semesterId, course) => {
     setPlan((prev) => {
       const semCourses = prev[semesterId] || [];
       if (semCourses.some((c) => c.id === course.id)) return prev;
-      return { ...prev, [semesterId]: [...semCourses, course] };
+      return {
+        ...prev,
+        [semesterId]: [...semCourses, course],
+      };
     });
   }, []);
 
@@ -271,6 +291,61 @@ export default function usePlanner(user) {
       setStudyAway(normalizeStudyAway(incoming.studyAway));
     }
   }, []);
+
+  const mergePlan = useCallback((incoming) => {
+    if (!incoming || typeof incoming !== "object") return;
+    if (!incoming.plan || typeof incoming.plan !== "object") return;
+
+    setPlan((prev) => {
+      const nextPlan = createEmptyPlan();
+      const seenAcrossPlan = new Set();
+
+      for (const semester of SEMESTERS) {
+        const semesterId = semester.id;
+        const existingCourses = Array.isArray(prev[semesterId])
+          ? prev[semesterId]
+          : [];
+
+        const keptCourses = [];
+        existingCourses.forEach((course) => {
+          const courseId = course?.id;
+          if (!courseId || seenAcrossPlan.has(courseId)) return;
+          seenAcrossPlan.add(courseId);
+          keptCourses.push(course);
+        });
+
+        nextPlan[semesterId] = keptCourses;
+      }
+
+      for (const semester of SEMESTERS) {
+        const semesterId = semester.id;
+        const importedCourses = Array.isArray(incoming.plan[semesterId])
+          ? incoming.plan[semesterId]
+          : [];
+
+        importedCourses.forEach((course) => {
+          const courseId = course?.id;
+          if (!courseId || seenAcrossPlan.has(courseId)) return;
+          nextPlan[semesterId].push(course);
+          seenAcrossPlan.add(courseId);
+        });
+      }
+
+      return deduplicatePlan(nextPlan);
+    });
+  }, []);
+
+  const importPlan = useCallback(
+    (incoming, mode = "replace") => {
+      if (mode === "merge") {
+        mergePlan(incoming);
+        return;
+      }
+
+      replacePlan(incoming);
+    },
+    [mergePlan, replacePlan],
+  );
 
   const toggleStudyAwaySemester = useCallback((semesterId) => {
     if (!STUDY_AWAY.eligibleSemesters.includes(semesterId)) {
@@ -547,35 +622,13 @@ export default function usePlanner(user) {
     [allPlannedCourses],
   );
 
-  // Build a map of courseId → list of unmet prerequisite IDs
-  // A prerequisite is "met" if it appears in a semester that comes before the course's semester
+  // Build a map of courseId → list of unmet prerequisite groups.
+  // A prerequisite group is "met" if any course in the group appears before it.
   const prereqWarnings = useMemo(() => {
-    const semesterOrder = SEMESTERS.map((s) => s.id);
-    const warnings = {};
-
-    for (const [semId, courses] of Object.entries(plan)) {
-      const semIndex = semesterOrder.indexOf(semId);
-      // Collect all courseIds placed in earlier semesters
-      const priorCourseIds = new Set();
-      for (let i = 0; i < semIndex; i++) {
-        for (const c of plan[semesterOrder[i]] || []) {
-          priorCourseIds.add(c.id);
-        }
-      }
-
-      for (const course of courses) {
-        if (!course.prerequisites || course.prerequisites.length === 0)
-          continue;
-        const unmet = course.prerequisites.filter(
-          (preId) => !priorCourseIds.has(preId),
-        );
-        if (unmet.length > 0) {
-          warnings[course.id] = unmet;
-        }
-      }
-    }
-
-    return warnings;
+    return buildPrerequisiteWarnings(
+      plan,
+      SEMESTERS.map((semester) => semester.id),
+    );
   }, [plan]);
 
   return {
@@ -594,6 +647,8 @@ export default function usePlanner(user) {
     clearSemester,
     clearAll,
     replacePlan,
+    mergePlan,
+    importPlan,
     totalCredits,
     semesterCredits,
     requirementProgress,

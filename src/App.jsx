@@ -34,7 +34,7 @@ function App() {
     addCourse,
     removeCourse,
     moveCourse,
-    replacePlan,
+    importPlan,
     studyAway,
     toggleStudyAwaySemester,
     setStudyAwayLocation,
@@ -107,7 +107,7 @@ function App() {
         studentName={studentName}
         studyAway={studyAway}
         semesterCredits={semesterCredits}
-        onImportPlan={replacePlan}
+        onImportPlan={importPlan}
       />
 
       <div className="planner-main relative z-0 flex-1 min-h-0 flex flex-col lg:flex-row">

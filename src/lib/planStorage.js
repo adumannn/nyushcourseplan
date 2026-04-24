@@ -1,5 +1,6 @@
 import { supabase } from "./supabase";
-import { SEMESTERS, COURSE_CATALOG } from "../data/courses";
+import { SEMESTERS } from "../data/courses";
+import { LOCAL_CATALOG_BY_ID, mergeCourseWithLocalCatalog } from "./localCatalog";
 
 function requireSupabase() {
   if (!supabase) throw new Error("Supabase is not configured");
@@ -29,19 +30,20 @@ function createEmptyPlan() {
 // Fall back to a stored snapshot so plans remain usable while the runtime
 // catalog source transitions away from the local hardcoded dataset.
 function resolveCourse(row) {
-  const catalogCourse = COURSE_CATALOG.find((c) => c.id === row.course_id);
-  if (catalogCourse) return catalogCourse;
+  const snapshot =
+    row.course_snapshot && typeof row.course_snapshot === "object"
+      ? row.course_snapshot
+      : null;
+  const catalogCourse = LOCAL_CATALOG_BY_ID.get(row.course_id);
+  const selectedCredits = Number.isFinite(row.selected_credits)
+    ? row.selected_credits
+    : snapshot?.credits;
 
-  if (row.course_snapshot && typeof row.course_snapshot === "object") {
-    const snapshot = row.course_snapshot;
-    const selectedCredits = Number.isFinite(row.selected_credits)
-      ? row.selected_credits
-      : snapshot.credits;
-
-    return {
-      ...snapshot,
-      credits: Number.isFinite(selectedCredits) ? selectedCredits : 4,
-    };
+  if (catalogCourse || snapshot) {
+    return mergeCourseWithLocalCatalog(snapshot || catalogCourse, {
+      courseId: row.course_id,
+      selectedCredits,
+    });
   }
 
   // Custom course — reconstruct from stored fields
@@ -70,6 +72,9 @@ function buildCourseSnapshot(course) {
       : [],
     prerequisites: Array.isArray(course.prerequisites)
       ? course.prerequisites
+      : [],
+    prerequisiteGroups: Array.isArray(course.prerequisiteGroups)
+      ? course.prerequisiteGroups
       : [],
     prerequisiteNote: course.prerequisiteNote || "",
     majors: Array.isArray(course.majors) ? course.majors : [],
@@ -106,8 +111,10 @@ function refreshPlanCourses(plan) {
   for (const [semId, courses] of Object.entries(plan)) {
     refreshed[semId] = (courses || []).map((stored) => {
       if (stored.id && !stored.id.startsWith("custom-")) {
-        const catalogCourse = COURSE_CATALOG.find((c) => c.id === stored.id);
-        if (catalogCourse) return catalogCourse;
+        return mergeCourseWithLocalCatalog(stored, {
+          courseId: stored.id,
+          selectedCredits: stored.credits,
+        });
       }
       return stored;
     });

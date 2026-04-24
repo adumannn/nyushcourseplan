@@ -1,6 +1,8 @@
 import { useState, useMemo } from "react";
-import { COURSE_CATALOG, CATEGORIES, DEPARTMENTS } from "../data/courses";
+import { CATEGORIES, DEPARTMENTS } from "../data/courses";
 import useCatalog from "../hooks/useCatalog";
+import { isCourseRelevantToMajor } from "../lib/majorCourseRules";
+import { LOCAL_CATALOG_COURSES } from "../lib/localCatalog";
 
 export default function CoursePicker({
   semesterId,
@@ -22,7 +24,11 @@ export default function CoursePicker({
 
   const { courses: catalogCourses, departments } = useCatalog();
   const availableCourses =
-    catalogCourses.length > 0 ? catalogCourses : COURSE_CATALOG;
+    catalogCourses.length > 0 ? catalogCourses : LOCAL_CATALOG_COURSES;
+  const courseSortCollator = useMemo(
+    () => new Intl.Collator(undefined, { numeric: true, sensitivity: "base" }),
+    [],
+  );
 
   const filtered = useMemo(() => {
     let list = availableCourses;
@@ -41,17 +47,27 @@ export default function CoursePicker({
       );
     }
 
-    // Sort: major-relevant courses first
-    if (major && major !== "custom") {
-      list = [...list].sort((a, b) => {
-        const aRel = a.majors?.includes(major) ? 0 : 1;
-        const bRel = b.majors?.includes(major) ? 0 : 1;
-        return aRel - bRel;
-      });
-    }
+    list = [...list].sort((a, b) => {
+      const aRel = isCourseRelevantToMajor(a, major) ? 0 : 1;
+      const bRel = isCourseRelevantToMajor(b, major) ? 0 : 1;
+      if (aRel !== bRel) return aRel - bRel;
+
+      const aCategoryLabel = CATEGORIES[a.category]?.label || a.category || "";
+      const bCategoryLabel = CATEGORIES[b.category]?.label || b.category || "";
+      const categoryCompare = courseSortCollator.compare(
+        aCategoryLabel,
+        bCategoryLabel,
+      );
+      if (categoryCompare !== 0) return categoryCompare;
+
+      const nameCompare = courseSortCollator.compare(a.name || "", b.name || "");
+      if (nameCompare !== 0) return nameCompare;
+
+      return courseSortCollator.compare(a.code || "", b.code || "");
+    });
 
     return list;
-  }, [availableCourses, search, filterDept, filterCat, major]);
+  }, [availableCourses, search, filterDept, filterCat, major, courseSortCollator]);
 
   const handleAddCatalog = (course) => {
     if (isCourseInPlan(course.id)) return;

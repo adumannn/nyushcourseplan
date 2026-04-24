@@ -1,6 +1,7 @@
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
+import { resolvePrerequisiteData } from "../../src/lib/prerequisites.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -156,7 +157,12 @@ function extractLabeledSectionIds(note, labelPattern) {
   return extractCourseIds(match[1]);
 }
 
-function buildCourseValidationIssues(course, parsedCredits, knownCourseIds) {
+function buildCourseValidationIssues(
+  course,
+  parsedCredits,
+  knownCourseIds,
+  prerequisiteData,
+) {
   const issues = [];
 
   if (!cleanString(course?.id)) issues.push("missing-course-id");
@@ -172,14 +178,18 @@ function buildCourseValidationIssues(course, parsedCredits, knownCourseIds) {
     issues.push("placeholder-course-code");
   }
 
-  const directPrereqIds = Array.isArray(course?.prerequisiteIds)
-    ? course.prerequisiteIds.map((value) => cleanString(value)).filter(Boolean)
+  const directPrereqIds = Array.isArray(prerequisiteData?.prerequisites)
+    ? prerequisiteData.prerequisites
     : [];
 
   for (const prereqId of directPrereqIds) {
     if (!knownCourseIds.has(prereqId)) {
       issues.push(`unresolved-prerequisite:${prereqId}`);
     }
+  }
+
+  for (const issue of prerequisiteData?.parseIssues || []) {
+    issues.push(issue);
   }
 
   return Array.from(new Set(issues));
@@ -296,20 +306,25 @@ function buildCourseRows(schoolSlug, schoolData, subjectRows) {
     }
     if (courseId) seenCourseIds.add(courseId);
 
+    const prerequisiteData = resolvePrerequisiteData({
+      prerequisiteNote: course.prerequisiteNote,
+      prerequisiteIds: Array.isArray(course.prerequisiteIds)
+        ? course.prerequisiteIds.map((value) => cleanString(value)).filter(Boolean)
+        : [],
+    });
     const parsedCredits = parseCredits(course.credits);
     const validationIssues = buildCourseValidationIssues(
       course,
       parsedCredits,
       knownCourseIds,
+      prerequisiteData,
     );
 
     const normalizedAttributes = normalizeAttributes(course.attributes);
     const relationshipRows = buildRelationshipRows({
       courseId,
       prerequisiteNote: course.prerequisiteNote,
-      directPrerequisiteIds: Array.isArray(course.prerequisiteIds)
-        ? course.prerequisiteIds.map((value) => cleanString(value)).filter(Boolean)
-        : [],
+      directPrerequisiteIds: prerequisiteData.prerequisites,
       knownCourseIds,
     });
 
@@ -458,6 +473,10 @@ export function getDefaultValidationReportPath(schoolSlug) {
   return path.join(REPORTS_DIR, `${schoolSlug}.validation.json`);
 }
 
+function getScrapedFilePath(schoolSlug) {
+  return path.join(SCRAPED_DATA_DIR, `${schoolSlug}.json`);
+}
+
 export function ensureReportsDirectory() {
   fs.mkdirSync(REPORTS_DIR, { recursive: true });
 }
@@ -543,7 +562,7 @@ function loadEnvFile(filePath) {
   }
 }
 
-function loadProjectEnv() {
+export function loadProjectEnv() {
   loadEnvFile(path.join(PROJECT_ROOT, ".env"));
   loadEnvFile(path.join(PROJECT_ROOT, ".env.local"));
 }

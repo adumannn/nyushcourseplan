@@ -6,8 +6,10 @@ import {
   GraduationCap,
   CheckSquare,
 } from "lucide-react";
-import { CATEGORIES, COURSE_CATALOG, CORE_REQUIREMENTS } from "../data/courses";
+import { CATEGORIES, CORE_REQUIREMENTS } from "../data/courses";
 import useCatalog from "../hooks/useCatalog";
+import { LOCAL_CATALOG_BY_ID } from "../lib/localCatalog";
+import { serializePrerequisiteGroup } from "../lib/prerequisites";
 
 export default function CourseDetailModal({
   course: passedCourse,
@@ -22,7 +24,7 @@ export default function CourseDetailModal({
   // pick up the latest merged metadata when available.
   const course =
     coursesById.get(passedCourse.id) ||
-    COURSE_CATALOG.find((c) => c.id === passedCourse.id) ||
+    LOCAL_CATALOG_BY_ID.get(passedCourse.id) ||
     passedCourse;
 
   const categoryKey =
@@ -31,16 +33,29 @@ export default function CourseDetailModal({
       : "elective";
   const category = CATEGORIES[categoryKey] || CATEGORIES.elective;
   const unmetPrereqs = prereqWarnings[course.id] || [];
+  const unmetGroupKeys = new Set(
+    unmetPrereqs.map((group) => serializePrerequisiteGroup(group)),
+  );
 
-  // Look up prerequisite course names from the merged catalog first.
-  const prereqCourses = (course.prerequisites || []).map((preId) => {
-    const cat =
-      coursesById.get(preId) || COURSE_CATALOG.find((c) => c.id === preId);
+  const prerequisiteGroups = (
+    Array.isArray(course.prerequisiteGroups) && course.prerequisiteGroups.length
+      ? course.prerequisiteGroups
+      : (course.prerequisites || []).map((preId) => [preId])
+  ).map((group) => {
+    const options = group.map((preId) => {
+      const catalogCourse =
+        coursesById.get(preId) || LOCAL_CATALOG_BY_ID.get(preId);
+      return {
+        id: preId,
+        name: catalogCourse?.name || preId,
+        code: catalogCourse?.code || preId,
+      };
+    });
+
     return {
-      id: preId,
-      name: cat?.name || preId,
-      code: cat?.code || preId,
-      met: !unmetPrereqs.includes(preId),
+      key: serializePrerequisiteGroup(group),
+      met: !unmetGroupKeys.has(serializePrerequisiteGroup(group)),
+      options,
     };
   });
 
@@ -119,7 +134,7 @@ export default function CourseDetailModal({
           )}
 
           {/* Prerequisites */}
-          {(prereqCourses.length > 0 || course.prerequisiteNote) && (
+          {(prerequisiteGroups.length > 0 || course.prerequisiteNote) && (
             <div className="space-y-2">
               <div className="flex items-center gap-2">
                 <BookOpen className="h-4 w-4 text-muted-foreground/60" />
@@ -128,20 +143,26 @@ export default function CourseDetailModal({
                 </span>
               </div>
 
-              {prereqCourses.length > 0 && (
+              {prerequisiteGroups.length > 0 && (
                 <div className="space-y-1.5 ml-6">
-                  {prereqCourses.map((pre) => (
+                  {prerequisiteGroups.map((group) => (
                     <div
-                      key={pre.id}
+                      key={group.key}
                       className="flex items-center gap-2 text-sm"
                     >
-                      {pre.met ? (
+                      {group.met ? (
                         <span className="h-1.5 w-1.5 rounded-full bg-chart-2" />
                       ) : (
                         <span className="h-1.5 w-1.5 rounded-full bg-amber-500" />
                       )}
-                      <span className={pre.met ? "text-muted-foreground" : ""}>
-                        {pre.code} — {pre.name}
+                      <span
+                        className={group.met ? "text-muted-foreground" : ""}
+                      >
+                        {group.options.length === 1
+                          ? `${group.options[0].code} — ${group.options[0].name}`
+                          : `One of: ${group.options
+                              .map((option) => `${option.code} — ${option.name}`)
+                              .join(", ")}`}
                       </span>
                     </div>
                   ))}

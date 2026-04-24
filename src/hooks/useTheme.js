@@ -7,7 +7,7 @@ export default function useTheme() {
     try {
       const stored = localStorage.getItem(STORAGE_KEY);
       if (stored === 'dark' || stored === 'light') return stored;
-    } catch (e) { /* ignore */ }
+    } catch { /* ignore */ }
     return window.matchMedia?.('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
   });
 

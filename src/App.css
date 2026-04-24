@@ -337,6 +337,333 @@
     cursor: not-allowed;
 }
 
+/* ── Plan transfer (import/export) ── */
+
+.plan-transfer-status {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    z-index: 85;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    max-width: min(360px, 86vw);
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    padding: 9px 11px;
+    font-size: 12px;
+    line-height: 1.4;
+    box-shadow:
+        0 12px 24px rgba(17, 26, 46, 0.1),
+        0 3px 8px rgba(17, 26, 46, 0.06);
+}
+
+.plan-transfer-status--success {
+    border-color: color-mix(in oklab, #16a34a 36%, var(--border));
+    background: color-mix(in oklab, #16a34a 10%, var(--card));
+    color: color-mix(in oklab, #14532d 84%, var(--foreground));
+}
+
+.plan-transfer-status--error {
+    border-color: color-mix(in oklab, #dc2626 38%, var(--border));
+    background: color-mix(in oklab, #dc2626 9%, var(--card));
+    color: color-mix(in oklab, #7f1d1d 78%, var(--foreground));
+}
+
+.plan-transfer-modal {
+    max-width: 620px;
+    max-height: min(88vh, 820px);
+}
+
+.plan-transfer-header-copy {
+    margin-top: 4px;
+    font-size: 12px;
+    line-height: 1.45;
+    color: var(--muted-foreground);
+}
+
+.plan-transfer-body {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-height: 0;
+    overflow-y: auto;
+}
+
+.plan-transfer-dropzone {
+    border: 1px dashed color-mix(in oklab, var(--primary) 35%, var(--border));
+    border-radius: 14px;
+    padding: 16px;
+    background: color-mix(in oklab, var(--primary) 6%, transparent);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition:
+        border-color 0.18s,
+        background-color 0.18s,
+        transform 0.18s;
+}
+
+.plan-transfer-dropzone--active {
+    border-color: color-mix(in oklab, var(--primary) 52%, var(--border));
+    background: color-mix(in oklab, var(--primary) 11%, transparent);
+    transform: translateY(-1px);
+}
+
+.plan-transfer-dropzone--busy {
+    opacity: 0.68;
+}
+
+.plan-transfer-dropzone svg {
+    flex-shrink: 0;
+    color: var(--primary);
+}
+
+.plan-transfer-dropzone-copy {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+    min-width: 0;
+}
+
+.plan-transfer-dropzone-copy p {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--foreground);
+}
+
+.plan-transfer-dropzone-copy span {
+    font-size: 12px;
+    color: var(--muted-foreground);
+}
+
+.plan-transfer-dropzone small {
+    margin-left: auto;
+    flex-shrink: 0;
+    font-size: 11px;
+    color: var(--muted-foreground);
+}
+
+.plan-transfer-link-btn {
+    border: none;
+    background: none;
+    padding: 0;
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--primary);
+    cursor: pointer;
+}
+
+.plan-transfer-link-btn:hover:not(:disabled) {
+    text-decoration: underline;
+}
+
+.plan-transfer-link-btn:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
+.plan-transfer-feedback {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 9px 10px;
+    font-size: 12px;
+    color: var(--muted-foreground);
+    background: color-mix(in oklab, var(--accent) 26%, transparent);
+}
+
+.plan-transfer-feedback--error {
+    border-color: color-mix(in oklab, #dc2626 36%, var(--border));
+    background: color-mix(in oklab, #dc2626 10%, transparent);
+    color: color-mix(in oklab, #7f1d1d 78%, var(--foreground));
+}
+
+.plan-transfer-feedback--error svg {
+    color: #dc2626;
+}
+
+.plan-transfer-preview {
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: color-mix(in oklab, var(--card) 92%, transparent);
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.plan-transfer-preview-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.plan-transfer-preview-head h3 {
+    font-size: 14px;
+    line-height: 1.35;
+    font-weight: 650;
+    color: var(--foreground);
+    min-width: 0;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.plan-transfer-badge {
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid color-mix(in oklab, var(--primary) 36%, var(--border));
+    border-radius: 999px;
+    padding: 3px 9px;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--primary);
+    background: color-mix(in oklab, var(--primary) 8%, transparent);
+}
+
+.plan-transfer-metrics {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+}
+
+.plan-transfer-metric {
+    border: 1px solid var(--border);
+    border-radius: 11px;
+    padding: 10px;
+    background: color-mix(in oklab, var(--card) 95%, transparent);
+}
+
+.plan-transfer-metric span {
+    display: block;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.65px;
+    color: var(--muted-foreground);
+    font-weight: 700;
+}
+
+.plan-transfer-metric strong {
+    margin-top: 4px;
+    display: block;
+    font-size: 20px;
+    line-height: 1;
+    color: var(--foreground);
+}
+
+.plan-transfer-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    font-size: 12px;
+    color: var(--muted-foreground);
+}
+
+.plan-transfer-semesters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+}
+
+.plan-transfer-chip {
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 4px 9px;
+    font-size: 11px;
+    color: var(--muted-foreground);
+    background: color-mix(in oklab, var(--accent) 18%, transparent);
+}
+
+.plan-transfer-warnings {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.plan-transfer-warning-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 7px;
+    border: 1px solid color-mix(in oklab, #f59e0b 42%, var(--border));
+    background: color-mix(in oklab, #f59e0b 12%, transparent);
+    color: var(--foreground);
+    border-radius: 10px;
+    padding: 8px 10px;
+    font-size: 12px;
+    line-height: 1.45;
+}
+
+.plan-transfer-warning-item svg {
+    color: #d97706;
+    flex-shrink: 0;
+    margin-top: 1px;
+}
+
+.plan-transfer-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+
+.plan-transfer-action-btn {
+    min-height: 40px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 9px 10px;
+    font-size: 12.5px;
+    font-weight: 650;
+    cursor: pointer;
+    transition:
+        border-color 0.15s,
+        background-color 0.15s,
+        color 0.15s,
+        transform 0.1s;
+}
+
+.plan-transfer-action-btn:active {
+    transform: translateY(1px);
+}
+
+.plan-transfer-action-btn:focus-visible,
+.plan-transfer-link-btn:focus-visible {
+    outline: 2px solid color-mix(in oklab, var(--ring) 72%, transparent);
+    outline-offset: 2px;
+}
+
+.plan-transfer-action-btn--merge {
+    color: var(--foreground);
+    border-color: color-mix(in oklab, #15803d 34%, var(--border));
+    background: color-mix(in oklab, #16a34a 12%, transparent);
+}
+
+.plan-transfer-action-btn--merge:hover {
+    border-color: color-mix(in oklab, #15803d 44%, var(--border));
+    background: color-mix(in oklab, #16a34a 16%, transparent);
+}
+
+.plan-transfer-action-btn--replace {
+    color: var(--foreground);
+    border-color: color-mix(in oklab, #b45309 36%, var(--border));
+    background: color-mix(in oklab, #f59e0b 13%, transparent);
+}
+
+.plan-transfer-action-btn--replace:hover {
+    border-color: color-mix(in oklab, #b45309 46%, var(--border));
+    background: color-mix(in oklab, #f59e0b 17%, transparent);
+}
+
 /* ── Dark mode: course picker polish ── */
 
 .dark .modal {
@@ -1906,6 +2233,46 @@
 
     .modal-custom {
         padding: 16px 12px;
+    }
+
+    .plan-transfer-modal {
+        max-height: 90vh;
+    }
+
+    .plan-transfer-body {
+        padding: 12px;
+    }
+
+    .plan-transfer-dropzone {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .plan-transfer-dropzone small {
+        margin-left: 0;
+    }
+
+    .plan-transfer-preview-head {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .plan-transfer-preview-head h3 {
+        width: 100%;
+    }
+
+    .plan-transfer-metrics {
+        grid-template-columns: 1fr;
+    }
+
+    .plan-transfer-actions {
+        grid-template-columns: 1fr;
+    }
+
+    .plan-transfer-status {
+        left: 0;
+        right: auto;
+        max-width: min(360px, calc(100vw - 24px));
     }
 
     .custom-field-row {

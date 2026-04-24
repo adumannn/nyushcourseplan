@@ -1,6 +1,9 @@
-import { COURSE_CATALOG } from "../data/courses";
+import { LOCAL_CATALOG_COURSES } from "./localCatalog";
+import { hydrateCoursePrerequisites } from "./prerequisites";
 
-const LOCAL_COURSES = Array.isArray(COURSE_CATALOG) ? COURSE_CATALOG : [];
+const LOCAL_COURSES = Array.isArray(LOCAL_CATALOG_COURSES)
+  ? LOCAL_CATALOG_COURSES
+  : [];
 
 export const DEFAULT_CATALOG_CATEGORY = "elective";
 export const DEFAULT_CATALOG_CREDITS = 4;
@@ -55,7 +58,7 @@ export function createRuntimeCourseFromRemote(
   const credits =
     creditsMin ?? creditsMax ?? local?.credits ?? DEFAULT_CATALOG_CREDITS;
 
-  return {
+  return hydrateCoursePrerequisites({
     id: row?.id || local?.id || "",
     code: row?.code || local?.code || row?.id || "",
     name: row?.name || local?.name || "Untitled Course",
@@ -79,7 +82,7 @@ export function createRuntimeCourseFromRemote(
     offeringTerms: Array.isArray(row?.offering_terms)
       ? row.offering_terms
       : [],
-  };
+  });
 }
 
 export function mergeCatalogCourses(

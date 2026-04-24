@@ -28,12 +28,11 @@ async function signOutIfUnauthorizedSession(session) {
 
 export default function useAuth() {
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(() => Boolean(supabase));
   const [authError, setAuthError] = useState('');
 
   useEffect(() => {
     if (!supabase) {
-      setLoading(false);
       return;
     }
 
