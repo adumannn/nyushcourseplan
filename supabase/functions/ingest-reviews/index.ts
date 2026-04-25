@@ -24,7 +24,11 @@ const GEMINI_ENDPOINT = `https://generativelanguage.googleapis.com/v1beta/models
 
 const COURSE_CODE_RE = /([A-Z]{2,6})-SHU[\s\-]?(\d+[A-Z]*)/i;
 const PROF_STRIP_RE = /(prof\.?|professor|教授|老师|先生|女士)/gi;
-const CONCURRENCY = 4;
+// Gemini free tier is 5 requests/minute. Serialize calls and pace them at
+// roughly 12s per request so we stay below that without burning quota on 429s.
+const CONCURRENCY = 1;
+const MIN_GEMINI_GAP_MS = 12_000;
+const MAX_GEMINI_RETRIES = 3;
 
 type Section = {
   rawHeading: string;
@@ -186,6 +190,25 @@ function buildPrompt(section: Section): string {
   ].join("\n");
 }
 
+let lastGeminiCallAt = 0;
+const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+
+function parseRetryDelayMs(errText: string): number | null {
+  try {
+    const parsed = JSON.parse(errText);
+    const details = parsed?.error?.details ?? [];
+    for (const d of details) {
+      if (d["@type"]?.includes("RetryInfo") && typeof d.retryDelay === "string") {
+        const m = d.retryDelay.match(/^([\d.]+)s$/);
+        if (m) return Math.ceil(parseFloat(m[1]) * 1000);
+      }
+    }
+  } catch {
+    // not JSON; fall through
+  }
+  return null;
+}
+
 async function callGemini(apiKey: string, section: Section): Promise<GeminiResult> {
   const body = {
     contents: [
@@ -201,31 +224,47 @@ async function callGemini(apiKey: string, section: Section): Promise<GeminiResul
     },
   };
 
-  const res = await fetch(`${GEMINI_ENDPOINT}?key=${apiKey}`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(body),
-  });
-  if (!res.ok) {
-    const errText = await res.text();
-    throw new Error(`Gemini call failed: ${res.status} ${errText}`);
-  }
-  const json = await res.json();
-  const text: string | undefined = json?.candidates?.[0]?.content?.parts?.[0]?.text;
-  if (!text) {
-    throw new Error(`Gemini returned no text: ${JSON.stringify(json)}`);
-  }
+  for (let attempt = 0; attempt <= MAX_GEMINI_RETRIES; attempt++) {
+    const waitForGap = lastGeminiCallAt + MIN_GEMINI_GAP_MS - Date.now();
+    if (waitForGap > 0) await sleep(waitForGap);
+    lastGeminiCallAt = Date.now();
 
-  const parsed = JSON.parse(text) as GeminiResult;
-  return {
-    summary_en: parsed.summary_en ?? "",
-    difficulty_en: parsed.difficulty_en ?? "",
-    workload_en: parsed.workload_en ?? "",
-    key_points_en: parsed.key_points_en ?? [],
-    teaching_style_en: parsed.teaching_style_en ?? "",
-    pros_en: parsed.pros_en ?? [],
-    cons_en: parsed.cons_en ?? [],
-  };
+    const res = await fetch(`${GEMINI_ENDPOINT}?key=${apiKey}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    });
+
+    if (res.ok) {
+      const json = await res.json();
+      const text: string | undefined =
+        json?.candidates?.[0]?.content?.parts?.[0]?.text;
+      if (!text) {
+        throw new Error(`Gemini returned no text: ${JSON.stringify(json)}`);
+      }
+      const parsed = JSON.parse(text) as GeminiResult;
+      return {
+        summary_en: parsed.summary_en ?? "",
+        difficulty_en: parsed.difficulty_en ?? "",
+        workload_en: parsed.workload_en ?? "",
+        key_points_en: parsed.key_points_en ?? [],
+        teaching_style_en: parsed.teaching_style_en ?? "",
+        pros_en: parsed.pros_en ?? [],
+        cons_en: parsed.cons_en ?? [],
+      };
+    }
+
+    const errText = await res.text();
+    const retriable = res.status === 429 || (res.status >= 500 && res.status < 600);
+    if (!retriable || attempt === MAX_GEMINI_RETRIES) {
+      throw new Error(`Gemini call failed: ${res.status} ${errText}`);
+    }
+    const hintedDelay = parseRetryDelayMs(errText);
+    const backoff = hintedDelay ?? Math.min(30_000, 1_000 * 2 ** attempt);
+    await sleep(backoff + 500);
+  }
+  // unreachable
+  throw new Error("Gemini retry loop exhausted");
 }
 
 async function processInBatches<T, R>(
