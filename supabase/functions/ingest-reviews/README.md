@@ -1,9 +1,48 @@
 # ingest-reviews
 
-Fetches the public community review Google Doc, parses it into sections by
-heading, runs each changed section through Gemini 2.5 Flash to produce an
-English summary, and upserts results into `course_reviews` and
-`course_professor_reviews`.
+Pulls the public community-review Google Doc (Chinese, freeform), trims it
+to passages that mention a NYU Shanghai course (by code or full name), and
+asks Gemini 2.5 Flash Lite to return structured per-course and per-professor
+review summaries. Results land in `course_reviews` and
+`course_professor_reviews`. A SHA-256 of the doc text is stored on each row
+of `review_ingest_runs` so the function can skip Gemini entirely when the
+doc hasn't changed since the last successful run.
+
+The doc is treated as freeform — there is no required heading convention.
+The model is responsible for matching mentions in the doc back to a
+`course_id` from the catalog (by code, full name, or context). Entries it
+cannot map confidently are dropped.
+
+## Architecture
+
+The Gemini call's wall time is bounded by the Supabase edge function's
+~150s idle timeout, and Gemini's free-tier per-minute and per-day request
+quotas. To stay inside both budgets the function:
+
+1. Loads the catalog from `public.catalog_courses` (~900 rows).
+2. Prunes the catalog to ~100-150 courses whose code or name appears in the
+   doc text.
+3. Trims the doc to lines mentioning a pruned course plus a small context
+   window (typically reduces 500KB → 50KB).
+4. Splits the trimmed doc into N chunks and runs **two parallel passes** for
+   each chunk: a course-level summary pass and a per-professor commentary
+   pass. The two passes use separate response schemas so each call's output
+   stays well under MAX_TOKENS.
+5. Merges results: dedupes by `course_id` for courses, by
+   `(course_id, professor_name)` for professors. Course-id strings returned
+   in unexpected formats (e.g. `"CSCI-SHU 220"` instead of `"CSCI-SHU-220"`)
+   are normalized back to canonical IDs via a code/id alias map.
+6. Drops obvious stub values (`""`, `"Unstated"`, `"N/A"`, etc.) and skips
+   entries that contain no real review content.
+7. Upserts cleaned rows. The `raw_zh` column is intentionally not populated
+   on new rows: asking Gemini to copy verbatim Chinese excerpts roughly
+   doubles output tokens and pushed us over MAX_TOKENS. The DB column stays
+   so older rows keep their excerpts.
+
+If a chunk fails (truncated output, transient 429, etc.) it is recorded in
+`review_ingest_runs.unknown_course_codes` as a `__chunk_errors__: …`
+diagnostic, but the rest of the chunks still upsert. Only when **every**
+chunk fails is the run as a whole marked errored.
 
 ## Secrets
 
@@ -24,8 +63,8 @@ supabase functions serve ingest-reviews --env-file ./supabase/.env.local
 curl -X POST http://127.0.0.1:54321/functions/v1/ingest-reviews
 ```
 
-`.env.local` should contain `GEMINI_API_KEY`, `REVIEW_DOC_ID`, and your
-local Supabase URL / service role key.
+`.env.local` should contain `GEMINI_API_KEY`, `REVIEW_DOC_ID`, and your local
+Supabase URL / service role key.
 
 ## Deploy
 
@@ -36,16 +75,28 @@ supabase functions deploy ingest-reviews
 ## Invocation modes
 
 ```bash
-# normal run — hash-gated, only changed sections call Gemini
+# normal run — doc-hash-gated; Gemini is only called when the doc changes
 curl -X POST $URL/functions/v1/ingest-reviews \
   -H "Authorization: Bearer $SERVICE_ROLE"
 
-# force re-summarize everything (e.g. after prompt changes)
+# force re-extract even when the doc is unchanged (e.g. after prompt changes)
 curl -X POST $URL/functions/v1/ingest-reviews \
   -H "Authorization: Bearer $SERVICE_ROLE" \
   -H "Content-Type: application/json" \
   -d '{"force":true}'
+
+# wait for the work synchronously (default is fire-and-forget; use this when
+# debugging so curl returns the run summary). The function still respects the
+# edge runtime's ~150s idle timeout.
+curl -X POST $URL/functions/v1/ingest-reviews \
+  -H "Authorization: Bearer $SERVICE_ROLE" \
+  -H "Content-Type: application/json" \
+  -d '{"force":true,"wait":true}'
 ```
+
+A normal POST returns `202 { mode: "background", … }` immediately; the work
+continues in `EdgeRuntime.waitUntil`. Poll `review_ingest_runs` for the
+completion record.
 
 ## Scheduling
 
@@ -59,24 +110,18 @@ alter database postgres
   set app.settings.service_role_key = '<service-role-key>';
 ```
 
+Until those are set the cron job will silently fail (no rows in
+`review_ingest_runs` at minute :07). Set them once via the Supabase
+dashboard SQL editor.
+
 Check runs via `select * from cron.job_run_details order by start_time desc`
 and `select * from review_ingest_runs order by started_at desc`.
 
-## Heading conventions the parser expects
+## Quota notes
 
-Either pattern works:
-
-```
-# CSCI-SHU 101 — Prof. Wang        (one heading per course+prof)
-```
-
-or
-
-```
-# CSCI-SHU 101                     (H1 = course)
-## Prof. Wang                      (H2 = professor, inherits course)
-```
-
-Headings mentioning `SHU` but lacking a parseable course code land in
-`review_ingest_runs.unknown_course_codes` for the run, so maintainers can spot
-and fix malformed headings.
+Free-tier `gemini-2.5-flash-lite` is currently 15 RPM and 200 RPD. Each
+ingest run makes 2 × CHUNKS calls (default CHUNKS=8 → 16 calls). At 16
+calls per run, the daily budget covers ~12 successful runs — well within
+the hourly cron schedule because the doc-hash gate skips Gemini entirely on
+hours when the doc hasn't changed. If you change CHUNKS or the doc edit
+cadence, recheck this math.
