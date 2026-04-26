@@ -100,19 +100,39 @@ completion record.
 
 ## Scheduling
 
-Migration `007_schedule_review_ingest.sql` installs a `pg_cron` job that fires
-every hour at minute 7. It requires two one-time database settings:
+Migration `007_schedule_review_ingest.sql` installs a `pg_cron` job that
+fires every hour at minute 7. Migration `009_review_cron_use_vault.sql`
+rewrites it so the bearer token comes from Supabase Vault instead of
+session-level GUCs (`alter database postgres set …` requires superuser
+privileges that the management API doesn't have, so the GUC approach
+silently failed).
+
+Required one-time setup: insert the service-role JWT into vault under the
+well-known name `ingest_reviews_service_role_key`. Either via SQL editor
+(superuser session):
 
 ```sql
-alter database postgres
-  set app.settings.edge_url = 'https://<project-ref>.supabase.co';
-alter database postgres
-  set app.settings.service_role_key = '<service-role-key>';
+select vault.create_secret(
+  '<service-role-jwt>',
+  'ingest_reviews_service_role_key',
+  'Used by ingest-reviews pg_cron job'
+);
 ```
 
-Until those are set the cron job will silently fail (no rows in
-`review_ingest_runs` at minute :07). Set them once via the Supabase
-dashboard SQL editor.
+…or via the Supabase management API:
+
+```bash
+curl -X POST "https://api.supabase.com/v1/projects/$REF/database/query" \
+  -H "Authorization: Bearer $SUPABASE_PAT" \
+  -H "Content-Type: application/json" \
+  -d "{\"query\": \"select vault.create_secret('$SERVICE_KEY', 'ingest_reviews_service_role_key');\"}"
+```
+
+If the vault secret is missing, the cron job is a no-op (the WHERE clause
+filters the http_post out), so a fresh project doesn't error every hour.
+
+The project URL is hardcoded in migration 009 — fork the migration and
+swap the URL for a different Supabase project.
 
 Check runs via `select * from cron.job_run_details order by start_time desc`
 and `select * from review_ingest_runs order by started_at desc`.
