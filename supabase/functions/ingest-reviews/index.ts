@@ -105,6 +105,17 @@ const PROFESSOR_SCHEMA = {
   required: ["professors"],
 };
 
+// Some courses are commonly referred to by abbreviations
+const COURSE_ALIASES: Record<string, string[]> = {
+  "CCSF-SHU-101L": ["GPS"],
+  "BUSF-SHU-220":  ["DBC"],
+  "CCSF-SHU-102":  ["POH"],   // Perspectives on the Humanities (verify)
+  "CCSF-SHU-103":  ["STS"],   // Science, Technology, and Society (verify)
+  "BUSF-SHU-250":  ["PFA"],
+  
+};
+
+
 type ProfessorRecord = ProfessorReview & { course_id: string };
 
 function requireEnv(name: string): string {
@@ -155,14 +166,30 @@ function buildCommonHeader(
   const catalogText = catalog
     .map((c) => `${c.id}\t${c.code}\t${c.name}`)
     .join("\n");
+  // Surface only abbreviations whose target course survived pruning.
+  // Otherwise we tell the model "GPS = CCSF-SHU-101L" but CCSF-SHU-101L
+  // isn't in the catalog list, so the model would still drop the entry.
+  const catalogIds = new Set(catalog.map((c) => c.id));
+  const abbrevLines = Object.entries(COURSE_ABBREVIATIONS)
+    .filter(([id]) => catalogIds.has(id))
+    .map(([id, aliases]) => `  ${aliases.join(", ")} → ${id}`);
+  const abbrevSection = abbrevLines.length > 0
+    ? [
+        ``,
+        `Known student abbreviations (use these to map nickname mentions to course_id):`,
+        ...abbrevLines,
+      ]
+    : [];
   return [
     `You are extracting structured reviews from a Chinese-language student community Google Doc for NYU Shanghai. The doc is freeform: a mix of section headings, course names, professor names, questions, replies, and free comments. There is no fixed structure.`,
     ``,
     `Use the following course catalog. course_id values you return MUST come exactly from this list — never invent IDs. Match references in the doc to a course_id by:`,
-    `  (a) explicit code mention like "SOCS-SHU 145" or "SOCS-SHU145",`,
+    `  (a) explicit code mention like "SOCS-SHU 145" or "SOCS-SHU145" (RARE — students almost never write codes),`,
     `  (b) course name match like "Foundations of Public Policy",`,
-    `  (c) clear context (e.g. a section heading naming the course followed by review content),`,
-    `  (d) abbreviations students commonly use (e.g. "DBC" → "Doing Business with China"). Do not guess if you are unsure.`,
+    `  (c) section heading naming the course followed by review content (e.g. a header line "GPS专区:" introduces a section about Global Perspectives on Society — every review that follows under that heading belongs to GPS),`,
+    `  (d) student abbreviations and nicknames — THIS IS THE PRIMARY MATCHING SIGNAL in this doc. The list below covers known abbreviations; apply the same logic for any other unambiguous initialism. Many courses appear in this doc ONLY by abbreviation.`,
+    `When unsure, drop the entry — never guess a course_id.`,
+    ...abbrevSection,
     ``,
     `Catalog (TSV: course_id<TAB>code<TAB>name):`,
     catalogText,
@@ -228,15 +255,50 @@ function escapeRegExp(s: string): string {
   return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 
+// Hardcoded student-abbreviation map. Students in this Chinese community
+// doc almost never write literal course codes (`CSCI-SHU 101`) or full
+// names (`Foundations of Public Policy`) — they refer to courses by
+// nicknames like `GPS`, `WAI`, `DBC`, `STS`. Both the pruner and the
+// trimmer below consult this map so abbreviation-only mentions actually
+// surface in the prompt sent to Gemini.
+//
+// All values verified against catalog_courses. Add new entries as you
+// discover missing courses. Pure-Latin tokens only — Chinese mentions
+// are caught by the catalog name match. POH is intentionally NOT here
+// because "Perspectives on the Humanities" is split across ~30 themed
+// sections (CCCF-SHU-101W1, W11, W16, W17, W19, W20, W21, W24, W25, …) so
+// "POH" alone cannot be mapped to a single course_id; reviews for those
+// only get extracted when students write the section title or theme.
+const COURSE_ABBREVIATIONS: Record<string, string[]> = {
+  "CCSF-SHU-101L": ["GPS"],   // Global Perspectives on Society
+  "WRIT-SHU-101":  ["WAI"],   // Writing as Inquiry: WI
+  "BUSF-SHU-288":  ["DBC"],   // Doing Business with China
+  "HUMN-SHU-110":  ["STS"],   // What is Science and Technology Studies?
+};
+
+// Compiled once per function invocation; maps each course id to the set
+// of regexes that should match its abbreviation in the doc.
+function buildAbbrevPatternMap(): Map<string, RegExp[]> {
+  const out = new Map<string, RegExp[]>();
+  for (const [id, aliases] of Object.entries(COURSE_ABBREVIATIONS)) {
+    out.set(
+      id,
+      aliases.map((a) => new RegExp(`\\b${escapeRegExp(a)}\\b`)),
+    );
+  }
+  return out;
+}
+
 // The Gemini call's wall time is bounded by the Supabase edge function's
 // wall-time limit (~150s). To stay under it we prune both the catalog and
 // the doc text aggressively before sending. Catalog → only courses whose
-// code or name is mentioned. Doc → only paragraphs near a mention, plus a
-// small context window. This typically takes the prompt from ~530KB to
-// ~50-80KB and keeps Gemini's response time well under the cap.
+// code, name, or known abbreviation is mentioned. Doc → only paragraphs
+// near a mention plus a small context window. This typically takes the
+// prompt from ~530KB to ~50-80KB.
 function pruneCatalogToMentioned(
   catalog: { id: string; code: string; name: string }[],
   docText: string,
+  abbrevPatterns: Map<string, RegExp[]>,
 ): { id: string; code: string; name: string }[] {
   const haystack = docText.toLowerCase();
   return catalog.filter((c) => {
@@ -255,6 +317,12 @@ function pruneCatalogToMentioned(
       const re = new RegExp(`\\b${escapeRegExp(name)}\\b`, "i");
       if (re.test(haystack)) return true;
     }
+    const abbrevs = abbrevPatterns.get(c.id);
+    if (abbrevs) {
+      for (const re of abbrevs) {
+        if (re.test(docText)) return true;
+      }
+    }
     return false;
   });
 }
@@ -265,6 +333,7 @@ const TRIM_LINES_AFTER = 5;
 function trimDocToRelevant(
   docText: string,
   catalog: { id: string; code: string; name: string }[],
+  abbrevPatterns: Map<string, RegExp[]>,
 ): string {
   if (catalog.length === 0) return docText;
 
@@ -281,6 +350,8 @@ function trimDocToRelevant(
     if (name.length >= 8) {
       patterns.push(new RegExp(`\\b${escapeRegExp(name)}\\b`, "i"));
     }
+    const abbrevs = abbrevPatterns.get(c.id);
+    if (abbrevs) for (const re of abbrevs) patterns.push(re);
   }
 
   const relevant = new Array(lines.length).fill(false);
@@ -521,7 +592,7 @@ function mergeProfessorRecords(parts: ProfessorRecord[][]): ProfessorRecord[] {
 // Two-pass extraction across N parallel doc chunks. Pass A asks Gemini for
 // per-course summaries only; pass B asks for per-professor commentary only.
 // Splitting the schema in half keeps each chunk's output well under the
-// MAX_TOKENS cap. All 2N calls run in parallel — well under Gemini Flash's
+// MAX_TOKENS cap. All 2N calls run in parallel — under Gemini Flash's
 // per-minute rate limit on a typical free key.
 async function callGemini(
   apiKey: string,
@@ -581,9 +652,20 @@ async function runIngest(opts: {
     if (fullCatalog.length === 0) {
       throw new Error("Catalog empty: catalog_courses has no rows");
     }
-    const prunedCatalog = pruneCatalogToMentioned(fullCatalog, docText);
+    // Catalog and doc are pruned/trimmed by literal mention BUT also by
+    // the abbreviation map (GPS → CCSF-SHU-101L, etc.) so courses
+    // mentioned only by nickname survive into the prompt. Sending the
+    // full unpruned catalog + full doc was tried and overshot Supabase's
+    // edge-function compute budget — the background task was killed
+    // before writing any row. Pruning keeps prompts ~50KB per chunk so
+    // the run fits in the 150s wall budget.
+    const abbrevPatterns = buildAbbrevPatternMap();
+    const prunedCatalog = pruneCatalogToMentioned(
+      fullCatalog,
+      docText,
+      abbrevPatterns,
+    );
     const catalog = prunedCatalog.length > 0 ? prunedCatalog : fullCatalog;
-    const validIds = new Set(catalog.map((c) => c.id));
     // Some Gemini responses come back with spaces or other separators in
     // course IDs (e.g., "CSCI-SHU 220" instead of "CSCI-SHU-220"). Build a
     // lookup that maps any plausible spelling back to the canonical id.
@@ -604,7 +686,8 @@ async function runIngest(opts: {
       const collapsed = raw.replace(/\s+/g, "").toLowerCase();
       return idAliases.get(collapsed) ?? null;
     };
-    const trimmedDoc = trimDocToRelevant(docText, catalog);
+
+    const trimmedDoc = trimDocToRelevant(docText, catalog, abbrevPatterns);
 
     const { courses, professors, chunkErrors } = await callGemini(
       geminiKey,
