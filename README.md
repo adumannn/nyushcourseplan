@@ -32,7 +32,7 @@ Computer Science, Data Science, Business and Finance, Business and Marketing, Bi
 
 ## Use It
 
-Visit **[nyushplanner.app](https://nyushplanner.app)** — no installation needed. Sign in with your NYU email (`@nyu.edu`).
+Visit **[nyushplanner.app](https://nyushplanner.app)**. Sign in with your NYU email (`@nyu.edu`).
 
 ## License
 
