@@ -1,5 +1,6 @@
 # NYU Shanghai Course Planner
 <img width="1497" height="867" alt="image" src="https://github.com/user-attachments/assets/01075a8f-50a0-4f3c-a5ab-aa6695ee4f03" />
+<img width="458" height="584" alt="image" src="https://github.com/user-attachments/assets/f3a42ba4-7914-4c18-8c19-11c36434531f" />
 
 
 A course planning tool for NYU Shanghai students. Plan your 4-year journey, pick a major, add courses into 8 semester slots, and track progress toward 128 graduation credits and requirement fulfillment.
