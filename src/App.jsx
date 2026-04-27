@@ -1,5 +1,6 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Analytics } from "@vercel/analytics/react";
+import { ListChecks, X } from "lucide-react";
 import useTheme from "./hooks/useTheme";
 import useAuth from "./hooks/useAuth";
 import usePlanner from "./hooks/usePlanner";
@@ -10,6 +11,7 @@ import CoursePicker from "./components/CoursePicker";
 import StudyAwayPicker from "./components/StudyAwayPicker";
 import CourseDetailModal from "./components/CourseDetailModal";
 import AuthGate from "./components/AuthGate";
+import { GRADUATION_CREDITS } from "./data/courses";
 import "./App.css";
 
 function App() {
@@ -53,6 +55,7 @@ function App() {
   const [studyAwayFocusSemester, setStudyAwayFocusSemester] = useState(null);
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [detailCourse, setDetailCourse] = useState(null);
+  const [requirementsSheetOpen, setRequirementsSheetOpen] = useState(false);
 
   const hasIncompleteStudyAway =
     studyAway.selectedSemesters.length === 0 ||
@@ -71,6 +74,24 @@ function App() {
     }, {});
   }, [studyAwayWarnings]);
 
+  // Lock body scroll while the mobile requirements sheet is open
+  useEffect(() => {
+    if (!requirementsSheetOpen) return undefined;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    const handleKey = (event) => {
+      if (event.key === "Escape") setRequirementsSheetOpen(false);
+    };
+    document.addEventListener("keydown", handleKey);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      document.removeEventListener("keydown", handleKey);
+    };
+  }, [requirementsSheetOpen]);
+
   // Auth gate — must sign in with Google
   if (authEnabled && !authLoading && !user) {
     return (
@@ -84,6 +105,11 @@ function App() {
       />
     );
   }
+
+  const completionPercent = Math.min(
+    (totalCredits / GRADUATION_CREDITS) * 100,
+    100,
+  );
 
   return (
     <div className="planner-shell h-dvh min-h-screen flex flex-col bg-background text-foreground">
@@ -111,7 +137,7 @@ function App() {
       />
 
       <div className="planner-main relative z-0 flex-1 min-h-0 flex flex-col lg:flex-row">
-        <div className="planner-board scrollbar-hidden flex-1 min-h-[45vh] lg:min-h-0 overflow-y-auto">
+        <div className="planner-board scrollbar-hidden flex-1 min-h-0 overflow-y-auto pb-20 lg:pb-0">
           {!loaded ? (
             <div className="plan-loading">
               <div className="spinner" />
@@ -136,11 +162,10 @@ function App() {
           )}
         </div>
 
+        {/* Desktop sidebar — hidden on mobile, shown lg+ */}
         <div
-          className={`planner-sidebar overflow-hidden transition-all duration-200 w-full lg:shrink-0 ${
-            isSidebarCollapsed
-              ? "max-h-24 lg:max-h-none lg:w-14"
-              : "max-h-[44vh] lg:max-h-none lg:w-80"
+          className={`planner-sidebar hidden lg:block overflow-hidden transition-all duration-200 lg:shrink-0 ${
+            isSidebarCollapsed ? "lg:w-14" : "lg:w-80"
           }`}
         >
           <RequirementsSidebar
@@ -153,6 +178,68 @@ function App() {
           />
         </div>
       </div>
+
+      {/* Mobile-only floating Progress pill */}
+      <button
+        type="button"
+        onClick={() => setRequirementsSheetOpen(true)}
+        className="lg:hidden fixed right-3 bottom-3 z-30 inline-flex items-center gap-2 rounded-full border border-border/60 bg-card px-4 py-2.5 text-sm font-medium shadow-lg shadow-black/10 hover:bg-accent active:scale-95 transition-all"
+        aria-label={`View progress: ${totalCredits} of ${GRADUATION_CREDITS} credits`}
+        aria-haspopup="dialog"
+        aria-expanded={requirementsSheetOpen}
+      >
+        <ListChecks className="h-4 w-4 text-[#57068c]" />
+        <span>Progress</span>
+        <span className="inline-flex items-baseline gap-1 tabular-nums">
+          <span>{totalCredits}</span>
+          <span className="text-[11px] text-muted-foreground">
+            / {GRADUATION_CREDITS}
+          </span>
+        </span>
+        <span className="relative h-1.5 w-12 overflow-hidden rounded-full bg-accent/40">
+          <span
+            className="absolute inset-y-0 left-0 rounded-full bg-[#57068c]"
+            style={{ width: `${completionPercent}%` }}
+          />
+        </span>
+      </button>
+
+      {/* Mobile-only bottom sheet for requirements */}
+      {requirementsSheetOpen && (
+        <div
+          className="requirements-sheet-overlay lg:hidden"
+          onClick={() => setRequirementsSheetOpen(false)}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Requirements progress"
+        >
+          <div
+            className="requirements-sheet-panel"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="pt-2 pb-1 flex justify-center shrink-0">
+              <div className="w-10 h-1 rounded-full bg-muted-foreground/30" />
+            </div>
+            <button
+              type="button"
+              onClick={() => setRequirementsSheetOpen(false)}
+              className="absolute top-2 right-2 p-2 rounded-md text-muted-foreground hover:bg-accent transition-colors"
+              aria-label="Close progress sheet"
+            >
+              <X className="h-4 w-4" />
+            </button>
+            <div className="flex-1 min-h-0 overflow-hidden">
+              <RequirementsSidebar
+                requirementProgress={requirementProgress}
+                totalCredits={totalCredits}
+                allPlannedCourses={allPlannedCourses}
+                major={major}
+                collapsed={false}
+              />
+            </div>
+          </div>
+        </div>
+      )}
 
       {pickerSemester && (
         <CoursePicker

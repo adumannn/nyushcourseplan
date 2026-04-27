@@ -15,7 +15,6 @@ import CourseCard from "./CourseCard";
 export default function SemesterCard({
   semesterKey,
   year,
-  semester,
   courses,
   credits,
   isStudyAway = false,
@@ -86,29 +85,36 @@ export default function SemesterCard({
           onDragOverIndex(event, semesterKey, courses.length)
         }
         onDrop={(event) => onDropAtIndex(event, semesterKey, courses.length)}
-        className="planner-semester-toggle w-full flex items-center justify-between px-4 sm:px-6 py-3.5 sm:py-4 hover:bg-accent/5 transition-colors"
+        className="planner-semester-toggle w-full flex items-center justify-between gap-2 px-3 sm:px-6 py-3 sm:py-4 hover:bg-accent/5 transition-colors"
       >
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-wrap">
           <span className="text-xs tracking-wider uppercase text-muted-foreground whitespace-nowrap">
             {year}
           </span>
-          <span className="text-sm text-muted-foreground/60">{semester}</span>
           {isStudyAway ? (
             <span className="planner-study-away-badge">
               <PlaneTakeoff className="h-3 w-3" />
-              Study Away: {studyAwayLocation || "Site pending"}
+              <span className="hidden sm:inline">Study Away: </span>
+              <span className="sm:hidden">✈ </span>
+              {studyAwayLocation || "Site pending"}
             </span>
           ) : studyAwayEligible ? (
-            <span className="planner-study-away-hint">Study away eligible</span>
+            <span className="planner-study-away-hint hidden sm:inline-flex">
+              Study away eligible
+            </span>
           ) : null}
           {studyAwayIssueCount > 0 && (
             <span className="inline-flex items-center gap-1 rounded-full border border-amber-500/30 bg-amber-500/10 px-2 py-0.5 text-[10px] font-medium text-amber-600 dark:text-amber-400">
               <AlertTriangle className="h-3 w-3" />
-              {studyAwayIssueCount} issue{studyAwayIssueCount === 1 ? "" : "s"}
+              {studyAwayIssueCount}
+              <span className="hidden sm:inline">
+                {" "}
+                issue{studyAwayIssueCount === 1 ? "" : "s"}
+              </span>
             </span>
           )}
         </div>
-        <div className="flex items-center gap-2 sm:gap-4">
+        <div className="flex items-center gap-1.5 sm:gap-4 shrink-0">
           {creditWarning && (
             <div
               className="flex items-center gap-1 text-amber-500"
@@ -120,16 +126,19 @@ export default function SemesterCard({
               </span>
             </div>
           )}
-          <div className="flex items-baseline gap-1.5">
+          <div className="flex items-baseline gap-1 sm:gap-1.5">
             <span
               className={`text-sm tabular-nums ${creditWarning ? "text-amber-500" : ""}`}
             >
               {credits}
             </span>
-            <span className="text-xs text-muted-foreground">credits</span>
+            <span className="text-[11px] sm:text-xs text-muted-foreground">
+              <span className="hidden sm:inline">credits</span>
+              <span className="sm:hidden">cr</span>
+            </span>
           </div>
           <ChevronDown
-            className={`h-4 w-4 text-muted-foreground transition-transform ${
+            className={`h-4 w-4 text-muted-foreground transition-transform shrink-0 ${
               isExpanded ? "rotate-180" : ""
             }`}
           />
@@ -137,7 +146,7 @@ export default function SemesterCard({
       </button>
 
       {isExpanded && (
-        <div className="planner-semester-body px-4 sm:px-6 pb-3 sm:pb-4 min-h-24">
+        <div className="planner-semester-body px-3 sm:px-6 pb-3 sm:pb-4 min-h-24">
           {(studyAwayEligible || isStudyAway) && (
             <div className="mb-3 flex items-center justify-between gap-3 rounded-lg border border-border/40 bg-accent/5 px-3 py-2">
               <div className="min-w-0">

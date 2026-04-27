@@ -78,6 +78,7 @@ export default function PlanMenu({
   totalCredits,
   semesterCredits,
   onImport,
+  compact = false,
 }) {
   const [open, setOpen] = useState(false);
   const [status, setStatus] = useState(null);
@@ -283,20 +284,29 @@ export default function PlanMenu({
     <div className="relative" ref={menuRef}>
       <button
         onClick={() => setOpen((prev) => !prev)}
-        className={`inline-flex items-center gap-1.5 rounded-md border px-2.5 py-1.5 text-xs transition-colors cursor-pointer ${
+        className={`inline-flex items-center rounded-md border transition-colors cursor-pointer ${
+          compact
+            ? "gap-0 p-2 min-h-[36px] min-w-[36px] justify-center text-xs"
+            : "gap-1.5 px-2.5 py-1.5 text-xs"
+        } ${
           open
             ? "border-[#57068c]/45 bg-[#57068c]/10 text-foreground"
             : "border-border/60 text-muted-foreground hover:bg-accent hover:text-foreground"
         }`}
         title="Import or export plan"
+        aria-label="Import or export plan"
         aria-haspopup="menu"
         aria-expanded={open}
       >
-        <Download className="h-3.5 w-3.5" />
-        <span>Plan</span>
-        <ChevronDown
-          className={`h-3 w-3 transition-transform ${open ? "rotate-180" : ""}`}
-        />
+        <Download className="h-4 w-4 sm:h-3.5 sm:w-3.5" />
+        {!compact && (
+          <>
+            <span>Plan</span>
+            <ChevronDown
+              className={`h-3 w-3 transition-transform ${open ? "rotate-180" : ""}`}
+            />
+          </>
+        )}
       </button>
 
       <input

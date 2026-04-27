@@ -284,7 +284,7 @@ export default function SemesterGrid({
           key={year.id}
           className="planner-year-block border-b border-border/40 last:border-b-0"
         >
-          <div className="planner-year-heading px-4 sm:px-6 py-2.5 sm:py-3 bg-accent/5 border-b border-border/30">
+          <div className="planner-year-heading sticky top-0 z-10 backdrop-blur-md bg-card/85 px-4 sm:px-6 py-2.5 sm:py-3 border-b border-border/30">
             <div className="flex items-center gap-3">
               <span className="text-xs tracking-wider uppercase text-muted-foreground font-medium">
                 {year.label}
@@ -303,7 +303,6 @@ export default function SemesterGrid({
                 key={semesterKey}
                 semesterKey={semesterKey}
                 year={`${semester} ${year.label.toUpperCase()}`}
-                semester={semester}
                 courses={plan[semesterKey] || []}
                 credits={semesterCredits[semesterKey] || 0}
                 isStudyAway={studyAway.selectedSemesters.includes(semesterKey)}

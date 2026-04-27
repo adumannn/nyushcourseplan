@@ -1,3 +1,57 @@
+/* ── Mobile bottom sheet (Requirements) ── */
+
+.requirements-sheet-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(6px);
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    z-index: 50;
+    animation: fadeIn 0.18s ease;
+}
+
+.requirements-sheet-panel {
+    position: relative;
+    width: 100%;
+    max-height: 88dvh;
+    background: var(--card);
+    border-top: 1px solid var(--border);
+    border-top-left-radius: 18px;
+    border-top-right-radius: 18px;
+    box-shadow:
+        0 -12px 40px rgba(0, 0, 0, 0.18),
+        0 -4px 12px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+    animation: slideUpFromBottom 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+    padding-bottom: env(safe-area-inset-bottom);
+}
+
+@keyframes slideUpFromBottom {
+    from {
+        opacity: 0.8;
+        transform: translateY(100%);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.dark .requirements-sheet-panel {
+    background: linear-gradient(
+        180deg,
+        rgba(28, 30, 36, 0.98),
+        rgba(20, 22, 27, 0.98)
+    );
+    border-color: rgba(255, 255, 255, 0.08);
+    box-shadow:
+        0 -16px 48px rgba(0, 0, 0, 0.6),
+        0 -4px 14px rgba(0, 0, 0, 0.32);
+}
+
 /* ── Modal / Course Picker ── */
 
 .modal-overlay {
@@ -163,7 +217,7 @@
     border-color: var(--ring);
 }
 
-@media (max-width: 560px) {
+@media (max-width: 360px) {
     .modal-filter-row {
         flex-direction: column;
     }
@@ -2190,49 +2244,108 @@
 
     .modal-overlay {
         align-items: flex-end;
-        padding: 12px;
+        padding: 0;
     }
 
     .modal {
-        max-height: 90vh;
-        border-radius: 14px;
+        max-width: 100%;
+        max-height: 92dvh;
+        border-radius: 16px 16px 0 0;
+        animation: slideUpFromBottom 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+        padding-bottom: env(safe-area-inset-bottom);
     }
 
     .modal-header {
-        padding: 14px;
+        padding: 14px 16px;
+        position: sticky;
+        top: 0;
+        z-index: 2;
+        background: var(--card);
+    }
+
+    .dark .modal-header {
+        background: rgba(20, 22, 27, 0.96);
+        backdrop-filter: blur(8px);
     }
 
     .modal-header h2 {
-        font-size: 14px;
+        font-size: 15px;
+    }
+
+    .modal-tabs {
+        position: sticky;
+        top: 49px;
+        z-index: 1;
+        background: var(--card);
+    }
+
+    .dark .modal-tabs {
+        background: rgba(20, 22, 27, 0.96);
+        backdrop-filter: blur(8px);
     }
 
     .modal-tab {
-        font-size: 12px;
-        padding: 10px 8px;
+        font-size: 13px;
+        padding: 12px 8px;
+        min-height: 44px;
     }
 
     .modal-filters {
-        padding: 10px 12px;
+        padding: 12px 14px;
     }
 
     .modal-filter-row {
-        flex-direction: column;
+        flex-direction: row;
+        gap: 8px;
     }
 
-    .modal-search,
-    .modal-filter-row select,
+    .modal-filter-row select {
+        flex: 1 1 0;
+        font-size: 12px;
+        min-height: 40px;
+    }
+
+    .modal-search {
+        min-height: 44px;
+        font-size: 16px; /* avoid iOS zoom on focus */
+    }
+
     .custom-field input,
     .custom-field select {
-        min-height: 40px;
-        font-size: 13px;
+        min-height: 44px;
+        font-size: 16px; /* avoid iOS zoom on focus */
+    }
+
+    .modal-course-list {
+        max-height: none;
+        flex: 1;
     }
 
     .modal-course-item {
-        padding: 9px 12px;
+        padding: 12px 14px;
+        gap: 12px;
+    }
+
+    .modal-course-color {
+        height: 32px;
+        width: 4px;
+    }
+
+    .modal-course-name {
+        font-size: 13px;
+    }
+
+    .modal-course-credits {
+        font-size: 11px;
+    }
+
+    .modal-course-add-icon {
+        font-size: 22px;
+        min-width: 28px;
     }
 
     .modal-custom {
-        padding: 16px 12px;
+        padding: 16px 14px;
     }
 
     .plan-transfer-modal {

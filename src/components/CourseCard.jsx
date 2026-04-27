@@ -68,9 +68,7 @@ export default function CourseCard({
       }}
       aria-grabbed={isDragging}
       style={cardStyle}
-      className={`planner-course-card group relative flex items-center gap-3 px-4 py-3 bg-accent/10 border rounded-md transition-all ${
-        touchMode ? 'cursor-pointer' : 'cursor-pointer'
-      } ${
+      className={`planner-course-card group relative flex items-center gap-2 sm:gap-3 px-3 sm:px-4 py-2.5 sm:py-3 bg-accent/10 border rounded-md transition-all cursor-pointer ${
         isDragging
           ? 'opacity-45 border-[#57068c]/50 ring-1 ring-[#57068c]/30'
           : hasPrereqWarning
@@ -78,12 +76,14 @@ export default function CourseCard({
             : 'border-border/30 hover:bg-accent/20 hover:border-border/50'
       }`}
     >
-      <GripVertical className="h-4 w-4 text-muted-foreground/40 shrink-0 cursor-grab active:cursor-grabbing" />
+      {!touchMode && (
+        <GripVertical className="h-4 w-4 text-muted-foreground/40 shrink-0 cursor-grab active:cursor-grabbing" />
+      )}
 
       <div className="flex-1 min-w-0">
-        <div className="flex items-baseline gap-2">
-          <span className="text-sm">{course.name}</span>
-          <span className="text-xs text-muted-foreground/60 font-mono">
+        <div className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
+          <span className="text-sm leading-snug">{course.name}</span>
+          <span className="text-[11px] sm:text-xs text-muted-foreground/60 font-mono">
             {course.code}
           </span>
         </div>
@@ -115,9 +115,10 @@ export default function CourseCard({
         )}
       </div>
 
-      <div className="flex items-center gap-2">
-        <span className="text-sm tabular-nums text-muted-foreground">
-          {course.credits} cr
+      <div className="flex items-center gap-0.5 sm:gap-2 shrink-0">
+        <span className="text-xs sm:text-sm tabular-nums text-muted-foreground">
+          {course.credits}
+          <span className="hidden sm:inline"> cr</span>
         </span>
         {touchMode && (
           <button
@@ -125,10 +126,10 @@ export default function CourseCard({
               event.stopPropagation();
               onClick?.();
             }}
-            className="p-2 hover:bg-accent/20 rounded transition-all"
+            className="p-2 hover:bg-accent/20 rounded transition-all min-h-[36px] min-w-[36px] flex items-center justify-center"
             aria-label="Course details"
           >
-            <Info className="h-3.5 w-3.5 text-muted-foreground" />
+            <Info className="h-4 w-4 text-muted-foreground" />
           </button>
         )}
         <button
@@ -136,9 +137,10 @@ export default function CourseCard({
             event.stopPropagation();
             onRemove(semesterKey, course.id);
           }}
-          className={`${touchMode ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'} p-2 hover:bg-destructive/10 rounded transition-all`}
+          aria-label={`Remove ${course.name}`}
+          className={`${touchMode ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'} p-2 hover:bg-destructive/10 rounded transition-all min-h-[36px] min-w-[36px] flex items-center justify-center`}
         >
-          <X className="h-3.5 w-3.5 text-muted-foreground hover:text-destructive" />
+          <X className="h-4 w-4 text-muted-foreground hover:text-destructive" />
         </button>
       </div>
     </div>

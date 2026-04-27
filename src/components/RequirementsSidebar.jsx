@@ -276,7 +276,7 @@ export default function RequirementsSidebar({
   );
 
   return (
-    <div className="planner-requirements flex flex-col h-full border-t border-border/40 lg:border-t-0 lg:border-l">
+    <div className="planner-requirements flex flex-col h-full lg:border-l border-border/40">
       <div
         className={`planner-requirements-header ${
           collapsed
