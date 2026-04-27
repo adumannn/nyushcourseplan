@@ -2,7 +2,7 @@
 
 Pulls the public community-review Google Doc (Chinese, freeform), trims it
 to passages that mention a NYU Shanghai course (by code or full name), and
-asks Gemini 2.5 Flash Lite to return structured per-course and per-professor
+asks Gemini 2.5 Flash to return structured per-course and per-professor
 review summaries. Results land in `course_reviews` and
 `course_professor_reviews`. A SHA-256 of the doc text is stored on each row
 of `review_ingest_runs` so the function can skip Gemini entirely when the
@@ -139,9 +139,11 @@ and `select * from review_ingest_runs order by started_at desc`.
 
 ## Quota notes
 
-Free-tier `gemini-2.5-flash-lite` is currently 15 RPM and 200 RPD. Each
-ingest run makes 2 × CHUNKS calls (default CHUNKS=8 → 16 calls). At 16
-calls per run, the daily budget covers ~12 successful runs — well within
-the hourly cron schedule because the doc-hash gate skips Gemini entirely on
-hours when the doc hasn't changed. If you change CHUNKS or the doc edit
-cadence, recheck this math.
+Free-tier `gemini-2.5-flash` is currently 10 RPM and 250 RPD. Each
+ingest run makes 2 × CHUNKS calls (default CHUNKS=8 → 16 calls). 16 calls
+in parallel will saturate the per-minute quota for ~1 minute, so a manual
+forced re-run kicked off seconds after the cron job will silently no-op on
+429s — wait at least a minute between forced runs. The daily budget covers
+~15 successful runs — well within the hourly cron schedule because the
+doc-hash gate skips Gemini entirely on hours when the doc hasn't changed.
+If you change CHUNKS or the doc edit cadence, recheck this math.

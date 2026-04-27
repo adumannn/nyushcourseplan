@@ -21,8 +21,8 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2.39.7";
 
 // Flash Lite has higher free-tier RPM (15 vs 5) and faster generation, which
 // matters because we run multiple chunks in parallel and the edge function's
-// idle timeout is ~150s.
-const GEMINI_MODEL = "gemini-2.5-flash-lite";
+// idle timeout is ~150s. The schema is designed to keep output under Gemini's max tokens even in the worst case, but if we see consistent timeouts we could also split the doc into multiple chunks and merge results in-memory before upserting to the DB.
+const GEMINI_MODEL = "gemini-2.5-flash";
 const GEMINI_ENDPOINT = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent`;
 const MAX_GEMINI_RETRIES = 3;
 
