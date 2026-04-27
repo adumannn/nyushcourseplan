@@ -253,9 +253,7 @@ export default function AuthGate({
         </section>
 
         <footer className="auth-footer">
-          <span>Restricted to nyu.edu / nyu.edu.cn</span>
-          <span className="auth-footer-dot" aria-hidden="true">&middot;</span>
-          <span>Your data stays in your account.</span>
+          <span>Restricted to nyu.edu</span>
         </footer>
       </main>
     </div>
