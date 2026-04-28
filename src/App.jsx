@@ -10,6 +10,7 @@ import RequirementsSidebar from "./components/layout/RequirementsSidebar";
 import CoursePicker from "./components/planner/CoursePicker";
 import StudyAwayPicker from "./components/planner/StudyAwayPicker";
 import CourseDetailModal from "./components/planner/CourseDetailModal";
+import SuggestionModal from "./components/layout/SuggestionModal";
 import AuthGate from "./components/auth/AuthGate";
 import { GRADUATION_CREDITS } from "./data/courses";
 import "./App.css";
@@ -20,7 +21,6 @@ function AppContent() {
     user,
     loading: authLoading,
     getToken,
-    signOut,
   } = useAuth();
 
   const {
@@ -51,6 +51,7 @@ function AppContent() {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [detailCourse, setDetailCourse] = useState(null);
   const [requirementsSheetOpen, setRequirementsSheetOpen] = useState(false);
+  const [suggestionOpen, setSuggestionOpen] = useState(false);
 
   const hasIncompleteStudyAway =
     studyAway.selectedSemesters.length === 0 ||
@@ -128,6 +129,7 @@ function AppContent() {
         studyAway={studyAway}
         semesterCredits={semesterCredits}
         onImportPlan={importPlan}
+        onOpenSuggestion={() => setSuggestionOpen(true)}
       />
 
       <div className="planner-main relative z-0 flex-1 min-h-0 flex flex-col lg:flex-row">
@@ -269,6 +271,13 @@ function AppContent() {
           onSetLocation={setStudyAwayLocation}
         />
       )}
+      {suggestionOpen && (
+        <SuggestionModal
+          onClose={() => setSuggestionOpen(false)}
+          getToken={getToken}
+        />
+      )}
+
       <Analytics />
     </div>
   );

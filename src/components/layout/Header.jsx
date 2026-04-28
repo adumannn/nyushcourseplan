@@ -3,6 +3,7 @@ import {
   Sun,
   PlaneTakeoff,
   AlertTriangle,
+  MessageSquare,
 } from "lucide-react";
 import { UserButton } from "@clerk/react";
 import { MAJORS } from "../../data/courses";
@@ -34,6 +35,7 @@ export default function Header({
   studyAway,
   semesterCredits,
   onImportPlan,
+  onOpenSuggestion,
 }) {
   const hasStudyAwayIssues =
     studyAwayWarningCount > 0 || hasIncompleteStudyAway;
@@ -152,6 +154,15 @@ export default function Header({
             )}
           </button>
 
+          <button
+            onClick={onOpenSuggestion}
+            className="p-2 rounded-md hover:bg-accent transition-colors text-muted-foreground cursor-pointer min-h-[36px] min-w-[36px] flex items-center justify-center border border-border/60"
+            title="Send a suggestion"
+            aria-label="Send a suggestion"
+          >
+            <MessageSquare className="h-4 w-4" />
+          </button>
+
           <UserButton appearance={clerkAppearance} />
         </div>
       </div>
@@ -251,6 +262,15 @@ export default function Header({
             ) : (
               <Sun className="h-4 w-4" />
             )}
+          </button>
+
+          <button
+            onClick={onOpenSuggestion}
+            className="p-1.5 rounded-md hover:bg-accent transition-colors text-muted-foreground cursor-pointer"
+            title="Send a suggestion"
+            aria-label="Send a suggestion"
+          >
+            <MessageSquare className="h-4 w-4" />
           </button>
 
           <UserButton appearance={clerkAppearance} />
