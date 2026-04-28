@@ -1872,11 +1872,45 @@
 
 /* ── Suggestion Modal ── */
 
+.suggestion-modal {
+    max-width: 460px;
+    overflow: hidden;
+}
+
+.suggestion-modal .modal-header {
+    padding: 15px 18px;
+}
+
+.suggestion-modal .modal-header h2 {
+    font-size: 16px;
+    font-weight: 650;
+}
+
+.suggestion-modal .modal-close {
+    width: 32px;
+    height: 32px;
+}
+
 .suggestion-form {
-    padding: 20px 16px;
+    padding: 16px 18px 18px;
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 14px;
+    overflow-y: auto;
+}
+
+.suggestion-modal .custom-field {
+    gap: 6px;
+}
+
+.suggestion-modal .custom-field input,
+.suggestion-modal .custom-field select {
+    min-height: 42px;
+    border-radius: 10px;
+    padding: 0 12px;
+    font-size: 14px;
+    font-weight: 520;
+    color: var(--foreground);
 }
 
 .suggestion-textarea {
@@ -1893,6 +1927,15 @@
     resize: vertical;
     min-height: 100px;
     transition: border-color 0.2s;
+}
+
+.suggestion-modal .suggestion-textarea {
+    min-height: 132px;
+    border-radius: 10px;
+    padding: 12px;
+    font-size: 14px;
+    font-weight: 450;
+    line-height: 1.45;
 }
 
 .suggestion-textarea:focus {
@@ -1912,6 +1955,22 @@
 .suggestion-error a {
     color: inherit;
     text-decoration: underline;
+}
+
+.suggestion-submit {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 2px;
+}
+
+.suggestion-submit:disabled {
+    opacity: 1;
+    transform: none;
+    background: color-mix(in oklab, var(--muted-foreground) 16%, var(--muted));
+    color: color-mix(in oklab, var(--muted-foreground) 82%, var(--foreground));
 }
 
 .suggestion-success {
@@ -1958,4 +2017,39 @@
 
 .dark .suggestion-textarea::placeholder {
     color: color-mix(in oklab, var(--muted-foreground) 84%, transparent);
+}
+
+.dark .suggestion-submit:disabled {
+    background: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.5);
+}
+
+@media (max-width: 768px) {
+    .suggestion-modal {
+        width: min(100% - 24px, 480px);
+        max-height: calc(100dvh - 24px);
+        margin-bottom: max(12px, env(safe-area-inset-bottom));
+        border-radius: 16px;
+        padding-bottom: 0;
+    }
+
+    .suggestion-modal .modal-header {
+        padding: 14px 16px;
+    }
+
+    .suggestion-form {
+        padding: 15px 16px 16px;
+        gap: 13px;
+    }
+
+    .suggestion-modal .custom-field input,
+    .suggestion-modal .custom-field select,
+    .suggestion-modal .suggestion-textarea {
+        font-size: 16px;
+    }
+
+    .suggestion-modal .suggestion-textarea {
+        min-height: 124px;
+        max-height: 32dvh;
+    }
 }

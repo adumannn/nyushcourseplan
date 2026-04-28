@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { Send } from "lucide-react";
+import { Send, X } from "lucide-react";
 import { getSupabaseClientWithAuth } from "../../lib/supabase";
 
 const CATEGORY_OPTIONS = [
@@ -150,19 +150,21 @@ export default function SuggestionModal({
       onClick={isSending ? undefined : onClose}
     >
       <div
-        className="modal"
-        style={{ maxWidth: 440 }}
+        className="modal suggestion-modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="suggestion-modal-title"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="modal-header">
-          <h2>Send a Suggestion</h2>
+          <h2 id="suggestion-modal-title">Send a Suggestion</h2>
           <button
             className="modal-close"
             onClick={onClose}
             disabled={isSending}
             aria-label="Close suggestion form"
           >
-            &times;
+            <X className="h-4 w-4" aria-hidden="true" />
           </button>
         </div>
 
@@ -242,14 +244,19 @@ export default function SuggestionModal({
 
             <button
               type="submit"
-              className="btn-primary"
+              className="btn-primary suggestion-submit"
               disabled={!canSubmit}
             >
-              {status === "sending"
-                ? "Sending..."
-                : status === "error"
-                  ? "Try again"
-                  : "Submit"}
+              {status === "sending" ? (
+                "Sending..."
+              ) : status === "error" ? (
+                "Try again"
+              ) : (
+                <>
+                  <Send className="h-4 w-4" aria-hidden="true" />
+                  <span>Submit</span>
+                </>
+              )}
             </button>
           </form>
         )}
