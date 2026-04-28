@@ -173,7 +173,7 @@ export default function SuggestionModal({
             </div>
             <p className="suggestion-success-title">Thanks for your feedback!</p>
             <p className="suggestion-success-body">
-              Your suggestion has been recorded. We review every submission.
+              Your suggestion has been recorded. I review every submission if I have enough time.
             </p>
             <button className="btn-primary" onClick={onClose}>
               Close
