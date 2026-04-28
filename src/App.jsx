@@ -20,9 +20,6 @@ function App() {
     user,
     loading: authLoading,
     signInWithGoogle,
-    signInWithEmail,
-    signUpWithEmail,
-    resetPassword,
     signOut,
     authError,
     enabled: authEnabled,
@@ -97,9 +94,6 @@ function App() {
     return (
       <AuthGate
         onSignInWithGoogle={signInWithGoogle}
-        onSignInWithEmail={signInWithEmail}
-        onSignUpWithEmail={signUpWithEmail}
-        onResetPassword={resetPassword}
         loading={authLoading}
         authError={authError}
       />
