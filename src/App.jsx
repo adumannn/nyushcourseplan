@@ -123,8 +123,6 @@ function AppContent() {
         studyAwayWarningCount={studyAwayWarnings.length}
         hasIncompleteStudyAway={hasIncompleteStudyAway}
         isStudyAwayOpen={studyAwayPickerOpen}
-        user={user}
-        onSignOut={signOut}
         plan={plan}
         studentName={studentName}
         studyAway={studyAway}

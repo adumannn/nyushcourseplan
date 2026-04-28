@@ -32,9 +32,18 @@ export async function getSupabaseClientWithAuth(getToken) {
   const client = createClient(supabaseUrl, supabaseAnonKey, {
     accessToken: async () => {
       try {
-        return await getToken();
+        const token = await getToken();
+        if (!token) {
+          console.warn('[Supabase Auth] getToken() returned null — Clerk session may not be active');
+        } else {
+          try {
+            const payload = JSON.parse(atob(token.split('.')[1]));
+            console.debug('[Supabase Auth] JWT sub:', payload.sub, '| exp:', new Date((payload.exp || 0) * 1000).toISOString());
+          } catch { /* ignore decode errors */ }
+        }
+        return token;
       } catch (error) {
-        console.warn('Failed to get Clerk token for Supabase:', error);
+        console.error('[Supabase Auth] getToken() threw:', error);
         return null;
       }
     },

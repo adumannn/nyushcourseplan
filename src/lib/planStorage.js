@@ -171,6 +171,7 @@ export const localStoragePlan = {
 export const supabasePlan = {
   async ensurePlan(userId, profileStudentName = "", getToken) {
     // Get existing plan or create one
+    console.debug('[ensurePlan] userId:', userId, '| getToken type:', typeof getToken);
     const db = await getSupabaseDb(getToken);
     const normalizedProfileName = normalizeStudentName(profileStudentName);
     const { data: existing, error: existingError } = await db
@@ -183,6 +184,7 @@ export const supabasePlan = {
       .limit(1)
       .maybeSingle();
 
+    console.debug('[ensurePlan] SELECT result — data:', existing, '| error:', existingError);
     if (existingError) throw existingError;
 
     if (existing) {
@@ -215,6 +217,7 @@ export const supabasePlan = {
       return existing;
     }
 
+    console.debug('[ensurePlan] No existing plan found, inserting new plan for userId:', userId);
     const { data: created, error } = await db
       .from("plans")
       .insert({
@@ -227,6 +230,7 @@ export const supabasePlan = {
       )
       .single();
 
+    console.debug('[ensurePlan] INSERT result — data:', created, '| error:', error);
     if (error) throw error;
     return created;
   },
@@ -263,7 +267,7 @@ export const supabasePlan = {
         }),
       };
     } catch (e) {
-      console.error("Failed to load from Supabase:", e);
+      console.error('[supabasePlan.load] FAILED — userId:', userId, '| error:', e?.message || e, '| code:', e?.code, '| details:', e?.details);
       return null;
     }
   },

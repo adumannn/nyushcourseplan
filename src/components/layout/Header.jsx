@@ -1,115 +1,22 @@
-import { useState, useRef, useEffect } from "react";
 import {
   Moon,
   Sun,
-  LogOut,
-  ChevronDown,
   PlaneTakeoff,
   AlertTriangle,
 } from "lucide-react";
+import { UserButton } from "@clerk/react";
 import { MAJORS } from "../../data/courses";
 import PlanMenu from "./PlanMenu";
 
-function AccountMenu({ user, onSignOut, compact = false }) {
-  const [open, setOpen] = useState(false);
-  const ref = useRef(null);
-
-  const displayName =
-    user?.user_metadata?.full_name || user?.email?.split("@")[0] || null;
-  const avatarUrl = user?.user_metadata?.avatar_url || null;
-  const userEmail = user?.email || null;
-
-  useEffect(() => {
-    if (!open) return undefined;
-    const handleClick = (e) => {
-      if (ref.current && !ref.current.contains(e.target)) {
-        setOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClick);
-    return () => document.removeEventListener("mousedown", handleClick);
-  }, [open]);
-
-  if (!user) return null;
-
-  return (
-    <div className="relative z-50" ref={ref}>
-      <button
-        onClick={() => setOpen((prev) => !prev)}
-        className={`flex items-center ${
-          compact ? "p-0.5 min-h-[34px]" : "gap-2 p-1"
-        } rounded-md hover:bg-accent transition-colors cursor-pointer`}
-        aria-haspopup="menu"
-        aria-expanded={open}
-        aria-label="Account menu"
-      >
-        {avatarUrl ? (
-          <img
-            src={avatarUrl}
-            alt=""
-            className="w-7 h-7 rounded-full"
-            referrerPolicy="no-referrer"
-          />
-        ) : (
-          <div className="w-7 h-7 rounded-full bg-[#57068c] text-white text-xs font-medium flex items-center justify-center">
-            {(displayName || "?")[0].toUpperCase()}
-          </div>
-        )}
-        {!compact && (
-          <ChevronDown
-            className={`h-3.5 w-3.5 text-muted-foreground transition-transform ${
-              open ? "rotate-180" : ""
-            }`}
-          />
-        )}
-      </button>
-
-      {open && (
-        <div className="absolute right-0 top-full mt-2 w-60 sm:w-64 bg-card border border-border rounded-lg shadow-lg z-70 overflow-hidden">
-          <div className="px-4 py-3 border-b border-border/40">
-            <div className="flex items-center gap-3">
-              {avatarUrl ? (
-                <img
-                  src={avatarUrl}
-                  alt=""
-                  className="w-10 h-10 rounded-full"
-                  referrerPolicy="no-referrer"
-                />
-              ) : (
-                <div className="w-10 h-10 rounded-full bg-[#57068c] text-white text-sm font-medium flex items-center justify-center">
-                  {(displayName || "?")[0].toUpperCase()}
-                </div>
-              )}
-              <div className="flex-1 min-w-0">
-                <div className="text-sm font-medium truncate">
-                  {displayName}
-                </div>
-                {userEmail && (
-                  <div className="text-xs text-muted-foreground truncate">
-                    {userEmail}
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
-
-          <div className="py-1">
-            <button
-              onClick={() => {
-                setOpen(false);
-                onSignOut();
-              }}
-              className="w-full flex items-center gap-3 px-4 py-3 text-sm text-muted-foreground hover:bg-accent hover:text-foreground transition-colors cursor-pointer"
-            >
-              <LogOut className="h-4 w-4" />
-              Sign out
-            </button>
-          </div>
-        </div>
-      )}
-    </div>
-  );
-}
+const clerkAppearance = {
+  elements: {
+    avatarBox: "w-7 h-7",
+    userButtonTrigger:
+      "rounded-md hover:bg-accent transition-colors cursor-pointer p-0.5",
+    userButtonPopoverCard:
+      "bg-card border border-border shadow-lg rounded-lg",
+  },
+};
 
 export default function Header({
   major,
@@ -122,8 +29,6 @@ export default function Header({
   studyAwayWarningCount = 0,
   hasIncompleteStudyAway = false,
   isStudyAwayOpen = false,
-  user,
-  onSignOut,
   plan,
   studentName,
   studyAway,
@@ -247,7 +152,7 @@ export default function Header({
             )}
           </button>
 
-          <AccountMenu user={user} onSignOut={onSignOut} compact />
+          <UserButton appearance={clerkAppearance} />
         </div>
       </div>
 
@@ -348,7 +253,7 @@ export default function Header({
             )}
           </button>
 
-          <AccountMenu user={user} onSignOut={onSignOut} />
+          <UserButton appearance={clerkAppearance} />
         </div>
       </div>
     </header>
