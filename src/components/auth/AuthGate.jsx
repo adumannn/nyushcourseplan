@@ -52,9 +52,17 @@ export default function AuthGate() {
             <div className="clerk-signin-container">
               <SignIn
                 appearance={{
+                  layout: {
+                    socialButtonsPlacement: 'top',
+                  },
                   elements: {
-                    rootBox: 'w-full',
-                    card: 'w-full bg-transparent shadow-none border-none p-0',
+                    rootBox: 'auth-clerk-root',
+                    cardBox: 'auth-clerk-card-box',
+                    card: 'auth-clerk-card',
+                    main: 'auth-clerk-main',
+                    form: 'auth-clerk-form',
+                    footer: 'auth-clerk-footer',
+                    footerAction: 'auth-clerk-footer-action',
                     socialButtonsBlockButton: 'auth-google-btn w-full',
                     formButtonPrimary: 'auth-google-btn w-full',
                     dividerLine: 'bg-border',

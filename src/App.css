@@ -1670,9 +1670,62 @@
     color: var(--muted-foreground);
 }
 
+.clerk-signin-container {
+    width: 100%;
+    margin-top: 28px;
+}
+
+.auth-clerk-root,
+.auth-clerk-card-box,
+.auth-clerk-card,
+.clerk-signin-container [class*="cl-rootBox"],
+.clerk-signin-container [class*="cl-cardBox"],
+.clerk-signin-container [class*="cl-card"] {
+    width: 100% !important;
+    max-width: 100% !important;
+}
+
+.auth-clerk-card-box,
+.auth-clerk-card,
+.clerk-signin-container [class*="cl-cardBox"],
+.clerk-signin-container [class*="cl-card"] {
+    background: transparent !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+}
+
+.auth-clerk-card {
+    padding: 0 !important;
+}
+
+.auth-clerk-main,
+.auth-clerk-form,
+.clerk-signin-container [class*="cl-main"],
+.clerk-signin-container [class*="cl-form"] {
+    width: 100% !important;
+    padding: 0 !important;
+}
+
+.auth-clerk-footer,
+.clerk-signin-container [class*="cl-footer"] {
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+}
+
+.auth-clerk-footer {
+    padding: 18px 0 0 !important;
+}
+
+.auth-clerk-footer-action,
+.clerk-signin-container [class*="cl-footerAction"] {
+    border: 0 !important;
+    padding: 0 !important;
+}
+
 /* Google sign-in button — only sign-in path */
 .auth-google-btn {
-    margin-top: 28px;
     width: 100%;
     min-height: 46px;
     border-radius: 12px;
