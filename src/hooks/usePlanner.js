@@ -96,10 +96,56 @@ export default function usePlanner(user, getToken) {
   const [planId, setPlanId] = useState(null);
   const [loaded, setLoaded] = useState(false);
   const saveTimeout = useRef(null);
+  const pendingSave = useRef(null);
   const saveInProgress = useRef(false);
   const skipNextSave = useRef(false);
 
   const isCloud = !!user;
+
+  const flushSaveQueue = useCallback(async () => {
+    if (saveInProgress.current) return;
+
+    saveInProgress.current = true;
+    try {
+      while (pendingSave.current) {
+        const snapshot = pendingSave.current;
+        pendingSave.current = null;
+
+        await localStoragePlan.save({
+          plan: snapshot.plan,
+          major: snapshot.major,
+          studentName: snapshot.studentName,
+          studyAway: snapshot.studyAway,
+        });
+
+        if (snapshot.isCloud && snapshot.planId && snapshot.userId) {
+          try {
+            await supabasePlan.save(
+              snapshot.userId,
+              {
+                planId: snapshot.planId,
+                plan: snapshot.plan,
+                major: snapshot.major,
+                studentName: snapshot.studentName,
+                studyAway: snapshot.studyAway,
+              },
+              snapshot.getToken,
+            );
+          } catch (error) {
+            console.error(
+              "Cloud plan save failed; latest plan remains cached locally.",
+              error,
+            );
+          }
+        }
+      }
+    } finally {
+      saveInProgress.current = false;
+      if (pendingSave.current) {
+        void flushSaveQueue();
+      }
+    }
+  }, []);
 
   // Load plan on mount or auth change
   useEffect(() => {
@@ -107,6 +153,8 @@ export default function usePlanner(user, getToken) {
 
     async function load() {
       setLoaded(false);
+      clearTimeout(saveTimeout.current);
+      pendingSave.current = null;
       let shouldSkipInitialSave = true;
 
       if (isCloud) {
@@ -161,32 +209,21 @@ export default function usePlanner(user, getToken) {
       return;
     }
 
-    clearTimeout(saveTimeout.current);
-    saveTimeout.current = setTimeout(async () => {
-      // Prevent concurrent saves (DELETE+INSERT is not atomic)
-      if (saveInProgress.current) return;
-      saveInProgress.current = true;
+    const snapshot = {
+      plan,
+      major,
+      studentName,
+      studyAway,
+      isCloud,
+      planId,
+      userId: user?.id || null,
+      getToken,
+    };
 
-      try {
-        if (isCloud && planId) {
-          await supabasePlan.save(user.id, {
-            planId,
-            plan,
-            major,
-            studentName,
-            studyAway,
-          }, getToken);
-        }
-        // Always write to localStorage as cache
-        localStoragePlan.save({
-          plan,
-          major,
-          studentName,
-          studyAway,
-        });
-      } finally {
-        saveInProgress.current = false;
-      }
+    clearTimeout(saveTimeout.current);
+    saveTimeout.current = setTimeout(() => {
+      pendingSave.current = snapshot;
+      void flushSaveQueue();
     }, 500);
 
     return () => clearTimeout(saveTimeout.current);
@@ -200,6 +237,7 @@ export default function usePlanner(user, getToken) {
     user,
     getToken,
     loaded,
+    flushSaveQueue,
   ]);
 
   const addCourse = useCallback((semesterId, course) => {

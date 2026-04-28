@@ -86,6 +86,33 @@ function buildCourseSnapshot(course) {
   };
 }
 
+function buildCourseRows(plan) {
+  const rows = [];
+
+  for (const [semesterId, courses] of Object.entries(plan || {})) {
+    (courses || []).forEach((course, i) => {
+      const courseId = course?.id;
+      if (!courseId) return;
+
+      const isCustom = courseId.startsWith("custom-");
+      rows.push({
+        semester_id: semesterId,
+        course_id: courseId,
+        position: i,
+        selected_credits: Number.isFinite(course.credits)
+          ? course.credits
+          : null,
+        course_snapshot: isCustom ? null : buildCourseSnapshot(course),
+        custom_name: isCustom ? course.name : null,
+        custom_credits: isCustom ? course.credits : null,
+        custom_category: isCustom ? course.category : null,
+      });
+    });
+  }
+
+  return rows;
+}
+
 // ─── localStorage implementation ───
 
 function normalizeStudyAwayPayload(studyAway) {
@@ -274,56 +301,22 @@ export const supabasePlan = {
 
   async save(userId, { planId, plan, major, studentName, studyAway }, getToken) {
     try {
+      if (!userId) throw new Error("Cannot save a cloud plan without a user");
       const db = await getSupabaseDb(getToken);
       const normalizedStudyAway = normalizeStudyAwayPayload(studyAway);
-      // Update plan metadata
-      const { error: updateError } = await db
-        .from("plans")
-        .update({
-          major,
-          student_name: studentName,
-          study_away_semesters: normalizedStudyAway.selectedSemesters,
-          study_away_locations: normalizedStudyAway.locations,
-        })
-        .eq("id", planId)
-        .eq("user_id", userId);
+      const { error } = await db.rpc("save_plan_with_courses", {
+        p_plan_id: planId,
+        p_major: major,
+        p_student_name: studentName || "",
+        p_study_away_semesters: normalizedStudyAway.selectedSemesters,
+        p_study_away_locations: normalizedStudyAway.locations,
+        p_courses: buildCourseRows(plan),
+      });
 
-      if (updateError) throw updateError;
-
-      // Replace all courses: delete then insert
-      const { error: deleteError } = await db
-        .from("plan_courses")
-        .delete()
-        .eq("plan_id", planId);
-
-      if (deleteError) throw deleteError;
-
-      const rows = [];
-      for (const [semesterId, courses] of Object.entries(plan)) {
-        courses.forEach((course, i) => {
-          const isCustom = course.id.startsWith("custom-");
-          rows.push({
-            plan_id: planId,
-            semester_id: semesterId,
-            course_id: course.id,
-            position: i,
-            selected_credits: Number.isFinite(course.credits)
-              ? course.credits
-              : null,
-            course_snapshot: isCustom ? null : buildCourseSnapshot(course),
-            custom_name: isCustom ? course.name : null,
-            custom_credits: isCustom ? course.credits : null,
-            custom_category: isCustom ? course.category : null,
-          });
-        });
-      }
-
-      if (rows.length > 0) {
-        const { error } = await db.from("plan_courses").insert(rows);
-        if (error) throw error;
-      }
+      if (error) throw error;
     } catch (e) {
       console.error("Failed to save to Supabase:", e);
+      throw e;
     }
   },
 
