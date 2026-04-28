@@ -1,14 +1,21 @@
-import { useEffect, useMemo, useState } from 'react';
-import { SignIn, SignUp, useAuth } from '@clerk/react';
+import { useEffect, useState } from 'react';
+import { useAuth } from '@clerk/react';
+import SignInForm from './SignInForm';
+import SignUpForm from './SignUpForm';
+import SSOCallback from './SSOCallback';
 
 const SIGN_UP_PATH = '/sign-up';
+const SSO_CALLBACK_PATH = '/sso-callback';
 
-function getAuthMode() {
-  return window.location.pathname === SIGN_UP_PATH ? 'sign-up' : 'sign-in';
+function getAuthRoute() {
+  const path = window.location.pathname;
+  if (path.startsWith(SSO_CALLBACK_PATH)) return 'sso-callback';
+  if (path === SIGN_UP_PATH) return 'sign-up';
+  return 'sign-in';
 }
 
-function getAuthCopy(mode) {
-  if (mode === 'sign-up') {
+function getAuthCopy(route) {
+  if (route === 'sign-up') {
     return {
       ariaLabel: 'Sign up for Course Planner',
       title: 'Create your account.',
@@ -25,46 +32,23 @@ function getAuthCopy(mode) {
 
 /**
  * Auth gate component using Clerk.
- * Displays Clerk's built-in sign-in UI when user is not authenticated.
+ * Renders custom sign-in / sign-up forms (built on useSignIn / useSignUp)
+ * or the OAuth callback handler, depending on the current path.
  */
 export default function AuthGate() {
   const { isLoaded } = useAuth();
-  const [authMode, setAuthMode] = useState(getAuthMode);
-  const copy = getAuthCopy(authMode);
-  const clerkAppearance = useMemo(
-    () => ({
-      layout: {
-        socialButtonsPlacement: 'top',
-      },
-      elements: {
-        rootBox: 'auth-clerk-root',
-        cardBox: 'auth-clerk-card-box',
-        card: 'auth-clerk-card',
-        main: 'auth-clerk-main',
-        form: 'auth-clerk-form',
-        footer: 'auth-clerk-footer',
-        footerAction: 'auth-clerk-footer-action',
-        socialButtonsBlockButton: 'auth-google-btn w-full',
-        formButtonPrimary: 'auth-google-btn w-full',
-        dividerLine: 'bg-border',
-        dividerText: 'text-muted-foreground text-sm',
-        headerTitle: 'hidden',
-        headerSubtitle: 'hidden',
-        footerActionLink: 'text-primary hover:text-primary/80',
-        formFieldLabel: 'text-sm font-medium',
-        formFieldInput: 'rounded-md border border-input bg-background px-3 py-2 text-sm',
-        formFieldErrorText: 'text-destructive text-sm mt-1',
-      },
-    }),
-    [],
-  );
+  const [route, setRoute] = useState(getAuthRoute);
 
   useEffect(() => {
-    const handleLocationChange = () => setAuthMode(getAuthMode());
+    const handleLocationChange = () => setRoute(getAuthRoute());
 
     window.addEventListener('popstate', handleLocationChange);
     return () => window.removeEventListener('popstate', handleLocationChange);
   }, []);
+
+  if (route === 'sso-callback') {
+    return <SSOCallback />;
+  }
 
   if (!isLoaded) {
     return (
@@ -79,6 +63,8 @@ export default function AuthGate() {
       </div>
     );
   }
+
+  const copy = getAuthCopy(route);
 
   return (
     <div className="auth-shell">
@@ -106,22 +92,8 @@ export default function AuthGate() {
             <h1 className="auth-title text-balance">{copy.title}</h1>
             <p className="auth-subtitle">{copy.subtitle}</p>
 
-            <div className="clerk-signin-container">
-              {authMode === 'sign-up' ? (
-                <SignUp
-                  appearance={clerkAppearance}
-                  signInUrl="/"
-                  forceRedirectUrl="/"
-                  fallbackRedirectUrl="/"
-                />
-              ) : (
-                <SignIn
-                  appearance={clerkAppearance}
-                  signUpUrl={SIGN_UP_PATH}
-                  forceRedirectUrl="/"
-                  fallbackRedirectUrl="/"
-                />
-              )}
+            <div className="auth-form-container">
+              {route === 'sign-up' ? <SignUpForm /> : <SignInForm />}
             </div>
           </section>
 
