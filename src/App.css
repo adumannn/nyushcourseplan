@@ -57,6 +57,103 @@
         0 -4px 14px rgba(0, 0, 0, 0.32);
 }
 
+/* ── Planner board ── */
+
+.planner-board {
+    overscroll-behavior: contain;
+    padding-bottom: calc(5.5rem + env(safe-area-inset-bottom));
+}
+
+.planner-grid {
+    min-height: 100%;
+}
+
+.planner-year-summary {
+    background: color-mix(in oklab, var(--card) 70%, transparent);
+}
+
+@media (min-width: 1024px) {
+    .planner-board {
+        padding: 14px;
+    }
+
+    .planner-grid {
+        display: grid;
+        grid-template-columns: repeat(
+            auto-fit,
+            minmax(min(100%, 225px), 1fr)
+        );
+        gap: 14px;
+        align-items: start;
+    }
+
+    .planner-year-block {
+        min-height: calc(100dvh - 118px);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        background: color-mix(in oklab, var(--card) 84%, transparent);
+        box-shadow:
+            0 18px 34px -30px rgba(17, 26, 46, 0.38),
+            inset 0 1px 0 rgba(255, 255, 255, 0.38);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .planner-year-heading {
+        position: relative;
+        top: auto;
+        padding: 14px !important;
+        background: color-mix(in oklab, var(--card) 92%, transparent);
+        border-bottom: 1px solid var(--border);
+    }
+
+    .planner-year-block .planner-semester-row {
+        border-bottom-color: color-mix(
+            in oklab,
+            var(--border) 72%,
+            transparent
+        );
+    }
+
+    .planner-year-block .planner-semester-row:last-child {
+        border-bottom: 0;
+    }
+
+    .planner-year-block .planner-semester-toggle {
+        align-items: flex-start;
+        padding: 13px 14px;
+    }
+
+    .planner-year-block .planner-semester-body {
+        padding: 0 14px 14px;
+    }
+
+    .planner-year-block .planner-semester-empty {
+        min-height: 116px;
+    }
+
+    .planner-year-block .planner-semester-add {
+        min-height: 42px;
+    }
+}
+
+@media (min-width: 1440px) {
+    .planner-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 1023px) {
+    .planner-year-summary {
+        padding-inline: 9px;
+    }
+
+    .planner-shell > button[aria-label^="View progress"] {
+        bottom: calc(0.75rem + env(safe-area-inset-bottom)) !important;
+    }
+}
+
 /* ── Modal / Course Picker ── */
 
 .modal-overlay {
@@ -96,6 +193,11 @@
     animation: slideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+.course-picker-modal {
+    max-width: 680px;
+    max-height: min(86vh, 760px);
+}
+
 @keyframes slideUp {
     from {
         opacity: 0;
@@ -118,6 +220,17 @@
 .modal-header h2 {
     font-size: 15px;
     font-weight: 600;
+}
+
+.modal-title-group {
+    min-width: 0;
+}
+
+.modal-subtitle {
+    margin-top: 2px;
+    font-size: 12px;
+    line-height: 1.35;
+    color: var(--muted-foreground);
 }
 
 .modal-close {
@@ -176,6 +289,20 @@
     border-bottom: 1px solid var(--border);
 }
 
+.modal-search-shell {
+    position: relative;
+    display: block;
+}
+
+.modal-search-icon {
+    position: absolute;
+    top: 50%;
+    left: 12px;
+    transform: translateY(-50%);
+    color: var(--muted-foreground);
+    pointer-events: none;
+}
+
 .modal-search {
     width: 100%;
     padding: 9px 12px;
@@ -187,6 +314,10 @@
     background: var(--input-background);
     color: var(--foreground);
     transition: border-color 0.2s;
+}
+
+.modal-search--with-icon {
+    padding-left: 38px;
 }
 
 .modal-search:focus {
@@ -222,6 +353,21 @@
     border-color: var(--ring);
 }
 
+.modal-filter-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    font-size: 11px;
+    color: var(--muted-foreground);
+}
+
+.modal-filter-meta span {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
 @media (max-width: 360px) {
     .modal-filter-row {
         flex-direction: column;
@@ -251,6 +397,11 @@
     display: flex;
     align-items: center;
     gap: 10px;
+    width: 100%;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    text-align: left;
     padding: 8px 16px;
     cursor: pointer;
     transition: background 0.1s;
@@ -261,7 +412,7 @@
 }
 
 .modal-course-item--disabled {
-    opacity: 0.3;
+    opacity: 0.48;
     cursor: default;
 }
 
@@ -279,6 +430,11 @@
 .modal-course-info {
     flex: 1;
     min-width: 0;
+}
+
+.modal-course-item:focus-visible {
+    outline: 2px solid color-mix(in oklab, var(--ring) 72%, transparent);
+    outline-offset: -2px;
 }
 
 .modal-course-code {
@@ -306,19 +462,26 @@
 }
 
 .modal-course-add-icon {
-    font-size: 16px;
-    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     color: var(--primary);
-    width: 22px;
-    text-align: center;
+    width: 28px;
+    height: 28px;
+    border: 1px solid color-mix(in oklab, var(--primary) 28%, var(--border));
+    border-radius: 8px;
+    background: color-mix(in oklab, var(--primary) 7%, transparent);
 }
 
 .modal-course-added {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
     font-size: 9px;
     font-weight: 600;
     color: var(--chart-2);
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 0;
 }
 
 /* ── Custom course form ── */
@@ -374,6 +537,10 @@
     background: var(--primary);
     color: var(--primary-foreground);
     border: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
     padding: 10px 18px;
     border-radius: 10px;
     font-size: 13px;
@@ -1565,7 +1732,7 @@
 }
 
 .planner-brand-name {
-    letter-spacing: -0.01em;
+    letter-spacing: 0;
     white-space: nowrap;
 }
 
@@ -1704,6 +1871,11 @@
         padding-bottom: env(safe-area-inset-bottom);
     }
 
+    .course-picker-modal {
+        height: 92dvh;
+        max-height: 92dvh;
+    }
+
     .modal-header {
         padding: 14px 16px;
         position: sticky;
@@ -1728,6 +1900,10 @@
         background: var(--card);
     }
 
+    .course-picker-modal .modal-tabs {
+        top: 62px;
+    }
+
     .dark .modal-tabs {
         background: rgba(20, 22, 27, 0.96);
         backdrop-filter: blur(8px);
@@ -1741,6 +1917,12 @@
 
     .modal-filters {
         padding: 12px 14px;
+    }
+
+    .course-picker-modal .modal-header,
+    .course-picker-modal .modal-tabs,
+    .course-picker-modal .modal-filters {
+        flex-shrink: 0;
     }
 
     .modal-filter-row {
@@ -1789,8 +1971,9 @@
     }
 
     .modal-course-add-icon {
-        font-size: 22px;
-        min-width: 28px;
+        min-width: 32px;
+        width: 32px;
+        height: 32px;
     }
 
     .modal-custom {

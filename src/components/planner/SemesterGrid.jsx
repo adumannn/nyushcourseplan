@@ -125,6 +125,25 @@ export default function SemesterGrid({
     return selectedCourse?.name || "Selected course";
   }, [dragState.courseId, plan]);
 
+  const yearSummaries = useMemo(() => {
+    return years.reduce((acc, year) => {
+      const semesterIds = year.semesters.map(
+        (semester) => `Y${year.id.slice(1)}-${semester}`,
+      );
+      const credits = semesterIds.reduce(
+        (sum, semesterId) => sum + (semesterCredits[semesterId] || 0),
+        0,
+      );
+      const courseCount = semesterIds.reduce(
+        (sum, semesterId) => sum + (plan[semesterId] || []).length,
+        0,
+      );
+
+      acc[year.id] = { credits, courseCount };
+      return acc;
+    }, {});
+  }, [plan, semesterCredits]);
+
   const handleCourseDragStart = useCallback((event, fromSemester, courseId) => {
     const payload = JSON.stringify({ courseId, fromSemester });
     if (event.dataTransfer) {
@@ -286,12 +305,18 @@ export default function SemesterGrid({
           className="planner-year-block border-b border-border/40 last:border-b-0"
         >
           <div className="planner-year-heading sticky top-0 z-10 backdrop-blur-md bg-card/85 px-4 sm:px-6 py-2.5 sm:py-3 border-b border-border/30">
-            <div className="flex items-center gap-3">
-              <span className="text-xs tracking-wider uppercase text-muted-foreground font-medium">
-                {year.label}
-              </span>
-              <span className="text-sm text-muted-foreground/80">
-                {year.name}
+            <div className="flex items-center gap-3 min-w-0">
+              <div className="min-w-0">
+                <span className="block text-xs tracking-wider uppercase text-muted-foreground font-medium">
+                  {year.label}
+                </span>
+                <span className="block truncate text-sm text-muted-foreground/80">
+                  {year.name}
+                </span>
+              </div>
+              <span className="planner-year-summary ml-auto shrink-0 rounded-full border border-border/50 px-2.5 py-1 text-[11px] text-muted-foreground tabular-nums">
+                {yearSummaries[year.id]?.credits || 0} cr /{" "}
+                {yearSummaries[year.id]?.courseCount || 0} courses
               </span>
             </div>
           </div>
