@@ -275,6 +275,10 @@ function AppContent() {
         <SuggestionModal
           onClose={() => setSuggestionOpen(false)}
           getToken={getToken}
+          user={user}
+          plan={plan}
+          major={major}
+          totalCredits={totalCredits}
         />
       )}
 

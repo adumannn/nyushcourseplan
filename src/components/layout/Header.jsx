@@ -157,8 +157,8 @@ export default function Header({
           <button
             onClick={onOpenSuggestion}
             className="p-2 rounded-md hover:bg-accent transition-colors text-muted-foreground cursor-pointer min-h-[36px] min-w-[36px] flex items-center justify-center border border-border/60"
-            title="Send a suggestion"
-            aria-label="Send a suggestion"
+            title="Send feedback"
+            aria-label="Send feedback"
           >
             <MessageSquare className="h-4 w-4" />
           </button>
@@ -266,11 +266,12 @@ export default function Header({
 
           <button
             onClick={onOpenSuggestion}
-            className="p-1.5 rounded-md hover:bg-accent transition-colors text-muted-foreground cursor-pointer"
-            title="Send a suggestion"
-            aria-label="Send a suggestion"
+            className="inline-flex items-center gap-1.5 rounded-md border border-border/60 px-2.5 py-1.5 text-xs font-medium text-muted-foreground hover:bg-accent hover:text-foreground transition-colors cursor-pointer"
+            title="Send feedback"
+            aria-label="Send feedback"
           >
             <MessageSquare className="h-4 w-4" />
+            <span>Feedback</span>
           </button>
 
           <UserButton appearance={clerkAppearance} />
