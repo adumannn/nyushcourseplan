@@ -1,5 +1,6 @@
 import { useState, useMemo } from "react";
-import { CATEGORIES, DEPARTMENTS } from "../../data/courses";
+import { MinusCircle } from "lucide-react";
+import { CATEGORIES, DEPARTMENTS, SEMESTERS } from "../../data/courses";
 import useCatalog from "../../hooks/useCatalog";
 import {
   getEffectiveCategory,
@@ -10,8 +11,10 @@ import { LOCAL_CATALOG_COURSES } from "../../lib/localCatalog";
 export default function CoursePicker({
   semesterId,
   onAdd,
+  onRemove,
   onClose,
   isCourseInPlan,
+  getCourseSemester,
   major,
 }) {
   const [tab, setTab] = useState("catalog");
@@ -30,6 +33,10 @@ export default function CoursePicker({
     catalogCourses.length > 0 ? catalogCourses : LOCAL_CATALOG_COURSES;
   const courseSortCollator = useMemo(
     () => new Intl.Collator(undefined, { numeric: true, sensitivity: "base" }),
+    [],
+  );
+  const semesterLabels = useMemo(
+    () => new Map(SEMESTERS.map((semester) => [semester.id, semester.label])),
     [],
   );
 
@@ -81,6 +88,12 @@ export default function CoursePicker({
   const handleAddCatalog = (course) => {
     if (isCourseInPlan(course.id)) return;
     onAdd(semesterId, course);
+  };
+
+  const handleRemoveCatalog = (event, courseId, placedSemesterId) => {
+    event.stopPropagation();
+    if (!placedSemesterId || !onRemove) return;
+    onRemove(placedSemesterId, courseId);
   };
 
   const handleAddCustom = () => {
@@ -175,14 +188,19 @@ export default function CoursePicker({
                 </div>
               ) : (
                 filtered.map((course) => {
-                  const inPlan = isCourseInPlan(course.id);
+                  const placedSemesterId =
+                    getCourseSemester?.(course.id) ||
+                    (isCourseInPlan(course.id) ? semesterId : null);
+                  const inPlan = Boolean(placedSemesterId);
                   const effectiveCategory = getEffectiveCategory(course, major);
                   const cat =
                     CATEGORIES[effectiveCategory] || CATEGORIES.elective;
+                  const placedSemesterLabel =
+                    semesterLabels.get(placedSemesterId) || "your plan";
                   return (
                     <div
                       key={course.id}
-                      className={`modal-course-item ${inPlan ? "modal-course-item--disabled" : ""}`}
+                      className={`modal-course-item ${inPlan ? "modal-course-item--added" : ""}`}
                       onClick={() => handleAddCatalog(course)}
                     >
                       <div
@@ -197,7 +215,28 @@ export default function CoursePicker({
                         {course.credits} cr
                       </span>
                       {inPlan ? (
-                        <span className="modal-course-added">Added</span>
+                        <div className="modal-course-added-actions">
+                          <span className="modal-course-added">
+                            {placedSemesterId === semesterId
+                              ? "Added"
+                              : "In plan"}
+                          </span>
+                          <button
+                            type="button"
+                            className="modal-course-remove"
+                            onClick={(event) =>
+                              handleRemoveCatalog(
+                                event,
+                                course.id,
+                                placedSemesterId,
+                              )
+                            }
+                            title={`Remove from ${placedSemesterLabel}`}
+                            aria-label={`Remove ${course.name} from ${placedSemesterLabel}`}
+                          >
+                            <MinusCircle className="h-4 w-4" aria-hidden="true" />
+                          </button>
+                        </div>
                       ) : (
                         <span className="modal-course-add-icon">+</span>
                       )}

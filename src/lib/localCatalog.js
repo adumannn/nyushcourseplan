@@ -33,10 +33,40 @@ function mergeCatalogs(generated, curated) {
   return Array.from(byId.values());
 }
 
+const CORE_REQUIREMENT_PATTERNS = [
+  {
+    id: "science",
+    pattern:
+      /\b(core\s+sts|science,\s*technology,?\s+and\s+society|science\s+technology\s+and\s+society)\b/i,
+  },
+];
+
+function inferRequirementIds(course) {
+  const fulfillmentText =
+    typeof course?.fulfillmentText === "string" ? course.fulfillmentText : "";
+  if (!fulfillmentText) return [];
+
+  return CORE_REQUIREMENT_PATTERNS.filter(({ pattern }) =>
+    pattern.test(fulfillmentText),
+  ).map(({ id }) => id);
+}
+
+function normalizeRequirementIds(course) {
+  const ids = new Set([
+    ...(Array.isArray(course.requirementIds) ? course.requirementIds : []),
+    ...inferRequirementIds(course),
+  ]);
+
+  return {
+    ...course,
+    requirementIds: [...ids],
+  };
+}
+
 const MERGED_CATALOG = mergeCatalogs(GENERATED_CATALOG, COURSE_CATALOG);
 
 export const LOCAL_CATALOG_COURSES = MERGED_CATALOG.map((course) =>
-  hydrateCoursePrerequisites({ ...course }),
+  hydrateCoursePrerequisites(normalizeRequirementIds({ ...course })),
 );
 
 export const LOCAL_CATALOG_BY_ID = new Map(

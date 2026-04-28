@@ -264,3 +264,9 @@ src/
 
 - Catalog ownership is split cleanly: `src/lib/localCatalog.js` owns local merge/hydration logic, `src/hooks/useCatalog.js` owns remote fetch/indexing, and the old orphaned `src/lib/catalog.js` module has been removed to avoid duplicate sources of truth.
 - Dynamic major-based categorization: `getEffectiveCategory(course, majorId)` in `src/lib/majorCourseRules.js` resolves the **effective** category (major-required, major-elective, etc.) based on the active major.
+- Generated catalog fulfillment text is normalized in `src/lib/localCatalog.js`; `CORE STS` / “Science, Technology and Society” courses receive the `science` requirement ID so STS courses such as `SOCS-SHU-170` count in the requirements tracker.
+- Saved plans are refreshed through `mergeCourseWithLocalCatalog()` on load so existing catalog courses pick up current metadata, including inferred requirement IDs, without losing selected credits.
+
+### Course picker UX
+
+- Already-added catalog courses stay visible in `CoursePicker` with an inline remove button. Use `getCourseSemester(courseId)` from `usePlanner` plus `removeCourse(semesterId, courseId)` to remove the existing placement without closing the picker.

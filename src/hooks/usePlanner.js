@@ -1,11 +1,11 @@
 import { useState, useEffect, useCallback, useMemo, useRef } from "react";
 import {
   SEMESTERS,
-  COURSE_CATALOG,
   CORE_REQUIREMENTS,
   getMajorRequirement,
   STUDY_AWAY,
 } from "../data/courses";
+import { mergeCourseWithLocalCatalog } from "../lib/localCatalog";
 import { localStoragePlan, supabasePlan } from "../lib/planStorage";
 import { buildPrerequisiteWarnings } from "../lib/prerequisites";
 
@@ -22,7 +22,6 @@ function createEmptyPlan() {
 // Safety net: remove duplicate courses within each semester
 // Also refreshes course metadata from the catalog (e.g. category renames)
 function deduplicatePlan(plan) {
-  const catalogById = new Map(COURSE_CATALOG.map((c) => [c.id, c]));
   const result = {};
   for (const [semId, courses] of Object.entries(plan)) {
     const seen = new Set();
@@ -32,13 +31,12 @@ function deduplicatePlan(plan) {
         seen.add(c.id);
         return true;
       })
-      .map((c) => {
-        const catalogCourse = catalogById.get(c.id);
-        if (catalogCourse) {
-          return { ...c, category: catalogCourse.category };
-        }
-        return c;
-      });
+      .map((c) =>
+        mergeCourseWithLocalCatalog(c, {
+          courseId: c.id,
+          selectedCredits: c.credits,
+        }),
+      );
   }
   return result;
 }
@@ -661,6 +659,19 @@ export default function usePlanner(user, getToken) {
     [allPlannedCourses],
   );
 
+  const getCourseSemester = useCallback(
+    (courseId) => {
+      for (const semester of SEMESTERS) {
+        const semesterId = semester.id;
+        if ((plan[semesterId] || []).some((course) => course.id === courseId)) {
+          return semesterId;
+        }
+      }
+      return null;
+    },
+    [plan],
+  );
+
   // Build a map of courseId → list of unmet prerequisite groups.
   // A prerequisite group is "met" if any course in the group appears before it.
   const prereqWarnings = useMemo(() => {
@@ -692,6 +703,7 @@ export default function usePlanner(user, getToken) {
     semesterCredits,
     requirementProgress,
     isCourseInPlan,
+    getCourseSemester,
     allPlannedCourses,
     prereqWarnings,
     loaded,

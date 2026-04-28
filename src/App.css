@@ -260,13 +260,13 @@
     background: var(--accent);
 }
 
-.modal-course-item--disabled {
-    opacity: 0.3;
+.modal-course-item--added {
+    opacity: 0.72;
     cursor: default;
 }
 
-.modal-course-item--disabled:hover {
-    background: transparent;
+.modal-course-item--added:hover {
+    background: color-mix(in oklab, var(--accent) 58%, transparent);
 }
 
 .modal-course-color {
@@ -319,6 +319,30 @@
     color: var(--chart-2);
     text-transform: uppercase;
     letter-spacing: 0.5px;
+}
+
+.modal-course-added-actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.modal-course-remove {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    color: var(--muted-foreground);
+    transition:
+        background 0.12s,
+        color 0.12s;
+}
+
+.modal-course-remove:hover {
+    background: color-mix(in oklab, var(--destructive) 12%, transparent);
+    color: var(--destructive);
 }
 
 /* ── Custom course form ── */

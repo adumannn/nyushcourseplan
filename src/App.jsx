@@ -43,6 +43,7 @@ function AppContent() {
     requirementProgress,
     allPlannedCourses,
     isCourseInPlan,
+    getCourseSemester,
     prereqWarnings,
     loaded,
   } = usePlanner(user, getToken);
@@ -248,8 +249,10 @@ function AppContent() {
         <CoursePicker
           semesterId={pickerSemester}
           onAdd={addCourse}
+          onRemove={removeCourse}
           onClose={() => setPickerSemester(null)}
           isCourseInPlan={isCourseInPlan}
+          getCourseSemester={getCourseSemester}
           major={major}
         />
       )}
