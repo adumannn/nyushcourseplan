@@ -1,12 +1,5 @@
 import { useState, useMemo } from "react";
-import {
-  CheckCircle2,
-  Plus,
-  Search,
-  SlidersHorizontal,
-  X,
-} from "lucide-react";
-import { CATEGORIES, DEPARTMENTS, SEMESTERS } from "../../data/courses";
+import { CATEGORIES, DEPARTMENTS } from "../../data/courses";
 import useCatalog from "../../hooks/useCatalog";
 import {
   getEffectiveCategory,
@@ -35,9 +28,6 @@ export default function CoursePicker({
   const { courses: catalogCourses, departments } = useCatalog();
   const availableCourses =
     catalogCourses.length > 0 ? catalogCourses : LOCAL_CATALOG_COURSES;
-  const semesterLabel =
-    SEMESTERS.find((semester) => semester.id === semesterId)?.label ||
-    semesterId;
   const courseSortCollator = useMemo(
     () => new Intl.Collator(undefined, { numeric: true, sensitivity: "base" }),
     [],
@@ -112,22 +102,11 @@ export default function CoursePicker({
 
   return (
     <div className="modal-overlay" onClick={onClose}>
-      <div
-        className="modal course-picker-modal"
-        onClick={(e) => e.stopPropagation()}
-      >
+      <div className="modal" onClick={(e) => e.stopPropagation()}>
         <div className="modal-header">
-          <div className="modal-title-group">
-            <h2>Add Course</h2>
-            <p className="modal-subtitle">{semesterLabel}</p>
-          </div>
-          <button
-            type="button"
-            className="modal-close"
-            onClick={onClose}
-            aria-label="Close course picker"
-          >
-            <X className="h-4 w-4" />
+          <h2>Add Course</h2>
+          <button className="modal-close" onClick={onClose}>
+            ×
           </button>
         </div>
 
@@ -149,25 +128,14 @@ export default function CoursePicker({
         {tab === "catalog" ? (
           <>
             <div className="modal-filters">
-              <label className="modal-search-shell">
-                <Search className="modal-search-icon h-4 w-4" />
-                <span className="sr-only">Search courses</span>
-                <input
-                  className="modal-search modal-search--with-icon"
-                  type="text"
-                  placeholder="Search by name or code..."
-                  value={search}
-                  onChange={(e) => setSearch(e.target.value)}
-                  autoFocus
-                />
-              </label>
-              <div className="modal-filter-meta">
-                <span>
-                  <SlidersHorizontal className="h-3.5 w-3.5" />
-                  Filters
-                </span>
-                <span>{filtered.length} results</span>
-              </div>
+              <input
+                className="modal-search"
+                type="text"
+                placeholder="Search by name or code..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                autoFocus
+              />
               <div className="modal-filter-row">
                 <select
                   value={filterDept}
@@ -212,17 +180,10 @@ export default function CoursePicker({
                   const cat =
                     CATEGORIES[effectiveCategory] || CATEGORIES.elective;
                   return (
-                    <button
-                      type="button"
+                    <div
                       key={course.id}
                       className={`modal-course-item ${inPlan ? "modal-course-item--disabled" : ""}`}
                       onClick={() => handleAddCatalog(course)}
-                      disabled={inPlan}
-                      aria-label={
-                        inPlan
-                          ? `${course.name} is already in your plan`
-                          : `Add ${course.name} to ${semesterLabel}`
-                      }
                     >
                       <div
                         className="modal-course-color"
@@ -236,16 +197,11 @@ export default function CoursePicker({
                         {course.credits} cr
                       </span>
                       {inPlan ? (
-                        <span className="modal-course-added">
-                          <CheckCircle2 className="h-3.5 w-3.5" />
-                          Added
-                        </span>
+                        <span className="modal-course-added">Added</span>
                       ) : (
-                        <span className="modal-course-add-icon">
-                          <Plus className="h-4 w-4" />
-                        </span>
+                        <span className="modal-course-add-icon">+</span>
                       )}
-                    </button>
+                    </div>
                   );
                 })
               )}
@@ -306,7 +262,6 @@ export default function CoursePicker({
               onClick={handleAddCustom}
               disabled={!customName.trim()}
             >
-              <Plus className="h-4 w-4" />
               Add Custom Course
             </button>
           </div>
