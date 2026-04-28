@@ -1,14 +1,16 @@
 import { useEffect, useState } from "react";
-import { supabase } from "../lib/supabase";
+import useAuth from "./useAuth";
+import { supabase, getSupabaseClientWithAuth } from "../lib/supabase";
 
 export default function useCourseReviews(courseId) {
+  const { getToken, user } = useAuth();
   const [courseReview, setCourseReview] = useState(null);
   const [professorReviews, setProfessorReviews] = useState([]);
   const [loading, setLoading] = useState(Boolean(supabase && courseId));
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    if (!supabase || !courseId) {
+    if (!supabase || !courseId || !user) {
       setCourseReview(null);
       setProfessorReviews([]);
       setLoading(false);
@@ -21,13 +23,19 @@ export default function useCourseReviews(courseId) {
 
     async function load() {
       try {
+        const db = await getSupabaseClientWithAuth(getToken);
+
+        if (!db) {
+          throw new Error("Supabase is not configured");
+        }
+
         const [courseRes, profRes] = await Promise.all([
-          supabase
+          db
             .from("course_reviews")
             .select("*")
             .eq("course_id", courseId)
             .maybeSingle(),
-          supabase
+          db
             .from("course_professor_reviews")
             .select("*")
             .eq("course_id", courseId)
@@ -57,7 +65,7 @@ export default function useCourseReviews(courseId) {
     return () => {
       cancelled = true;
     };
-  }, [courseId]);
+  }, [courseId, getToken, user]);
 
   return { courseReview, professorReviews, loading, error };
 }

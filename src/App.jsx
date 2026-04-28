@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
 import { Analytics } from "@vercel/analytics/react";
-import { SignedIn, SignedOut } from "@clerk/react";
 import { ListChecks, X } from "lucide-react";
 import useTheme from "./hooks/useTheme";
 import useAuth from "./hooks/useAuth";
@@ -20,6 +19,7 @@ function AppContent() {
   const {
     user,
     loading: authLoading,
+    getToken,
     signOut,
   } = useAuth();
 
@@ -43,7 +43,7 @@ function AppContent() {
     isCourseInPlan,
     prereqWarnings,
     loaded,
-  } = usePlanner(user);
+  } = usePlanner(user, getToken);
 
   const [pickerSemester, setPickerSemester] = useState(null);
   const [studyAwayPickerOpen, setStudyAwayPickerOpen] = useState(false);
@@ -277,14 +277,27 @@ function AppContent() {
 }
 
 export default function App() {
+  const { user, loading } = useAuth();
+
+  if (loading) {
+    return (
+      <div
+        className="auth-loading-shell min-h-screen flex items-center justify-center bg-background"
+        role="status"
+        aria-live="polite"
+        aria-label="Loading"
+      >
+        <div className="spinner" />
+        <p className="auth-loading-label">Preparing secure sign-in&hellip;</p>
+      </div>
+    );
+  }
+
+  if (!user) {
+    return <AuthGate />;
+  }
+
   return (
-    <>
-      <SignedOut>
-        <AuthGate />
-      </SignedOut>
-      <SignedIn>
-        <AppContent />
-      </SignedIn>
-    </>
+    <AppContent />
   );
 }

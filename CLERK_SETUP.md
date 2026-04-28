@@ -39,6 +39,8 @@ VITE_SUPABASE_URL=https://pbyqozmqqkhgbnnjhsly.supabase.co
 VITE_SUPABASE_ANON_KEY=...
 ```
 
+For local development on `localhost` / `127.0.0.1`, use a Clerk `pk_test_...` publishable key. Clerk `pk_live_...` keys are restricted to the configured production domain and will not load on localhost.
+
 ---
 
 ## Step 4: Configure Custom Domain (Optional but Recommended)
@@ -84,30 +86,56 @@ If you don't have a custom domain yet:
 
 ---
 
-## Step 7: Deploy RLS Migration to Supabase
+## Step 7: Connect Clerk to Supabase Auth
 
-The codebase now includes a migration file that updates Supabase's row-level security to validate Clerk JWTs.
+Supabase now recommends Third-Party Auth for Clerk instead of the older Clerk JWT-template flow.
+
+### Hosted Supabase
+
+1. In Clerk, open **Connect with Supabase** and configure the instance for Supabase compatibility.
+2. In Supabase Dashboard, open **Authentication → Sign In / Providers → Third-Party Auth**.
+3. Add **Clerk** and enter the Clerk frontend API/custom auth domain, for example `clerk.nyushplanner.app`.
+4. Make sure Clerk session tokens include `role: "authenticated"`; the Supabase connection flow should configure this automatically.
+
+### Local Supabase CLI
+
+`supabase/config.toml` includes:
+
+```toml
+[auth.third_party.clerk]
+enabled = true
+domain = "clerk.nyushplanner.app"
+```
+
+Update the domain if your Clerk instance uses a different frontend API/custom auth domain.
+
+---
+
+## Step 8: Deploy Database Migrations to Supabase
+
+The codebase now includes migrations that store Clerk user IDs as text and update Supabase row-level security to validate Clerk session JWTs.
 
 ### For Local Development
 
 ```bash
 # Connect to your local Supabase (if using Supabase CLI)
-supabase db push supabase/migrations/010_migrate_to_clerk_jwt.sql
+supabase db push
 ```
 
 ### For Production Supabase
 
 1. Go to **[supabase.com](https://supabase.com) → Your Project → SQL Editor**
-2. Open the file `supabase/migrations/010_migrate_to_clerk_jwt.sql` from your codebase
-3. Copy the entire migration SQL
-4. Paste into Supabase SQL Editor
-5. Click **Run**
+2. Open `supabase/migrations/010_migrate_to_clerk_jwt.sql` and run it if it has not been applied yet
+3. Open `supabase/migrations/011_clerk_user_ids_and_policies.sql`
+4. Copy the entire migration SQL
+5. Paste into Supabase SQL Editor
+6. Click **Run**
 
-This updates all RLS policies to check Clerk JWTs instead of Supabase sessions.
+This updates `plans.user_id` from Supabase Auth UUIDs to Clerk text user IDs, and recreates RLS policies around `auth.jwt()->>'sub'`.
 
 ---
 
-## Step 8: Test Locally
+## Step 9: Test Locally
 
 ```bash
 # Install dependencies (if not already done)
@@ -122,11 +150,11 @@ npm run dev
 3. Click **Continue with Google**
 4. Sign in with your NYU email
 5. After sign-in, your course plan should load
-6. Try adding courses, saving changes, and refreshing — localStorage persists your plan
+6. Try adding courses, saving changes, and refreshing — Supabase persists the signed-in plan, with `localStorage` as a cache
 
 ---
 
-## Step 9: Verify Supabase Integration
+## Step 10: Verify Supabase Integration
 
 Once you're signed in:
 
@@ -135,15 +163,15 @@ Once you're signed in:
 3. Look for a Supabase API call (e.g., to `/rest/v1/plans`)
 4. Check the request headers — you should see:
    ```
-   Authorization: Bearer <YOUR_CLERK_JWT>
+   Authorization: Bearer <YOUR_CLERK_SESSION_JWT>
    ```
 5. Verify the response is `200 OK`, not `403 Forbidden`
 
-If you see `403`, the RLS policy update didn't apply. Re-run the migration in Supabase.
+If you see `403`, the Clerk third-party auth provider or RLS migration did not apply correctly. Re-run Step 7 and Step 8.
 
 ---
 
-## Step 10: Test Cross-Device Persistence
+## Step 11: Test Cross-Device Persistence
 
 1. Sign in and create a course plan
 2. Open the app in an **incognito/private window**
@@ -163,6 +191,12 @@ If you see `403`, the RLS policy update didn't apply. Re-run the migration in Su
 npm run dev
 ```
 
+### Issue: Infinite "Preparing secure sign-in" on localhost
+
+**Likely cause:** Local dev is using a Clerk `pk_live_...` key. Clerk live keys only work on the configured production domain.
+
+**Fix:** Use a Clerk `pk_test_...` publishable key in `.env` for local development, then restart `npm run dev`.
+
 ### Issue: OAuth Redirect Loop
 
 **Likely cause:** Your Clerk domain configuration doesn't match your app URL.
@@ -174,9 +208,9 @@ npm run dev
 
 ### Issue: "User not found in Supabase"
 
-**Likely cause:** RLS migration wasn't applied to Supabase.
+**Likely cause:** Supabase is still expecting Supabase Auth UUID users, or the Clerk third-party auth provider is not configured.
 
-**Fix:** Re-run the migration in Supabase SQL Editor (Step 7).
+**Fix:** Re-run Step 7 and Step 8.
 
 ### Issue: Courses aren't persisting across refresh
 
@@ -185,7 +219,7 @@ npm run dev
 **Fix:**
 1. Check browser console for errors
 2. Verify `Authorization` header is being sent (Step 9)
-3. Re-run Supabase migration
+3. Re-run the Clerk third-party auth setup and Supabase migrations
 
 ---
 
@@ -202,14 +236,14 @@ npm run dev
 
 - **Clerk Docs:** [https://clerk.com/docs](https://clerk.com/docs)
 - **Clerk Support:** [https://support.clerk.com](https://support.clerk.com)
-- **Supabase Clerk Integration:** [https://supabase.com/docs/guides/auth/auth-clerk](https://supabase.com/docs/guides/auth/auth-clerk)
+- **Supabase Clerk Integration:** [https://supabase.com/docs/guides/auth/third-party/clerk](https://supabase.com/docs/guides/auth/third-party/clerk)
 
 ---
 
 **Summary:**
 - ✅ Codebase migrated to Clerk
 - ✅ Custom domain support unlocked (free tier)
-- ⏳ You need to: Create Clerk app → Get API keys → Update `.env` → Deploy RLS migration
+- ⏳ You need to: Create Clerk app → Get API keys → Update `.env` → Add Clerk in Supabase Third-Party Auth → Deploy migrations
 - 📝 Estimated time: 10-15 minutes
 
 Good luck! 🚀

@@ -1,10 +1,15 @@
-import { supabase } from "./supabase";
+import { supabase, getSupabaseClientWithAuth } from "./supabase";
 import { SEMESTERS } from "../data/courses";
 import { LOCAL_CATALOG_BY_ID, mergeCourseWithLocalCatalog } from "./localCatalog";
 
 function requireSupabase() {
   if (!supabase) throw new Error("Supabase is not configured");
   return supabase;
+}
+
+async function getSupabaseDb(getToken) {
+  const db = await getSupabaseClientWithAuth(getToken);
+  return db || requireSupabase();
 }
 
 const STORAGE_KEY = "nyu-shanghai-course-planner";
@@ -164,11 +169,11 @@ export const localStoragePlan = {
 // ─── Supabase implementation ───
 
 export const supabasePlan = {
-  async ensurePlan(userId, profileStudentName = "") {
+  async ensurePlan(userId, profileStudentName = "", getToken) {
     // Get existing plan or create one
-    const db = requireSupabase();
+    const db = await getSupabaseDb(getToken);
     const normalizedProfileName = normalizeStudentName(profileStudentName);
-    const { data: existing } = await db
+    const { data: existing, error: existingError } = await db
       .from("plans")
       .select(
         "id, name, major, student_name, study_away_semesters, study_away_locations",
@@ -176,7 +181,9 @@ export const supabasePlan = {
       .eq("user_id", userId)
       .order("created_at", { ascending: true })
       .limit(1)
-      .single();
+      .maybeSingle();
+
+    if (existingError) throw existingError;
 
     if (existing) {
       // Backfill legacy default plan name once; preserve any custom plan names.
@@ -224,12 +231,12 @@ export const supabasePlan = {
     return created;
   },
 
-  async load(userId, profileStudentName = "") {
+  async load(userId, profileStudentName = "", getToken) {
     try {
-      const planRow = await this.ensurePlan(userId, profileStudentName);
+      const planRow = await this.ensurePlan(userId, profileStudentName, getToken);
       const planId = planRow.id;
 
-      const db = requireSupabase();
+      const db = await getSupabaseDb(getToken);
       const { data: courses, error } = await db
         .from("plan_courses")
         .select("*")
@@ -261,12 +268,12 @@ export const supabasePlan = {
     }
   },
 
-  async save(userId, { planId, plan, major, studentName, studyAway }) {
+  async save(userId, { planId, plan, major, studentName, studyAway }, getToken) {
     try {
-      const db = requireSupabase();
+      const db = await getSupabaseDb(getToken);
       const normalizedStudyAway = normalizeStudyAwayPayload(studyAway);
       // Update plan metadata
-      await db
+      const { error: updateError } = await db
         .from("plans")
         .update({
           major,
@@ -274,10 +281,18 @@ export const supabasePlan = {
           study_away_semesters: normalizedStudyAway.selectedSemesters,
           study_away_locations: normalizedStudyAway.locations,
         })
-        .eq("id", planId);
+        .eq("id", planId)
+        .eq("user_id", userId);
+
+      if (updateError) throw updateError;
 
       // Replace all courses: delete then insert
-      await db.from("plan_courses").delete().eq("plan_id", planId);
+      const { error: deleteError } = await db
+        .from("plan_courses")
+        .delete()
+        .eq("plan_id", planId);
+
+      if (deleteError) throw deleteError;
 
       const rows = [];
       for (const [semesterId, courses] of Object.entries(plan)) {
@@ -308,7 +323,7 @@ export const supabasePlan = {
     }
   },
 
-  async importFromLocal(userId) {
+  async importFromLocal(userId, getToken) {
     const localData = await localStoragePlan.load();
     if (!localData || !localData.plan) return false;
 
@@ -317,11 +332,11 @@ export const supabasePlan = {
     if (!hasCourses) return false;
 
     const localStudentName = normalizeStudentName(localData.studentName);
-    const planRow = await this.ensurePlan(userId, localStudentName);
+    const planRow = await this.ensurePlan(userId, localStudentName, getToken);
 
     // Update plan metadata from local
-    const db = requireSupabase();
-    await db
+    const db = await getSupabaseDb(getToken);
+    const { error: updateError } = await db
       .from("plans")
       .update({
         name: buildPlanName(localStudentName),
@@ -330,7 +345,10 @@ export const supabasePlan = {
         study_away_semesters: localData.studyAway?.selectedSemesters || [],
         study_away_locations: localData.studyAway?.locations || {},
       })
-      .eq("id", planRow.id);
+      .eq("id", planRow.id)
+      .eq("user_id", userId);
+
+    if (updateError) throw updateError;
 
     // Import courses
     await this.save(userId, {
@@ -339,7 +357,7 @@ export const supabasePlan = {
       major: localData.major || "cs",
       studentName: localData.studentName || "",
       studyAway: normalizeStudyAwayPayload(localData.studyAway),
-    });
+    }, getToken);
 
     return true;
   },

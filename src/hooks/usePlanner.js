@@ -88,7 +88,7 @@ function getUserProfileName(user) {
   return typeof rawName === "string" ? rawName.trim() : "";
 }
 
-export default function usePlanner(user) {
+export default function usePlanner(user, getToken) {
   const [plan, setPlan] = useState(createEmptyPlan);
   const [major, setMajor] = useState("cs");
   const [studentName, setStudentName] = useState("");
@@ -111,7 +111,7 @@ export default function usePlanner(user) {
 
       if (isCloud) {
         const profileStudentName = getUserProfileName(user);
-        const data = await supabasePlan.load(user.id, profileStudentName);
+        const data = await supabasePlan.load(user.id, profileStudentName, getToken);
         if (cancelled) return;
         if (data) {
           const storedStudentName =
@@ -149,7 +149,7 @@ export default function usePlanner(user) {
     return () => {
       cancelled = true;
     };
-  }, [user, isCloud]);
+  }, [user, isCloud, getToken]);
 
   // Debounced save on changes
   useEffect(() => {
@@ -175,7 +175,7 @@ export default function usePlanner(user) {
             major,
             studentName,
             studyAway,
-          });
+          }, getToken);
         }
         // Always write to localStorage as cache
         localStoragePlan.save({
@@ -198,6 +198,7 @@ export default function usePlanner(user) {
     isCloud,
     planId,
     user,
+    getToken,
     loaded,
   ]);
 

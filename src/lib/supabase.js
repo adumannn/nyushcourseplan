@@ -1,8 +1,8 @@
 import { createClient } from '@supabase/supabase-js';
-import { getAuth } from '@clerk/react';
 
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+const clerkClientCache = new WeakMap();
 
 /**
  * Create Supabase client with Clerk JWT token support.
@@ -10,11 +10,6 @@ const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
  */
 export const supabase = supabaseUrl && supabaseAnonKey
   ? createClient(supabaseUrl, supabaseAnonKey, {
-      global: {
-        headers: {
-          Authorization: '',
-        },
-      },
       auth: {
         persistSession: false, // Clerk manages sessions, not Supabase
       },
@@ -22,32 +17,32 @@ export const supabase = supabaseUrl && supabaseAnonKey
   : null;
 
 /**
- * Get the Supabase client configured with the current Clerk session's JWT.
+ * Get the Supabase client configured with a Clerk session's JWT.
  * Call this before making queries that need RLS validation.
  */
-export async function getSupabaseClientWithAuth() {
+export async function getSupabaseClientWithAuth(getToken) {
   if (!supabase) return null;
+  if (typeof getToken !== 'function') return supabase;
 
-  try {
-    const auth = getAuth();
-    const token = await auth?.getToken?.({ template: 'supabase' });
-
-    if (token) {
-      // Clone the client with the authorization header set
-      return createClient(supabaseUrl, supabaseAnonKey, {
-        global: {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        },
-        auth: {
-          persistSession: false,
-        },
-      });
-    }
-  } catch (error) {
-    console.warn('Failed to get Clerk token for Supabase:', error);
+  const cachedClient = clerkClientCache.get(getToken);
+  if (cachedClient) {
+    return cachedClient;
   }
 
-  return supabase;
+  const client = createClient(supabaseUrl, supabaseAnonKey, {
+    accessToken: async () => {
+      try {
+        return await getToken();
+      } catch (error) {
+        console.warn('Failed to get Clerk token for Supabase:', error);
+        return null;
+      }
+    },
+    auth: {
+      persistSession: false,
+    },
+  });
+
+  clerkClientCache.set(getToken, client);
+  return client;
 }
