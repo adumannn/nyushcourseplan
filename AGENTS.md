@@ -270,3 +270,8 @@ src/
 ### Course picker UX
 
 - Already-added catalog courses stay visible in `CoursePicker` with an inline remove button. Use `getCourseSemester(courseId)` from `usePlanner` plus `removeCourse(semesterId, courseId)` to remove the existing placement without closing the picker.
+
+### Study away picker UX
+
+- `StudyAwayPicker` uses a desktop two-panel planning modal with summary metrics, semester rows, quick site chips, and a policy/advising sidebar. Preserve the status-first flow: pick semesters, resolve pending sites, then review warnings.
+- On mobile/tablet, the same modal behaves like a bottom sheet with a single scrolling surface and sticky actions. Keep mobile controls full-width, avoid disabled selects for unselected semesters, and use the locked note pattern until a semester is selected.

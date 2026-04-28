@@ -1,10 +1,14 @@
 import { useEffect, useMemo, useRef } from "react";
 import {
   AlertTriangle,
+  CalendarDays,
   CheckCircle2,
-  Globe,
-  MapPin,
+  CircleDashed,
+  Info,
+  ListChecks,
+  MapPinned,
   PlaneTakeoff,
+  RotateCcw,
   X,
 } from "lucide-react";
 import { MAJOR_REQUIREMENTS, SEMESTERS, STUDY_AWAY } from "../../data/courses";
@@ -40,6 +44,18 @@ function getQuickPicksForSemester(semesterId) {
       STUDY_AWAY.locations.includes(location) &&
       !isBlockedLocation(semesterId, location),
   );
+}
+
+function getSemesterHint(semesterId) {
+  if (semesterId === "Y2-Spring") {
+    return "Earliest eligible study-away term.";
+  }
+
+  if (semesterId === "Y4-Fall") {
+    return "Final eligible term before senior spring in Shanghai.";
+  }
+
+  return "Common study-away window.";
 }
 
 export default function StudyAwayPicker({
@@ -98,12 +114,22 @@ export default function StudyAwayPicker({
     (semesterId) => !studyAway.locations[semesterId],
   ).length;
   const maxReached = selectedCount >= STUDY_AWAY.maxSemesters;
+  const readyCount = selectedCount - missingSiteCount;
+  const issueCount = warnings.length;
   const selectionStatus =
     selectedCount === 0
       ? "Select at least 1 semester"
       : missingSiteCount > 0
         ? `${missingSiteCount} site${missingSiteCount === 1 ? "" : "s"} still needed`
         : "Selections complete";
+  const nextStep =
+    selectedCount === 0
+      ? "Pick one eligible semester to satisfy the study-away requirement."
+      : missingSiteCount > 0
+        ? "Choose a site for each selected semester before finalizing the plan."
+        : issueCount > 0
+          ? "Review the advising warnings below before using this plan."
+          : "Your study-away selections are ready for the graduation check.";
 
   const clearSelections = () => {
     sortedSelectedSemesters.forEach((semesterId) =>
@@ -172,7 +198,7 @@ export default function StudyAwayPicker({
   }, [initialSemester]);
 
   return (
-    <div className="modal-overlay" onClick={onClose}>
+    <div className="modal-overlay study-away-overlay" onClick={onClose}>
       <div
         ref={modalRef}
         className="modal study-away-modal"
@@ -182,6 +208,7 @@ export default function StudyAwayPicker({
         aria-labelledby={dialogTitleId}
         aria-describedby={dialogDescriptionId}
       >
+        <div className="study-away-sheet-handle" aria-hidden="true" />
         <div className="modal-header">
           <div>
             <h2 id={dialogTitleId}>Study Away Planning</h2>
@@ -195,7 +222,7 @@ export default function StudyAwayPicker({
             onClick={onClose}
             aria-label="Close study away picker"
           >
-            ×
+            <X className="h-4 w-4" />
           </button>
         </div>
 
@@ -231,6 +258,61 @@ export default function StudyAwayPicker({
 
         <div className="study-away-layout">
           <div className="study-away-main">
+            <div className="study-away-overview" aria-label="Study away status">
+              <div
+                className={`study-away-stat-card ${selectedCount > 0 ? "study-away-stat-card--success" : ""}`}
+              >
+                <div className="study-away-stat-icon">
+                  <CalendarDays className="h-4 w-4" />
+                </div>
+                <span className="study-away-stat-label">Semesters</span>
+                <strong className="study-away-stat-value">
+                  {selectedCount}/{STUDY_AWAY.maxSemesters}
+                </strong>
+                <span className="study-away-stat-meta">1 required</span>
+              </div>
+
+              <div
+                className={`study-away-stat-card ${
+                  missingSiteCount > 0
+                    ? "study-away-stat-card--warning"
+                    : selectedCount > 0
+                      ? "study-away-stat-card--success"
+                      : ""
+                }`}
+              >
+                <div className="study-away-stat-icon">
+                  <MapPinned className="h-4 w-4" />
+                </div>
+                <span className="study-away-stat-label">Sites ready</span>
+                <strong className="study-away-stat-value">{readyCount}</strong>
+                <span className="study-away-stat-meta">
+                  {missingSiteCount === 0
+                    ? "No gaps"
+                    : `${missingSiteCount} pending`}
+                </span>
+              </div>
+
+              <div
+                className={`study-away-stat-card ${
+                  issueCount > 0
+                    ? "study-away-stat-card--warning"
+                    : selectedCount > 0
+                      ? "study-away-stat-card--success"
+                      : ""
+                }`}
+              >
+                <div className="study-away-stat-icon">
+                  <ListChecks className="h-4 w-4" />
+                </div>
+                <span className="study-away-stat-label">Issues</span>
+                <strong className="study-away-stat-value">{issueCount}</strong>
+                <span className="study-away-stat-meta">
+                  {issueCount === 0 ? "Clear" : "Needs review"}
+                </span>
+              </div>
+            </div>
+
             {globalWarnings.length > 0 && (
               <div className="study-away-warnings">
                 {globalWarnings.map((warning) => (
@@ -249,13 +331,18 @@ export default function StudyAwayPicker({
                 const location = studyAway.locations[semesterId] || "";
                 const quickPicks = getQuickPicksForSemester(semesterId);
                 const semesterWarnings = warningsBySemester[semesterId] || [];
-                const locationDisabled = !isSelected;
                 const selectionDisabled = !isSelected && maxReached;
+                const hasWarnings = semesterWarnings.length > 0;
+                const statusClass = isSelected
+                  ? hasWarnings || !location
+                    ? "study-away-status--warning"
+                    : "study-away-status--success"
+                  : "";
 
                 return (
                   <div
                     key={semesterId}
-                    className={`study-away-semester-row ${isSelected ? "study-away-semester-row--active" : ""} ${selectionDisabled ? "study-away-semester-row--disabled" : ""}`}
+                    className={`study-away-semester-row ${isSelected ? "study-away-semester-row--active" : ""} ${hasWarnings ? "study-away-semester-row--warning" : ""} ${selectionDisabled ? "study-away-semester-row--disabled" : ""}`}
                   >
                     <div className="study-away-semester-main">
                       <div className="study-away-semester-details">
@@ -269,28 +356,31 @@ export default function StudyAwayPicker({
                           aria-pressed={isSelected}
                           disabled={selectionDisabled}
                         >
-                          <span className="study-away-semester-check">
+                          <span
+                            className={`study-away-semester-check ${isSelected ? "study-away-semester-check--active" : ""}`}
+                          >
                             {isSelected ? (
                               <CheckCircle2 className="h-4 w-4" />
                             ) : (
-                              <Globe className="h-4 w-4" />
+                              <CircleDashed className="h-4 w-4" />
                             )}
                           </span>
-                          <span className="study-away-semester-label">
-                            {getSemesterLabel(semesterId)}
+                          <span className="study-away-semester-label-stack">
+                            <span className="study-away-semester-label">
+                              {getSemesterLabel(semesterId)}
+                            </span>
+                            <span className="study-away-semester-window">
+                              Eligible term
+                            </span>
                           </span>
                         </button>
                         <p className="study-away-semester-helper">
-                          {semesterId === "Y2-Spring"
-                            ? "Best for an early study-away option."
-                            : semesterId === "Y4-Fall"
-                              ? "Last eligible term before your final Shanghai semester."
-                              : "Common study-away window."}
+                          {getSemesterHint(semesterId)}
                         </p>
                       </div>
 
                       <span
-                        className={`study-away-status ${isSelected ? "study-away-status--active" : ""}`}
+                        className={`study-away-status ${isSelected ? "study-away-status--active" : ""} ${statusClass}`}
                       >
                         {isSelected
                           ? location
@@ -303,69 +393,81 @@ export default function StudyAwayPicker({
                     </div>
 
                     <div className="study-away-location-stack">
-                      <label className="study-away-location-group">
-                        <MapPin className="h-3.5 w-3.5" />
-                        <span className="sr-only">
-                          Location for {getSemesterLabel(semesterId)}
-                        </span>
-                        <select
-                          value={location}
-                          onChange={(event) =>
-                            onSetLocation(semesterId, event.target.value)
-                          }
-                          disabled={locationDisabled}
-                          aria-label={`Study away site for ${getSemesterLabel(semesterId)}`}
-                        >
-                          <option value="">Select a site</option>
-                          {STUDY_AWAY.locations.map((option) => {
-                            const blocked = isBlockedLocation(
-                              semesterId,
-                              option,
-                            );
-                            return (
-                              <option
-                                key={option}
-                                value={option}
-                                disabled={blocked}
-                              >
-                                {blocked
-                                  ? `${option} (Unavailable this term)`
-                                  : option}
-                              </option>
-                            );
-                          })}
-                        </select>
-                      </label>
+                      {isSelected ? (
+                        <>
+                          <label className="study-away-location-group">
+                            <span className="study-away-location-label">
+                              <MapPinned className="h-3.5 w-3.5" />
+                              Site
+                            </span>
+                            <select
+                              value={location}
+                              onChange={(event) =>
+                                onSetLocation(semesterId, event.target.value)
+                              }
+                              aria-label={`Study away site for ${getSemesterLabel(semesterId)}`}
+                            >
+                              <option value="">Select a site</option>
+                              {STUDY_AWAY.locations.map((option) => {
+                                const blocked = isBlockedLocation(
+                                  semesterId,
+                                  option,
+                                );
+                                return (
+                                  <option
+                                    key={option}
+                                    value={option}
+                                    disabled={blocked}
+                                  >
+                                    {blocked
+                                      ? `${option} (Unavailable this term)`
+                                      : option}
+                                  </option>
+                                );
+                              })}
+                            </select>
+                          </label>
 
-                      {!isSelected && (
-                        <p className="study-away-inline-note">
+                          {quickPicks.length > 0 && (
+                            <div
+                              className="study-away-quick-picks"
+                              aria-label={`Quick site choices for ${getSemesterLabel(semesterId)}`}
+                            >
+                              <span className="study-away-quick-picks-label">
+                                Quick picks
+                              </span>
+                              {quickPicks.map((option) => (
+                                <button
+                                  type="button"
+                                  key={option}
+                                  className={`study-away-quick-pick ${location === option ? "study-away-quick-pick--active" : ""}`}
+                                  onClick={() =>
+                                    onSetLocation(semesterId, option)
+                                  }
+                                  aria-pressed={location === option}
+                                >
+                                  {option}
+                                </button>
+                              ))}
+                              {location && (
+                                <button
+                                  type="button"
+                                  className="study-away-quick-pick"
+                                  onClick={() =>
+                                    onSetLocation(semesterId, "")
+                                  }
+                                >
+                                  Clear site
+                                </button>
+                              )}
+                            </div>
+                          )}
+                        </>
+                      ) : (
+                        <p className="study-away-inline-note study-away-inline-note--locked">
+                          <Info className="h-3.5 w-3.5" />
                           Select this semester first to choose a site.
                         </p>
-                      )}
-
-                      {isSelected && quickPicks.length > 0 && (
-                        <div className="study-away-quick-picks">
-                          {quickPicks.map((option) => (
-                            <button
-                              type="button"
-                              key={option}
-                              className={`study-away-quick-pick ${location === option ? "study-away-quick-pick--active" : ""}`}
-                              onClick={() => onSetLocation(semesterId, option)}
-                              aria-pressed={location === option}
-                            >
-                              {option}
-                            </button>
-                          ))}
-                          {location && (
-                            <button
-                              type="button"
-                              className="study-away-quick-pick"
-                              onClick={() => onSetLocation(semesterId, "")}
-                            >
-                              Clear site
-                            </button>
-                          )}
-                        </div>
                       )}
 
                       {semesterId === "Y2-Spring" && (
@@ -401,6 +503,7 @@ export default function StudyAwayPicker({
                 onClick={clearSelections}
                 disabled={selectedCount === 0}
               >
+                <RotateCcw className="h-4 w-4" />
                 Clear selections
               </button>
               <button
@@ -408,6 +511,7 @@ export default function StudyAwayPicker({
                 className="study-away-action-btn study-away-action-btn--primary"
                 onClick={onClose}
               >
+                <CheckCircle2 className="h-4 w-4" />
                 Done
               </button>
             </div>
@@ -417,13 +521,7 @@ export default function StudyAwayPicker({
             <div className="study-away-summary">
               <span className="study-away-summary-label">Selection status</span>
               <p className="study-away-summary-headline">{selectionStatus}</p>
-              <p className="study-away-summary-tip">
-                {selectedCount === 0
-                  ? "You need at least one study-away semester."
-                  : missingSiteCount > 0
-                    ? "Each selected semester should have a site."
-                    : "Your selected semesters are ready."}
-              </p>
+              <p className="study-away-summary-tip">{nextStep}</p>
             </div>
 
             <div className="study-away-selected-strip">
@@ -454,7 +552,10 @@ export default function StudyAwayPicker({
             </div>
 
             <div className="study-away-notes">
-              <h3>Study Away Policy Notes</h3>
+              <div className="study-away-notes-heading">
+                <Info className="h-3.5 w-3.5" />
+                <h3>Policy notes</h3>
+              </div>
               <ul>
                 {STUDY_AWAY.notes.map((note) => (
                   <li key={note}>{note}</li>
@@ -463,9 +564,10 @@ export default function StudyAwayPicker({
 
               {isCsDsMajor && (
                 <>
-                  <h3 className="study-away-subheading">
-                    CS/DS Advising Notes
-                  </h3>
+                  <div className="study-away-notes-heading study-away-subheading">
+                    <Info className="h-3.5 w-3.5" />
+                    <h3>CS/DS advising</h3>
+                  </div>
                   {majorNote ? <p>{majorNote}</p> : null}
                   <ul>
                     {(STUDY_AWAY.csdsAdvisingNotes || []).map((note) => (
