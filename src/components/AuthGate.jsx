@@ -45,7 +45,6 @@ export default function AuthGate({
 
   return (
     <div className="auth-shell">
-      <div className="auth-mesh" aria-hidden="true" />
       <nav className="auth-topbar">
         <header className="auth-brand">
           <span className="planner-logo-mark" aria-hidden="true">

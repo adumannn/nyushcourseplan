@@ -1528,22 +1528,9 @@
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    background: #f4f7ff;
+    background: var(--background);
     font-family: 'Geist', 'Avenir Next', 'Segoe UI', sans-serif;
-    color: #0a0a0a;
-    overflow: hidden;
-}
-
-.auth-mesh {
-    position: absolute;
-    inset: 0;
-    background:
-        radial-gradient(ellipse 50% 40% at 10% 10%, rgba(87, 6, 140, 0.22), transparent 60%),
-        radial-gradient(ellipse 50% 40% at 90% 20%, rgba(200, 162, 255, 0.22), transparent 60%),
-        radial-gradient(ellipse 60% 50% at 50% 100%, rgba(87, 6, 140, 0.16), transparent 60%);
-    filter: blur(40px);
-    z-index: 0;
-    pointer-events: none;
+    color: var(--foreground);
 }
 
 .auth-topbar {
@@ -1609,7 +1596,7 @@
     font-size: 14px;
     font-weight: 600;
     letter-spacing: -0.01em;
-    color: #0a0a0a;
+    color: var(--foreground);
 }
 
 .auth-card {
@@ -1617,14 +1604,9 @@
     display: flex;
     flex-direction: column;
     padding: 36px 40px;
-    background: rgba(255, 255, 255, 0.7);
-    border: 1px solid rgba(255, 255, 255, 0.8);
+    background: var(--card);
+    border: 1px solid var(--border);
     border-radius: 18px;
-    box-shadow:
-        0 1px 2px rgba(17, 26, 46, 0.06),
-        0 20px 60px rgba(17, 26, 46, 0.1);
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
 }
 
 .auth-title {
@@ -1633,7 +1615,7 @@
     font-size: 26px;
     line-height: 1.15;
     letter-spacing: -0.025em;
-    color: #0a0a0a;
+    color: var(--foreground);
     font-weight: 600;
 }
 
@@ -1642,7 +1624,7 @@
     text-align: center;
     font-size: 14.5px;
     line-height: 1.55;
-    color: #5f6d85;
+    color: var(--muted-foreground);
 }
 
 /* Google sign-in button — only sign-in path */
@@ -1651,14 +1633,14 @@
     width: 100%;
     min-height: 44px;
     border-radius: 10px;
-    border: 1px solid rgba(10, 10, 10, 0.14);
-    background: #ffffff;
+    border: 1px solid var(--border);
+    background: var(--card);
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 10px;
     padding: 0 16px;
-    color: #0a0a0a;
+    color: var(--foreground);
     font-size: 14px;
     font-weight: 500;
     letter-spacing: -0.005em;
@@ -1670,8 +1652,8 @@
 }
 
 .auth-google-btn:hover:not(:disabled) {
-    background: #fafafa;
-    border-color: rgba(10, 10, 10, 0.24);
+    background: color-mix(in oklab, var(--card) 92%, var(--foreground));
+    border-color: color-mix(in oklab, var(--border) 60%, var(--foreground));
 }
 
 .auth-google-btn:active:not(:disabled) {
@@ -1708,54 +1690,7 @@
     gap: 8px;
     margin-top: 20px;
     font-size: 11.5px;
-    color: #6b7280;
-}
-
-/* ── Dark theme overrides ── */
-
-[data-theme="dark"] .auth-shell {
-    background: #0b0714;
-    color: #fafafa;
-}
-
-[data-theme="dark"] .auth-mesh {
-    background:
-        radial-gradient(ellipse 50% 40% at 10% 10%, rgba(158, 90, 222, 0.28), transparent 60%),
-        radial-gradient(ellipse 50% 40% at 90% 20%, rgba(87, 6, 140, 0.32), transparent 60%),
-        radial-gradient(ellipse 60% 50% at 50% 100%, rgba(45, 17, 69, 0.6), transparent 60%);
-}
-
-[data-theme="dark"] .auth-card {
-    background: rgba(24, 24, 27, 0.6);
-    border-color: rgba(255, 255, 255, 0.08);
-    box-shadow:
-        0 1px 2px rgba(0, 0, 0, 0.4),
-        0 20px 60px rgba(0, 0, 0, 0.45);
-}
-
-[data-theme="dark"] .auth-brand-name,
-[data-theme="dark"] .auth-title {
-    color: #fafafa;
-}
-
-[data-theme="dark"] .auth-subtitle {
-    color: #a1a1aa;
-}
-
-[data-theme="dark"] .auth-footer {
-    color: #71717a;
-}
-
-/* Google sign-in stays outlined in dark mode */
-[data-theme="dark"] .auth-google-btn {
-    background: #18181b;
-    border-color: rgba(255, 255, 255, 0.1);
-    color: #fafafa;
-}
-
-[data-theme="dark"] .auth-google-btn:hover:not(:disabled) {
-    background: #27272a;
-    border-color: rgba(255, 255, 255, 0.2);
+    color: var(--muted-foreground);
 }
 
 /* ── Scrollbars ── */
