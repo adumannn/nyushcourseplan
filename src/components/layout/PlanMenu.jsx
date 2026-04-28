@@ -6,7 +6,6 @@ import {
   Download,
   FileUp,
   Upload,
-  FileJson,
   FileSpreadsheet,
   Printer,
   ChevronDown,
@@ -14,10 +13,8 @@ import {
   RefreshCw,
 } from "lucide-react";
 import {
-  exportPlanAsJSON,
   exportPlanAsCSV,
   exportPlanAsPDF,
-  importPlanFromJSON,
   importPlanFromCSV,
 } from "../../lib/planTransfer";
 import { SEMESTERS, getMajorLabel } from "../../data/courses";
@@ -52,14 +49,6 @@ function resolveImportParser(file) {
   const mimeType = (file?.type || "").toLowerCase();
 
   if (
-    filename.endsWith(".json") ||
-    mimeType.includes("application/json") ||
-    mimeType.includes("text/json")
-  ) {
-    return { parser: importPlanFromJSON, label: "JSON" };
-  }
-
-  if (
     filename.endsWith(".csv") ||
     mimeType.includes("text/csv") ||
     mimeType.includes("application/csv")
@@ -67,7 +56,7 @@ function resolveImportParser(file) {
     return { parser: importPlanFromCSV, label: "CSV" };
   }
 
-  throw new Error("Unsupported file type. Please import a .json or .csv file.");
+  throw new Error("Unsupported file type. Please import a .csv file.");
 }
 
 export default function PlanMenu({
@@ -126,24 +115,6 @@ export default function PlanMenu({
   const announceStatus = useCallback((tone, message) => {
     setStatus({ tone, message });
   }, []);
-
-  const handleExportJSON = () => {
-    closeMenu();
-    try {
-      const result = exportPlanAsJSON({
-        plan,
-        major,
-        studentName,
-        studyAway,
-      });
-      announceStatus(
-        "success",
-        `Exported ${pluralize(result.courseCount, "course")} to ${result.filename}.`,
-      );
-    } catch (err) {
-      announceStatus("error", err?.message || "Failed to export JSON.");
-    }
-  };
 
   const handleExportCSV = () => {
     closeMenu();
@@ -312,7 +283,7 @@ export default function PlanMenu({
       <input
         ref={fileInputRef}
         type="file"
-        accept="application/json,text/json,text/csv,application/csv,.json,.csv"
+        accept="text/csv,application/csv,.csv"
         className="hidden"
         onChange={handleFileSelected}
       />
@@ -340,14 +311,6 @@ export default function PlanMenu({
           </div>
           <button
             role="menuitem"
-            onClick={handleExportJSON}
-            className="w-full flex items-center gap-3 px-4 py-2 text-sm text-muted-foreground hover:bg-accent hover:text-foreground transition-colors cursor-pointer"
-          >
-            <FileJson className="h-4 w-4" />
-            As JSON
-          </button>
-          <button
-            role="menuitem"
             onClick={handleExportCSV}
             className="w-full flex items-center gap-3 px-4 py-2 text-sm text-muted-foreground hover:bg-accent hover:text-foreground transition-colors cursor-pointer"
           >
@@ -360,7 +323,7 @@ export default function PlanMenu({
             className="w-full flex items-center gap-3 px-4 py-2 text-sm text-muted-foreground hover:bg-accent hover:text-foreground transition-colors cursor-pointer"
           >
             <Printer className="h-4 w-4" />
-            As PDF (Print)
+            As PDF
           </button>
         </div>
       )}
@@ -389,8 +352,8 @@ export default function PlanMenu({
               <div>
                 <h2 id="plan-transfer-title">Import Plan</h2>
                 <p className="plan-transfer-header-copy">
-                  Upload a JSON or CSV export, preview it, then merge or replace
-                  your current plan.
+                  Upload a CSV export, preview it, then merge or replace your
+                  current plan.
                 </p>
               </div>
               <button
@@ -425,7 +388,7 @@ export default function PlanMenu({
                     choose a file
                   </button>
                 </div>
-                <small>Supported: .json and .csv</small>
+                <small>Supported: .csv</small>
               </div>
 
               {importLoading && (

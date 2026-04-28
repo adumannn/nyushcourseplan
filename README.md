@@ -21,7 +21,7 @@ Computer Science, Data Science, Business and Finance, Business and Marketing, Bi
 - **Category legend** — Color-coded legend in the sidebar explains what each course color means
 - **Drag & drop** — Reorder and move courses between semesters (desktop and mobile touch support)
 - **Study away planning** — Mark semesters as study away with location selection and CS/DS-specific advising warnings
-- **Import / Export** — Save your plan as JSON (lossless), CSV (spreadsheet-friendly), or PDF (print view). Load a plan back from JSON or CSV.
+- **Import / Export** — Save your plan as CSV (spreadsheet-friendly) or a polished PDF print view. Load a plan back from CSV.
 - **Google sign-in** — NYU-domain accounts; plans sync to the cloud across devices
 - **Dark/light theme** — System-aware with manual toggle
 - **Large local fallback catalog** — Uses generated Shanghai bulletin data merged with curated metadata
@@ -62,7 +62,7 @@ src/
       AuthGate.jsx          Google sign-in gate
     layout/
       Header.jsx            Logo, credits, major select, study-away, plan menu, account
-      PlanMenu.jsx          Import/Export dropdown (JSON, CSV, PDF)
+      PlanMenu.jsx          Import/Export dropdown (CSV, PDF)
       RequirementsSidebar.jsx
     planner/
       SemesterGrid.jsx      4-year grid layout
@@ -82,7 +82,7 @@ src/
     localCatalog.js         Local catalog merge/hydration helpers
     supabase.js             Supabase client init
     planStorage.js          localStorage + Supabase storage abstraction
-    planTransfer.js         Import/export helpers (JSON, CSV, PDF)
+    planTransfer.js         Import/export helpers (CSV, PDF, legacy JSON import)
   data/
     courses.js              Curated course metadata, requirements, majors, study-away rules
     courses.generated.js    Generated Shanghai bulletin catalog fallback
