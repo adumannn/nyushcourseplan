@@ -38,9 +38,6 @@ export default function CoursePicker({
     }
     if (filterCat) {
       list = list.filter((c) => c.category === filterCat);
-      if (filterCat === "major-required" || filterCat === "major-elective") {
-        list = list.filter((c) => isCourseRelevantToMajor(c, major));
-      }
     }
     if (search.trim()) {
       const q = search.toLowerCase();
