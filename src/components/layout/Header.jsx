@@ -3,6 +3,7 @@ import {
   Sun,
   PlaneTakeoff,
   AlertTriangle,
+  Inbox,
   MessageSquare,
 } from "lucide-react";
 import { UserButton } from "@clerk/react";
@@ -36,6 +37,8 @@ export default function Header({
   semesterCredits,
   onImportPlan,
   onOpenSuggestion,
+  canViewSuggestionInbox = false,
+  onOpenSuggestionInbox,
 }) {
   const hasStudyAwayIssues =
     studyAwayWarningCount > 0 || hasIncompleteStudyAway;
@@ -163,6 +166,17 @@ export default function Header({
             <MessageSquare className="h-4 w-4" />
           </button>
 
+          {canViewSuggestionInbox && (
+            <button
+              onClick={onOpenSuggestionInbox}
+              className="p-2 rounded-md hover:bg-accent transition-colors text-muted-foreground cursor-pointer min-h-[36px] min-w-[36px] flex items-center justify-center border border-border/60"
+              title="Feedback inbox"
+              aria-label="Feedback inbox"
+            >
+              <Inbox className="h-4 w-4" />
+            </button>
+          )}
+
           <UserButton appearance={clerkAppearance} />
         </div>
       </div>
@@ -273,6 +287,18 @@ export default function Header({
             <MessageSquare className="h-4 w-4" />
             <span>Feedback</span>
           </button>
+
+          {canViewSuggestionInbox && (
+            <button
+              onClick={onOpenSuggestionInbox}
+              className="inline-flex items-center gap-1.5 rounded-md border border-border/60 px-2.5 py-1.5 text-xs font-medium text-muted-foreground hover:bg-accent hover:text-foreground transition-colors cursor-pointer"
+              title="Feedback inbox"
+              aria-label="Feedback inbox"
+            >
+              <Inbox className="h-4 w-4" />
+              <span>Inbox</span>
+            </button>
+          )}
 
           <UserButton appearance={clerkAppearance} />
         </div>

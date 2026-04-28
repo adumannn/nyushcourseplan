@@ -10,9 +10,11 @@ import RequirementsSidebar from "./components/layout/RequirementsSidebar";
 import CoursePicker from "./components/planner/CoursePicker";
 import StudyAwayPicker from "./components/planner/StudyAwayPicker";
 import CourseDetailModal from "./components/planner/CourseDetailModal";
+import SuggestionInbox from "./components/layout/SuggestionInbox";
 import SuggestionModal from "./components/layout/SuggestionModal";
 import AuthGate from "./components/auth/AuthGate";
 import { GRADUATION_CREDITS } from "./data/courses";
+import { isFeedbackAdmin } from "./lib/feedbackAdmin";
 import "./App.css";
 
 function AppContent() {
@@ -52,6 +54,7 @@ function AppContent() {
   const [detailCourse, setDetailCourse] = useState(null);
   const [requirementsSheetOpen, setRequirementsSheetOpen] = useState(false);
   const [suggestionOpen, setSuggestionOpen] = useState(false);
+  const [suggestionInboxOpen, setSuggestionInboxOpen] = useState(false);
 
   const hasIncompleteStudyAway =
     studyAway.selectedSemesters.length === 0 ||
@@ -107,6 +110,7 @@ function AppContent() {
     (totalCredits / GRADUATION_CREDITS) * 100,
     100,
   );
+  const canViewSuggestionInbox = isFeedbackAdmin(user);
 
   return (
     <div className="planner-shell h-dvh min-h-screen flex flex-col bg-background text-foreground">
@@ -130,6 +134,8 @@ function AppContent() {
         semesterCredits={semesterCredits}
         onImportPlan={importPlan}
         onOpenSuggestion={() => setSuggestionOpen(true)}
+        canViewSuggestionInbox={canViewSuggestionInbox}
+        onOpenSuggestionInbox={() => setSuggestionInboxOpen(true)}
       />
 
       <div className="planner-main relative z-0 flex-1 min-h-0 flex flex-col lg:flex-row">
@@ -279,6 +285,13 @@ function AppContent() {
           plan={plan}
           major={major}
           totalCredits={totalCredits}
+        />
+      )}
+      {suggestionInboxOpen && canViewSuggestionInbox && (
+        <SuggestionInbox
+          onClose={() => setSuggestionInboxOpen(false)}
+          getToken={getToken}
+          user={user}
         />
       )}
 
