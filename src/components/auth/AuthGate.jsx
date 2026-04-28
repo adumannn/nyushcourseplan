@@ -1,4 +1,27 @@
-import { SignIn, useAuth } from '@clerk/react';
+import { useEffect, useMemo, useState } from 'react';
+import { SignIn, SignUp, useAuth } from '@clerk/react';
+
+const SIGN_UP_PATH = '/sign-up';
+
+function getAuthMode() {
+  return window.location.pathname === SIGN_UP_PATH ? 'sign-up' : 'sign-in';
+}
+
+function getAuthCopy(mode) {
+  if (mode === 'sign-up') {
+    return {
+      ariaLabel: 'Sign up for Course Planner',
+      title: 'Create your account.',
+      subtitle: 'Use your NYU account to save your course plan.',
+    };
+  }
+
+  return {
+    ariaLabel: 'Sign in to Course Planner',
+    title: 'Welcome back.',
+    subtitle: 'Sign in with your NYU account to plan your four years.',
+  };
+}
 
 /**
  * Auth gate component using Clerk.
@@ -6,6 +29,42 @@ import { SignIn, useAuth } from '@clerk/react';
  */
 export default function AuthGate() {
   const { isLoaded } = useAuth();
+  const [authMode, setAuthMode] = useState(getAuthMode);
+  const copy = getAuthCopy(authMode);
+  const clerkAppearance = useMemo(
+    () => ({
+      layout: {
+        socialButtonsPlacement: 'top',
+      },
+      elements: {
+        rootBox: 'auth-clerk-root',
+        cardBox: 'auth-clerk-card-box',
+        card: 'auth-clerk-card',
+        main: 'auth-clerk-main',
+        form: 'auth-clerk-form',
+        footer: 'auth-clerk-footer',
+        footerAction: 'auth-clerk-footer-action',
+        socialButtonsBlockButton: 'auth-google-btn w-full',
+        formButtonPrimary: 'auth-google-btn w-full',
+        dividerLine: 'bg-border',
+        dividerText: 'text-muted-foreground text-sm',
+        headerTitle: 'hidden',
+        headerSubtitle: 'hidden',
+        footerActionLink: 'text-primary hover:text-primary/80',
+        formFieldLabel: 'text-sm font-medium',
+        formFieldInput: 'rounded-md border border-input bg-background px-3 py-2 text-sm',
+        formFieldErrorText: 'text-destructive text-sm mt-1',
+      },
+    }),
+    [],
+  );
+
+  useEffect(() => {
+    const handleLocationChange = () => setAuthMode(getAuthMode());
+
+    window.addEventListener('popstate', handleLocationChange);
+    return () => window.removeEventListener('popstate', handleLocationChange);
+  }, []);
 
   if (!isLoaded) {
     return (
@@ -38,45 +97,31 @@ export default function AuthGate() {
             <span className="auth-brand-name">Course Planner</span>
           </header>
 
-          <section className="auth-card" aria-label="Sign in to Course Planner">
+          <section className="auth-card" aria-label={copy.ariaLabel}>
             <p className="auth-eyebrow">
               <span className="auth-eyebrow-dot" aria-hidden="true" />
               NYU Shanghai
             </p>
 
-            <h1 className="auth-title text-balance">Welcome back.</h1>
-            <p className="auth-subtitle">
-              Sign in with your NYU account to plan your four years.
-            </p>
+            <h1 className="auth-title text-balance">{copy.title}</h1>
+            <p className="auth-subtitle">{copy.subtitle}</p>
 
             <div className="clerk-signin-container">
-              <SignIn
-                appearance={{
-                  layout: {
-                    socialButtonsPlacement: 'top',
-                  },
-                  elements: {
-                    rootBox: 'auth-clerk-root',
-                    cardBox: 'auth-clerk-card-box',
-                    card: 'auth-clerk-card',
-                    main: 'auth-clerk-main',
-                    form: 'auth-clerk-form',
-                    footer: 'auth-clerk-footer',
-                    footerAction: 'auth-clerk-footer-action',
-                    socialButtonsBlockButton: 'auth-google-btn w-full',
-                    formButtonPrimary: 'auth-google-btn w-full',
-                    dividerLine: 'bg-border',
-                    dividerText: 'text-muted-foreground text-sm',
-                    headerTitle: 'hidden',
-                    headerSubtitle: 'hidden',
-                    footerActionLink: 'text-primary hover:text-primary/80',
-                    formFieldLabel: 'text-sm font-medium',
-                    formFieldInput: 'rounded-md border border-input bg-background px-3 py-2 text-sm',
-                    formFieldErrorText: 'text-destructive text-sm mt-1',
-                  },
-                }}
-                redirectUrl="/"
-              />
+              {authMode === 'sign-up' ? (
+                <SignUp
+                  appearance={clerkAppearance}
+                  signInUrl="/"
+                  forceRedirectUrl="/"
+                  fallbackRedirectUrl="/"
+                />
+              ) : (
+                <SignIn
+                  appearance={clerkAppearance}
+                  signUpUrl={SIGN_UP_PATH}
+                  forceRedirectUrl="/"
+                  fallbackRedirectUrl="/"
+                />
+              )}
             </div>
           </section>
 
