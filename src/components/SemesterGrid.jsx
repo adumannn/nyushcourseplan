@@ -52,6 +52,7 @@ export default function SemesterGrid({
   onOpenStudyAway,
   prereqWarnings = {},
   onCourseClick,
+  major,
 }) {
   const [dragState, setDragState] = useState(createEmptyDragState);
   const [isTouchDevice, setIsTouchDevice] = useState(false);
@@ -325,6 +326,7 @@ export default function SemesterGrid({
                 onTapAtIndex={handleTapAtIndex}
                 prereqWarnings={prereqWarnings}
                 onCourseClick={onCourseClick}
+                major={major}
               />
             );
           })}

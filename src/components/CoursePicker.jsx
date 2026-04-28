@@ -1,7 +1,10 @@
 import { useState, useMemo } from "react";
 import { CATEGORIES, DEPARTMENTS } from "../data/courses";
 import useCatalog from "../hooks/useCatalog";
-import { isCourseRelevantToMajor } from "../lib/majorCourseRules";
+import {
+  getEffectiveCategory,
+  isCourseRelevantToMajor,
+} from "../lib/majorCourseRules";
 import { LOCAL_CATALOG_COURSES } from "../lib/localCatalog";
 
 export default function CoursePicker({
@@ -37,7 +40,9 @@ export default function CoursePicker({
       list = list.filter((c) => c.department === filterDept);
     }
     if (filterCat) {
-      list = list.filter((c) => c.category === filterCat);
+      list = list.filter(
+        (c) => getEffectiveCategory(c, major) === filterCat,
+      );
     }
     if (search.trim()) {
       const q = search.toLowerCase();
@@ -52,8 +57,12 @@ export default function CoursePicker({
       const bRel = isCourseRelevantToMajor(b, major) ? 0 : 1;
       if (aRel !== bRel) return aRel - bRel;
 
-      const aCategoryLabel = CATEGORIES[a.category]?.label || a.category || "";
-      const bCategoryLabel = CATEGORIES[b.category]?.label || b.category || "";
+      const aEffective = getEffectiveCategory(a, major);
+      const bEffective = getEffectiveCategory(b, major);
+      const aCategoryLabel =
+        CATEGORIES[aEffective]?.label || aEffective || "";
+      const bCategoryLabel =
+        CATEGORIES[bEffective]?.label || bEffective || "";
       const categoryCompare = courseSortCollator.compare(
         aCategoryLabel,
         bCategoryLabel,
@@ -167,8 +176,9 @@ export default function CoursePicker({
               ) : (
                 filtered.map((course) => {
                   const inPlan = isCourseInPlan(course.id);
+                  const effectiveCategory = getEffectiveCategory(course, major);
                   const cat =
-                    CATEGORIES[course.category] || CATEGORIES.elective;
+                    CATEGORIES[effectiveCategory] || CATEGORIES.elective;
                   return (
                     <div
                       key={course.id}

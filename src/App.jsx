@@ -148,6 +148,7 @@ function App() {
               studyAwayWarnings={studyAwayWarningsBySemester}
               prereqWarnings={prereqWarnings}
               onCourseClick={setDetailCourse}
+              major={major}
               onOpenStudyAway={(semesterId) => {
                 setStudyAwayFocusSemester(semesterId);
                 setStudyAwayPickerOpen(true);
@@ -249,6 +250,7 @@ function App() {
         <CourseDetailModal
           course={detailCourse}
           prereqWarnings={prereqWarnings}
+          major={major}
           onClose={() => setDetailCourse(null)}
         />
       )}

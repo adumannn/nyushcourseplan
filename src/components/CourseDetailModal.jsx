@@ -9,12 +9,14 @@ import {
 import { CATEGORIES, CORE_REQUIREMENTS } from "../data/courses";
 import useCatalog from "../hooks/useCatalog";
 import { LOCAL_CATALOG_BY_ID } from "../lib/localCatalog";
+import { getEffectiveCategory } from "../lib/majorCourseRules";
 import { serializePrerequisiteGroup } from "../lib/prerequisites";
 import ReviewSummary from "./ReviewSummary";
 
 export default function CourseDetailModal({
   course: passedCourse,
   prereqWarnings = {},
+  major,
   onClose,
 }) {
   const { coursesById } = useCatalog();
@@ -28,9 +30,10 @@ export default function CourseDetailModal({
     LOCAL_CATALOG_BY_ID.get(passedCourse.id) ||
     passedCourse;
 
+  const resolvedCategory = getEffectiveCategory(course, major);
   const categoryKey =
-    typeof course.category === "string"
-      ? course.category.toLowerCase()
+    typeof resolvedCategory === "string"
+      ? resolvedCategory.toLowerCase()
       : "elective";
   const category = CATEGORIES[categoryKey] || CATEGORIES.elective;
   const unmetPrereqs = prereqWarnings[course.id] || [];

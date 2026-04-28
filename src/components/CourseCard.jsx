@@ -1,6 +1,7 @@
 import { useRef } from 'react';
 import { GripVertical, X, Info, AlertTriangle } from 'lucide-react';
 import { CATEGORIES } from '../data/courses';
+import { getEffectiveCategory } from '../lib/majorCourseRules';
 
 function withAlpha(color, alpha) {
   if (typeof color !== 'string' || !color.startsWith('#')) {
@@ -34,13 +35,16 @@ export default function CourseCard({
   touchMode = false,
   isDragging = false,
   hasPrereqWarning = false,
+  major,
 }) {
   const didDragRef = useRef(false);
 
-  const categoryKey = typeof course.category === 'string'
-    ? course.category.toLowerCase()
+  const resolvedCategory = getEffectiveCategory(course, major);
+  const categoryKey = typeof resolvedCategory === 'string'
+    ? resolvedCategory.toLowerCase()
     : 'elective';
   const categoryColor = CATEGORIES[categoryKey]?.color || CATEGORIES.elective.color;
+  const categoryLabel = CATEGORIES[categoryKey]?.label || categoryKey;
   const cardStyle = {
     borderLeftWidth: '3px',
     borderLeftColor: categoryColor,
@@ -87,7 +91,7 @@ export default function CourseCard({
             {course.code}
           </span>
         </div>
-        {course.category && (
+        {categoryKey && (
           <div className="mt-1.5">
             <span
               className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full border text-[10px] font-medium uppercase tracking-wide"
@@ -97,7 +101,7 @@ export default function CourseCard({
                 className="h-1.5 w-1.5 rounded-full"
                 style={{ backgroundColor: categoryColor }}
               />
-              {course.category}
+              {categoryLabel}
             </span>
           </div>
         )}
