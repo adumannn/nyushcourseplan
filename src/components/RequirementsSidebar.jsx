@@ -332,7 +332,7 @@ export default function RequirementsSidebar({
       </div>
 
       {!collapsed && (
-        <div className="planner-requirements-scroll scrollbar-hidden flex-1 overflow-y-auto">
+        <div className="planner-requirements-scroll scrollbar-hidden flex-1 min-h-0 overflow-y-auto overscroll-contain">
           <div className="p-4 sm:p-6 space-y-6 sm:space-y-8">
             {requirements.map((requirement, index) => (
               <RequirementCategory key={index} requirement={requirement} />

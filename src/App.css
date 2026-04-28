@@ -15,7 +15,12 @@
 .requirements-sheet-panel {
     position: relative;
     width: 100%;
-    max-height: 88dvh;
+    /* Use both min/max height + explicit height so flex children get a
+       definite container height and the inner scroll resolves correctly on
+       iOS Safari. Without an explicit height the panel can collapse to
+       intrinsic size and break the inner overflow-y: auto. */
+    height: 85dvh;
+    max-height: 85dvh;
     background: var(--card);
     border-top: 1px solid var(--border);
     border-top-left-radius: 18px;
