@@ -20,11 +20,11 @@ const MAJOR_DEPT_PREFIXES = {
   chemistry: ["CHEM"],
   biology: ["BIOL"],
   "neural-science": ["NEUR", "BIOL"],
-  "interactive-media-arts": ["INTM"],
-  "interactive-media-business": ["INTM", "BUSF"],
-  humanities: ["HUMN", "LITR", "PHIL", "HIST"],
-  "global-china-studies": ["GCS", "HIST"],
-  "social-science": ["SOSC", "ANTH", "POLI", "PSYC", "SOCI"],
+  "interactive-media-arts": ["INTM", "IMBX"],
+  "interactive-media-business": ["INTM", "IMBX", "BUSF", "MGMT", "MKTG"],
+  humanities: ["ART", "GCHN", "HIST", "HUMN", "LITR", "PHIL"],
+  "global-china-studies": ["GCHN", "HIST", "SOCS"],
+  "social-science": ["SOCS", "GCHN", "PSYC", "ECON"],
   "self-designed-honors": [],
 };
 

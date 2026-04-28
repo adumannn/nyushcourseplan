@@ -235,10 +235,12 @@ export const MAJOR_REQUIREMENTS = {
       {
         label: 'Statistics Requirement',
         courseIds: ['MATH-SHU-235', 'MATH-SHU-238', 'BUSF-SHU-101'],
+        count: 1,
       },
       {
         label: 'Architecture Requirement',
-        courseIds: ['CENG-SHU-202', 'CSCI-SHU-350'],
+        courseIds: ['CENG-SHU-202', 'CSCI-UA-201', 'CSCI-SHU-350'],
+        count: 1,
       },
     ],
     capstone: { courseId: 'CSCI-SHU-420', label: 'Computer Science Senior Project', notes: 'Fall Only' },
@@ -275,6 +277,7 @@ export const MAJOR_REQUIREMENTS = {
       {
         label: 'China Business Studies',
         courseIds: ['BUSF-SHU-200D', 'BUSF-SHU-286', 'BUSF-SHU-288'],
+        count: 1,
       },
     ],
     capstone: null,
@@ -305,14 +308,17 @@ export const MAJOR_REQUIREMENTS = {
       {
         label: 'Marketing Electives',
         courseIds: ['MKTG-SHU-2', 'MKTG-SHU-9'],
+        count: 1,
       },
       {
         label: 'Marketing Electives',
         courseIds: ['MKTG-SHU-3', 'MKTG-SHU-53', 'MKTG-SHU-57', 'MKTG-SHU-64'],
+        count: 1,
       },
       {
         label: 'China Business Studies',
         courseIds: ['BUSF-SHU-288', 'BUSF-SHU-200D', 'BUSF-SHU-286'],
+        count: 1,
       },
     ],
     capstone: null,
@@ -343,14 +349,17 @@ export const MAJOR_REQUIREMENTS = {
       {
         label: 'Foundational Courses',
         courseIds: ['CHEM-SHU-127', 'CHEM-SHU-128'],
+        count: 1,
       },
       {
         label: 'Foundational Courses',
         courseIds: ['PHYS-SHU-11', 'PHYS-SHU-91'],
+        count: 1,
       },
       {
         label: 'Foundational Courses',
         courseIds: ['PHYS-SHU-12', 'PHYS-SHU-93'],
+        count: 1,
       },
       {
         label: 'Select five elective courses from the list below',
@@ -389,10 +398,12 @@ export const MAJOR_REQUIREMENTS = {
       {
         label: 'Foundational Courses',
         courseIds: ['PHYS-SHU-11', 'PHYS-SHU-91'],
+        count: 1,
       },
       {
         label: 'Foundational Courses',
         courseIds: ['PHYS-SHU-12', 'PHYS-SHU-93'],
+        count: 1,
       },
       {
         label: 'Select three of the following',
@@ -424,14 +435,17 @@ export const MAJOR_REQUIREMENTS = {
       {
         label: 'Required Courses',
         courseIds: ['CENG-SHU-202', 'CSCI-UA-201'],
+        count: 1,
       },
       {
         label: 'Required Courses',
         courseIds: ['MATH-SHU-235', 'MATH-SHU-238'],
+        count: 1,
       },
       {
         label: 'Required Courses',
         courseIds: ['MATH-SHU-265', 'MATH-SHU-140', 'MATH-SHU-160'],
+        count: 1,
       },
       {
         label: 'CSCI-SHU Requirement',
@@ -460,22 +474,27 @@ export const MAJOR_REQUIREMENTS = {
       {
         label: 'Foundational Courses',
         courseIds: ['BUSF-SHU-101', 'MATH-SHU-235', 'MATH-SHU-238'],
+        count: 1,
       },
       {
         label: 'Mathematics',
         courseIds: ['MATH-SHU-151', 'MATH-SHU-328'],
+        count: 1,
       },
       {
         label: 'Mathematics',
         courseIds: ['MATH-SHU-140', 'MATH-SHU-141', 'MATH-SHU-265'],
+        count: 1,
       },
       {
         label: 'Data Analysis',
         courseIds: ['ECON-SHU-301', 'MATH-SHU-234'],
+        count: 1,
       },
       {
         label: 'Data Analysis',
         courseIds: ['CSCI-SHU-220', 'DATS-SHU-235', 'DATS-SHU-240'],
+        count: 1,
       },
     ],
     capstone: { courseId: 'DATS-SHU-420', label: 'Data Science Senior Project' },
@@ -584,10 +603,12 @@ export const MAJOR_REQUIREMENTS = {
       {
         label: 'Required Courses',
         courseIds: ['ECON-SHU-1', 'ECON-SHU-251'],
+        count: 1,
       },
       {
         label: 'Required Courses',
         courseIds: ['MATH-SHU-235', 'BUSF-SHU-101'],
+        count: 1,
       },
     ],
     capstone: null,
@@ -610,26 +631,32 @@ export const MAJOR_REQUIREMENTS = {
       {
         label: 'Major Requirements',
         courseIds: ['CSCI-SHU-11', 'CSCI-SHU-101'],
+        count: 1,
       },
       {
         label: 'Major Requirements',
         courseIds: ['ECE-UY-3054', 'ENGR-UH-3610'],
+        count: 1,
       },
       {
         label: 'Major Requirements',
         courseIds: ['ECE-UY-3114', 'ENGR-UH-3611'],
+        count: 1,
       },
       {
         label: 'Major Requirements',
         courseIds: ['ECE-UY-3604', 'PHYS-UH-2115'],
+        count: 1,
       },
       {
         label: 'Major Requirements',
         courseIds: ['MATH-SHU-235', 'MATH-SHU-238'],
+        count: 1,
       },
       {
         label: 'Major Requirements',
         courseIds: ['MATH-SHU-265', 'MATH-SHU-140', 'MATH-SHU-160'],
+        count: 1,
       },
       {
         label: 'Electives',
@@ -646,10 +673,11 @@ export const MAJOR_REQUIREMENTS = {
   'global-china-studies': {
     label: 'Global China Studies',
     bulletin: 'AY 2025-26',
-    coursesNeeded: 6,
-    creditsNeeded: 64,
+    coursesNeeded: 9,
+    creditsNeeded: 36,
     requiredCourses: [
       { courseId: 'GCHN-SHU-110', label: 'The Concept of China' },
+      { courseId: 'GCHN-SHU-400', label: 'Global China Studies Senior Capstone Seminar I' },
     ],
     selectOneCourses: [
       {
@@ -657,16 +685,12 @@ export const MAJOR_REQUIREMENTS = {
         courseIds: ['GCHN-SHU-164', 'GCHN-SHU-165', 'GCHN-SHU-234', 'GCHN-SHU-264', 'SOCS-SHU-341'],
         count: 2,
       },
-      {
-        label: 'Chinese for Advanced Undergraduate Research (Students in Advanced Track only)',
-        courseIds: ['GCHN-SHU-200', 'GCHN-SHU-233', 'GCHN-SHU-283', 'GCHN-SHU-316'],
-      },
     ],
     capstone: { courseId: 'GCHN-SHU-401', label: 'Global China Studies Senior Capstone Seminar II' },
-    electivesNeeded: 1,
-    electiveCreditsNeeded: 44,
-    otherElectiveCredits: '',
-    notes: 'Non-Native Chinese Speakers Native Chinese Speakers',
+    electivesNeeded: 4,
+    electiveCreditsNeeded: 16,
+    otherElectiveCredits: '44-48',
+    notes: 'Default tracker reflects the Regular Track: two China and the World courses and four Global China Studies electives. Advanced Track students instead take one China and the World course, three Global China Studies electives, two advanced language courses, and one Chinese for Advanced Undergraduate Research course; consult an advisor for track planning.',
   },
   'honors-mathematics': {
     label: 'Honors Mathematics',
@@ -694,45 +718,52 @@ export const MAJOR_REQUIREMENTS = {
     electivesNeeded: 0,
     electiveCreditsNeeded: 0,
     otherElectiveCredits: '',
-    notes: 'Other Elective Credits',
+    notes: '',
   },
   humanities: {
     label: 'Humanities',
     bulletin: 'AY 2025-26',
-    coursesNeeded: 5,
-    creditsNeeded: 20,
-    requiredCourses: [],
+    coursesNeeded: 12,
+    creditsNeeded: 46,
+    requiredCourses: [
+      { courseId: 'HUMN-SHU-400A', label: 'Humanities Capstone Seminar I' },
+    ],
     selectOneCourses: [
       {
         label: 'Choose at least two of the following',
         courseIds: ['ART-SHU-101', 'HIST-SHU-101', 'HIST-SHU-102', 'HUMN-SHU-101', 'HUMN-SHU-110', 'HUMN-SHU-112', 'PHIL-SHU-101'],
+        count: 2,
       },
       {
         label: 'Choose at least two of the following',
         courseIds: ['HIST-SHU-130', 'HIST-SHU-205', 'HIST-SHU-310', 'HUMN-SHU-180', 'HUMN-SHU-182', 'HUMN-SHU-183', 'HUMN-SHU-205', 'HUMN-SHU-231', 'HUMN-SHU-140', 'HUMN-SHU-160', 'PHIL-SHU-70', 'PHIL-SHU-80', 'PHIL-SHU-107', 'PHIL-SHU-115'],
+        count: 2,
       },
       {
         label: 'Choose at least five of the following',
         courseIds: ['ART-SHU-180', 'GCHN-SHU-210', 'HIST-SHU-158', 'HIST-SHU-188', 'HIST-SHU-209', 'HIST-SHU-265', 'HIST-SHU-305', 'HUMN-SHU-190', 'HUMN-SHU-280', 'PHIL-SHU-110', 'PHIL-SHU-200', 'PHIL-SHU-205'],
+        count: 5,
       },
       {
         label: 'Choose at least one of the following',
         courseIds: ['ART-SHU-222', 'HIST-SHU-330', 'HUMN-SHU-308', 'PHIL-SHU-91', 'PHIL-SHU-130'],
+        count: 1,
       },
     ],
     capstone: { courseId: 'HUMN-SHU-401', label: 'Humanities Capstone Seminar' },
     electivesNeeded: 0,
     electiveCreditsNeeded: 0,
     otherElectiveCredits: '38-46',
-    notes: '',
+    notes: 'Listed Humanities options are sample courses from the bulletin, not the complete approved list.',
   },
   'interactive-media-arts': {
     label: 'Interactive Media Arts',
     bulletin: 'AY 2025-26',
-    coursesNeeded: 24,
-    creditsNeeded: 36,
+    coursesNeeded: 12,
+    creditsNeeded: 48,
     requiredCourses: [
       { courseId: 'INTM-SHU-205', label: 'What is New Media?' },
+      { courseId: 'INTM-SHU-400', label: 'Capstone Studio I' },
     ],
     selectOneCourses: [
       {
@@ -742,25 +773,27 @@ export const MAJOR_REQUIREMENTS = {
       },
     ],
     capstone: { courseId: 'INTM-SHU-401', label: 'Capstone Studio II' },
-    electivesNeeded: 20,
-    electiveCreditsNeeded: 20,
+    electivesNeeded: 7,
+    electiveCreditsNeeded: 28,
     otherElectiveCredits: '28-36',
-    notes: '',
+    notes: 'Electives include 20 credits of IMA electives and 8 credits of advanced IMA electives.',
   },
   'interactive-media-business': {
     label: 'Interactive Media + Business',
     bulletin: 'AY 2025-26',
-    coursesNeeded: 27,
-    creditsNeeded: 48,
+    coursesNeeded: 16,
+    creditsNeeded: 64,
     requiredCourses: [
       { courseId: 'IMBX-SHU-110', label: 'Innovation Lab' },
       { courseId: 'ECON-SHU-251', label: 'Economics of Global Business' },
       { courseId: 'BUSF-SHU-250', label: 'Principles of Financial Accounting' },
+      { courseId: 'IMBX-SHU-400', label: 'IMB Capstone 1' },
     ],
     selectOneCourses: [
       {
         label: 'IMB Foundation Courses',
         courseIds: ['IMBX-SHU-106', 'INTM-SHU-101', 'INTM-SHU-103', 'INTM-SHU-120', 'INTM-SHU-205'],
+        count: 1,
       },
       {
         label: 'Business Flexible Core Courses',
@@ -769,39 +802,40 @@ export const MAJOR_REQUIREMENTS = {
       },
     ],
     capstone: { courseId: 'IMBX-SHU-401', label: 'IMB Capstone 2' },
-    electivesNeeded: 20,
-    electiveCreditsNeeded: 20,
+    electivesNeeded: 8,
+    electiveCreditsNeeded: 32,
     otherElectiveCredits: '12-20',
-    notes: '',
+    notes: 'Electives include 12 credits of Business electives and 20 credits of IMB electives.',
   },
   mathematics: {
     label: 'Mathematics',
     bulletin: 'AY 2025-26',
-    coursesNeeded: 15,
-    creditsNeeded: 60,
+    coursesNeeded: 13,
+    creditsNeeded: 52,
     requiredCourses: [
-      { courseId: 'CCSF-SHU-101L', label: 'Global Perspectives on Society' },
-      { courseId: 'WRIT-SHU-102', label: 'Writing as Inquiry' },
-      { courseId: 'WRIT-SHU-201', label: 'Perspectives on the Humanities' },
       { courseId: 'MATH-SHU-140', label: 'Linear Algebra' },
       { courseId: 'MATH-SHU-151', label: 'Multivariable Calculus' },
     ],
     selectOneCourses: [
       {
-        label: 'Required Mathematics Courses',
+        label: 'Foundations of Mathematical Methods / Honors Calculus',
         courseIds: ['MATH-SHU-143', 'MATH-SHU-201'],
+        count: 1,
       },
       {
-        label: 'Required Mathematics Courses',
+        label: 'Probability Requirement',
         courseIds: ['MATH-SHU-235', 'MATH-SHU-238'],
+        count: 1,
       },
       {
-        label: 'Required Mathematics Courses',
+        label: 'Ordinary Differential Equations Requirement',
         courseIds: ['MATH-SHU-262', 'MATH-SHU-362'],
+        count: 1,
       },
       {
         label: 'Select at least two of the following',
         courseIds: ['MATH-SHU-141', 'MATH-SHU-142', 'MATH-SHU-226', 'MATH-SHU-282', 'MATH-SHU-328', 'MATH-SHU-329', 'MATH-SHU-339', 'MATH-SHU-348', 'MATH-SHU-349', 'MATH-SHU-350', 'MATH-SHU-375', 'MATH-SHU-377'],
+        count: 2,
       },
       {
         label: 'Select six of the following',
@@ -813,7 +847,7 @@ export const MAJOR_REQUIREMENTS = {
     electivesNeeded: 0,
     electiveCreditsNeeded: 0,
     otherElectiveCredits: '28-36',
-    notes: 'Social and Cultural Foundations Interdisciplinary Perspectives on China (Two Courses) Language Courses Mathematics Requirement Fulfilled by Major Coursework Algorithmic Thinking Course Experimental Discovery in the Natural World Course Science, Technology and Society Course',
+    notes: 'Mathematics core requirement is fulfilled by major coursework. Senior capstone project is required by policy but has no separate course in the bulletin table.',
   },
   'neural-science': {
     label: 'Neural Science',
@@ -837,22 +871,27 @@ export const MAJOR_REQUIREMENTS = {
       {
         label: 'Foundational Courses',
         courseIds: ['CHEM-SHU-127', 'CHEM-SHU-128'],
+        count: 1,
       },
       {
         label: 'Foundational Courses',
         courseIds: ['PHYS-SHU-11', 'PHYS-SHU-91'],
+        count: 1,
       },
       {
         label: 'Foundational Courses',
         courseIds: ['PHYS-SHU-12', 'PHYS-SHU-93'],
+        count: 1,
       },
       {
         label: 'Select one approved upper-level Psychology or Biology course',
         courseIds: ['PSYCH-UA-29', 'PSYCH-UA-44', 'PSYCH-UA-46', 'PSYCH-UA-60', 'BIOL-SHU-30', 'BIOL-SHU-263', 'CHEM-SHU-881', 'CHEM-SHU-882', 'BIOL-UA-25', 'NEUR-SHU-222', 'NEUR-SHU-131'],
+        count: 1,
       },
       {
         label: 'Complete 4-8 credits of',
         courseIds: ['NEUR-SHU-997', 'NEUR-SHU-998'],
+        count: 1,
       },
       {
         label: 'MATH-SHU Requirement',
@@ -892,10 +931,12 @@ export const MAJOR_REQUIREMENTS = {
       {
         label: 'Foundational Courses',
         courseIds: ['CHEM-SHU-127', 'CHEM-SHU-128'],
+        count: 1,
       },
       {
         label: 'Foundational Courses',
         courseIds: ['PHYS-SHU-11', 'PHYS-SHU-91'],
+        count: 1,
       },
       {
         label: 'Select three of the following',
@@ -925,9 +966,11 @@ export const MAJOR_REQUIREMENTS = {
   'social-science': {
     label: 'Social Science',
     bulletin: 'AY 2025-26',
-    coursesNeeded: 8,
-    creditsNeeded: 60,
-    requiredCourses: [],
+    coursesNeeded: 11,
+    creditsNeeded: 44,
+    requiredCourses: [
+      { courseId: 'SOCS-SHU-401', label: 'Social Science Senior Seminar' },
+    ],
     selectOneCourses: [
       {
         label: 'Foundational Courses',
@@ -940,15 +983,15 @@ export const MAJOR_REQUIREMENTS = {
         count: 2,
       },
       {
-        label: 'SOCS-SHU Requirement',
+        label: 'Major Core Courses',
         courseIds: ['SOCS-SHU-151', 'SOCS-SHU-223', 'SOCS-SHU-228', 'SOCS-SHU-229', 'SOCS-SHU-236', 'SOCS-SHU-245', 'SOCS-SHU-253', 'SOCS-SHU-270', 'SOCS-SHU-289', 'SOCS-SHU-334', 'SOCS-SHU-352', 'SOCS-SHU-378'],
         count: 2,
       },
     ],
     capstone: { courseId: 'SOCS-SHU-402', label: 'Social Science Capstone Seminar' },
-    electivesNeeded: 1,
-    electiveCreditsNeeded: 32,
-    otherElectiveCredits: '',
+    electivesNeeded: 3,
+    electiveCreditsNeeded: 12,
+    otherElectiveCredits: '32-40',
     concentrations: [
       {
         name: 'Anthropology',
@@ -1072,7 +1115,7 @@ export const MAJOR_REQUIREMENTS = {
         ],
       },
     ],
-    notes: '',
+    notes: 'Focus courses are tracked as three major electives and should come from one approved track.',
   },
 };
 
