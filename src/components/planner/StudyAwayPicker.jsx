@@ -7,7 +7,7 @@ import {
   PlaneTakeoff,
   X,
 } from "lucide-react";
-import { MAJOR_REQUIREMENTS, SEMESTERS, STUDY_AWAY } from "../data/courses";
+import { MAJOR_REQUIREMENTS, SEMESTERS, STUDY_AWAY } from "../../data/courses";
 
 function getSemesterLabel(semesterId) {
   return (

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { MessageSquare, ChevronDown, ChevronRight } from "lucide-react";
-import useCourseReviews from "../hooks/useCourseReviews";
+import useCourseReviews from "../../hooks/useCourseReviews";
 
 function formatRelative(iso) {
   if (!iso) return "";

@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import { ChevronDown, CheckCircle2, Circle, ChevronsLeft, ChevronsRight } from 'lucide-react';
-import { CORE_REQUIREMENTS, GRADUATION_CREDITS, CATEGORIES, getMajorRequirement } from '../data/courses';
+import { CORE_REQUIREMENTS, GRADUATION_CREDITS, CATEGORIES, getMajorRequirement } from '../../data/courses';
 
 function RequirementCategory({ requirement }) {
   const hasItems = Array.isArray(requirement.items) && requirement.items.length > 0;

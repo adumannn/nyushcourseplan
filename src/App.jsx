@@ -1,28 +1,26 @@
 import { useEffect, useMemo, useState } from "react";
 import { Analytics } from "@vercel/analytics/react";
+import { SignedIn, SignedOut } from "@clerk/react";
 import { ListChecks, X } from "lucide-react";
 import useTheme from "./hooks/useTheme";
 import useAuth from "./hooks/useAuth";
 import usePlanner from "./hooks/usePlanner";
-import Header from "./components/Header";
-import SemesterGrid from "./components/SemesterGrid";
-import RequirementsSidebar from "./components/RequirementsSidebar";
-import CoursePicker from "./components/CoursePicker";
-import StudyAwayPicker from "./components/StudyAwayPicker";
-import CourseDetailModal from "./components/CourseDetailModal";
-import AuthGate from "./components/AuthGate";
+import Header from "./components/layout/Header";
+import SemesterGrid from "./components/planner/SemesterGrid";
+import RequirementsSidebar from "./components/layout/RequirementsSidebar";
+import CoursePicker from "./components/planner/CoursePicker";
+import StudyAwayPicker from "./components/planner/StudyAwayPicker";
+import CourseDetailModal from "./components/planner/CourseDetailModal";
+import AuthGate from "./components/auth/AuthGate";
 import { GRADUATION_CREDITS } from "./data/courses";
 import "./App.css";
 
-function App() {
+function AppContent() {
   const { theme, toggleTheme } = useTheme();
   const {
     user,
     loading: authLoading,
-    signInWithGoogle,
     signOut,
-    authError,
-    enabled: authEnabled,
   } = useAuth();
 
   const {
@@ -89,14 +87,18 @@ function App() {
     };
   }, [requirementsSheetOpen]);
 
-  // Auth gate — must sign in with Google
-  if (authEnabled && !authLoading && !user) {
+  // Auth gate — must sign in with Clerk
+  if (authLoading) {
     return (
-      <AuthGate
-        onSignInWithGoogle={signInWithGoogle}
-        loading={authLoading}
-        authError={authError}
-      />
+      <div
+        className="auth-loading-shell min-h-screen flex items-center justify-center bg-background"
+        role="status"
+        aria-live="polite"
+        aria-label="Loading"
+      >
+        <div className="spinner" />
+        <p className="auth-loading-label">Preparing secure sign-in&hellip;</p>
+      </div>
     );
   }
 
@@ -274,4 +276,15 @@ function App() {
   );
 }
 
-export default App;
+export default function App() {
+  return (
+    <>
+      <SignedOut>
+        <AuthGate />
+      </SignedOut>
+      <SignedIn>
+        <AppContent />
+      </SignedIn>
+    </>
+  );
+}

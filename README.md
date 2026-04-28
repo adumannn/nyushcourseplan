@@ -22,14 +22,28 @@ Computer Science, Data Science, Business and Finance, Business and Marketing, Bi
 - **Drag & drop** — Reorder and move courses between semesters (desktop and mobile touch support)
 - **Study away planning** — Mark semesters as study away with location selection and CS/DS-specific advising warnings
 - **Import / Export** — Save your plan as JSON (lossless), CSV (spreadsheet-friendly), or PDF (print view). Load a plan back from JSON or CSV.
-- **Email + Google sign-in** — NYU-domain accounts; plans sync to the cloud across devices
+- **Google sign-in** — NYU-domain accounts; plans sync to the cloud across devices
 - **Dark/light theme** — System-aware with manual toggle
+- **Large local fallback catalog** — Uses generated Shanghai bulletin data merged with curated metadata
 
 ## Tech Stack
 
 - **Frontend:** React 19, Vite 8, Tailwind CSS 4
 - **Auth & Database:** Supabase (email/password + Google OAuth, Postgres, Row-Level Security)
 - **Storage:** Supabase for signed-in users, `localStorage` as a write-through cache
+
+## Development
+
+```bash
+npm install
+npm run dev
+```
+
+To regenerate the local fallback catalog from the latest Shanghai scrape:
+
+```bash
+npm run generate:catalog
+```
 
 ## Use It
 
@@ -44,26 +58,34 @@ This project is licensed under the **PolyForm Noncommercial License 1.0.0** — 
 ```
 src/
   components/
-    AuthGate.jsx            Sign-in / sign-up screen (email + Google)
-    Header.jsx              Logo, credits, major select, study-away, plan menu, account
-    PlanMenu.jsx            Import/Export dropdown (JSON, CSV, PDF)
-    SemesterGrid.jsx        4-year grid layout
-    SemesterCard.jsx        Single semester with courses
-    CourseCard.jsx          Individual course chip
-    CourseDetailModal.jsx   Course details popover
-    CoursePicker.jsx        Modal to browse/add courses
-    StudyAwayPicker.jsx     Study-away semester + location picker
-    RequirementsSidebar.jsx Progress tracker
+    auth/
+      AuthGate.jsx          Google sign-in gate
+    layout/
+      Header.jsx            Logo, credits, major select, study-away, plan menu, account
+      PlanMenu.jsx          Import/Export dropdown (JSON, CSV, PDF)
+      RequirementsSidebar.jsx
+    planner/
+      SemesterGrid.jsx      4-year grid layout
+      SemesterCard.jsx      Single semester with courses
+      CourseCard.jsx        Individual course chip
+      CourseDetailModal.jsx Course details popover
+      CoursePicker.jsx      Modal to browse/add courses
+      StudyAwayPicker.jsx   Study-away semester + location picker
+    reviews/
+      ReviewSummary.jsx     Course/professor review summaries
   hooks/
-    useAuth.js              Email/password + Google OAuth via Supabase
+    useAuth.js              Auth state + Google OAuth via Supabase
     useCatalog.js           Catalog loader / selector
     usePlanner.js           Plan state, persistence, derived data, replacePlan
     useTheme.js             Dark/light theme toggle
   lib/
-    catalog.js              Catalog source helpers
+    localCatalog.js         Local catalog merge/hydration helpers
     supabase.js             Supabase client init
     planStorage.js          localStorage + Supabase storage abstraction
     planTransfer.js         Import/export helpers (JSON, CSV, PDF)
   data/
-    courses.js              Course catalog, requirements, majors, study-away rules
+    courses.js              Curated course metadata, requirements, majors, study-away rules
+    courses.generated.js    Generated Shanghai bulletin catalog fallback
+scripts/
+  generate-local-catalog.mjs   Builds src/data/courses.generated.js
 ```

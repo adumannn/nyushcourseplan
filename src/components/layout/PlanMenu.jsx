@@ -19,8 +19,8 @@ import {
   exportPlanAsPDF,
   importPlanFromJSON,
   importPlanFromCSV,
-} from "../lib/planTransfer";
-import { SEMESTERS, getMajorLabel } from "../data/courses";
+} from "../../lib/planTransfer";
+import { SEMESTERS, getMajorLabel } from "../../data/courses";
 
 function pluralize(count, singular, plural = `${singular}s`) {
   return `${count} ${count === 1 ? singular : plural}`;

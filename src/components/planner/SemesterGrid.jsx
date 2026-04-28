@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { SEMESTERS } from "../data/courses";
+import { SEMESTERS } from "../../data/courses";
 import SemesterCard from "./SemesterCard";
 
 const years = [

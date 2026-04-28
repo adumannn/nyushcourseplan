@@ -274,6 +274,7 @@ const COURSE_ABBREVIATIONS: Record<string, string[]> = {
   "WRIT-SHU-101":  ["WAI"],   // Writing as Inquiry: WI
   "BUSF-SHU-288":  ["DBC"],   // Doing Business with China
   "HUMN-SHU-110":  ["STS"],   // What is Science and Technology Studies?
+  "BUSF-SHU-250":  ["PFA"],
 };
 
 // Compiled once per function invocation; maps each course id to the set

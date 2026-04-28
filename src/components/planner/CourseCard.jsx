@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 import { GripVertical, X, Info, AlertTriangle } from 'lucide-react';
-import { CATEGORIES } from '../data/courses';
-import { getEffectiveCategory } from '../lib/majorCourseRules';
+import { CATEGORIES } from '../../data/courses';
+import { getEffectiveCategory } from '../../lib/majorCourseRules';
 
 function withAlpha(color, alpha) {
   if (typeof color !== 'string' || !color.startsWith('#')) {

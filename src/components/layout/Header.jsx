@@ -7,7 +7,7 @@ import {
   PlaneTakeoff,
   AlertTriangle,
 } from "lucide-react";
-import { MAJORS } from "../data/courses";
+import { MAJORS } from "../../data/courses";
 import PlanMenu from "./PlanMenu";
 
 function AccountMenu({ user, onSignOut, compact = false }) {

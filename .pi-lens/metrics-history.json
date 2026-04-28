@@ -1,0 +1,31 @@
+{
+  "version": 1,
+  "files": {
+    "src/App.jsx": {
+      "latest": {
+        "commit": "86524f6",
+        "timestamp": "2026-04-26T11:00:37.733Z",
+        "mi": 27.6,
+        "cognitive": 20,
+        "nesting": 4,
+        "lines": 179,
+        "maxCyclomatic": 19,
+        "entropy": 6.45
+      },
+      "history": [
+        {
+          "commit": "86524f6",
+          "timestamp": "2026-04-26T11:00:37.733Z",
+          "mi": 27.6,
+          "cognitive": 20,
+          "nesting": 4,
+          "lines": 179,
+          "maxCyclomatic": 19,
+          "entropy": 6.45
+        }
+      ],
+      "trend": "stable"
+    }
+  },
+  "capturedAt": "2026-04-26T11:00:42.734Z"
+}

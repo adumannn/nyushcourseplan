@@ -6,12 +6,12 @@ import {
   GraduationCap,
   CheckSquare,
 } from "lucide-react";
-import { CATEGORIES, CORE_REQUIREMENTS } from "../data/courses";
-import useCatalog from "../hooks/useCatalog";
-import { LOCAL_CATALOG_BY_ID } from "../lib/localCatalog";
-import { getEffectiveCategory } from "../lib/majorCourseRules";
-import { serializePrerequisiteGroup } from "../lib/prerequisites";
-import ReviewSummary from "./ReviewSummary";
+import { CATEGORIES, CORE_REQUIREMENTS } from "../../data/courses";
+import useCatalog from "../../hooks/useCatalog";
+import { LOCAL_CATALOG_BY_ID } from "../../lib/localCatalog";
+import { getEffectiveCategory } from "../../lib/majorCourseRules";
+import { serializePrerequisiteGroup } from "../../lib/prerequisites";
+import ReviewSummary from "../reviews/ReviewSummary";
 
 export default function CourseDetailModal({
   course: passedCourse,

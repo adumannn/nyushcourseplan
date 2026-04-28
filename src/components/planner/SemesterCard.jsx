@@ -9,7 +9,7 @@ import {
 import {
   MAX_CREDITS_PER_SEMESTER,
   MIN_CREDITS_PER_SEMESTER,
-} from "../data/courses";
+} from "../../data/courses";
 import CourseCard from "./CourseCard";
 
 export default function SemesterCard({

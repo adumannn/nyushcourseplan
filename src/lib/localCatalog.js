@@ -1,7 +1,41 @@
 import { COURSE_CATALOG } from "../data/courses.js";
+import { GENERATED_CATALOG } from "../data/courses.generated.js";
 import { hydrateCoursePrerequisites } from "./prerequisites.js";
 
-export const LOCAL_CATALOG_COURSES = COURSE_CATALOG.map((course) =>
+// Merge the auto-generated bulletin scrape (~922 courses, mostly bare metadata)
+// with the hand-curated COURSE_CATALOG (~75 courses with rich metadata —
+// csRole, majors, requirementIds, custom prerequisites, etc.).
+//
+// Strategy: scraped fields fill in the gaps (description, offeringText,
+// department for non-CS subjects), and the hand-curated entry wins on every
+// field it explicitly defines. This preserves all the metadata the app
+// relies on for major-relevance/category resolution while still surfacing
+// every course on the bulletin in the picker even when Supabase is empty.
+function mergeCatalogs(generated, curated) {
+  const byId = new Map();
+
+  for (const course of generated) {
+    if (course?.id) byId.set(course.id, { ...course });
+  }
+
+  for (const course of curated) {
+    if (!course?.id) continue;
+    const existing = byId.get(course.id);
+    if (existing) {
+      // Hand-curated keys win, but keep the scrape's enrichments
+      // (description / offeringText / fulfillmentText) when not overridden.
+      byId.set(course.id, { ...existing, ...course });
+    } else {
+      byId.set(course.id, { ...course });
+    }
+  }
+
+  return Array.from(byId.values());
+}
+
+const MERGED_CATALOG = mergeCatalogs(GENERATED_CATALOG, COURSE_CATALOG);
+
+export const LOCAL_CATALOG_COURSES = MERGED_CATALOG.map((course) =>
   hydrateCoursePrerequisites({ ...course }),
 );
 

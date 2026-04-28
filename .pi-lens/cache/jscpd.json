@@ -1,0 +1,88 @@
+{
+  "success": true,
+  "clones": [
+    {
+      "fileA": "supabase/functions/ingest-reviews/index.ts",
+      "startA": 491,
+      "fileB": "supabase/functions/ingest-reviews/index.ts",
+      "startB": 451,
+      "lines": 7,
+      "tokens": 0
+    },
+    {
+      "fileA": "supabase/functions/ingest-reviews/index.ts",
+      "startA": 610,
+      "fileB": "supabase/functions/ingest-reviews/index.ts",
+      "startB": 371,
+      "lines": 7,
+      "tokens": 0
+    },
+    {
+      "fileA": "supabase/functions/ingest-reviews/index.ts",
+      "startA": 641,
+      "fileB": "supabase/functions/ingest-reviews/index.ts",
+      "startB": 393,
+      "lines": 6,
+      "tokens": 0
+    },
+    {
+      "fileA": "supabase/functions/ingest-reviews/index.ts",
+      "startA": 802,
+      "fileB": "supabase/functions/ingest-reviews/index.ts",
+      "startB": 689,
+      "lines": 12,
+      "tokens": 0
+    },
+    {
+      "fileA": "src/lib/prerequisites.js",
+      "startA": 187,
+      "fileB": "src/lib/prerequisites.js",
+      "startB": 146,
+      "lines": 18,
+      "tokens": 0
+    },
+    {
+      "fileA": "src/hooks/usePlanner.js",
+      "startA": 423,
+      "fileB": "src/hooks/usePlanner.js",
+      "startB": 373,
+      "lines": 11,
+      "tokens": 0
+    },
+    {
+      "fileA": "src/hooks/useCatalog.js",
+      "startA": 356,
+      "fileB": "src/hooks/useCatalog.js",
+      "startB": 292,
+      "lines": 35,
+      "tokens": 0
+    },
+    {
+      "fileA": "src/components/RequirementsSidebar.jsx",
+      "startA": 53,
+      "fileB": "src/components/RequirementsSidebar.jsx",
+      "startB": 37,
+      "lines": 9,
+      "tokens": 0
+    },
+    {
+      "fileA": "scripts/lib/requirement-normalize.mjs",
+      "startA": 170,
+      "fileB": "scripts/lib/requirement-normalize.mjs",
+      "startB": 130,
+      "lines": 11,
+      "tokens": 0
+    },
+    {
+      "fileA": "scripts/scrape-bulletin.mjs",
+      "startA": 144,
+      "fileB": "scripts/scrape-bulletin.mjs",
+      "startB": 110,
+      "lines": 9,
+      "tokens": 0
+    }
+  ],
+  "duplicatedLines": 115,
+  "totalLines": 12652,
+  "percentage": 0.91
+}

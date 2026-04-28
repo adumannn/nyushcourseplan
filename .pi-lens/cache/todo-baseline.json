@@ -1,0 +1,11 @@
+{
+  "items": [
+    {
+      "type": "XXX",
+      "message": "-SHU-NNN'` line appears, look ahead up to",
+      "file": "scripts/sync-local-credits.mjs",
+      "line": 120,
+      "column": 17
+    }
+  ]
+}

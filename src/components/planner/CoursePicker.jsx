@@ -1,11 +1,11 @@
 import { useState, useMemo } from "react";
-import { CATEGORIES, DEPARTMENTS } from "../data/courses";
-import useCatalog from "../hooks/useCatalog";
+import { CATEGORIES, DEPARTMENTS } from "../../data/courses";
+import useCatalog from "../../hooks/useCatalog";
 import {
   getEffectiveCategory,
   isCourseRelevantToMajor,
-} from "../lib/majorCourseRules";
-import { LOCAL_CATALOG_COURSES } from "../lib/localCatalog";
+} from "../../lib/majorCourseRules";
+import { LOCAL_CATALOG_COURSES } from "../../lib/localCatalog";
 
 export default function CoursePicker({
   semesterId,
