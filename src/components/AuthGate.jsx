@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 const DEFAULT_GOOGLE_ERROR = 'Could not start Google sign-in. Please try again.';
 
@@ -8,23 +8,18 @@ export default function AuthGate({
   authError = '',
 }) {
   const [isGoogleLoading, setIsGoogleLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
-
-  useEffect(() => {
-    if (authError) {
-      setErrorMessage(authError);
-    }
-  }, [authError]);
+  const [localErrorMessage, setLocalErrorMessage] = useState('');
+  const errorMessage = authError || localErrorMessage;
 
   const handleGoogle = async () => {
     if (isGoogleLoading) return;
-    setErrorMessage('');
+    setLocalErrorMessage('');
     setIsGoogleLoading(true);
     try {
       await onSignInWithGoogle();
     } catch {
       setIsGoogleLoading(false);
-      setErrorMessage(DEFAULT_GOOGLE_ERROR);
+      setLocalErrorMessage(DEFAULT_GOOGLE_ERROR);
     }
   };
 

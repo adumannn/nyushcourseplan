@@ -1,4 +1,8 @@
-import { SEMESTERS, STUDY_AWAY } from "../data/courses.js";
+import {
+  SEMESTERS,
+  STUDY_AWAY,
+  CATEGORIES,
+} from "../data/courses.js";
 import {
   LOCAL_CATALOG_BY_ID,
   mergeCourseWithLocalCatalog,
