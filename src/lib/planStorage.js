@@ -95,6 +95,7 @@ function buildCourseRows(plan) {
       if (!courseId) return;
 
       const isCustom = courseId.startsWith("custom-");
+      const hasLocalCatalogRecord = LOCAL_CATALOG_BY_ID.has(courseId);
       rows.push({
         semester_id: semesterId,
         course_id: courseId,
@@ -102,7 +103,8 @@ function buildCourseRows(plan) {
         selected_credits: Number.isFinite(course.credits)
           ? course.credits
           : null,
-        course_snapshot: isCustom ? null : buildCourseSnapshot(course),
+        course_snapshot:
+          isCustom || hasLocalCatalogRecord ? null : buildCourseSnapshot(course),
         custom_name: isCustom ? course.name : null,
         custom_credits: isCustom ? course.credits : null,
         custom_category: isCustom ? course.category : null,

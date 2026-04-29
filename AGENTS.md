@@ -239,6 +239,8 @@ src/
 - **useAuth bridge:** `src/hooks/useAuth.js` wraps Clerk's `useAuth()`, `useClerk()`, and `useUser()` to expose a compatible interface for existing `App.jsx` code (`user`, `loading`, `getToken`, `signOut`).
 - **getSupabaseClientWithAuth(getToken):** Always call this before making Supabase queries that need RLS validation. It creates a Supabase client with the `accessToken` option wired to Clerk's `getToken()` session-token callback.
 - **Migration 010/011:** Migration 010 replaces Supabase Auth checks with Clerk JWT checks; migration 011 converts `plans.user_id` from UUID/FK to text and tightens plan/review policies for Clerk session tokens.
+- **Migration 016 database hardening:** Drops unused `plan_courses` snapshot/credit indexes, replaces the single-column plan user index with `(user_id, created_at)`, adds NOT VALID write-shape constraints for plans, plan courses, and suggestions, and recreates user suggestion policies with optimized Clerk JWT checks. It does not merge or delete existing duplicate plan rows.
+- **Plan course snapshots:** `src/lib/planStorage.js` stores `course_snapshot` only for non-custom courses missing from the bundled local catalog. Catalog-backed courses are resolved through `LOCAL_CATALOG_BY_ID` on load; custom courses continue using the dedicated `custom_*` columns.
 
 ### Mobile UX patterns (see CLAUDE.md for full details)
 
