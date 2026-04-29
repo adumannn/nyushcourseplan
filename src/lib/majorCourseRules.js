@@ -1,4 +1,4 @@
-import { getMajorRequirement } from "../data/courses";
+import { getMajorRequirement } from "../data/courses.js";
 
 const BUSINESS_TRACK_MAJORS = new Set(["business", "business-marketing"]);
 

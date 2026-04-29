@@ -35,11 +35,43 @@ function mergeCatalogs(generated, curated) {
 
 const CORE_REQUIREMENT_PATTERNS = [
   {
+    id: "writing",
+    pattern: /\bcore\s+(?:writing\s+requirement|poh)\b/i,
+  },
+  {
+    id: "language",
+    pattern:
+      /\bcore\s+(?:curriculum[-\s]*)?(?:chinese\s+)?language(?:\s+requirement)?\b/i,
+  },
+  {
+    id: "social-and-cultural-foundations",
+    pattern:
+      /\b(?:core\s+(?:curriculum\s+)?global\s+perspectives\s+on\s+society|core\s+(?:poh|sspc|hpc|ipc)|core\s+curriculum\s+(?:social\s+science|humanistic|interdisciplinary)\s+perspectives?\s+on\s+china)\b/i,
+  },
+  {
+    id: "mathematics",
+    pattern:
+      /\b(?:core\s+(?:curriculum\s+)?math(?:ematics)?\s+requirement|math(?:ematics)?\s+core\s+math(?:ematics)?\s+requirement)\b/i,
+  },
+  {
+    id: "algorithmic-thinking",
+    pattern: /\b(?:core\s+at|core\s+curriculum\s+requirement\s+algorithmic\s+thinking)\b/i,
+  },
+  {
     id: "science",
     pattern:
-      /\b(core\s+sts|science,\s*technology,?\s+and\s+society|science\s+technology\s+and\s+society)\b/i,
+      /\b(core\s+(?:ed|sts)|core\s+curriculum(?:\s+requirement|:)?\s+(?:science\s+)?(?:experimental\s+discovery|science,\s*technology,?\s+and\s+society|science\s+technology\s+and\s+society)|science,\s*technology,?\s+and\s+society|science\s+technology\s+and\s+society)\b/i,
   },
 ];
+
+const CATEGORY_BY_REQUIREMENT_ID = {
+  writing: "writing",
+  language: "language",
+  "social-and-cultural-foundations": "gps",
+  mathematics: "core",
+  "algorithmic-thinking": "core",
+  science: "core",
+};
 
 function inferRequirementIds(course) {
   const fulfillmentText =
@@ -56,10 +88,20 @@ function normalizeRequirementIds(course) {
     ...(Array.isArray(course.requirementIds) ? course.requirementIds : []),
     ...inferRequirementIds(course),
   ]);
+  const requirementIds = [...ids];
+  const inferredCategory = requirementIds
+    .map((id) => CATEGORY_BY_REQUIREMENT_ID[id])
+    .find(Boolean);
+  const existingCategory =
+    typeof course.category === "string" ? course.category : "";
 
   return {
     ...course,
-    requirementIds: [...ids],
+    category:
+      existingCategory && existingCategory !== "elective"
+        ? existingCategory
+        : inferredCategory || existingCategory || "elective",
+    requirementIds,
   };
 }
 

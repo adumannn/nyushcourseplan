@@ -1,6 +1,7 @@
 import { useState, useMemo } from 'react';
 import { ChevronDown, CheckCircle2, Circle, ChevronsLeft, ChevronsRight } from 'lucide-react';
 import { CORE_REQUIREMENTS, GRADUATION_CREDITS, CATEGORIES, getMajorRequirement } from '../../data/courses';
+import { getEffectiveCategory } from '../../lib/majorCourseRules';
 
 function RequirementCategory({ requirement }) {
   const hasItems = Array.isArray(requirement.items) && requirement.items.length > 0;
@@ -121,6 +122,18 @@ function buildRequirements(requirementProgress, allPlannedCourses, major) {
     );
   }
 
+  function fulfillsRequirementId(course, requirementId) {
+    const requirementIds = Array.isArray(course.requirementIds)
+      ? course.requirementIds
+      : [];
+    if (requirementIds.includes(requirementId)) return true;
+
+    const requirement = CORE_REQUIREMENTS.find((r) => r.id === requirementId);
+    if (!requirement || requirement.category === 'core') return false;
+
+    return getEffectiveCategory(course, major) === requirement.category;
+  }
+
   // Core Requirements
   const coreIds = [
     'social-and-cultural-foundations',
@@ -144,9 +157,7 @@ function buildRequirements(requirementProgress, allPlannedCourses, major) {
       // fulfills this requirement via requirementIds.
       const completed = sub.code
         ? isSubcourseCompleted(sub)
-        : planned.some(
-            (c) => c.requirementIds && c.requirementIds.includes(id)
-          );
+        : planned.some((c) => fulfillsRequirementId(c, id));
       coreItems.push({
         name: sub.name,
         completed,
@@ -239,7 +250,7 @@ function buildRequirements(requirementProgress, allPlannedCourses, major) {
   const electives = requirementProgress['electives'];
   if (electives) {
     const electiveItems = planned
-      .filter((c) => c.category === 'elective')
+      .filter((c) => getEffectiveCategory(c, major) === 'elective')
       .map((c) => ({
         name: c.name,
         completed: true,

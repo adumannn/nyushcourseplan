@@ -6,6 +6,7 @@ import {
   STUDY_AWAY,
 } from "../data/courses";
 import { mergeCourseWithLocalCatalog } from "../lib/localCatalog";
+import { getEffectiveCategory } from "../lib/majorCourseRules";
 import { localStoragePlan, supabasePlan } from "../lib/planStorage";
 import { buildPrerequisiteWarnings } from "../lib/prerequisites";
 
@@ -84,6 +85,31 @@ function getUserProfileName(user) {
   const rawName =
     user?.user_metadata?.full_name || user?.user_metadata?.name || "";
   return typeof rawName === "string" ? rawName.trim() : "";
+}
+
+function courseFulfillsRequirement(course, requirement, majorId) {
+  const requirementIds = Array.isArray(course?.requirementIds)
+    ? course.requirementIds
+    : [];
+  if (requirementIds.includes(requirement.id)) {
+    return true;
+  }
+
+  const category = getEffectiveCategory(course, majorId);
+  if (requirement.category === "core") {
+    return false;
+  }
+
+  return category === requirement.category;
+}
+
+function isEffectiveMajorCourse(course, majorId) {
+  const category = getEffectiveCategory(course, majorId);
+  return category === "major-required" || category === "major-elective";
+}
+
+function isEffectiveElectiveCourse(course, majorId) {
+  return getEffectiveCategory(course, majorId) === "elective";
 }
 
 export default function usePlanner(user, getToken) {
@@ -511,10 +537,8 @@ export default function usePlanner(user, getToken) {
 
       if (!isCsDsMajor) return;
 
-      const majorCourseCount = (plan[semesterId] || []).filter(
-        (course) =>
-          course.category === "major-required" ||
-          course.category === "major-elective",
+      const majorCourseCount = (plan[semesterId] || []).filter((course) =>
+        isEffectiveMajorCourse(course, major),
       ).length;
 
       if (majorCourseCount > STUDY_AWAY.maxMajorCoursesPerSemester) {
@@ -549,14 +573,9 @@ export default function usePlanner(user, getToken) {
     const progress = {};
 
     CORE_REQUIREMENTS.forEach((req) => {
-      const courses = allPlannedCourses.filter((course) => {
-        // Use requirementIds when available for precise matching
-        if (course.requirementIds && course.requirementIds.length > 0) {
-          return course.requirementIds.includes(req.id);
-        }
-        // Fall back to category matching only for courses without requirementIds
-        return course.category === req.category;
-      });
+      const courses = allPlannedCourses.filter((course) =>
+        courseFulfillsRequirement(course, req, major),
+      );
       const creditsTaken = courses.reduce((sum, c) => sum + c.credits, 0);
       progress[req.id] = {
         ...req,
@@ -569,7 +588,7 @@ export default function usePlanner(user, getToken) {
     const languageProgress = progress.language;
     if (languageProgress) {
       const languageCourses = allPlannedCourses.filter(
-        (course) => course.category === "language",
+        (course) => courseFulfillsRequirement(course, languageProgress, major),
       );
       const isEapCourse = (course) => EAP_COURSE_IDS.has(course.id);
 
@@ -624,8 +643,8 @@ export default function usePlanner(user, getToken) {
     }
 
     const majorReq = getMajorRequirement(major);
-    const majorCourses = allPlannedCourses.filter(
-      (c) => c.category === "major-required" || c.category === "major-elective",
+    const majorCourses = allPlannedCourses.filter((course) =>
+      isEffectiveMajorCourse(course, major),
     );
     progress["major"] = {
       id: "major",
@@ -639,8 +658,8 @@ export default function usePlanner(user, getToken) {
         : false,
     };
 
-    const electiveCourses = allPlannedCourses.filter(
-      (c) => c.category === "elective",
+    const electiveCourses = allPlannedCourses.filter((course) =>
+      isEffectiveElectiveCourse(course, major),
     );
     progress["electives"] = {
       id: "electives",
