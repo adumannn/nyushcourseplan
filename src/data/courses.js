@@ -894,7 +894,7 @@ export const MAJOR_REQUIREMENTS = {
         count: 1,
       },
       {
-        label: 'MATH-SHU Requirement',
+        label: 'Upper-Level Neural Science / Mathematics Electives',
         courseIds: ['MATH-SHU-160', 'NEUR-SHU-261', 'NEUR-SHU-131', 'NEUR-SHU-270', 'NEUR-SHU-301', 'NEUR-SHU-130', 'NEUR-SHU-132', 'CCEX-SHU-122', 'NEURL-UA-302', 'NEURL-UA-305'],
         count: 2,
       },
@@ -961,7 +961,7 @@ export const MAJOR_REQUIREMENTS = {
     electivesNeeded: 0,
     electiveCreditsNeeded: 0,
     otherElectiveCredits: '',
-    notes: 'Approved Major and Elective Courses',
+    notes: 'Self-designed honors students propose a custom interdisciplinary curriculum approved by the Dean\'s Office. The planner does not pre-list requirements for this major; use Custom Courses to add approved coursework as your proposal evolves.',
   },
   'social-science': {
     label: 'Social Science',
