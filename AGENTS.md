@@ -198,6 +198,8 @@ src/
     useCourseReviews.js
     useAuth.js           (Phase 2)
   lib/
+    campus.js            (course campus normalization and display helpers)
+    campus.test.js
     supabase.js          (Phase 2)
     planStorage.js       (Phase 2 — abstracts local vs remote)
     feedbackAdmin.js     (admin visibility helpers for the feedback inbox)
@@ -205,8 +207,11 @@ src/
     localCatalog.test.js
     majorCourseRules.js  (active-major category resolution)
     majorCourseRules.test.js
+    planTransfer.js      (CSV/PDF export and CSV/legacy JSON import)
+    planTransfer.test.js
   data/
     courses.js           (exists)
+    courses.generated.js (generated bulletin fallback catalog with campus metadata)
   App.jsx
   main.jsx
 ```
@@ -262,19 +267,25 @@ src/
 ### Plan transfer exports
 
 - **Visible export formats:** `PlanMenu` exposes CSV and PDF only. JSON import/export helpers remain in `src/lib/planTransfer.js` for legacy compatibility and tests, but JSON is not shown in the import/export UI.
-- **PDF export:** `exportPlanAsPDF` generates a polished print document with a summary header, credit progress, category pills, semester credit status, and study-away summary before invoking the browser print dialog.
+- **PDF export:** `exportPlanAsPDF` generates a polished print document with a summary header, credit progress, category/campus pills, semester credit status, and study-away summary before invoking the browser print dialog.
+- **Campus preservation:** CSV and legacy JSON transfer helpers include `campuses` so imported custom or remote-only courses keep their displayed campus labels.
 
 ### Catalog architecture
 
 - Catalog ownership is split cleanly: `src/lib/localCatalog.js` owns local merge/hydration logic, `src/hooks/useCatalog.js` owns remote fetch/indexing, and the old orphaned `src/lib/catalog.js` module has been removed to avoid duplicate sources of truth.
+- Course campus labels are normalized through `src/lib/campus.js`. Use `getCourseCampuses()` / `formatCourseCampuses()` in UI and transfer code rather than reading `course.campuses` directly; New York bulletin schools are grouped under the `New York` campus label.
+- `scripts/generate-local-catalog.mjs` reads `scraped-data/all-courses.json`, aggregates duplicate course IDs across schools, and emits `campuses: [...]` into `src/data/courses.generated.js`. Use `npm run generate:catalog` after refreshing scraped bulletin data.
+- Supabase multi-campus offerings live in `public.catalog_course_offerings` (migration `017_catalog_course_offerings.sql`). `catalog_courses.id` remains the canonical stable course ID used by saved plans; offerings carry `school_slug`, `subject_slug`, and `campus_label`.
+- `useCatalog()` loads all published catalog pages by default, pages through Supabase results, chunks relationship lookups, and merges remote offerings with local curated metadata so each runtime course has `campuses`.
 - Dynamic major-based categorization: `getEffectiveCategory(course, majorId)` in `src/lib/majorCourseRules.js` resolves the **effective** category (major-required, major-elective, etc.) based on the active major.
 - Generated catalog fulfillment text is normalized in `src/lib/localCatalog.js`; common bulletin phrases for CORE Writing, Language, GPS/PoH/IPC/HPC/SSPC, Mathematics, Algorithmic Thinking, ED, and STS receive the corresponding `requirementIds`, and generated elective-category entries are promoted to the matching display category (`writing`, `language`, `gps`, or `core`) when appropriate.
-- Saved plans are refreshed through `mergeCourseWithLocalCatalog()` on load so existing catalog courses pick up current metadata, including inferred requirement IDs, without losing selected credits.
+- Saved plans are refreshed through `mergeCourseWithLocalCatalog()` on load so existing catalog courses pick up current metadata, including inferred requirement IDs and campus labels, without losing selected credits.
 - Requirement progress counts active-major **effective** categories from `getEffectiveCategory()` rather than only raw stored course categories, so bars stay aligned with the category shown on course cards.
 
 ### Course picker UX
 
 - Already-added catalog courses stay visible in `CoursePicker` with an inline remove button. Use `getCourseSemester(courseId)` from `usePlanner` plus `removeCourse(semesterId, courseId)` to remove the existing placement without closing the picker.
+- Course picker rows show campus labels and include a campus filter. Custom course campus defaults to the semester's study-away location when set, otherwise Shanghai.
 
 ### Study away picker UX
 

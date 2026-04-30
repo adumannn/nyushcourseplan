@@ -11,6 +11,10 @@ import {
   LOCAL_CATALOG_BY_ID,
   mergeCourseWithLocalCatalog,
 } from "./localCatalog.js";
+import {
+  formatCourseCampuses,
+  getCourseCampuses,
+} from "./campus.js";
 
 const PLAN_EXPORT_VERSION = 2;
 const PLAN_EXPORT_KIND = "nyu-shanghai-course-plan";
@@ -156,6 +160,7 @@ function resolveCourse(courseId, fallback) {
     credits: Number.isFinite(credits) ? credits : 4,
     category: fallback?.category || "elective",
     department: fallback?.department || "Custom",
+    campuses: getCourseCampuses(fallback),
   };
 }
 
@@ -184,6 +189,7 @@ export function exportPlanAsJSON({
           name: c.name,
           credits: c.credits,
           category: c.category,
+          campuses: getCourseCampuses(c),
         })),
       ]),
     ),
@@ -214,13 +220,22 @@ export function exportPlanAsCSV({ plan, studentName }) {
     "Name",
     "Credits",
     "Category",
+    "Campuses",
     "CourseId",
   ];
   const lines = [headers.join(",")];
   for (const s of SEMESTERS) {
     for (const c of plan?.[s.id] || []) {
       lines.push(
-        [s.id, c.code, c.name, c.credits, c.category, c.id]
+        [
+          s.id,
+          c.code,
+          c.name,
+          c.credits,
+          c.category,
+          getCourseCampuses(c).join("; "),
+          c.id,
+        ]
           .map(csvCell)
           .join(","),
       );
@@ -385,10 +400,11 @@ export function exportPlanAsPDF({
                   ${escapeHtml(category.label)}
                 </span>
               </td>
+              <td class="campus">${escapeHtml(formatCourseCampuses(course))}</td>
             </tr>`;
           })
           .join("")
-      : `<tr><td colspan="5" class="muted">No courses planned</td></tr>`;
+      : `<tr><td colspan="6" class="muted">No courses planned</td></tr>`;
 
     return `
       <section class="semester ${semester.state.className}">
@@ -411,6 +427,7 @@ export function exportPlanAsPDF({
               <th>Course</th>
               <th class="num">Cr</th>
               <th>Category</th>
+              <th>Campus</th>
             </tr>
           </thead>
           <tbody>${rows}</tbody>
@@ -668,6 +685,11 @@ export function exportPlanAsPDF({
     font-size: 8px;
     font-weight: 800;
     white-space: normal;
+  }
+  .campus {
+    width: 74px;
+    color: #596173;
+    overflow-wrap: anywhere;
   }
   .muted {
     color: #9aa2b1;
@@ -950,6 +972,7 @@ export async function importPlanFromCSV(file) {
     name: header.indexOf("name"),
     credits: header.indexOf("credits"),
     category: header.indexOf("category"),
+    campuses: header.indexOf("campuses"),
     courseId: header.indexOf("courseid"),
   };
   if (idx.semester < 0) {
@@ -994,6 +1017,13 @@ export async function importPlanFromCSV(file) {
       name: idx.name >= 0 ? cols[idx.name]?.trim() : undefined,
       credits: idx.credits >= 0 ? cols[idx.credits]?.trim() : undefined,
       category: idx.category >= 0 ? cols[idx.category]?.trim() : undefined,
+      campuses:
+        idx.campuses >= 0
+          ? cols[idx.campuses]
+              ?.split(";")
+              .map((value) => value.trim())
+              .filter(Boolean)
+          : undefined,
     };
     const course = resolveCourse(courseId, fallback);
     if (!course) continue;

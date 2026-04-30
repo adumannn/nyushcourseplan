@@ -8,6 +8,7 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
+    "generate:catalog": "node scripts/generate-local-catalog.mjs",
     "validate:catalog": "node scripts/validate-scraped-data.mjs",
     "import:catalog": "node scripts/import-scraped-to-supabase.mjs",
     "sync-credits": "node scripts/sync-local-credits.mjs"

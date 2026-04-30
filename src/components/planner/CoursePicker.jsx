@@ -1,7 +1,12 @@
 import { useState, useMemo } from "react";
-import { MinusCircle } from "lucide-react";
-import { CATEGORIES, DEPARTMENTS, SEMESTERS } from "../../data/courses";
+import { MapPin, MinusCircle } from "lucide-react";
+import { CATEGORIES, DEPARTMENTS, SEMESTERS, STUDY_AWAY } from "../../data/courses";
 import useCatalog from "../../hooks/useCatalog";
+import {
+  formatCourseCampuses,
+  getCourseCampuses,
+  normalizeCampuses,
+} from "../../lib/campus";
 import {
   getEffectiveCategory,
   isCourseRelevantToMajor,
@@ -16,17 +21,20 @@ export default function CoursePicker({
   isCourseInPlan,
   getCourseSemester,
   major,
+  defaultCampus = "Shanghai",
 }) {
   const [tab, setTab] = useState("catalog");
   const [search, setSearch] = useState("");
   const [filterDept, setFilterDept] = useState("");
   const [filterCat, setFilterCat] = useState("");
+  const [filterCampus, setFilterCampus] = useState("");
 
   // Custom course form
   const [customName, setCustomName] = useState("");
   const [customCode, setCustomCode] = useState("");
   const [customCredits, setCustomCredits] = useState(4);
   const [customCategory, setCustomCategory] = useState("elective");
+  const [customCampus, setCustomCampus] = useState(defaultCampus || "Shanghai");
 
   const { courses: catalogCourses, departments } = useCatalog();
   const availableCourses =
@@ -39,6 +47,24 @@ export default function CoursePicker({
     () => new Map(SEMESTERS.map((semester) => [semester.id, semester.label])),
     [],
   );
+  const campusOptions = useMemo(() => {
+    const campuses = availableCourses.flatMap((course) =>
+      getCourseCampuses(course, []),
+    );
+    return normalizeCampuses(campuses).sort((a, b) => a.localeCompare(b));
+  }, [availableCourses]);
+  const customCampusOptions = useMemo(
+    () =>
+      normalizeCampuses([
+        defaultCampus,
+        "Shanghai",
+        "New York",
+        "Abu Dhabi",
+        ...STUDY_AWAY.locations,
+        ...campusOptions,
+      ]),
+    [campusOptions, defaultCampus],
+  );
 
   const filtered = useMemo(() => {
     let list = availableCourses;
@@ -49,6 +75,11 @@ export default function CoursePicker({
     if (filterCat) {
       list = list.filter(
         (c) => getEffectiveCategory(c, major) === filterCat,
+      );
+    }
+    if (filterCampus) {
+      list = list.filter((c) =>
+        getCourseCampuses(c, []).includes(filterCampus),
       );
     }
     if (search.trim()) {
@@ -83,7 +114,15 @@ export default function CoursePicker({
     });
 
     return list;
-  }, [availableCourses, search, filterDept, filterCat, major, courseSortCollator]);
+  }, [
+    availableCourses,
+    search,
+    filterDept,
+    filterCat,
+    filterCampus,
+    major,
+    courseSortCollator,
+  ]);
 
   const handleAddCatalog = (course) => {
     if (isCourseInPlan(course.id)) return;
@@ -105,12 +144,14 @@ export default function CoursePicker({
       credits: Number(customCredits) || 4,
       category: customCategory,
       department: "Custom",
+      campuses: normalizeCampuses([customCampus || defaultCampus || "Shanghai"]),
     };
     onAdd(semesterId, course);
     setCustomName("");
     setCustomCode("");
     setCustomCredits(4);
     setCustomCategory("elective");
+    setCustomCampus(defaultCampus || "Shanghai");
   };
 
   return (
@@ -178,6 +219,17 @@ export default function CoursePicker({
                     </option>
                   ))}
                 </select>
+                <select
+                  value={filterCampus}
+                  onChange={(e) => setFilterCampus(e.target.value)}
+                >
+                  <option value="">All Campuses</option>
+                  {campusOptions.map((campus) => (
+                    <option key={campus} value={campus}>
+                      {campus}
+                    </option>
+                  ))}
+                </select>
               </div>
             </div>
 
@@ -210,6 +262,10 @@ export default function CoursePicker({
                       <div className="modal-course-info">
                         <span className="modal-course-code">{course.code}</span>
                         <span className="modal-course-name">{course.name}</span>
+                        <span className="modal-course-campus">
+                          <MapPin className="h-3 w-3" aria-hidden="true" />
+                          {formatCourseCampuses(course)}
+                        </span>
                       </div>
                       <span className="modal-course-credits">
                         {course.credits} cr
@@ -292,6 +348,20 @@ export default function CoursePicker({
                 {Object.entries(CATEGORIES).map(([key, cat]) => (
                   <option key={key} value={key}>
                     {cat.label}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="custom-field">
+              <label htmlFor="custom-campus">Campus</label>
+              <select
+                id="custom-campus"
+                value={customCampus}
+                onChange={(e) => setCustomCampus(e.target.value)}
+              >
+                {customCampusOptions.map((campus) => (
+                  <option key={campus} value={campus}>
+                    {campus}
                   </option>
                 ))}
               </select>

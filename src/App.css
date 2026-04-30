@@ -299,6 +299,22 @@
     text-overflow: ellipsis;
 }
 
+.modal-course-campus {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    max-width: 100%;
+    margin-top: 3px;
+    color: var(--muted-foreground);
+    font-size: 10px;
+    font-weight: 500;
+    line-height: 1.2;
+}
+
+.modal-course-campus svg {
+    flex: 0 0 auto;
+}
+
 .modal-course-credits {
     font-size: 10px;
     color: var(--muted-foreground);

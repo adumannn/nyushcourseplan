@@ -1,5 +1,6 @@
 import { supabase, getSupabaseClientWithAuth } from "./supabase";
 import { SEMESTERS } from "../data/courses";
+import { getCourseCampuses } from "./campus";
 import { LOCAL_CATALOG_BY_ID, mergeCourseWithLocalCatalog } from "./localCatalog";
 
 function requireSupabase() {
@@ -59,6 +60,7 @@ function resolveCourse(row) {
     credits: row.custom_credits || 4,
     category: row.custom_category || "elective",
     department: "Custom",
+    campuses: getCourseCampuses(snapshot || null),
   };
 }
 
@@ -83,6 +85,7 @@ function buildCourseSnapshot(course) {
       : [],
     prerequisiteNote: course.prerequisiteNote || "",
     majors: Array.isArray(course.majors) ? course.majors : [],
+    campuses: getCourseCampuses(course),
   };
 }
 
@@ -104,7 +107,7 @@ function buildCourseRows(plan) {
           ? course.credits
           : null,
         course_snapshot:
-          isCustom || hasLocalCatalogRecord ? null : buildCourseSnapshot(course),
+          isCustom || !hasLocalCatalogRecord ? buildCourseSnapshot(course) : null,
         custom_name: isCustom ? course.name : null,
         custom_credits: isCustom ? course.credits : null,
         custom_category: isCustom ? course.category : null,

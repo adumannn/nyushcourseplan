@@ -14,6 +14,7 @@ import SuggestionInbox from "./components/layout/SuggestionInbox";
 import SuggestionModal from "./components/layout/SuggestionModal";
 import AuthGate from "./components/auth/AuthGate";
 import { GRADUATION_CREDITS } from "./data/courses";
+import { getDefaultCampusForSemester } from "./lib/campus";
 import { isFeedbackAdmin } from "./lib/feedbackAdmin";
 import "./App.css";
 
@@ -254,6 +255,7 @@ function AppContent() {
           isCourseInPlan={isCourseInPlan}
           getCourseSemester={getCourseSemester}
           major={major}
+          defaultCampus={getDefaultCampusForSemester(pickerSemester, studyAway)}
         />
       )}
 

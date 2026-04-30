@@ -1,9 +1,15 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { supabase } from "../lib/supabase";
 import { LOCAL_CATALOG_COURSES } from "../lib/localCatalog";
+import {
+  getCampusLabelForSchoolSlug,
+  normalizeCampuses,
+} from "../lib/campus";
 import { hydrateCoursePrerequisites } from "../lib/prerequisites";
 
 const LOCAL_COURSES = LOCAL_CATALOG_COURSES.map((course) => ({ ...course }));
+const CATALOG_PAGE_SIZE = 1000;
+const RELATIONSHIP_CHUNK_SIZE = 500;
 
 const LOCAL_COURSES_BY_ID = new Map(
   LOCAL_COURSES.map((course) => [course.id, course]),
@@ -153,9 +159,27 @@ function buildPrerequisiteMap(relationships) {
   return map;
 }
 
+function resolveRemoteCampuses(remoteCourse, subject) {
+  const offerings = Array.isArray(remoteCourse.catalog_course_offerings)
+    ? remoteCourse.catalog_course_offerings
+    : [];
+  const offeringCampuses = offerings.map((offering) =>
+    offering?.campus_label ||
+    getCampusLabelForSchoolSlug(offering?.school_slug),
+  );
+  const subjectCampus = getCampusLabelForSchoolSlug(subject?.school_slug);
+
+  return normalizeCampuses(offeringCampuses, subjectCampus ? [subjectCampus] : []);
+}
+
 function toRuntimeCourse(remoteCourse, prerequisiteMap) {
   const localCourse = LOCAL_COURSES_BY_ID.get(remoteCourse.id);
   const subject = normalizeSubject(remoteCourse.catalog_subjects);
+  const remoteCampuses = resolveRemoteCampuses(remoteCourse, subject);
+  const campuses = normalizeCampuses([
+    ...remoteCampuses,
+    ...normalizeCampuses(localCourse?.campuses),
+  ]);
 
   const creditsMin =
     typeof remoteCourse.credits_min === "number"
@@ -188,6 +212,7 @@ function toRuntimeCourse(remoteCourse, prerequisiteMap) {
       remoteCourse.prerequisite_note || localCourse?.prerequisiteNote || "",
     requirementIds: localCourse?.requirementIds || [],
     majors: localCourse?.majors || [],
+    campuses,
     offeringText: remoteCourse.offering_text || "",
     offeringTerms: Array.isArray(remoteCourse.offering_terms)
       ? remoteCourse.offering_terms
@@ -209,59 +234,94 @@ async function fetchPublishedCatalog(schoolSlug) {
     return { courses: [], relationships: [] };
   }
 
-  const { data: remoteCourses, error: courseError } = await supabase
-    .from("catalog_courses")
-    .select(
-      `
-        id,
-        code,
-        name,
-        description,
-        credits_min,
-        credits_max,
-        is_variable_credit,
-        prerequisite_note,
-        offering_text,
-        offering_terms,
-        catalog_subjects!inner (
-          slug,
+  const remoteCourses = [];
+  let offset = 0;
+
+  while (true) {
+    let query = supabase
+      .from("catalog_courses")
+      .select(
+        `
+          id,
           code,
           name,
-          school_slug
-        )
-      `,
-    )
-    .eq("catalog_subjects.school_slug", schoolSlug)
-    .order("code", { ascending: true });
+          description,
+          credits_min,
+          credits_max,
+          is_variable_credit,
+          prerequisite_note,
+          offering_text,
+          offering_terms,
+          catalog_subjects!inner (
+            slug,
+            code,
+            name,
+            school_slug,
+            is_published
+          ),
+          catalog_course_offerings (
+            campus_label,
+            school_slug,
+            subject_slug,
+            is_published
+          )
+        `,
+      )
+      .eq("is_published", true)
+      .eq("catalog_subjects.is_published", true)
+      .order("code", { ascending: true })
+      .range(offset, offset + CATALOG_PAGE_SIZE - 1);
 
-  if (courseError) {
-    throw courseError;
+    if (schoolSlug && schoolSlug !== "all") {
+      query = query.eq("catalog_subjects.school_slug", schoolSlug);
+    }
+
+    const { data, error } = await query;
+
+    if (error) {
+      throw error;
+    }
+
+    const page = data || [];
+    remoteCourses.push(...page);
+    if (page.length < CATALOG_PAGE_SIZE) break;
+    offset += CATALOG_PAGE_SIZE;
   }
 
-  if (!remoteCourses || remoteCourses.length === 0) {
+  if (remoteCourses.length === 0) {
     return { courses: [], relationships: [] };
   }
 
   const courseIds = remoteCourses.map((course) => course.id);
+  const relationships = [];
 
-  const { data: relationships, error: relationshipError } = await supabase
-    .from("catalog_course_relationships")
-    .select("course_id, related_course_id, relationship_type")
-    .eq("relationship_type", "prerequisite")
-    .in("course_id", courseIds);
+  for (
+    let index = 0;
+    index < courseIds.length;
+    index += RELATIONSHIP_CHUNK_SIZE
+  ) {
+    const chunk = courseIds.slice(index, index + RELATIONSHIP_CHUNK_SIZE);
+    const { data, error } = await supabase
+      .from("catalog_course_relationships")
+      .select("course_id, related_course_id, relationship_type")
+      .eq("relationship_type", "prerequisite")
+      .in("course_id", chunk);
 
-  if (relationshipError) {
-    throw relationshipError;
+    if (error) {
+      throw error;
+    }
+
+    relationships.push(...(data || []));
   }
 
   return {
     courses: remoteCourses,
-    relationships: relationships || [],
+    relationships,
   };
 }
 
 export default function useCatalog(options = {}) {
-  const schoolSlug = options.schoolSlug || "shanghai";
+  const schoolSlug = options.schoolSlug || "all";
   const localFallback = options.localFallback || LOCAL_COURSES;
   const resolvedLocalFallback = useMemo(
     () =>

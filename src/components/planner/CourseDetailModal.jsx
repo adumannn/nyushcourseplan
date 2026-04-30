@@ -5,9 +5,11 @@ import {
   Layers,
   GraduationCap,
   CheckSquare,
+  MapPin,
 } from "lucide-react";
 import { CATEGORIES, CORE_REQUIREMENTS } from "../../data/courses";
 import useCatalog from "../../hooks/useCatalog";
+import { getCourseCampuses } from "../../lib/campus";
 import { LOCAL_CATALOG_BY_ID } from "../../lib/localCatalog";
 import { getEffectiveCategory } from "../../lib/majorCourseRules";
 import { serializePrerequisiteGroup } from "../../lib/prerequisites";
@@ -36,6 +38,7 @@ export default function CourseDetailModal({
       ? resolvedCategory.toLowerCase()
       : "elective";
   const category = CATEGORIES[categoryKey] || CATEGORIES.elective;
+  const campuses = getCourseCampuses(course);
   const unmetPrereqs = prereqWarnings[course.id] || [];
   const unmetGroupKeys = new Set(
     unmetPrereqs.map((group) => serializePrerequisiteGroup(group)),
@@ -110,6 +113,28 @@ export default function CourseDetailModal({
               {category.label}
             </span>
           </div>
+
+          {/* Campuses */}
+          {campuses.length > 0 && (
+            <div className="space-y-2">
+              <div className="flex items-center gap-2">
+                <MapPin className="h-4 w-4 text-muted-foreground/60" />
+                <span className="text-xs tracking-wider uppercase text-muted-foreground font-medium">
+                  Offered at
+                </span>
+              </div>
+              <div className="flex flex-wrap gap-1.5 ml-6">
+                {campuses.map((campus) => (
+                  <span
+                    key={campus}
+                    className="rounded-full border border-border/50 bg-accent/20 px-2 py-0.5 text-xs text-muted-foreground"
+                  >
+                    {campus}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
 
           {/* Requirements fulfilled */}
           {course.requirementIds && course.requirementIds.length > 0 && (

@@ -1,5 +1,6 @@
 import { COURSE_CATALOG } from "../data/courses.js";
 import { GENERATED_CATALOG } from "../data/courses.generated.js";
+import { normalizeCampuses } from "./campus.js";
 import { hydrateCoursePrerequisites } from "./prerequisites.js";
 
 // Merge the auto-generated bulletin scrape (~922 courses, mostly bare metadata)
@@ -139,6 +140,7 @@ export function mergeCourseWithLocalCatalog(
         : catalogCourse?.credits,
     category: catalogCourse?.category || course?.category || "elective",
     department: course?.department || catalogCourse?.department || "General",
+    campuses: normalizeCampuses(course?.campuses, catalogCourse?.campuses),
     requirementIds: resolvePreferredArray(
       catalogCourse?.requirementIds,
       course?.requirementIds,

@@ -1,6 +1,7 @@
 import { useRef } from 'react';
-import { GripVertical, X, Info, AlertTriangle } from 'lucide-react';
+import { GripVertical, X, Info, AlertTriangle, MapPin } from 'lucide-react';
 import { CATEGORIES } from '../../data/courses';
+import { formatCourseCampuses } from '../../lib/campus';
 import { getEffectiveCategory } from '../../lib/majorCourseRules';
 
 function withAlpha(color, alpha) {
@@ -55,6 +56,7 @@ export default function CourseCard({
     borderColor: withAlpha(categoryColor, 0.36),
     color: categoryColor,
   };
+  const campusLabel = formatCourseCampuses(course);
 
   return (
     <div
@@ -91,8 +93,9 @@ export default function CourseCard({
             {course.code}
           </span>
         </div>
-        {categoryKey && (
-          <div className="mt-1.5">
+        {(categoryKey || campusLabel) && (
+          <div className="mt-1.5 flex flex-wrap items-center gap-1.5">
+            {categoryKey && (
             <span
               className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full border text-[10px] font-medium uppercase tracking-wide"
               style={categoryBadgeStyle}
@@ -103,6 +106,13 @@ export default function CourseCard({
               />
               {categoryLabel}
             </span>
+            )}
+            {campusLabel && (
+              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full border border-border/45 bg-background/55 text-[10px] font-medium text-muted-foreground">
+                <MapPin className="h-3 w-3" aria-hidden="true" />
+                {campusLabel}
+              </span>
+            )}
           </div>
         )}
         {course.prerequisiteNote && (

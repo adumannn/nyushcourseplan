@@ -1,12 +1,12 @@
 // AUTO-GENERATED — DO NOT EDIT BY HAND.
 //
-// Source: scraped-data/shanghai.json
-// Generated: 2026-04-28T08:49:40.096Z
+// Source: scraped-data/all-courses.json
+// Generated: 2026-04-30T08:47:15.750Z
 // Courses: 922
 //
 // Run `npm run generate:catalog` (or
 // `node scripts/generate-local-catalog.mjs`) to refresh this file from the
-// latest `scraped-data/shanghai.json` produced by `scripts/scrape-bulletin.mjs`.
+// latest `scraped-data/all-courses.json` produced by `scripts/scrape-bulletin.mjs`.
 //
 // The hand-curated COURSE_CATALOG in src/data/courses.js is merged on top
 // of GENERATED_CATALOG at runtime by src/lib/localCatalog.js, so explicit
@@ -28,7 +28,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "occasionally",
-    "fulfillmentText": "General Elective."
+    "fulfillmentText": "General Elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "ARBC-SHU-102",
@@ -46,7 +49,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "ARBC-SHU 101 Elementary Arabic I or the equivalent.",
     "offeringText": "every year",
-    "fulfillmentText": "General Elective."
+    "fulfillmentText": "General Elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "ART-SHU-101",
@@ -62,7 +68,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Fall",
-    "fulfillmentText": "Humanities Major Requirement Foundations/Introductory Courses (18-19 Critical Concepts Core Course/Survey Courses)."
+    "fulfillmentText": "Humanities Major Requirement Foundations/Introductory Courses (18-19 Critical Concepts Core Course/Survey Courses).",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "ART-SHU-1010",
@@ -78,7 +87,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "occasionally",
-    "fulfillmentText": "General Elective. Repeat rule: Non-Repeatable. Students can only take this course once during their study at NYUSH."
+    "fulfillmentText": "General Elective. Repeat rule: Non-Repeatable. Students can only take this course once during their study at NYUSH.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "ART-SHU-103",
@@ -96,7 +108,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "None. Anti-requisite: ART-SHU 310/9210 Introduction to Studio Art",
     "offeringText": "Fall",
-    "fulfillmentText": "General Elective."
+    "fulfillmentText": "General Elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "ART-SHU-105",
@@ -112,7 +127,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "",
-    "fulfillmentText": "general elective"
+    "fulfillmentText": "general elective",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "ART-SHU-180",
@@ -128,7 +146,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Fall",
-    "fulfillmentText": "Humanities Other Introductory course; GCS China and the World."
+    "fulfillmentText": "Humanities Other Introductory course; GCS China and the World.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "ART-SHU-1911",
@@ -155,7 +176,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "ART-SHU 103 Foundations in Visual Arts, OR ART-SHU 255 Printmaking in an Expanded Field, OR ART-SHU 275 Mark Making, OR ART-SHU 306 Moving Images 1, OR ART-SHU 211 Foundations in Painting, OR ART-SHU 301 Photography 1 OR ART-SHU 375 The Graphic Novel, OR ART-SHU 320 Experiences in Time, OR ART-SHU 274 Chinese Woodblock Printmaking, OR ART-SHU 222 Site and Situation: Social Space and Public Art",
     "offeringText": "Spring",
-    "fulfillmentText": "General Elective"
+    "fulfillmentText": "General Elective",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "ART-SHU-211",
@@ -171,7 +195,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Spring",
-    "fulfillmentText": "general elective"
+    "fulfillmentText": "general elective",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "ART-SHU-222",
@@ -189,7 +216,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "None. Anti-Requisite: ART-SHU 223 Site and Situation: Social Space and Public Art.",
     "offeringText": "Spring",
-    "fulfillmentText": "Humanities Interdisciplinary/other Advanced course; IMA elective; IMB major IMA/B elective."
+    "fulfillmentText": "Humanities Interdisciplinary/other Advanced course; IMA elective; IMB major IMA/B elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "ART-SHU-223",
@@ -205,7 +235,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "",
     "offeringText": "January term of odd numbered years",
-    "fulfillmentText": "General elective."
+    "fulfillmentText": "General elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "ART-SHU-225A",
@@ -221,7 +254,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "occasionally",
-    "fulfillmentText": "This course counts toward the Cross-School Dance Minor hosted by Tisch School of the Arts at NYU. Repeat rule: Non-Repeatable. Students can only take this course once during their study at NYUSH."
+    "fulfillmentText": "This course counts toward the Cross-School Dance Minor hosted by Tisch School of the Arts at NYU. Repeat rule: Non-Repeatable. Students can only take this course once during their study at NYUSH.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "ART-SHU-225B",
@@ -237,7 +273,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "occasionally",
-    "fulfillmentText": "This course counts toward the Cross-School Dance Minor hosted by Tisch School of the Arts at NYU."
+    "fulfillmentText": "This course counts toward the Cross-School Dance Minor hosted by Tisch School of the Arts at NYU.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "ART-SHU-227",
@@ -253,7 +292,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "",
-    "fulfillmentText": "general elective"
+    "fulfillmentText": "general elective",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "ART-SHU-230",
@@ -269,7 +311,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None",
     "offeringText": "occasionally",
-    "fulfillmentText": "This course counts toward the Cross-School Dance Minor hosted by Tisch School of the Arts at NYU. Repeat rule: Non-Repeatable. Students can only take this course once during their study at NYUSH."
+    "fulfillmentText": "This course counts toward the Cross-School Dance Minor hosted by Tisch School of the Arts at NYU. Repeat rule: Non-Repeatable. Students can only take this course once during their study at NYUSH.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "ART-SHU-231",
@@ -285,7 +330,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "",
-    "fulfillmentText": "General Elective. Repeat rule: Non-Repeatable. Students can only take this course once during their study at NYUSH."
+    "fulfillmentText": "General Elective. Repeat rule: Non-Repeatable. Students can only take this course once during their study at NYUSH.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "ART-SHU-238",
@@ -301,7 +349,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "",
     "offeringText": "occasionally",
-    "fulfillmentText": "This course counts toward the Cross-School Dance Minor hosted by Tisch School of the Arts at NYU. Repeat rule: Students can take this course up to two times in total (not necessarily consecutive) for credit during their study at NYUSH."
+    "fulfillmentText": "This course counts toward the Cross-School Dance Minor hosted by Tisch School of the Arts at NYU. Repeat rule: Students can take this course up to two times in total (not necessarily consecutive) for credit during their study at NYUSH.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "ART-SHU-239",
@@ -317,7 +368,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "occasionally",
-    "fulfillmentText": "This course counts toward the Cross-School Dance Minor hosted by Tisch School of the Arts at NYU."
+    "fulfillmentText": "This course counts toward the Cross-School Dance Minor hosted by Tisch School of the Arts at NYU.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "ART-SHU-241",
@@ -333,7 +387,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "occasionally",
-    "fulfillmentText": "General elective."
+    "fulfillmentText": "General elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "ART-SHU-242",
@@ -349,7 +406,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Spring",
-    "fulfillmentText": "This course counts toward the Cross-School Dance Minor hosted by Tisch School of the Arts at NYU. Repeat rule: Non-Repeatable. Students can only take this course once during their study at NYUSH."
+    "fulfillmentText": "This course counts toward the Cross-School Dance Minor hosted by Tisch School of the Arts at NYU. Repeat rule: Non-Repeatable. Students can only take this course once during their study at NYUSH.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "ART-SHU-243",
@@ -365,7 +425,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Fall",
-    "fulfillmentText": "This course counts toward the Cross-School Dance Minor hosted by Tisch School of the Arts at NYU. Repeat rule: Non-Repeatable. Students can only take this course once during their study at NYUSH."
+    "fulfillmentText": "This course counts toward the Cross-School Dance Minor hosted by Tisch School of the Arts at NYU. Repeat rule: Non-Repeatable. Students can only take this course once during their study at NYUSH.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "ART-SHU-244",
@@ -383,7 +446,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "ART-SHU 230 Ballet or upon instructor's approval for students who received prior training in ballet outside of NYUSH. Contact the instructor for permission.",
     "offeringText": "Spring",
-    "fulfillmentText": "This course counts toward the Cross-School Dance Minor hosted by Tisch School of the Arts at NYU. Repeat rule: Students can take this course up to two times in total (not necessarily consecutive) for credit during their study at NYUSH."
+    "fulfillmentText": "This course counts toward the Cross-School Dance Minor hosted by Tisch School of the Arts at NYU. Repeat rule: Students can take this course up to two times in total (not necessarily consecutive) for credit during their study at NYUSH.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "ART-SHU-246",
@@ -399,7 +465,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "A prerequisite of at least 2 dance classes prior to taking this class is required and a basic knowledge of Adobe Premiere. If you think you are qualified, please contact the instructor for permission.",
     "offeringText": "Spring",
-    "fulfillmentText": "This course counts toward the Cross-School Dance Minor hosted by Tisch School of the Arts at NYU. Repeat rule: Non-Repeatable. Students can only take this course once during their study at NYUSH."
+    "fulfillmentText": "This course counts toward the Cross-School Dance Minor hosted by Tisch School of the Arts at NYU. Repeat rule: Non-Repeatable. Students can only take this course once during their study at NYUSH.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "ART-SHU-250",
@@ -415,7 +484,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None",
     "offeringText": "Spring",
-    "fulfillmentText": "IMA elective; IMB major IMA/B elective; Social Science focus course Anthropology track 200 level."
+    "fulfillmentText": "IMA elective; IMB major IMA/B elective; Social Science focus course Anthropology track 200 level.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "ART-SHU-255",
@@ -431,7 +503,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Fall of even numbered years",
-    "fulfillmentText": "This course satisfies IMA elective; IMB major IMA/B elective."
+    "fulfillmentText": "This course satisfies IMA elective; IMB major IMA/B elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "ART-SHU-274",
@@ -447,7 +522,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None",
     "offeringText": "Fall of odd numbered years",
-    "fulfillmentText": "IMA elective; IMB major IMA/B elective; GCS Major elective Chinese Media, Arts, and Literature elective."
+    "fulfillmentText": "IMA elective; IMB major IMA/B elective; GCS Major elective Chinese Media, Arts, and Literature elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "ART-SHU-275",
@@ -463,7 +541,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Fall",
-    "fulfillmentText": "General Elective."
+    "fulfillmentText": "General Elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "ART-SHU-301",
@@ -479,7 +560,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Fall",
-    "fulfillmentText": "general elective"
+    "fulfillmentText": "general elective",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "ART-SHU-302",
@@ -495,7 +579,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Photography I or Moving Images l",
     "offeringText": "Spring term of even numbered years",
-    "fulfillmentText": "general elective"
+    "fulfillmentText": "general elective",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "ART-SHU-306",
@@ -511,7 +598,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Spring",
-    "fulfillmentText": "This course satisfies IMA/IMB elective."
+    "fulfillmentText": "This course satisfies IMA/IMB elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "ART-SHU-307",
@@ -531,7 +621,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "ART-SHU 306 (Moving Images or Moving Images I); ART-SHU 301 / ART-SHU 9301 (Introduction to Photography I or Photography I)",
     "offeringText": "Spring term of odd numbered years",
-    "fulfillmentText": "IMA/IMB elective."
+    "fulfillmentText": "IMA/IMB elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "ART-SHU-310",
@@ -547,7 +640,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": "general elective"
+    "fulfillmentText": "general elective",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "ART-SHU-320",
@@ -563,7 +659,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Any ARTS-UG, VISAR-UH, ART-UE , IMNY-UT, INTM-SHU, OART-UT OR ART-SHU Class",
     "offeringText": "Spring",
-    "fulfillmentText": "IMA Major elective; IMB major IMA/IMB elective."
+    "fulfillmentText": "IMA Major elective; IMB major IMA/IMB elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "ART-SHU-340",
@@ -581,7 +680,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "ART-SHU 239.2 or 239.4 Choreography & Performance",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": "Counts towards the Global Dance Minor Repeat rule: Non-Repeatable. Students can only take this course once during their study at NYUSH."
+    "fulfillmentText": "Counts towards the Global Dance Minor Repeat rule: Non-Repeatable. Students can only take this course once during their study at NYUSH.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "ART-SHU-375",
@@ -597,7 +699,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Spring term of even numbered years",
-    "fulfillmentText": "IMA/IMB elective; Creative Writing elective."
+    "fulfillmentText": "IMA/IMB elective; Creative Writing elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "ART-SHU-845",
@@ -613,7 +718,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None",
     "offeringText": "",
-    "fulfillmentText": "General Elective Repeat rule: Non-Repeatable. Students can only take this course once during their study at NYUSH."
+    "fulfillmentText": "General Elective Repeat rule: Non-Repeatable. Students can only take this course once during their study at NYUSH.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "ART-SHU-9210",
@@ -629,7 +737,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": "general elective"
+    "fulfillmentText": "general elective",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "ART-SHU-9301",
@@ -645,7 +756,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": "general elective"
+    "fulfillmentText": "general elective",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "BIOL-SHU-123",
@@ -661,7 +775,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "",
     "offeringText": "Spring",
-    "fulfillmentText": "Core Curriculum Requirement Experimental Discovery in the Natural World Courses; Biology Major Foundational Courses; Mathematics Major Science Lab sections; Honors Mathematics Major Science Lab sections; Neural Science Major Foundational Courses; Physics Major Foundational Courses; Data Science Major Courses for Concentration in Genomics."
+    "fulfillmentText": "Core Curriculum Requirement Experimental Discovery in the Natural World Courses; Biology Major Foundational Courses; Mathematics Major Science Lab sections; Honors Mathematics Major Science Lab sections; Neural Science Major Foundational Courses; Physics Major Foundational Courses; Data Science Major Courses for Concentration in Genomics.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "BIOL-SHU-200",
@@ -679,7 +796,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "is BIOL-SHU 22 Foundations of Biology II",
     "offeringText": "occasionally",
-    "fulfillmentText": "Biology elective."
+    "fulfillmentText": "Biology elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "BIOL-SHU-21",
@@ -699,7 +819,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "or Co-req for BIOL-SHU 21 is MATH-SHU 121 or MATH-SHU 201",
     "offeringText": "Spring",
-    "fulfillmentText": "CORE ED; Biology, NS, Physics Foundational course; Math/Honors Math Science Lecture; DS concentration in Genomics."
+    "fulfillmentText": "CORE ED; Biology, NS, Physics Foundational course; Math/Honors Math Science Lecture; DS concentration in Genomics.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "BIOL-SHU-22",
@@ -720,7 +843,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "BIOL-SHU 21 Foundations of Biology I and (MATH-SHU 131 Calculus or MATH-SHU 123 Multivariable Calculus or MATH-SHU 201 Honors Calculus).",
     "offeringText": "Fall",
-    "fulfillmentText": "Biology Major Foundational Courses; Mathematics Major Science Lecture sections; Honors Mathematics Major Science Lecture sections; Neural Science Major Foundational Courses; Data Science Major Courses for Concentration in Genomics."
+    "fulfillmentText": "Biology Major Foundational Courses; Mathematics Major Science Lecture sections; Honors Mathematics Major Science Lecture sections; Neural Science Major Foundational Courses; Data Science Major Courses for Concentration in Genomics.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "BIOL-SHU-250",
@@ -738,7 +864,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "BIOL-SHU 21.",
     "offeringText": "Spring",
-    "fulfillmentText": "Biology required course."
+    "fulfillmentText": "Biology required course.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "BIOL-SHU-261",
@@ -760,7 +889,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "co-req/pre-req (one of Stats course NEUR SHU 100 or MATH-SHU 235 or MATH-SHU 234 or BUSF-SHU 101) AND pre-req (CSCI-SHU 11 ICP or CSCI-SHU 101 ICDS)",
     "offeringText": "Fall",
-    "fulfillmentText": "Core Curriculum Requirement Science, Technology and Society Courses; Biology Major Biology Electives; Data Science Major Courses for Concentration in Genomics."
+    "fulfillmentText": "Core Curriculum Requirement Science, Technology and Society Courses; Biology Major Biology Electives; Data Science Major Courses for Concentration in Genomics.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "BIOL-SHU-263",
@@ -778,7 +910,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "BIOL-SHU 250 Organismal Systems, or Foundations of Biology II.",
     "offeringText": "Spring term of even numbered years",
-    "fulfillmentText": "Biology elective; Neural Science Approved upper-level Biology course."
+    "fulfillmentText": "Biology elective; Neural Science Approved upper-level Biology course.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "BIOL-SHU-271",
@@ -796,7 +931,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "Foundations of Biology I (BIOL-SHU 21)",
     "offeringText": "Spring",
-    "fulfillmentText": "Biology elective"
+    "fulfillmentText": "Biology elective",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "BIOL-SHU-30",
@@ -814,7 +952,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "BIOL-SHU 22 Foundations of Biology II.",
     "offeringText": "Fall",
-    "fulfillmentText": "Core Curriculum Requirement Science, Technology and Society Courses; Biology Major Electives; Neural Science Major Approved upper-level Biology courses."
+    "fulfillmentText": "Core Curriculum Requirement Science, Technology and Society Courses; Biology Major Electives; Neural Science Major Approved upper-level Biology courses.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "BIOL-SHU-31",
@@ -833,7 +974,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "or co-req is BIOL-SH 30 Genetics or BIOL-UA 30 Genetics",
     "offeringText": "Fall",
-    "fulfillmentText": "Biology Major Electives."
+    "fulfillmentText": "Biology Major Electives.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "BIOL-SHU-314",
@@ -852,7 +996,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "for BIOL-SHU 314 is BIO-SHU 21 Foundations of Biology I.",
     "offeringText": "Spring",
-    "fulfillmentText": "Biology elective; Neural Science Approved upper-level Biology course."
+    "fulfillmentText": "Biology elective; Neural Science Approved upper-level Biology course.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "BIOL-SHU-400",
@@ -868,7 +1015,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "department consent.",
     "offeringText": "Fall",
-    "fulfillmentText": "Biology Major Electives."
+    "fulfillmentText": "Biology Major Electives.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "BIOL-SHU-5",
@@ -884,7 +1034,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "occasionally",
-    "fulfillmentText": "Core Curriculum Science Experimental Discovery in the Natural World Courses."
+    "fulfillmentText": "Core Curriculum Science Experimental Discovery in the Natural World Courses.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "BIOL-SHU-997",
@@ -900,7 +1053,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Foundations of Science I-III (or Physics I&II, Foundations of Chemistry I&II, Foundations of Biology I&II), and a minimum GPA of 3.0 overall and in all science and mathematics courses required for the major, permission of a biology faculty member (at NYU-Shanghai, NYU-Abu Dhabi, or NYU-New York) who will act as a sponsor and mentor, and approval of the Discipline Leader in Biology. The faculty mentor must be selected in consultation with the Discipline Leader in Biology. Offered in the Fall, Spring or Summer. 2 to 4 points per term for a maximum of 4 points. This course aims at engaging students in research. It is designed to offer students an opportunity to observe biological research up close and gain hands-on research experience by working as a member in an active research team. Independent Study I and II can be done with the same supervisor or two different supervisors. No lectures will be given. Student researchers are expected to attend and actively participate in lab/supervision meetings. A Proposal for Independent Study form must be filled out, signed by the Discipline Leader in Biology, and submitted to the student's academic advisor. Requires a written report on the research to be evaluated by the faculty sponsor, with a copy submitted to the Discipline Leader in Biology and a copy to the Dean of Arts & Sciences. Prerequisite: department consent.",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": "Biology Major Electives."
+    "fulfillmentText": "Biology Major Electives.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "BIOL-SHU-998",
@@ -916,7 +1072,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "senior students with Biology primary major",
     "offeringText": "Fall",
-    "fulfillmentText": "Biology required."
+    "fulfillmentText": "Biology required.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "BIOL-SHU-999",
@@ -935,7 +1094,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "Independent Study (BIOL-SHU 997 or 998), a minimum GPA of 3.65 overall, a minimum GPA of 3.65 in all science and mathematics courses required for the major, and permission of a sponsor and the Dean of Arts & Sciences. Open to Biology majors only. The faculty mentor must be selected in consultation with the Dean of Arts & Sciences. May not be used for the major in biology. Offered in the fall, spring, and summer. 2 points. For biology majors who have completed at least one semester of laboratory research (BIOL-SHU 997 or 998) and are able to expand this work into a thesis. Requires writing a Thesis (i.e., a full literature search of the subject and a formal written report on the research in publication form), which is defended in front of a committee of three faculty (which includes the faculty sponsor), chosen by the student in consultation with the faculty mentor. (The defense may be a brief oral presentation followed by a question-and-answer session.) The Thesis and defense must be evaluated by the committee, with the cover page of the thesis signed by all committee members, with a copy of the Thesis submitted to the Dean of Arts & Sciences. (It is recommended that the student meet with the faculty committee at least once mid-semester to evaluate and guide the student's progress on the thesis work.) Prerequisite: None.",
     "offeringText": "Spring",
-    "fulfillmentText": "Biology elective."
+    "fulfillmentText": "Biology elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "BPEP-SHU-9042",
@@ -951,7 +1113,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Sophomore standing or above with at least one course in BUSF-SHU.",
     "offeringText": "Spring",
-    "fulfillmentText": "CORE SSPC; GCS The Politics, Economy, and Environment of China; Social Science Political Economy Focus 300 level; Business Non-Finance/Non-Marketing elective or China Business Studies; IMB Business elective; Economics elective."
+    "fulfillmentText": "CORE SSPC; GCS The Politics, Economy, and Environment of China; Social Science Political Economy Focus 300 level; Business Non-Finance/Non-Marketing elective or China Business Studies; IMB Business elective; Economics elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "BUSF-SHU-101",
@@ -967,7 +1132,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": "This course satisfies the following: Major req: BUSF, BUSM, ECON, CS, DS Foundational course; Social Science: methods course; IMB Business elective."
+    "fulfillmentText": "This course satisfies the following: Major req: BUSF, BUSM, ECON, CS, DS Foundational course; Social Science: methods course; IMB Business elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "BUSF-SHU-142",
@@ -983,7 +1151,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "not open to first-semester students.",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": "This course satisfies BUSF/ BUSM Business Elective, Business Analytics Track; IMB Business Flexible Core."
+    "fulfillmentText": "This course satisfies BUSF/ BUSM Business Elective, Business Analytics Track; IMB Business Flexible Core.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "BUSF-SHU-188",
@@ -999,7 +1170,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "occasionally",
-    "fulfillmentText": "BUSF/BUSM China Business Studies; IMB Business elective; GCS The Politics, Economy, and Environment of China."
+    "fulfillmentText": "BUSF/BUSM China Business Studies; IMB Business elective; GCS The Politics, Economy, and Environment of China.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "BUSF-SHU-200A",
@@ -1015,7 +1189,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "sophomore or above.",
     "offeringText": "occasionally",
-    "fulfillmentText": "BUSF Non-Finance/BUSM Non-Marketing elective; IMB Business elective."
+    "fulfillmentText": "BUSF Non-Finance/BUSM Non-Marketing elective; IMB Business elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "BUSF-SHU-200B",
@@ -1031,7 +1208,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Sophomore or above.",
     "offeringText": "occasionally",
-    "fulfillmentText": "BUSF Non-Finance/BUSM Non-Marketing elective or China Business Studies (must have China related topic); Business Management Track; IMB Business elective."
+    "fulfillmentText": "BUSF Non-Finance/BUSM Non-Marketing elective or China Business Studies (must have China related topic); Business Management Track; IMB Business elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "BUSF-SHU-200D",
@@ -1047,7 +1227,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Management and Organizations or Intro to Marketing, requires Junior or Senior standing.",
     "offeringText": "Spring",
-    "fulfillmentText": "This course satisfies Business China Business Studies or Non-Finance/Non-Marketing elective, Business Management Track; IMB Business elective."
+    "fulfillmentText": "This course satisfies Business China Business Studies or Non-Finance/Non-Marketing elective, Business Management Track; IMB Business elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "BUSF-SHU-200F",
@@ -1065,7 +1248,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "BUSF-SHU 202 Foundations of Finance.",
     "offeringText": "",
-    "fulfillmentText": "BUSF Finance elective; BUSM Non-Marketing elective; IMB Business elective."
+    "fulfillmentText": "BUSF Finance elective; BUSM Non-Marketing elective; IMB Business elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "BUSF-SHU-200G",
@@ -1081,7 +1267,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None",
     "offeringText": "every year",
-    "fulfillmentText": "BUSF Non-Finance elective; BUSM Non-Marketing elective; IMB business elective"
+    "fulfillmentText": "BUSF Non-Finance elective; BUSM Non-Marketing elective; IMB business elective",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "BUSF-SHU-202",
@@ -1101,7 +1290,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "ECON-SHU 3 Microeconomics and (BUSF-SHU 101 Statistics for Business & Econ or MATH-SHU 235 Probability and Statistics).",
     "offeringText": "Fall",
-    "fulfillmentText": "This course satisfies BUSF/BUSM Major core; IMB Business Flexible Core or elective; Data Science concentration in Finance/Marketing. It counts for the Stern Minor."
+    "fulfillmentText": "This course satisfies BUSF/BUSM Major core; IMB Business Flexible Core or elective; Data Science concentration in Finance/Marketing. It counts for the Stern Minor.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "BUSF-SHU-206",
@@ -1117,7 +1309,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Foundations of Finance and Economics of Global Business (or Macroeconomics). Corporate Finance is recommended but not required.",
     "offeringText": "occasionally",
-    "fulfillmentText": "BUSF Finance elective or China Business Studies; BUSM Non-Marketing elective or China Business Studies; IMB Business elective."
+    "fulfillmentText": "BUSF Finance elective or China Business Studies; BUSM Non-Marketing elective or China Business Studies; IMB Business elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "BUSF-SHU-209T",
@@ -1133,7 +1328,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "",
-    "fulfillmentText": ""
+    "fulfillmentText": "",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "BUSF-SHU-210",
@@ -1153,7 +1351,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "BUSF-SHU 101 Statistics for Business & Econ or MATH-SHU 234 Mathematical Statistics or MATH-SHU 235 Probability and Statistics and sophomore standing or above.",
     "offeringText": "occasionally",
-    "fulfillmentText": "CORE AT; BUSF/BUSM Business elective, Business Analytics Track; IMB Business Flexible Core course."
+    "fulfillmentText": "CORE AT; BUSF/BUSM Business elective, Business Analytics Track; IMB Business Flexible Core course.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "BUSF-SHU-215",
@@ -1171,7 +1372,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "Foundations of Finance (BUSF-SHU 202)",
     "offeringText": "every other year",
-    "fulfillmentText": "Business and Finance Major: Finance Elective; Business and Marketing Major: Non-Marketing Elective; IMB Business Elective"
+    "fulfillmentText": "Business and Finance Major: Finance Elective; Business and Marketing Major: Non-Marketing Elective; IMB Business Elective",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "BUSF-SHU-220F",
@@ -1187,7 +1391,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "occasionally",
-    "fulfillmentText": "BUSF Finance elective; BUSM Non-Marketing elective; IMB Business elective."
+    "fulfillmentText": "BUSF Finance elective; BUSM Non-Marketing elective; IMB Business elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "BUSF-SHU-221",
@@ -1203,7 +1410,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "",
     "offeringText": "occasionally",
-    "fulfillmentText": "BUSF Non-Finance; BUSM Non-Marketing elective; IMB Business elective."
+    "fulfillmentText": "BUSF Non-Finance; BUSM Non-Marketing elective; IMB Business elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "BUSF-SHU-222",
@@ -1221,7 +1431,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "BUSF-SHU 202 Foundations of Finance.",
     "offeringText": "occasionally",
-    "fulfillmentText": "BUSF Finance elective; BUSM Non-Marketing elective; IMB Business elective."
+    "fulfillmentText": "BUSF Finance elective; BUSM Non-Marketing elective; IMB Business elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "BUSF-SHU-225",
@@ -1237,7 +1450,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None",
     "offeringText": "occasionally",
-    "fulfillmentText": "BUSF Non-Finance Elective; BUSM Non-Marketing elective; Business Management Track; IMB Business elective."
+    "fulfillmentText": "BUSF Non-Finance Elective; BUSM Non-Marketing elective; Business Management Track; IMB Business elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "BUSF-SHU-228",
@@ -1255,7 +1471,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "Foundations of Finance (BUSF-SHU 202)",
     "offeringText": "every year",
-    "fulfillmentText": "BUSF Finance elective; BUSM Non-Marketing elective; IMB Business elective; Social Science Focus Environmental Studies 200 level course."
+    "fulfillmentText": "BUSF Finance elective; BUSM Non-Marketing elective; IMB Business elective; Social Science Focus Environmental Studies 200 level course.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "BUSF-SHU-229",
@@ -1271,7 +1490,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Corporate Finance",
     "offeringText": "occasionally",
-    "fulfillmentText": "BUSF Finance elective; BUSM Non-Marketing elective; IMB Business elective."
+    "fulfillmentText": "BUSF Finance elective; BUSM Non-Marketing elective; IMB Business elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "BUSF-SHU-232",
@@ -1287,7 +1509,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None",
     "offeringText": "occasionally",
-    "fulfillmentText": "BUSF Non-Finance elective; BUSM Non-Marketing elective; IMB Interactive Media Elective Courses or Business elective; IMA elective."
+    "fulfillmentText": "BUSF Non-Finance elective; BUSM Non-Marketing elective; IMB Interactive Media Elective Courses or Business elective; IMA elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "BUSF-SHU-244",
@@ -1303,7 +1528,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Foundations of Finance",
     "offeringText": "occasionally",
-    "fulfillmentText": "BUSF Finance elective; BUSM Non-Marketing elective; IMB Business elective."
+    "fulfillmentText": "BUSF Finance elective; BUSM Non-Marketing elective; IMB Business elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "BUSF-SHU-250",
@@ -1319,7 +1547,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Not open to first-semester students.",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": "This course satisfies BUSF/BUSM Major core /Business Accounting track; IMB Business required Foundation /elective; Data Science concentration in Finance/Marketing. It can count for the CAS Business Studies Minor."
+    "fulfillmentText": "This course satisfies BUSF/BUSM Major core /Business Accounting track; IMB Business required Foundation /elective; Data Science concentration in Finance/Marketing. It can count for the CAS Business Studies Minor.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "BUSF-SHU-252",
@@ -1335,7 +1566,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Junior standing or above. The course should be by application only. (Open to NYU SH students as well as Stern students) Previous study at two sites (not including Shanghai) is preferred.",
     "offeringText": "Spring",
-    "fulfillmentText": "BUSF Non-finance elective; BUSM non-marketing elective; Business majors China Business Studies."
+    "fulfillmentText": "BUSF Non-finance elective; BUSM non-marketing elective; Business majors China Business Studies.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "BUSF-SHU-270",
@@ -1353,7 +1587,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "for this course is ACCT-UB 3, Financial Statement Analysis. Students learn the financial reporting rules associated with the concepts learned in FSA. The course emphasizes the relationship between financial statements and the reporting rules on which they are based. Prerequisite: Principles of Financial Accounting",
     "offeringText": "occasionally",
-    "fulfillmentText": "IMB Business elective; BUSF Non-Finance elective; BUMS Non-Marketing elective, Business Accounting track."
+    "fulfillmentText": "IMB Business elective; BUSF Non-Finance elective; BUMS Non-Marketing elective, Business Accounting track.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "BUSF-SHU-271",
@@ -1369,7 +1606,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Calculus and ICP. Sophomore or above students.",
     "offeringText": "occasionally",
-    "fulfillmentText": "BUSF Non-Finance elective; BUSM Non-Marketing elective; IMB Business elective."
+    "fulfillmentText": "BUSF Non-Finance elective; BUSM Non-Marketing elective; IMB Business elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "BUSF-SHU-272",
@@ -1385,7 +1625,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "occasionally",
-    "fulfillmentText": "BUSF Non-Finance elective; BUSM Non-Marketing elective; IMB Business elective."
+    "fulfillmentText": "BUSF Non-Finance elective; BUSM Non-Marketing elective; IMB Business elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "BUSF-SHU-273",
@@ -1403,7 +1646,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "CSCI-SHU 11 Introduction to Computer Programming",
     "offeringText": "Spring",
-    "fulfillmentText": "BUSM Marketing elective; BUSF Non-Finance elective; Business Analytics track; IMB Business elective."
+    "fulfillmentText": "BUSM Marketing elective; BUSF Non-Finance elective; Business Analytics track; IMB Business elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "BUSF-SHU-274",
@@ -1423,7 +1669,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "CSCI-SHU 11 Introduction to Computer Programming. Antirequisite: Students who have taken ECON-SHU 232 Blockchain, Cryptocurrency & Money or BUSF-SHU 366 Applications in Entrepreneurial Finance: Fintech are not eligible to enroll.",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": "BUSF Non-finance Elective; BUSM Non-marketing Elective; IMB Business Elective. Prerequisite: CSCI-SHU 11 Introduction to Computer Programming. Antirequisite: Students who have taken ECON-SHU 232 Blockchain, Cryptocurrency & Money or BUSF-SHU 366 Applications in Entrepreneurial Finance: Fintech are not eligible to enroll."
+    "fulfillmentText": "BUSF Non-finance Elective; BUSM Non-marketing Elective; IMB Business Elective. Prerequisite: CSCI-SHU 11 Introduction to Computer Programming. Antirequisite: Students who have taken ECON-SHU 232 Blockchain, Cryptocurrency & Money or BUSF-SHU 366 Applications in Entrepreneurial Finance: Fintech are not eligible to enroll.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "BUSF-SHU-275",
@@ -1439,7 +1688,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Spring",
-    "fulfillmentText": "BUSF Non-Finance Elective; BUSM Non-Marketing Elective; Business Management Track Elective; IMB Business Elective."
+    "fulfillmentText": "BUSF Non-Finance Elective; BUSM Non-Marketing Elective; Business Management Track Elective; IMB Business Elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "BUSF-SHU-276",
@@ -1458,7 +1710,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "CSCI-SHU 11 Introduction to Computer Programming AND MATH-SHU 131 Calculus AND Sophomore standing",
     "offeringText": "every year",
-    "fulfillmentText": "IMB Business elective; BUSF Non-Finance elective; BUSM Non-Marketing elective; Business Analytics track."
+    "fulfillmentText": "IMB Business elective; BUSF Non-Finance elective; BUSM Non-Marketing elective; Business Analytics track.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "BUSF-SHU-286",
@@ -1474,7 +1729,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Foundations of Finance or Principles of Finance",
     "offeringText": "occasionally",
-    "fulfillmentText": "BUSF China Business Studies or Finance elective; BUSM China Business Studies or Non-Marketing elective; IMB Business elective."
+    "fulfillmentText": "BUSF China Business Studies or Finance elective; BUSM China Business Studies or Non-Marketing elective; IMB Business elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "BUSF-SHU-288",
@@ -1490,7 +1748,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Junior or Senior students with primary or secondary major in Business/ IMB/ Social Science/ GCS/ Economics",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": "This course satisfies Business China Business Studies course or Non-Finance/Non-Marketing elective, Business Management Track; IMB Business Elective; GCS Elective The Politics, Economy, and Environment of China."
+    "fulfillmentText": "This course satisfies Business China Business Studies course or Non-Finance/Non-Marketing elective, Business Management Track; IMB Business Elective; GCS Elective The Politics, Economy, and Environment of China.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "BUSF-SHU-289",
@@ -1506,7 +1767,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Shanghai home students only.",
     "offeringText": "every year",
-    "fulfillmentText": "China Business Studies; IMB Business elective."
+    "fulfillmentText": "China Business Studies; IMB Business elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "BUSF-SHU-3",
@@ -1522,7 +1786,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": "This course may satisfy China Business Studies, depending on the individual topic; otherwise non-Finance/non-Marketing elective."
+    "fulfillmentText": "This course may satisfy China Business Studies, depending on the individual topic; otherwise non-Finance/non-Marketing elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "BUSF-SHU-303",
@@ -1540,7 +1807,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "BUSF-SHU 202",
     "offeringText": "Spring",
-    "fulfillmentText": "This course satisfies BUSF core: BUSM Business elective; Data Science concentration in Finance; IMB Business elective."
+    "fulfillmentText": "This course satisfies BUSF core: BUSM Business elective; Data Science concentration in Finance; IMB Business elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "BUSF-SHU-304",
@@ -1558,7 +1828,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "BUSF-SHU 202.",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": "This course satisfies BUSF Finance Elective; BUSM Non-Marketing Elective; IMB Business elective."
+    "fulfillmentText": "This course satisfies BUSF Finance Elective; BUSM Non-Marketing Elective; IMB Business elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "BUSF-SHU-305",
@@ -1576,7 +1849,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "BUSF-SHU 202.",
     "offeringText": "Fall",
-    "fulfillmentText": "This course satisfies BUSF Finance Elective; BUSM Non-Marketing elective; IMB Business elective."
+    "fulfillmentText": "This course satisfies BUSF Finance Elective; BUSM Non-Marketing elective; IMB Business elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "BUSF-SHU-308",
@@ -1592,7 +1868,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Corporate Finance",
     "offeringText": "",
-    "fulfillmentText": "BUSF Finance elective; BUSM Non-Marketing elective; IMB Business elective."
+    "fulfillmentText": "BUSF Finance elective; BUSM Non-Marketing elective; IMB Business elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "BUSF-SHU-309",
@@ -1608,7 +1887,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Spring",
-    "fulfillmentText": "This course satisfies BUSF Non-Finance elective; BUSM Non-Marketing elective; Business Accounting Track; IMB Business elective."
+    "fulfillmentText": "This course satisfies BUSF Non-Finance elective; BUSM Non-Marketing elective; Business Accounting Track; IMB Business elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "BUSF-SHU-310",
@@ -1624,7 +1906,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Introduction to Computer Programing (to manipulate network datasets), and Calculus.",
     "offeringText": "occasionally",
-    "fulfillmentText": "This course satisfies BUSF Non-Finance Elective; BUSM Non-Marketing elective; IMB Business Elective; Social Science methods; Computer Science elective; Data Science Concentration in AI."
+    "fulfillmentText": "This course satisfies BUSF Non-Finance Elective; BUSM Non-Marketing elective; IMB Business Elective; Social Science methods; Computer Science elective; Data Science Concentration in AI.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "BUSF-SHU-311",
@@ -1640,7 +1925,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "sophomore standing and higher",
     "offeringText": "",
-    "fulfillmentText": "This course satisfies BUSM Non-Marketing Elective; BUSF Non-Finance Elective; IMB Business elective."
+    "fulfillmentText": "This course satisfies BUSM Non-Marketing Elective; BUSF Non-Finance Elective; IMB Business elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "BUSF-SHU-312",
@@ -1656,7 +1944,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Open to sophomores, juniors, and seniors from all majors. Fullfillment: This course satisfies Business China Business Studies (if China related); BUSM: Non-Marketing Elective; BUSF:Non-Finance Elective; Management Track; IMB Business elective.",
     "offeringText": "",
-    "fulfillmentText": ""
+    "fulfillmentText": "",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "BUSF-SHU-318",
@@ -1674,7 +1965,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "BUSF-SHU 202 Foundation of Finance",
     "offeringText": "",
-    "fulfillmentText": "Business and Finance: Non-Finance Elective; Business and Marketing: Non-Marketing Elective; IMB Business Elective"
+    "fulfillmentText": "Business and Finance: Non-Finance Elective; Business and Marketing: Non-Marketing Elective; IMB Business Elective",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "BUSF-SHU-321",
@@ -1692,7 +1986,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "BUSF-SHU 303 Corporate Finance and Junior or Senior students.",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": "This course satisfies BUSF Finance elective; BUSM Non-marketing elective; Business Finance track; IMB Business elective."
+    "fulfillmentText": "This course satisfies BUSF Finance elective; BUSM Non-marketing elective; Business Finance track; IMB Business elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "BUSF-SHU-334",
@@ -1708,7 +2005,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Foundations of Finance",
     "offeringText": "occasionally",
-    "fulfillmentText": "This course satisfies BUSF Finance elective; BUSM Non-Marketing elective; IMB Business elective."
+    "fulfillmentText": "This course satisfies BUSF Finance elective; BUSM Non-Marketing elective; IMB Business elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "BUSF-SHU-350",
@@ -1726,7 +2026,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "Principles of Fin Accounting (BUSF-SHU 250).",
     "offeringText": "occasionally",
-    "fulfillmentText": "This course satisfies BUSF Non-Finance elective; BUSM Non-Marketing elective; Business Accounting track; IMB Business elective."
+    "fulfillmentText": "This course satisfies BUSF Non-Finance elective; BUSM Non-Marketing elective; Business Accounting track; IMB Business elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "BUSF-SHU-351",
@@ -1742,7 +2045,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Sophomore Standing.",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": "This course satisfies BUSF/BUSM Business Elective or non-Finance/non-Marketing elective; Business Analytic track; IMB Business Flexible Core or elective."
+    "fulfillmentText": "This course satisfies BUSF/BUSM Business Elective or non-Finance/non-Marketing elective; Business Analytic track; IMB Business Flexible Core or elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "BUSF-SHU-353",
@@ -1761,7 +2067,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "BUSF-SHU 202 Foundations of Finance and ECON-SHU 250/251 Economics of Global Business.",
     "offeringText": "occasionally",
-    "fulfillmentText": "This course satisfies BUSF Finance elective; BUSM Non-Marketing elective; Business Finance Track; IMB Business elective."
+    "fulfillmentText": "This course satisfies BUSF Finance elective; BUSM Non-Marketing elective; Business Finance Track; IMB Business elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "BUSF-SHU-361",
@@ -1777,7 +2086,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None",
     "offeringText": "every other year",
-    "fulfillmentText": "This course satisfies BUSF Finance elective; BUSM Non-Marketing elective; IMB Business elective."
+    "fulfillmentText": "This course satisfies BUSF Finance elective; BUSM Non-Marketing elective; IMB Business elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "BUSF-SHU-366",
@@ -1793,7 +2105,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Foundations of Finance",
     "offeringText": "every other year",
-    "fulfillmentText": "This course satisfies BUSF Finance elective; BUSM Non-Marketing elective; IMB Business elective."
+    "fulfillmentText": "This course satisfies BUSF Finance elective; BUSM Non-Marketing elective; IMB Business elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "BUSF-SHU-369",
@@ -1812,7 +2127,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "BUSF-SHU 202 Foundations of Finance and CSCI-SHU 11 Introduction to Computer Programming",
     "offeringText": "Spring term of odd numbered years",
-    "fulfillmentText": "BUSF Finance Elective; BUSM Non-Marketing Elective; IMB Business Elective"
+    "fulfillmentText": "BUSF Finance Elective; BUSM Non-Marketing Elective; IMB Business Elective",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "BUSF-SHU-390",
@@ -1828,7 +2146,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Foundations of Finance, and Economics of Global Business (or Macroeconomics). Corporate Finance – highly recommended, While not required, other valuation courses such as Investing and Financing In and With China, Equity Valuation, Debt Instruments, etc. and accounting classes such as Financial Statements Analysis, etc. are helpful. This course is an upper-level finance elective.",
     "offeringText": "every year",
-    "fulfillmentText": "BUSF Finance elective; BUSM Non-Marketing elective; IMB Business elective."
+    "fulfillmentText": "BUSF Finance elective; BUSM Non-Marketing elective; IMB Business elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "BUSF-SHU-420",
@@ -1844,7 +2165,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Foundations of Finance and a familiarity with simple probability and statistics including least squares regression. Programing experience will be preferred.",
     "offeringText": "every year",
-    "fulfillmentText": "This course satisfies BUSF Finance/non-Finance elective; BUSM Non-Marketing elective; Business Analytics Track; IMB Business elective."
+    "fulfillmentText": "This course satisfies BUSF Finance/non-Finance elective; BUSM Non-Marketing elective; Business Analytics Track; IMB Business elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "BUSF-SHU-421",
@@ -1863,7 +2187,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "BUSF-SHU 202 Foundations of Finance and BUSF-SHU 250 Principals of Financial Accounting",
     "offeringText": "Spring",
-    "fulfillmentText": "BUSF Finance Elective; BUSM Non-Marketing Elective; IMB Business Elective"
+    "fulfillmentText": "BUSF Finance Elective; BUSM Non-Marketing Elective; IMB Business Elective",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "BUSF-SHU-441",
@@ -1882,7 +2209,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "BUSF-SHU 202 Foundations of Finance and BUSF-SHU 303 Corporate Finance.",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": "This course satisfies BUSF Finance elective; BUSM Non-Marketing elective; IMB Business elective."
+    "fulfillmentText": "This course satisfies BUSF Finance elective; BUSM Non-Marketing elective; IMB Business elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "BUSF-SHU-442",
@@ -1898,7 +2228,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Foundations of Finance, Corporate Finance and Economics of Global Business (or Macroeconomics).",
     "offeringText": "every year",
-    "fulfillmentText": "This course satisfies BUSF Finance elective; BUSM Non-Marketing elective; IMB Business elective."
+    "fulfillmentText": "This course satisfies BUSF Finance elective; BUSM Non-Marketing elective; IMB Business elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "BUSF-SHU-48",
@@ -1914,7 +2247,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Foundations of Finance.",
     "offeringText": "every year",
-    "fulfillmentText": "BUSF Finance elective; BUSM Non-Marketing elective; IMB Business elective."
+    "fulfillmentText": "BUSF Finance elective; BUSM Non-Marketing elective; IMB Business elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "BUSF-SHU-499",
@@ -1930,7 +2266,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Must be a senior in the business major",
     "offeringText": "every year",
-    "fulfillmentText": "General elective."
+    "fulfillmentText": "General elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "BUSF-SHU-5",
@@ -1946,7 +2285,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Spring",
-    "fulfillmentText": ""
+    "fulfillmentText": "",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "BUSF-SHU-9289",
@@ -1962,7 +2304,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Open to non-shanghai students only.",
     "offeringText": "every year",
-    "fulfillmentText": "General elective."
+    "fulfillmentText": "General elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "BUSF-SHU-997",
@@ -1978,7 +2323,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "",
     "offeringText": "Fall, Spring, and Summer terms",
-    "fulfillmentText": "This course satisfies BUSF Non-Finance elective; BUSM Non-Marketing elective; IMB Business elective."
+    "fulfillmentText": "This course satisfies BUSF Non-Finance elective; BUSM Non-Marketing elective; IMB Business elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CCCF-SHU-101W1",
@@ -1996,7 +2344,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "C or better in WRIT-SHU 101 or 102 Writing as Inquiry. Students cannot register for more than one section of PoH.",
     "offeringText": "Fall",
-    "fulfillmentText": "CORE PoH."
+    "fulfillmentText": "CORE PoH.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CCCF-SHU-101W11",
@@ -2014,7 +2365,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "C or better in WRIT-SHU 101 or 102 Writing as Inquiry. Students cannot register for more than one section of PoH.",
     "offeringText": "Fall",
-    "fulfillmentText": "CORE PoH."
+    "fulfillmentText": "CORE PoH.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CCCF-SHU-101W16",
@@ -2032,7 +2386,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "C or better in WRIT-SHU 101 or 102 Writing as Inquiry. Students cannot register for more than one section of PoH.",
     "offeringText": "Fall",
-    "fulfillmentText": "CORE PoH."
+    "fulfillmentText": "CORE PoH.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CCCF-SHU-101W17",
@@ -2050,7 +2407,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "C or better in WRIT-SHU 101 or 102 Writing as Inquiry. Students cannot register for more than one section of PoH.",
     "offeringText": "Fall",
-    "fulfillmentText": "CORE PoH."
+    "fulfillmentText": "CORE PoH.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CCCF-SHU-101W19",
@@ -2068,7 +2428,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "C or better in WRIT-SHU 101 or 102 Writing as Inquiry. Students cannot register for more than one section of PoH.",
     "offeringText": "Fall",
-    "fulfillmentText": "CORE PoH."
+    "fulfillmentText": "CORE PoH.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CCCF-SHU-101W20",
@@ -2086,7 +2449,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "C or better in WRIT-SHU 101 or 102 Writing as Inquiry. Students cannot register for more than one section of PoH.",
     "offeringText": "Fall",
-    "fulfillmentText": "CORE PoH."
+    "fulfillmentText": "CORE PoH.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CCCF-SHU-101W21",
@@ -2104,7 +2470,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "C or better in WRIT-SHU 101 or 102 Writing as Inquiry. Students cannot register for more than one section of PoH.",
     "offeringText": "Fall",
-    "fulfillmentText": "CORE PoH."
+    "fulfillmentText": "CORE PoH.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CCCF-SHU-101W22",
@@ -2122,7 +2491,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "C or better in WRIT-SHU 101 or 102 Writing as Inquiry. Students cannot register for more than one section of PoH.",
     "offeringText": "Fall",
-    "fulfillmentText": "CORE PoH."
+    "fulfillmentText": "CORE PoH.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CCCF-SHU-101W24",
@@ -2140,7 +2512,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "C or better in WRIT-SHU 101 or 102 Writing as Inquiry. Students cannot register for more than one section of PoH.",
     "offeringText": "Fall",
-    "fulfillmentText": "CORE PoH."
+    "fulfillmentText": "CORE PoH.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CCCF-SHU-101W25",
@@ -2158,7 +2533,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "C or better in WRIT-SHU 101 or 102 Writing as Inquiry. Students cannot register for more than one section of PoH.",
     "offeringText": "Fall",
-    "fulfillmentText": "CORE PoH."
+    "fulfillmentText": "CORE PoH.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CCCF-SHU-101W27",
@@ -2176,7 +2554,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "C or better in WRIT-SHU 101 or 102 Writing as Inquiry. Students cannot register for more than one section of PoH.",
     "offeringText": "Fall",
-    "fulfillmentText": "CORE PoH."
+    "fulfillmentText": "CORE PoH.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CCCF-SHU-101W28",
@@ -2194,7 +2575,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "C or better in WRIT-SHU 101 or 102 Writing as Inquiry. Students cannot register for more than one section of PoH.",
     "offeringText": "",
-    "fulfillmentText": "CORE PoH."
+    "fulfillmentText": "CORE PoH.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CCCF-SHU-101W29",
@@ -2212,7 +2596,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "C or better in WRIT-SHU 101 or 102 Writing as Inquiry. Students cannot register for more than one section of PoH.",
     "offeringText": "Fall",
-    "fulfillmentText": "CORE PoH."
+    "fulfillmentText": "CORE PoH.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CCCF-SHU-101W3",
@@ -2230,7 +2617,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "C or better in WRIT-SHU 101 or 102 Writing as Inquiry. Students cannot register for more than one section of PoH.",
     "offeringText": "occasionally",
-    "fulfillmentText": "CORE PoH."
+    "fulfillmentText": "CORE PoH.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CCCF-SHU-101W30",
@@ -2248,7 +2638,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "C or better in WRIT-SHU 101 or 102 Writing as Inquiry. Students cannot register for more than one section of PoH.",
     "offeringText": "Fall",
-    "fulfillmentText": "CORE PoH."
+    "fulfillmentText": "CORE PoH.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CCCF-SHU-101W31",
@@ -2266,7 +2659,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "C or better in WRIT-SHU 101 or 102 Writing as Inquiry. Students cannot register for more than one section of PoH.",
     "offeringText": "Fall",
-    "fulfillmentText": "CORE PoH."
+    "fulfillmentText": "CORE PoH.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CCCF-SHU-101W32",
@@ -2284,7 +2680,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "C or better in WRIT-SHU 101 or 102 Writing as Inquiry. Students cannot register for more than one section of PoH.",
     "offeringText": "Fall",
-    "fulfillmentText": "CORE PoH."
+    "fulfillmentText": "CORE PoH.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CCCF-SHU-101W33",
@@ -2302,7 +2701,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "C or better in WRIT-SHU 101 or 102 Writing as Inquiry. Students cannot register for more than one section of PoH.",
     "offeringText": "Fall",
-    "fulfillmentText": "CORE PoH."
+    "fulfillmentText": "CORE PoH.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CCCF-SHU-101W34",
@@ -2320,7 +2722,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "C or better in WRIT-SHU 101 or 102 Writing as Inquiry. Students cannot register for more than one section of PoH.",
     "offeringText": "Fall",
-    "fulfillmentText": "CORE PoH."
+    "fulfillmentText": "CORE PoH.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CCCF-SHU-101W35",
@@ -2338,7 +2743,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "C or better in WRIT-SHU 101 or 102 Writing as Inquiry. Students cannot register for more than one section of PoH.",
     "offeringText": "Fall",
-    "fulfillmentText": "CORE PoH."
+    "fulfillmentText": "CORE PoH.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CCCF-SHU-101W36",
@@ -2356,7 +2764,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "C or better in WRIT-SHU 101 or 102 Writing as Inquiry. Students cannot register for more than one section of PoH.",
     "offeringText": "Fall",
-    "fulfillmentText": "CORE PoH."
+    "fulfillmentText": "CORE PoH.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CCCF-SHU-101W37",
@@ -2374,7 +2785,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "C or better in WRIT-SHU 101 or 102 Writing as Inquiry. Students cannot register for more than one section of PoH.",
     "offeringText": "Fall",
-    "fulfillmentText": "CORE PoH."
+    "fulfillmentText": "CORE PoH.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CCCF-SHU-101W38",
@@ -2392,7 +2806,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "C or better in WRIT-SHU 101 or 102 Writing as Inquiry. Students cannot register for more than one section of PoH.",
     "offeringText": "Fall",
-    "fulfillmentText": "CORE PoH."
+    "fulfillmentText": "CORE PoH.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CCCF-SHU-101W39",
@@ -2410,7 +2827,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "C or better in WRIT-SHU 101 or 102 Writing as Inquiry. Students cannot register for more than one section of PoH.",
     "offeringText": "Fall",
-    "fulfillmentText": "CORE PoH."
+    "fulfillmentText": "CORE PoH.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CCCF-SHU-101W40",
@@ -2428,7 +2848,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "C or better in WRIT-SHU 101 or 102 Writing as Inquiry. Students cannot register for more than one section of PoH.",
     "offeringText": "Fall",
-    "fulfillmentText": "CORE PoH."
+    "fulfillmentText": "CORE PoH.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CCCF-SHU-101W41",
@@ -2446,7 +2869,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "C or better in WRIT-SHU 101 or 102 Writing as Inquiry. Students cannot register for more than one section of PoH.",
     "offeringText": "Fall",
-    "fulfillmentText": "CORE PoH."
+    "fulfillmentText": "CORE PoH.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CCCF-SHU-101W42",
@@ -2464,7 +2890,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "C or better in WRIT-SHU 101 or 102 Writing as Inquiry. Students cannot register for more than one section of PoH.",
     "offeringText": "Fall",
-    "fulfillmentText": "CORE PoH."
+    "fulfillmentText": "CORE PoH.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CCCF-SHU-101W43",
@@ -2482,7 +2911,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "C or better in WRIT-SHU 101 or 102 Writing as Inquiry. Students cannot register for more than one section of PoH.",
     "offeringText": "Fall",
-    "fulfillmentText": "CORE PoH."
+    "fulfillmentText": "CORE PoH.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CCCF-SHU-101W5",
@@ -2500,7 +2932,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "C or better in WRIT-SHU 101 or 102 Writing as Inquiry. Students cannot register for more than one section of PoH.",
     "offeringText": "occasionally",
-    "fulfillmentText": "CORE PoH."
+    "fulfillmentText": "CORE PoH.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CCCF-SHU-101W9",
@@ -2518,7 +2953,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "C or better in WRIT-SHU 101 or 102 Writing as Inquiry. Students cannot register for more than one section of PoH.",
     "offeringText": "Fall",
-    "fulfillmentText": "CORE PoH."
+    "fulfillmentText": "CORE PoH.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CCCF-SHU-130",
@@ -2534,7 +2972,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "",
     "offeringText": "occasionally",
-    "fulfillmentText": "general elective"
+    "fulfillmentText": "general elective",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CCEX-SHU-1",
@@ -2550,7 +2991,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "",
     "offeringText": "",
-    "fulfillmentText": "Core Curriculum Science Experimental Discovery in the Natural World Courses."
+    "fulfillmentText": "Core Curriculum Science Experimental Discovery in the Natural World Courses.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CCEX-SHU-115",
@@ -2566,7 +3010,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "",
     "offeringText": "",
-    "fulfillmentText": "CORE ED."
+    "fulfillmentText": "CORE ED.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CCEX-SHU-120",
@@ -2584,7 +3031,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "None. Antirequisite: Students who have taken CHEM-SHU 125 Foundations of Chemistry I are not eligible.",
     "offeringText": "Fall",
-    "fulfillmentText": "CORE ED."
+    "fulfillmentText": "CORE ED.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CCEX-SHU-122",
@@ -2600,7 +3050,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None",
     "offeringText": "every year",
-    "fulfillmentText": "CORE ED; NS elective."
+    "fulfillmentText": "CORE ED; NS elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CCEX-SHU-136",
@@ -2616,7 +3069,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Spring term of odd numbered years",
-    "fulfillmentText": "CORE ED"
+    "fulfillmentText": "CORE ED",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CCEX-SHU-137",
@@ -2632,7 +3088,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "",
     "offeringText": "",
-    "fulfillmentText": "CORE ED (with CCEX-SHU 136)"
+    "fulfillmentText": "CORE ED (with CCEX-SHU 136)",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CCEX-SHU-170",
@@ -2648,7 +3107,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "every year",
-    "fulfillmentText": "Core Curriculum Science Experimental Discovery in the Natural World Courses."
+    "fulfillmentText": "Core Curriculum Science Experimental Discovery in the Natural World Courses.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CCEX-SHU-203",
@@ -2664,7 +3126,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": "Core Curriculum Science Experimental Discovery in the Natural World Courses."
+    "fulfillmentText": "Core Curriculum Science Experimental Discovery in the Natural World Courses.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CCEX-SHU-214",
@@ -2680,7 +3145,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Spring",
-    "fulfillmentText": "CORE ED"
+    "fulfillmentText": "CORE ED",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CCEX-SHU-3",
@@ -2696,7 +3164,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "",
     "offeringText": "",
-    "fulfillmentText": "Core Curriculum Science Experimental Discovery in the Natural World Courses."
+    "fulfillmentText": "Core Curriculum Science Experimental Discovery in the Natural World Courses.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CCSF-SHU-101L",
@@ -2712,7 +3183,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "for CCSF-101: none.",
     "offeringText": "Fall",
-    "fulfillmentText": "Core Curriculum Global Perspectives on Society."
+    "fulfillmentText": "Core Curriculum Global Perspectives on Society.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CCST-SHU-133",
@@ -2728,7 +3202,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "",
     "offeringText": "",
-    "fulfillmentText": "CORE STS."
+    "fulfillmentText": "CORE STS.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CCST-SHU-142",
@@ -2744,7 +3221,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "occasionally",
-    "fulfillmentText": "CORE STS."
+    "fulfillmentText": "CORE STS.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CEL-SHU-101E",
@@ -2760,7 +3240,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "",
     "offeringText": "",
-    "fulfillmentText": ""
+    "fulfillmentText": "",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CEL-SHU-102",
@@ -2776,7 +3259,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "",
     "offeringText": "occasionally",
-    "fulfillmentText": ""
+    "fulfillmentText": "",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CENG-SHU-201",
@@ -2792,7 +3278,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Intro to Programming or Intro to Computer Science or placement test or interaction lab.",
     "offeringText": "Fall",
-    "fulfillmentText": "Core Curriculum: Science Experimental Discovery in the Natural World Courses ; Major: CS Electives, CE Required, EE Required."
+    "fulfillmentText": "Core Curriculum: Science Experimental Discovery in the Natural World Courses ; Major: CS Electives, CE Required, EE Required.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CENG-SHU-202",
@@ -2812,7 +3301,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "CSCI-SHU 101 ICDS or CSCI-SHU 11 ICP or INTM-SHU 101 interaction Lab.",
     "offeringText": "Spring",
-    "fulfillmentText": "Major: CS Required, CE Required."
+    "fulfillmentText": "Major: CS Required, CE Required.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CENG-SHU-352",
@@ -2828,7 +3320,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "",
-    "fulfillmentText": "Core Curriculum Science Science, Technology and Society Courses; Social Science Focus Urban Studies 200 level."
+    "fulfillmentText": "Core Curriculum Science Science, Technology and Society Courses; Social Science Focus Urban Studies 200 level.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CENG-SHU-400",
@@ -2844,7 +3339,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Senior Standing.",
     "offeringText": "Spring",
-    "fulfillmentText": ""
+    "fulfillmentText": "",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CENG-SHU-401",
@@ -2862,7 +3360,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "CENG-SHU 400.",
     "offeringText": "occasionally",
-    "fulfillmentText": ""
+    "fulfillmentText": "",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CENG-SHU-997",
@@ -2878,7 +3379,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": ""
+    "fulfillmentText": "",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CHEM-SHU-125",
@@ -2897,7 +3401,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "or co-req: MATH-SHU 121 Calculus or MATH-SHU 201 Honors Calculus",
     "offeringText": "Fall",
-    "fulfillmentText": "Core Curriculum: Science Experimental Discovery in the Natural World Courses; Major: Biology Foundational Courses; Chemistry Foundational Courses; Mathematics & Honors Mathematics Science Lecture sections; Neural Science Foundational Courses; Physics Foundational Courses."
+    "fulfillmentText": "Core Curriculum: Science Experimental Discovery in the Natural World Courses; Major: Biology Foundational Courses; Chemistry Foundational Courses; Mathematics & Honors Mathematics Science Lecture sections; Neural Science Foundational Courses; Physics Foundational Courses.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CHEM-SHU-126",
@@ -2917,7 +3424,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "CHEM-SHU 125 Foundations of Chemistry I AND pre-req or co-req: MATH-SHU 131 Calculus or MATH-SHU 201 Honors Calculus",
     "offeringText": "Spring",
-    "fulfillmentText": "Biology Foundational Courses; Chemistry Foundational Courses; Mathematics & Honors Mathematics Science Lecture sections; Neural Science Foundational Courses; Physics Foundational Courses."
+    "fulfillmentText": "Biology Foundational Courses; Chemistry Foundational Courses; Mathematics & Honors Mathematics Science Lecture sections; Neural Science Foundational Courses; Physics Foundational Courses.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CHEM-SHU-127",
@@ -2935,7 +3445,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "or co-req: CHEM-SHU 125 Foundations of Chemistry I",
     "offeringText": "Fall",
-    "fulfillmentText": "Core Curriculum: Experimental Discovery in the Natural World Courses; Major: Biology Foundational Courses; Chemistry Foundational Courses; Mathematics & Honors Mathematics Science Lab sections; Neural Science Foundational Courses."
+    "fulfillmentText": "Core Curriculum: Experimental Discovery in the Natural World Courses; Major: Biology Foundational Courses; Chemistry Foundational Courses; Mathematics & Honors Mathematics Science Lab sections; Neural Science Foundational Courses.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CHEM-SHU-128",
@@ -2954,7 +3467,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "for CHEM-SHU 128 is Prereq OR Coreq: Calculus/ Honors Calc (MATH-121/201) AND Prereq OR Coreq: Found of Chem II (CHEM-SHU 126).",
     "offeringText": "Spring",
-    "fulfillmentText": "Biology Foundational course; Chemistry Foundational course; Neural Science Foundational course; Physics Foundational course."
+    "fulfillmentText": "Biology Foundational course; Chemistry Foundational course; Neural Science Foundational course; Physics Foundational course.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CHEM-SHU-225",
@@ -2970,7 +3486,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Foundations of Chemistry II AND (Pre-req or Co-req: Foundations of Chemistry I Lab or Foundations of Chemistry II Lab.)",
     "offeringText": "Fall",
-    "fulfillmentText": "Biology Major Additional Required Courses; Chemistry Major Additional Required Courses."
+    "fulfillmentText": "Biology Major Additional Required Courses; Chemistry Major Additional Required Courses.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CHEM-SHU-225L",
@@ -2988,7 +3507,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "or coreq: Organic Chem I (CHEM-SHU 225)",
     "offeringText": "Fall",
-    "fulfillmentText": "Biology Major Additional Required Courses; Chemistry Major Additional Required Courses."
+    "fulfillmentText": "Biology Major Additional Required Courses; Chemistry Major Additional Required Courses.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CHEM-SHU-226",
@@ -3006,7 +3528,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "CHEM-SHU 225.",
     "offeringText": "Spring",
-    "fulfillmentText": "Chemistry Additional Required Courses."
+    "fulfillmentText": "Chemistry Additional Required Courses.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CHEM-SHU-226L",
@@ -3024,7 +3549,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "CHEM-SHU 226.",
     "offeringText": "Spring",
-    "fulfillmentText": "Chemistry Additional Required Courses."
+    "fulfillmentText": "Chemistry Additional Required Courses.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CHEM-SHU-312",
@@ -3042,7 +3570,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "CHEM-SHU 126 Foundations of Chemistry II.",
     "offeringText": "occasionally",
-    "fulfillmentText": "Chemistry Major Electives."
+    "fulfillmentText": "Chemistry Major Electives.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CHEM-SHU-651",
@@ -3062,7 +3593,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "PHYS-SHU 12 General Physics II OR PHYS-SHU 93 Foundations of Physics II Honors, and CHEM-SHU 126 Foundations of Chemistry II.",
     "offeringText": "occasionally",
-    "fulfillmentText": "Chemistry additional required course."
+    "fulfillmentText": "Chemistry additional required course.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CHEM-SHU-652",
@@ -3082,7 +3616,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "CHEM-SHU 126 Foundations of Chemistry II and PHYS-SHU 12 General Physics II or PHYS-SHU 93 Found of Physics II Honors. Multivariable Calculus is strongly recommended. Linear Algebra and Differential Equations is also recommended",
     "offeringText": "occasionally",
-    "fulfillmentText": "Chemistry Major Required."
+    "fulfillmentText": "Chemistry Major Required.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CHEM-SHU-881",
@@ -3100,7 +3637,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "CHEM-SHU 226.",
     "offeringText": "Fall",
-    "fulfillmentText": "Biology Major Electives; Chemistry Major Electives; Neural Science Major Approved upper-level Biology courses."
+    "fulfillmentText": "Biology Major Electives; Chemistry Major Electives; Neural Science Major Approved upper-level Biology courses.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CHEM-SHU-882",
@@ -3118,7 +3658,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "CHEM-SHU 226.",
     "offeringText": "Spring",
-    "fulfillmentText": "Biology Major Electives; Chemistry Major Electives; Neural Science Major Approved upper-level Biology courses."
+    "fulfillmentText": "Biology Major Electives; Chemistry Major Electives; Neural Science Major Approved upper-level Biology courses.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CHEM-SHU-997",
@@ -3134,7 +3677,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Foundations of Science I-III (or Physics I&II, Foundations of Chemistry I&II, Foundations of Biology I&II), and a minimum GPA of 3.0 overall and in all science and mathematics courses required for the major, permission of a chemistry faculty member (at NYU-Shanghai, NYU-Abu Dhabi, or NYU-New York) who will act as a sponsor and mentor, and approval of the Director of Undergraduate Studies (DUS) in Chemistry. The faculty mentor must be selected in consultation with the DUS. Offered in the Fall, Spring or Summer. 2 to 4 points per term for a maximum of 4 points. This course aims at engaging students in research. It is designed to offer students an opportunity to observe chemistry research up close and gain hands-on research experience by working as a member in an active research team. Independent Study I and II can be done with the same supervisor or two different supervisors. No lectures will be given. Student researchers are expected to attend and actively participate in lab/supervision meetings. A Proposal for Independent Study form must be filled out, signed by the DUS, and submitted to the Registrar. Requires a written report on the research to be evaluated by the faculty sponsor, with a copy submitted to the DUS and a copy to the Dean of Arts & Sciences. Department consent is needed.",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": "Chemistry Major Electives."
+    "fulfillmentText": "Chemistry Major Electives.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CHEM-SHU-998",
@@ -3150,7 +3696,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "senior students with chemistry primary major.",
     "offeringText": "Fall",
-    "fulfillmentText": "Chemistry required."
+    "fulfillmentText": "Chemistry required.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CHEM-SHU-999",
@@ -3169,7 +3718,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "Independent Study (CHEM-SHU 997 or 998), a minimum GPA of 3.65 overall, a minimum GPA of 3.65 in all science and mathematics courses required for the major, and permission of a faculty sponsor and the Dean of Arts & Sciences. Open to Chemistry majors only. The faculty mentor must be selected in consultation with the Dean of Arts & Sciences. May not be used for the major in chemistry. Offered in the fall, spring, and summer. 2 points. For chemistry majors who have completed at least one semester of laboratory research (CHEM-SHU 997 or 998) and are able to expand this work into a thesis. Requires writing a Thesis (i.e., a full literature search of the subject and a formal written report on the research in publication form), which is defended in front of a committee of three faculty (which includes the faculty sponsor), chosen by the student in consultation with the faculty mentor. (The defense may be a brief oral presentation followed by a question-and-answer session.) The Thesis and defense must be evaluated by the committee, with the cover page of the thesis signed by all committee members, with a copy of the Thesis submitted to the Dean of Arts & Sciences. (It is recommended that the student meet with the faculty committee at least once mid-semester to evaluate and guide the student's progress on the thesis work.) Department consent is needed.",
     "offeringText": "Spring",
-    "fulfillmentText": ""
+    "fulfillmentText": "",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CHIN-SHU-10",
@@ -3185,7 +3737,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": "General Elective."
+    "fulfillmentText": "General Elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CHIN-SHU-101",
@@ -3201,7 +3756,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Fall, Spring, and Summer terms",
-    "fulfillmentText": "General Elective."
+    "fulfillmentText": "General Elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CHIN-SHU-101S",
@@ -3217,7 +3775,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None. (Special for freshman students enrolled in Foundation of Science)",
     "offeringText": "Fall",
-    "fulfillmentText": "General Elective."
+    "fulfillmentText": "General Elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CHIN-SHU-101S2",
@@ -3235,7 +3796,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "Successful completion of first half. (CHIN-SHU 102S1)",
     "offeringText": "Spring",
-    "fulfillmentText": "General Elective."
+    "fulfillmentText": "General Elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CHIN-SHU-102",
@@ -3254,7 +3818,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "CHIN-SHU 101 Elementary Chinese I or CHIN-SHU 101S2 Elementary Chinese I - FoS 2.",
     "offeringText": "Fall, Spring, and Summer terms",
-    "fulfillmentText": "General Elective."
+    "fulfillmentText": "General Elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CHIN-SHU-102S",
@@ -3272,7 +3839,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "CHIN-SHU 101 or 101S2.",
     "offeringText": "Fall",
-    "fulfillmentText": "General Elective."
+    "fulfillmentText": "General Elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CHIN-SHU-102S2",
@@ -3290,7 +3860,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "Successful completion of first half. (CHIN-SHU 102S1)",
     "offeringText": "Spring",
-    "fulfillmentText": ""
+    "fulfillmentText": "",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CHIN-SHU-111",
@@ -3306,7 +3879,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None. ​This course is followed by Intermediate for Advanced Beginners.",
     "offeringText": "Fall, Spring, and Summer terms",
-    "fulfillmentText": "General Elective."
+    "fulfillmentText": "General Elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CHIN-SHU-121",
@@ -3322,7 +3898,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "",
     "offeringText": "Summer term",
-    "fulfillmentText": "General elective."
+    "fulfillmentText": "General elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CHIN-SHU-122",
@@ -3338,7 +3917,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "",
     "offeringText": "Summer term",
-    "fulfillmentText": "general elective."
+    "fulfillmentText": "general elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CHIN-SHU-150",
@@ -3356,7 +3938,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "CHIN-SHU 101 Elementary Chinese I or native Chinese speaker",
     "offeringText": "",
-    "fulfillmentText": "General Elective."
+    "fulfillmentText": "General Elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CHIN-SHU-20",
@@ -3372,7 +3957,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": "General Elective."
+    "fulfillmentText": "General Elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CHIN-SHU-201",
@@ -3390,7 +3978,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "CHIN-SHU 102.",
     "offeringText": "Fall, Spring, and Summer terms",
-    "fulfillmentText": "General Elective."
+    "fulfillmentText": "General Elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CHIN-SHU-201A",
@@ -3409,7 +4000,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "CHIN-SHU 102 or 102A or placement; Co-requisite: CHIN-SHU 202A.",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": "General Elective."
+    "fulfillmentText": "General Elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CHIN-SHU-202",
@@ -3427,7 +4021,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "CHIN-SHU 201.",
     "offeringText": "Fall, Spring, and Summer terms",
-    "fulfillmentText": "Core Curriculum Language."
+    "fulfillmentText": "Core Curriculum Language.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CHIN-SHU-202A",
@@ -3443,7 +4040,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": "Core Curriculum Language."
+    "fulfillmentText": "Core Curriculum Language.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CHIN-SHU-203",
@@ -3459,7 +4059,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": "General Elective."
+    "fulfillmentText": "General Elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CHIN-SHU-204",
@@ -3480,7 +4083,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "CHIN-SHU 102 or the equivalent. Anti-requisite: Students who have completed CHIN-SHU 202 or the equivalent (CHIN-SHU 211, CHIN-SHU 202A) are not eligible. Any student enrolled in a higher class isn't eligible.",
     "offeringText": "every year",
-    "fulfillmentText": "General Electives"
+    "fulfillmentText": "General Electives",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CHIN-SHU-211",
@@ -3498,7 +4104,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "CHIN-SHU 111 Elementary Chinese for Advanced Beginners. This course is followed by Advanced Chinese I.",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": "Core Curriculum Language."
+    "fulfillmentText": "Core Curriculum Language.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CHIN-SHU-221",
@@ -3514,7 +4123,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": "Core Curriculum-Chinese Language requirement."
+    "fulfillmentText": "Core Curriculum-Chinese Language requirement.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CHIN-SHU-222",
@@ -3530,7 +4142,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "",
     "offeringText": "Fall, Spring, and Summer terms",
-    "fulfillmentText": "Core Curriculum-Chinese Language requirement."
+    "fulfillmentText": "Core Curriculum-Chinese Language requirement.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CHIN-SHU-301",
@@ -3548,7 +4163,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "CHIN-SHU 202 OR equivalent.",
     "offeringText": "Fall, Spring, and Summer terms",
-    "fulfillmentText": "Core Curriculum Language; GCS Major Requirement Language Courses For Advanced GCS Track Non-Native Chinese Speakers."
+    "fulfillmentText": "Core Curriculum Language; GCS Major Requirement Language Courses For Advanced GCS Track Non-Native Chinese Speakers.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CHIN-SHU-301A",
@@ -3566,7 +4184,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "CHIN-SHU 211 or equivalent",
     "offeringText": "",
-    "fulfillmentText": "Core Curriculum Language; GCS Major Requirement Language Courses For Advanced GCS Track Non-Native Chinese Speakers."
+    "fulfillmentText": "Core Curriculum Language; GCS Major Requirement Language Courses For Advanced GCS Track Non-Native Chinese Speakers.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CHIN-SHU-302",
@@ -3584,7 +4205,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "CHIN-SHU 301.",
     "offeringText": "Fall, Spring, and Summer terms",
-    "fulfillmentText": "Core Curriculum Language; GCS Major Requirement Language Courses For Advanced GCS Track Non-Native Chinese Speakers."
+    "fulfillmentText": "Core Curriculum Language; GCS Major Requirement Language Courses For Advanced GCS Track Non-Native Chinese Speakers.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CHIN-SHU-302A",
@@ -3602,7 +4226,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "CHIN-SHU 301A",
     "offeringText": "",
-    "fulfillmentText": ""
+    "fulfillmentText": "",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CHIN-SHU-306",
@@ -3620,7 +4247,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "Intermediate Chinese II (CHIN-SHU 202) or above.",
     "offeringText": "every year",
-    "fulfillmentText": "General Elective."
+    "fulfillmentText": "General Elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CHIN-SHU-321",
@@ -3636,7 +4266,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "",
     "offeringText": "",
-    "fulfillmentText": "Core Curriculum Language; GCS Major Requirement Language Courses For Advanced GCS Track."
+    "fulfillmentText": "Core Curriculum Language; GCS Major Requirement Language Courses For Advanced GCS Track.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CHIN-SHU-321A",
@@ -3652,7 +4285,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "",
     "offeringText": "Summer term",
-    "fulfillmentText": "Core Curriculum Language; GCS Major Requirement Language Courses For Advanced GCS Track."
+    "fulfillmentText": "Core Curriculum Language; GCS Major Requirement Language Courses For Advanced GCS Track.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CHIN-SHU-322",
@@ -3668,7 +4304,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "",
     "offeringText": "",
-    "fulfillmentText": "Core Curriculum Language; GCS Major Requirement Language Courses For Advanced GCS Track."
+    "fulfillmentText": "Core Curriculum Language; GCS Major Requirement Language Courses For Advanced GCS Track.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CHIN-SHU-322A",
@@ -3684,7 +4323,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "",
     "offeringText": "Summer term",
-    "fulfillmentText": "Core Curriculum Language; GCS Major Requirement Language Courses For Advanced GCS Track."
+    "fulfillmentText": "Core Curriculum Language; GCS Major Requirement Language Courses For Advanced GCS Track.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CHIN-SHU-401",
@@ -3702,7 +4344,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "CHIN-SHU 302 or placed out of Advanced Chinese II.",
     "offeringText": "Fall",
-    "fulfillmentText": "Core Curriculum Language."
+    "fulfillmentText": "Core Curriculum Language.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CHIN-SHU-403",
@@ -3724,7 +4369,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "for CHIN-SHU 403 is CHIN-SHU 302 OR EAST-UA 206 OR EAST-UA 9206 OR CHINL-UH 3002 OR place put of advanced Chinese II.",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": "Core Curriculum Language."
+    "fulfillmentText": "Core Curriculum Language.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CHIN-SHU-404",
@@ -3743,7 +4391,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "CHIN-SHU 403 Interpreting Modern China or CHIN-SHU 302 Advanced Chinese II or place out of Advanced Chinese 2.",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": "Core Curriculum Language."
+    "fulfillmentText": "Core Curriculum Language.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CHIN-SHU-405",
@@ -3759,7 +4410,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Advanced Chinese II or the equivalent",
     "offeringText": "Fall",
-    "fulfillmentText": "Core Curriculum Language; GCS Major Requirement Language Courses For Advanced GCS Track Non-Native Chinese Speakers; Chinese Minor and the Chinese Language and Literature Minor."
+    "fulfillmentText": "Core Curriculum Language; GCS Major Requirement Language Courses For Advanced GCS Track Non-Native Chinese Speakers; Chinese Minor and the Chinese Language and Literature Minor.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CHIN-SHU-406",
@@ -3775,7 +4429,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Advanced Chinese II or the equivalent",
     "offeringText": "Spring",
-    "fulfillmentText": "Post-advanced Chinese elective; Chinese Minor and the Chinese Language and Literature Minor."
+    "fulfillmentText": "Post-advanced Chinese elective; Chinese Minor and the Chinese Language and Literature Minor.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CHIN-SHU-408",
@@ -3791,7 +4448,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Advanced Chinese II (or equivalent)",
     "offeringText": "every year",
-    "fulfillmentText": "This would count toward the current Chinese minor and also toward the proposed Chinese Language and Literature Major (for L2 learners)"
+    "fulfillmentText": "This would count toward the current Chinese minor and also toward the proposed Chinese Language and Literature Major (for L2 learners)",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CHIN-SHU-409",
@@ -3807,7 +4467,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Advanced Chinese II or the equivalent",
     "offeringText": "every year",
-    "fulfillmentText": "Chinese Minor and the Chinese Language and Literature Minor."
+    "fulfillmentText": "Chinese Minor and the Chinese Language and Literature Minor.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CHIN-SHU-410",
@@ -3825,7 +4488,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "Advanced Chinese II (CHIN-SHU 302) or equivalent or by placement exam",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": "Core Curriculum Language."
+    "fulfillmentText": "Core Curriculum Language.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CHIN-SHU-415",
@@ -3843,7 +4509,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "CHIN-SHU 302 or place out of Advance Chinese 2.",
     "offeringText": "occasionally",
-    "fulfillmentText": "Core Curriculum Language."
+    "fulfillmentText": "Core Curriculum Language.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CHIN-SHU-416",
@@ -3861,7 +4530,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "CHIN-SHU 302 Advance Chinese 2 or place out of Advance Chinese 2.",
     "offeringText": "occasionally",
-    "fulfillmentText": "Core Curriculum Language."
+    "fulfillmentText": "Core Curriculum Language.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CHIN-SHU-421",
@@ -3880,7 +4552,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "CHIN-SHU 302, CHIN-SHU 301A, or with the instructor’s permission.",
     "offeringText": "Summer term",
-    "fulfillmentText": "GCS major advanced track Language requirement for Non-Native Chinese Speakers; Chinese minor."
+    "fulfillmentText": "GCS major advanced track Language requirement for Non-Native Chinese Speakers; Chinese minor.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CHIN-SHU-422",
@@ -3898,7 +4573,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "CHIN-SHU 421 or with the instructor’s permission.",
     "offeringText": "Summer term",
-    "fulfillmentText": "GCS major advanced track Language requirement for Non-Native Chinese Speakers; Chinese minor."
+    "fulfillmentText": "GCS major advanced track Language requirement for Non-Native Chinese Speakers; Chinese minor.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CHIN-SHU-429",
@@ -3914,7 +4592,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "",
     "offeringText": "occasionally",
-    "fulfillmentText": "GCS The Politics, Economy, and Environment of China"
+    "fulfillmentText": "GCS The Politics, Economy, and Environment of China",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CHIN-SHU-430",
@@ -3930,7 +4611,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Advanced Chinese II or place out of Advanced Chinese 2.",
     "offeringText": "",
-    "fulfillmentText": "Core Curriculum Language; Chinese Minor and the Chinese Language and Literature Minor."
+    "fulfillmentText": "Core Curriculum Language; Chinese Minor and the Chinese Language and Literature Minor.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CHIN-SHU-450",
@@ -3946,7 +4630,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Advanced Chinese II or equivalent.",
     "offeringText": "every year",
-    "fulfillmentText": "GCS Advanced Track Post Advanced Chinese course; Chinese Language and Literature Minor."
+    "fulfillmentText": "GCS Advanced Track Post Advanced Chinese course; Chinese Language and Literature Minor.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CHIN-SHU-460A",
@@ -3962,7 +4649,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Advanced II or equivalent",
     "offeringText": "Fall",
-    "fulfillmentText": "Core Curriculum Language. Can count toward the Chinese Language Minor"
+    "fulfillmentText": "Core Curriculum Language. Can count toward the Chinese Language Minor",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CHIN-SHU-460B",
@@ -3980,7 +4670,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "Advanced II or equivalent and CHIN-SHU 460A.",
     "offeringText": "Spring",
-    "fulfillmentText": "Core Curriculum Language. Can count toward the Chinese Language Minor."
+    "fulfillmentText": "Core Curriculum Language. Can count toward the Chinese Language Minor.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CHIN-SHU-500",
@@ -3996,7 +4689,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Advanced Chinese 2 or equivalent.",
     "offeringText": "Fall, Spring, and Summer terms",
-    "fulfillmentText": "Core Curriculum Language. Can count toward Chinese minor. Can fulfill global language requirement for L1 Chinese study away students."
+    "fulfillmentText": "Core Curriculum Language. Can count toward Chinese minor. Can fulfill global language requirement for L1 Chinese study away students.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CHIN-SHU-9000",
@@ -4012,7 +4708,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": "General Elective."
+    "fulfillmentText": "General Elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CHIN-SHU-9002",
@@ -4028,7 +4727,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": "General Elective."
+    "fulfillmentText": "General Elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CRWR-SHU-159",
@@ -4044,7 +4746,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None",
     "offeringText": "Fall",
-    "fulfillmentText": "Humanities Introductory course (18-19: survey)."
+    "fulfillmentText": "Humanities Introductory course (18-19: survey).",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CRWR-SHU-161",
@@ -4060,7 +4765,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "requirement for intermediate Creative Writing workshops. Prerequisite: None.",
     "offeringText": "Spring term of odd numbered years",
-    "fulfillmentText": "This course is designed to fulfill the same fundamental requirements as Introduction to Creative Writing with the key difference being that, in addition to writing their own creative works, students will also study form and genre by translating exemplary works of poetry and narrative prose. Pending further discussion, development and approval, students would be able to take an intermediate literary translation course to complete a Creative Writing Minor with an Emphasis in Literary Translation."
+    "fulfillmentText": "This course is designed to fulfill the same fundamental requirements as Introduction to Creative Writing with the key difference being that, in addition to writing their own creative works, students will also study form and genre by translating exemplary works of poetry and narrative prose. Pending further discussion, development and approval, students would be able to take an intermediate literary translation course to complete a Creative Writing Minor with an Emphasis in Literary Translation.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CRWR-SHU-170T",
@@ -4076,7 +4784,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "every year",
-    "fulfillmentText": "This course counts as an elective class towards the creative writing minor."
+    "fulfillmentText": "This course counts as an elective class towards the creative writing minor.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CRWR-SHU-175",
@@ -4092,7 +4803,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "none.",
     "offeringText": "occasionally",
-    "fulfillmentText": "IMA/IMB elective"
+    "fulfillmentText": "IMA/IMB elective",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CRWR-SHU-176",
@@ -4108,7 +4822,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "none.",
     "offeringText": "",
-    "fulfillmentText": "General Elective."
+    "fulfillmentText": "General Elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CRWR-SHU-177T",
@@ -4124,7 +4841,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "none.",
     "offeringText": "",
-    "fulfillmentText": "General Elective."
+    "fulfillmentText": "General Elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CRWR-SHU-201T",
@@ -4142,7 +4862,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "CRWR-SHU 159 Introduction to Creative Writing, or junior/senior standing",
     "offeringText": "",
-    "fulfillmentText": "Intermediate Workshop for Creative Writing minors; Humanities Advanced course"
+    "fulfillmentText": "Intermediate Workshop for Creative Writing minors; Humanities Advanced course",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CRWR-SHU-207",
@@ -4161,7 +4884,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "Introduction to Creative Writing (CRWR-SHU 159 or CRWR-SHU 161) OR Junior standing.",
     "offeringText": "occasionally",
-    "fulfillmentText": "Humanities other Advanced course."
+    "fulfillmentText": "Humanities other Advanced course.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CRWR-SHU-209",
@@ -4180,7 +4906,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "CRWR-SHU 159 Introduction to Creative Writing OR WRIT-SHU 201 PoH.",
     "offeringText": "Spring term of odd numbered years",
-    "fulfillmentText": "General Elective."
+    "fulfillmentText": "General Elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CRWR-SHU-217",
@@ -4199,7 +4928,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "Introduction to Creative Writing (CRWR-SHU 159 or CRWR-SHU 161) OR Junior standing.",
     "offeringText": "every other year",
-    "fulfillmentText": "General Elective."
+    "fulfillmentText": "General Elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CRWR-SHU-219",
@@ -4218,7 +4950,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "Introduction to Creative Writing (CRWR-SHU 159 or CRWR-SHU 161) OR Junior standing.",
     "offeringText": "occasionally",
-    "fulfillmentText": "General Elective."
+    "fulfillmentText": "General Elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CRWR-SHU-220",
@@ -4237,7 +4972,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "Introduction to Creative Writing (CRWR-SHU 159 or CRWR-SHU 161) OR Junior standing.",
     "offeringText": "Spring term of odd numbered years",
-    "fulfillmentText": "General Elective."
+    "fulfillmentText": "General Elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CRWR-SHU-221",
@@ -4256,7 +4994,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "Introduction to Creative Writing (CRWR-SHU 159 or CRWR-SHU 161) OR Junior standing.",
     "offeringText": "Spring term of even numbered years",
-    "fulfillmentText": "Humanities other Advanced course."
+    "fulfillmentText": "Humanities other Advanced course.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CRWR-SHU-245",
@@ -4275,7 +5016,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "Introduction to Creative Writing (CRWR-SHU 159 or CRWR-SHU 161) OR Junior standing.",
     "offeringText": "Fall of odd numbered years",
-    "fulfillmentText": "IMB Interactive Media Elective Courses."
+    "fulfillmentText": "IMB Interactive Media Elective Courses.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CRWR-SHU-246",
@@ -4291,7 +5035,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Students must have completed Introduction to Creative Writing or be of junior or senior standing.",
     "offeringText": "",
-    "fulfillmentText": "General Elective."
+    "fulfillmentText": "General Elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CRWR-SHU-248",
@@ -4310,7 +5057,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "Introduction to Creative Writing (CRWR-SHU 159 or CRWR-SHU 161) OR Junior standing.",
     "offeringText": "Fall of even numbered years",
-    "fulfillmentText": "This course will fulfill one of the two the Intermediate Workshop components for the creative writing minor. Humanities other Advanced course."
+    "fulfillmentText": "This course will fulfill one of the two the Intermediate Workshop components for the creative writing minor. Humanities other Advanced course.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CRWR-SHU-260",
@@ -4330,7 +5080,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "Writing as Inquiry WRIT-SHU 101/102 OR CRWR-SHU 159 Introduction to Creative Writing OR CRWR-SHU 161 Introduction to Creative Writing: Literary Translation Focus",
     "offeringText": "occasionally",
-    "fulfillmentText": "This course counts as one of the three intermediate/advanced creative writing workshops required for completion of the Creative Writing Minor."
+    "fulfillmentText": "This course counts as one of the three intermediate/advanced creative writing workshops required for completion of the Creative Writing Minor.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CSCI-SHU-101",
@@ -4346,7 +5099,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Introduction to Computer Programming or placement exam.",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": "Core Curriculum Requirement Algorithmic Thinking; Computer Science Major Required Courses; Computer Systems Engineering Major Required Courses; Data Science Major Foundational Courses; Electrical and Systems Engineering Major Required Major Courses; IMB optional Foundation course."
+    "fulfillmentText": "Core Curriculum Requirement Algorithmic Thinking; Computer Science Major Required Courses; Computer Systems Engineering Major Required Courses; Data Science Major Foundational Courses; Electrical and Systems Engineering Major Required Major Courses; IMB optional Foundation course.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CSCI-SHU-11",
@@ -4362,7 +5118,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Either placed into Calculus or at least a C in Pre-Calculus (shanghai portal students only)",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": "Core Curriculum Requirement Algorithmic Thinking; EE Required Major Courses."
+    "fulfillmentText": "Core Curriculum Requirement Algorithmic Thinking; EE Required Major Courses.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CSCI-SHU-188",
@@ -4378,7 +5137,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "ICP OR ICS (best to have some experience in Music, or check with the instructor before enrolling)",
     "offeringText": "occasionally",
-    "fulfillmentText": "Computer Science Major Electives."
+    "fulfillmentText": "Computer Science Major Electives.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CSCI-SHU-200",
@@ -4396,7 +5158,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "CSCI-SHU 101 Introduction to Computer Science",
     "offeringText": "every year",
-    "fulfillmentText": "Computer Science elective."
+    "fulfillmentText": "Computer Science elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CSCI-SHU-205",
@@ -4414,7 +5179,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "CSCI-SHU 101 Introduction to Computer and Data Science",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": "Computer Science Elective."
+    "fulfillmentText": "Computer Science Elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CSCI-SHU-210",
@@ -4430,7 +5198,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "ICS or A- in ICP.",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": "CS Required, Data Science Required, CE Required."
+    "fulfillmentText": "CS Required, Data Science Required, CE Required.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CSCI-SHU-213",
@@ -4448,7 +5219,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "CSCI-SHU 210 Data Structures.",
     "offeringText": "occasionally",
-    "fulfillmentText": "Computer Science Major Electives; Data Science Major Required Data Management Courses; Computer Systems Engineering elective."
+    "fulfillmentText": "Computer Science Major Electives; Data Science Major Required Data Management Courses; Computer Systems Engineering elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CSCI-SHU-215",
@@ -4467,7 +5241,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "CENG-SHU 202 Computer Architecture or CSCI-UA 201 Computer Systems Organization.",
     "offeringText": "Fall",
-    "fulfillmentText": "Computer Science Major Required Courses; Computer Systems Engineering Major Elective."
+    "fulfillmentText": "Computer Science Major Required Courses; Computer Systems Engineering Major Elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CSCI-SHU-220",
@@ -4483,7 +5260,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Data Structures AND (Discrete Math OR Linear Algebra OR Honors Linear Algebra)",
     "offeringText": "Spring",
-    "fulfillmentText": "CS Required, Data Science Data Analysis/AI."
+    "fulfillmentText": "CS Required, Data Science Data Analysis/AI.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CSCI-SHU-222",
@@ -4501,7 +5281,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "Data Structures OR CS-UY 2134 (Data Structures and Algorithms) OR ICS with Instructor Permission.",
     "offeringText": "occasionally",
-    "fulfillmentText": "CS Electives."
+    "fulfillmentText": "CS Electives.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CSCI-SHU-2314",
@@ -4521,7 +5304,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "MATH-SHU 131 or MATH-SHU 201. Equivalent to MATH-UA 120.",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": "MATH Additional Mathematics Electives, CS Required"
+    "fulfillmentText": "MATH Additional Mathematics Electives, CS Required",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CSCI-SHU-254",
@@ -4539,7 +5325,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "CENG-SHU 202 Computer Architecture",
     "offeringText": "Spring",
-    "fulfillmentText": "CS elective; CE elective."
+    "fulfillmentText": "CS elective; CE elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CSCI-SHU-308",
@@ -4557,7 +5346,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "CSCI-SHU 101 or placement test.",
     "offeringText": "occasionally",
-    "fulfillmentText": "CS Electives, CE Electives, EE Additional Electives."
+    "fulfillmentText": "CS Electives, CE Electives, EE Additional Electives.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CSCI-SHU-311",
@@ -4576,7 +5368,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "CSCI-SHU 2314 Discrete Math and CSCI-SHU 210 Data Structures",
     "offeringText": "",
-    "fulfillmentText": "CS elective."
+    "fulfillmentText": "CS elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CSCI-SHU-350",
@@ -4597,7 +5392,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "( CSCI-SHU 11 or CSCI-SHU 101 ) AND (CENG-SHU 202 or CENG-SHU 201).",
     "offeringText": "occasionally",
-    "fulfillmentText": "CS elective; CE Required, EE Additional Electives."
+    "fulfillmentText": "CS elective; CE Required, EE Additional Electives.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CSCI-SHU-360",
@@ -4613,7 +5411,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Introduction to Computer Programming, Calculus, and (Probability and Statistics OR Theory of Probability OR Statistics for Business & Economics OR Linear Algebra).",
     "offeringText": "Spring",
-    "fulfillmentText": "Business Analytics Track; Computer Science Electives; Data Science Major Data Analysis Courses."
+    "fulfillmentText": "Business Analytics Track; Computer Science Electives; Data Science Major Data Analysis Courses.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CSCI-SHU-361",
@@ -4634,7 +5435,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "CSCI-SHU 215 Operating Systems OR Prerequisite: CENG-SHU 202 Computer Architecture or CSCI-UA 201 Computer Systems Organization and Co-requisite: CSCI-SHU 215 Operating Systems",
     "offeringText": "every year",
-    "fulfillmentText": "CS, CE, EE elective."
+    "fulfillmentText": "CS, CE, EE elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CSCI-SHU-370",
@@ -4652,7 +5456,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "CSCI-SHU 210.",
     "offeringText": "occasionally",
-    "fulfillmentText": "CS elective."
+    "fulfillmentText": "CS elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CSCI-SHU-375",
@@ -4668,7 +5475,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Machine Learning AND (Probability and Statistics OR Theory of Probability).",
     "offeringText": "occasionally",
-    "fulfillmentText": "Computer Science Major Electives; Data Science Major Courses for Concentration in Artificial Intelligence."
+    "fulfillmentText": "Computer Science Major Electives; Data Science Major Courses for Concentration in Artificial Intelligence.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CSCI-SHU-376",
@@ -4689,7 +5499,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "CSCI-SHU 11 Introduction to Computer Programming and (CSCI-SHU 360 Marchine Learning or MATH-SHU 235 Probability and Statistic or MATH-SHU 238 Theory of Probability)",
     "offeringText": "",
-    "fulfillmentText": "CS elective; DS AI concentration."
+    "fulfillmentText": "CS elective; DS AI concentration.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CSCI-SHU-378",
@@ -4705,7 +5518,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Algorithms, theory of probability, or permission of the instructor.",
     "offeringText": "occasionally",
-    "fulfillmentText": "Mathematics Additional Electives; Honors Mathematics Electives; CS Electives."
+    "fulfillmentText": "Mathematics Additional Electives; Honors Mathematics Electives; CS Electives.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CSCI-SHU-381",
@@ -4725,7 +5541,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "CSCI-SHU 360 Machine Learning or MATH-SHU 235 Probability and Statistic or MATH-SHU 238 Theory of Probability",
     "offeringText": "every year",
-    "fulfillmentText": "CS elective; DS Concentration in AI."
+    "fulfillmentText": "CS elective; DS Concentration in AI.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CSCI-SHU-410",
@@ -4741,7 +5560,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Intro to Computer Science.",
     "offeringText": "occasionally",
-    "fulfillmentText": "CS Electives."
+    "fulfillmentText": "CS Electives.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CSCI-SHU-420",
@@ -4757,7 +5579,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "senior standing with CS primary major.",
     "offeringText": "Fall",
-    "fulfillmentText": "CS Required."
+    "fulfillmentText": "CS Required.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "CSCI-SHU-997",
@@ -4773,7 +5598,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "permission of the department. 2-4 credits Students majoring in computer science are permitted to work on an individual basis under the supervision of a full-time faculty member in the department if they have maintained an overall GPA of 3.0 and a GPA of 3.5 in computer science and have a study proposal that is approved by a computer science professor. Students are expected to spend about two to three hours a week per credit (a 4-credit IS would involve about ten to twelve hours a week) on their project.",
     "offeringText": "occasionally",
-    "fulfillmentText": "Computer Science Major Electives."
+    "fulfillmentText": "Computer Science Major Electives.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "DATS-SHU-200",
@@ -4794,7 +5622,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "CSCI-SHU 11 Introduction to Computer Programming or placement test AND MATH-SHU 131 Calculus AND MATH-SHU 140 Linear Algebra/ MATH-SHU 141 Honors Linear Algebra I.",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": "CS elective; DS AI concentration."
+    "fulfillmentText": "CS elective; DS AI concentration.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "DATS-SHU-235",
@@ -4810,7 +5641,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "or Co-requisite: Data Structures. Students must be CS or DS major and have junior or senior standing.",
     "offeringText": "Fall",
-    "fulfillmentText": "CS Electives, Data Science Data Analysis Required; Data Science Courses for Concentration in Artificial Intelligence. Prerequisite or Co-requisite: Data Structures. Students must be CS or DS major and have junior or senior standing."
+    "fulfillmentText": "CS Electives, Data Science Data Analysis Required; Data Science Courses for Concentration in Artificial Intelligence. Prerequisite or Co-requisite: Data Structures. Students must be CS or DS major and have junior or senior standing.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "DATS-SHU-236",
@@ -4829,7 +5663,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "DATS-SHU 234 Mathematical of Statistics (used to be MATH-SHU 234).",
     "offeringText": "Spring",
-    "fulfillmentText": "Math Constrained Math elective or additional Math elective; Honors Math elective; Data Science Concentration in AI."
+    "fulfillmentText": "Math Constrained Math elective or additional Math elective; Honors Math elective; Data Science Concentration in AI.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "DATS-SHU-240",
@@ -4848,7 +5685,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "ICP; AND Calculus (MATH-SHU 121) or Honor Calculus (MATH-SHU 201).",
     "offeringText": "occasionally",
-    "fulfillmentText": "CS Electives, Data Science Data Analysis Required; Data Science Courses for Concentration in Artificial Intelligence."
+    "fulfillmentText": "CS Electives, Data Science Data Analysis Required; Data Science Courses for Concentration in Artificial Intelligence.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "DATS-SHU-369",
@@ -4867,7 +5707,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "CSCI-SHU 360 Marchine Learning or MATH-SHU 235 Probability and Statistic",
     "offeringText": "every year",
-    "fulfillmentText": "CS Electives, and DS course for AI concentration."
+    "fulfillmentText": "CS Electives, and DS course for AI concentration.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "DATS-SHU-377",
@@ -4888,7 +5731,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "CSCI-SHU 101 Introduction to Computer Programming and (CSCI-SHU 360 Marchine Learning or MATH-SHU 235 Probability and Statistic or MATH-SHU 238 Theory of Probability)",
     "offeringText": "every year",
-    "fulfillmentText": "CS elective; DS Concentration in AI."
+    "fulfillmentText": "CS elective; DS Concentration in AI.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "DATS-SHU-420",
@@ -4904,7 +5750,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "senior standing and primary major in Data Science.",
     "offeringText": "Fall",
-    "fulfillmentText": "DS Required."
+    "fulfillmentText": "DS Required.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "DATS-SHU-997",
@@ -4920,7 +5769,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "department consent.",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": "general elective."
+    "fulfillmentText": "general elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "EAP-SHU-100",
@@ -4936,7 +5788,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Fall",
-    "fulfillmentText": ""
+    "fulfillmentText": "",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "EAP-SHU-100A",
@@ -4952,7 +5807,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "occasionally",
-    "fulfillmentText": ""
+    "fulfillmentText": "",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "EAP-SHU-100B",
@@ -4968,7 +5826,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Fall",
-    "fulfillmentText": ""
+    "fulfillmentText": "",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "EAP-SHU-100H",
@@ -4984,7 +5845,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "",
-    "fulfillmentText": ""
+    "fulfillmentText": "",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "EAP-SHU-100I",
@@ -5000,7 +5864,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "",
-    "fulfillmentText": ""
+    "fulfillmentText": "",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "EAP-SHU-100J",
@@ -5016,7 +5883,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "",
-    "fulfillmentText": ""
+    "fulfillmentText": "",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "EAP-SHU-100K",
@@ -5032,7 +5902,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "",
-    "fulfillmentText": ""
+    "fulfillmentText": "",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "EAP-SHU-100L",
@@ -5048,7 +5921,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Fall",
-    "fulfillmentText": ""
+    "fulfillmentText": "",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "EAP-SHU-100M",
@@ -5064,7 +5940,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Fall",
-    "fulfillmentText": ""
+    "fulfillmentText": "",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "EAP-SHU-100N",
@@ -5080,7 +5959,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Fall",
-    "fulfillmentText": ""
+    "fulfillmentText": "",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "EAP-SHU-100P",
@@ -5096,7 +5978,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Fall",
-    "fulfillmentText": ""
+    "fulfillmentText": "",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "EAP-SHU-100Q",
@@ -5112,7 +5997,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Fall",
-    "fulfillmentText": ""
+    "fulfillmentText": "",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "EAP-SHU-100R",
@@ -5128,7 +6016,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Fall",
-    "fulfillmentText": ""
+    "fulfillmentText": "",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "EAP-SHU-100S",
@@ -5144,7 +6035,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Special for freshman students enrolled in Foundation of Science. Prerequisite: None.",
     "offeringText": "Fall",
-    "fulfillmentText": ""
+    "fulfillmentText": "",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "EAP-SHU-100S3",
@@ -5160,7 +6054,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Special for freshman students enrolled in Foundation of Science.",
     "offeringText": "Fall",
-    "fulfillmentText": ""
+    "fulfillmentText": "",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "EAP-SHU-100S4",
@@ -5176,7 +6073,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Special for freshman students enrolled in Foundation of Science.",
     "offeringText": "",
-    "fulfillmentText": ""
+    "fulfillmentText": "",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "EAP-SHU-100T",
@@ -5192,7 +6092,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "",
-    "fulfillmentText": ""
+    "fulfillmentText": "",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "EAP-SHU-100U",
@@ -5208,7 +6111,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Fall",
-    "fulfillmentText": ""
+    "fulfillmentText": "",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "EAP-SHU-100V",
@@ -5224,7 +6130,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Fall",
-    "fulfillmentText": ""
+    "fulfillmentText": "",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "EAP-SHU-100W",
@@ -5240,7 +6149,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "occasionally",
-    "fulfillmentText": ""
+    "fulfillmentText": "",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "EAP-SHU-100X",
@@ -5256,7 +6168,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Fall",
-    "fulfillmentText": ""
+    "fulfillmentText": "",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "EAP-SHU-100Y",
@@ -5272,7 +6187,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Fall",
-    "fulfillmentText": ""
+    "fulfillmentText": "",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "EAP-SHU-100Z",
@@ -5288,7 +6206,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Fall",
-    "fulfillmentText": ""
+    "fulfillmentText": "",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "EAP-SHU-101",
@@ -5304,7 +6225,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Spring",
-    "fulfillmentText": "Core Language requirement."
+    "fulfillmentText": "Core Language requirement.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "EAP-SHU-101-20A",
@@ -5320,7 +6244,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "",
     "offeringText": "",
-    "fulfillmentText": "Core Language requirement."
+    "fulfillmentText": "Core Language requirement.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "EAP-SHU-101A",
@@ -5336,7 +6263,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "",
-    "fulfillmentText": "Core Language requirement."
+    "fulfillmentText": "Core Language requirement.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "EAP-SHU-101B",
@@ -5352,7 +6282,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "",
-    "fulfillmentText": "Core Language requirement."
+    "fulfillmentText": "Core Language requirement.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "EAP-SHU-101C",
@@ -5368,7 +6301,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "",
-    "fulfillmentText": "Core Language requirement."
+    "fulfillmentText": "Core Language requirement.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "EAP-SHU-101D",
@@ -5384,7 +6320,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "",
-    "fulfillmentText": "Core Language requirement."
+    "fulfillmentText": "Core Language requirement.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "EAP-SHU-101E",
@@ -5400,7 +6339,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "",
-    "fulfillmentText": "Core Language requirement."
+    "fulfillmentText": "Core Language requirement.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "EAP-SHU-101F",
@@ -5416,7 +6358,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "",
-    "fulfillmentText": "Core Language requirement."
+    "fulfillmentText": "Core Language requirement.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "EAP-SHU-101G",
@@ -5432,7 +6377,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "",
-    "fulfillmentText": "Core Language requirement."
+    "fulfillmentText": "Core Language requirement.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "EAP-SHU-101H",
@@ -5448,7 +6396,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "",
-    "fulfillmentText": "Core Language requirement."
+    "fulfillmentText": "Core Language requirement.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "EAP-SHU-101I",
@@ -5464,7 +6415,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "",
-    "fulfillmentText": "Core Language requirement."
+    "fulfillmentText": "Core Language requirement.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "EAP-SHU-101J",
@@ -5480,7 +6434,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "",
-    "fulfillmentText": "Core Language requirement."
+    "fulfillmentText": "Core Language requirement.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "EAP-SHU-101P",
@@ -5496,7 +6453,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "",
-    "fulfillmentText": "Core Language requirement."
+    "fulfillmentText": "Core Language requirement.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "EAP-SHU-101S",
@@ -5512,7 +6472,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Special for freshman students enrolled in Foundation of Science.",
     "offeringText": "Spring",
-    "fulfillmentText": "Core Language requirement."
+    "fulfillmentText": "Core Language requirement.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "EAP-SHU-101S1",
@@ -5528,7 +6491,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Special for freshman students enrolled in Foundation of Science.",
     "offeringText": "every year",
-    "fulfillmentText": "Core Language requirement."
+    "fulfillmentText": "Core Language requirement.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "EAP-SHU-101S4",
@@ -5544,7 +6510,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Special for freshman students enrolled in Foundation of Science.",
     "offeringText": "",
-    "fulfillmentText": "Core Language requirement."
+    "fulfillmentText": "Core Language requirement.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "EAP-SHU-101V",
@@ -5560,7 +6529,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "",
-    "fulfillmentText": "Core Language requirement."
+    "fulfillmentText": "Core Language requirement.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "EAP-SHU-101W",
@@ -5576,7 +6548,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "",
-    "fulfillmentText": "Core Language requirement."
+    "fulfillmentText": "Core Language requirement.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "EAP-SHU-201",
@@ -5592,7 +6567,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Sophomore standing (Chinese & international students)",
     "offeringText": "every year",
-    "fulfillmentText": "General Elective"
+    "fulfillmentText": "General Elective",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "EAP-SHU-202",
@@ -5608,7 +6586,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Sophomore standing (Chinese & international students)",
     "offeringText": "every year",
-    "fulfillmentText": "General elective"
+    "fulfillmentText": "General elective",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "ECON-SHU-1",
@@ -5624,7 +6605,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": "Economics Major Required Economics Courses; Social Science Major Foundational Courses; Data Science Major Courses for Concentration in Economics."
+    "fulfillmentText": "Economics Major Required Economics Courses; Social Science Major Foundational Courses; Data Science Major Courses for Concentration in Economics.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "ECON-SHU-10",
@@ -5645,7 +6629,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "( ECON-SHU 2 Principles of Microeconomics or ECON-SHU 3 Microeconomics ) and ( MATH-SHU 131 Calculus or ECON-SHU 5 Math for Econ 1: Optimization ).",
     "offeringText": "Fall",
-    "fulfillmentText": "Economics Major Requirement; Social Science Major Focus Courses Political Economy - 200 level."
+    "fulfillmentText": "Economics Major Requirement; Social Science Major Focus Courses Political Economy - 200 level.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "ECON-SHU-151",
@@ -5665,7 +6652,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "for ECON-SHU 151 is ECON-SHU 1 Principles of Macroeconomics or ECON-SHU 3 Microeconomics.",
     "offeringText": "",
-    "fulfillmentText": "Economics elective."
+    "fulfillmentText": "Economics elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "ECON-SHU-200",
@@ -5681,7 +6671,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": "1) Topic: Economics of Gender: Economics elective; Social Science Political Economy 200 level; 2) Topic: Financial Crises & Econ. Policy: Advanced Economics elective; 3) Topic: Market Design: Economics elective."
+    "fulfillmentText": "1) Topic: Economics of Gender: Economics elective; Social Science Political Economy 200 level; 2) Topic: Financial Crises & Econ. Policy: Advanced Economics elective; 3) Topic: Market Design: Economics elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "ECON-SHU-202",
@@ -5700,7 +6693,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "ECON-SHU 1 Principles of Macroeconomics or ECON-SHU 251 Economics of Global Business.",
     "offeringText": "Spring",
-    "fulfillmentText": "Economics required; Social Science Focus Political Economy 200 level course."
+    "fulfillmentText": "Economics required; Social Science Focus Political Economy 200 level course.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "ECON-SHU-208",
@@ -5720,7 +6716,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "ECON-SHU 1 Principles of Macroeconomics OR ECON-SHU 251 Economics of Global Business OR BUSF-SHU 202 Foundations of Finance.",
     "offeringText": "occasionally",
-    "fulfillmentText": "Economics elective."
+    "fulfillmentText": "Economics elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "ECON-SHU-210",
@@ -5739,7 +6738,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "ECON-SHU 3 Microeconomics or ECON-SHU 216 Introduction to Game Theory",
     "offeringText": "",
-    "fulfillmentText": "Economics Advanced elective."
+    "fulfillmentText": "Economics Advanced elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "ECON-SHU-216",
@@ -5757,7 +6759,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "Calc (MATH-SHU 131 OR 201)",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": "Economics Major Electives; IMB Major Business Elective Courses; Mathematics Major Additional Mathematics Electives; Honors Mathematics Major Mathematics Electives; Social Science Major Methods Courses; Business and Finance Major Non-Finance Electives; Business and Marketing Major Non-Marketing Electives"
+    "fulfillmentText": "Economics Major Electives; IMB Major Business Elective Courses; Mathematics Major Additional Mathematics Electives; Honors Mathematics Major Mathematics Electives; Social Science Major Methods Courses; Business and Finance Major Non-Finance Electives; Business and Marketing Major Non-Marketing Electives",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "ECON-SHU-217",
@@ -5775,7 +6780,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "ECON-SHU 1 Principles of Macroeconomics.",
     "offeringText": "",
-    "fulfillmentText": "Economics Major Advanced Economics Electives."
+    "fulfillmentText": "Economics Major Advanced Economics Electives.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "ECON-SHU-218",
@@ -5793,7 +6801,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "for ECON-SHU 218 is Microeconomics and (Principles of Macroeconomics or EGB).",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": "Core Curriculum Social Science Perspective on China; Social Science Major Focus Courses Political Economy - 200 level; Economics electives, BUSF &BUSM major China Business Studied."
+    "fulfillmentText": "Core Curriculum Social Science Perspective on China; Social Science Major Focus Courses Political Economy - 200 level; Economics electives, BUSF &BUSM major China Business Studied.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "ECON-SHU-219",
@@ -5813,7 +6824,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "Introductory Macroeconomics (ECON-SHU 1 or ECON-SHU 251) and Introductory Microeconomics (ECON-SHU 3).",
     "offeringText": "occasionally",
-    "fulfillmentText": "Economics Elective."
+    "fulfillmentText": "Economics Elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "ECON-SHU-221",
@@ -5832,7 +6846,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "or Co-requisite: Principles of Macroeconomics (ECON-SHU 1 or equivalent) or Economics of Global Business (ECON-SHU 251 or equivalent).",
     "offeringText": "every year",
-    "fulfillmentText": "CORE IPC; Economics Elective."
+    "fulfillmentText": "CORE IPC; Economics Elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "ECON-SHU-222",
@@ -5848,7 +6865,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Sophomore standing.",
     "offeringText": "every year",
-    "fulfillmentText": "Econ elective; Social Science Focus Political Economy 200 level."
+    "fulfillmentText": "Econ elective; Social Science Focus Political Economy 200 level.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "ECON-SHU-225",
@@ -5864,7 +6884,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "ECON SHU 3 Microeconomics",
     "offeringText": "Fall",
-    "fulfillmentText": "Economics Major Advanced Economics Electives; Social Science Major Focus Courses Political Economy - 300 level."
+    "fulfillmentText": "Economics Major Advanced Economics Electives; Social Science Major Focus Courses Political Economy - 300 level.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "ECON-SHU-232",
@@ -5880,7 +6903,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "ICP, or ICS, or Creative Coding Lab",
     "offeringText": "Fall",
-    "fulfillmentText": "CORE STS; Economics Elective."
+    "fulfillmentText": "CORE STS; Economics Elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "ECON-SHU-238",
@@ -5896,7 +6922,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Fall",
-    "fulfillmentText": "CORE SSPC or IPC; Economics elective; GCS elective The Politics, Economy, and Environment of China; Social Science Focus Political Economy 200 level course."
+    "fulfillmentText": "CORE SSPC or IPC; Economics elective; GCS elective The Politics, Economy, and Environment of China; Social Science Focus Political Economy 200 level course.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "ECON-SHU-239",
@@ -5912,7 +6941,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "This course assumes no prior background in economics. However, if you are already familiar with basic algebra and basic calculus, supply and demand curves, basic economics concepts, it will help you to understand this course better. Prereq: None.",
     "offeringText": "every year",
-    "fulfillmentText": "CORE IPC; Economics Elective; Social Science Focus Political Economy 200 level."
+    "fulfillmentText": "CORE IPC; Economics Elective; Social Science Focus Political Economy 200 level.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "ECON-SHU-251",
@@ -5931,7 +6963,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "ECON-SHU 150 or ECON-SHU 3",
     "offeringText": "Spring",
-    "fulfillmentText": "Economics required; IMB Business Foundation course; Social Science Foundational course; BUSF/BUSM Business Core course."
+    "fulfillmentText": "Economics required; IMB Business Foundation course; Social Science Foundational course; BUSF/BUSM Business Core course.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "ECON-SHU-255",
@@ -5949,7 +6984,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "MATH-SHU 9 Precalculus",
     "offeringText": "every year",
-    "fulfillmentText": "Economics elective; Social Science Focus Political Economy 200 level."
+    "fulfillmentText": "Economics elective; Social Science Focus Political Economy 200 level.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "ECON-SHU-3",
@@ -5965,7 +7003,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Calculus or above.",
     "offeringText": "Fall, Spring, and Summer terms",
-    "fulfillmentText": "Economics Major Requirements; IMB Major Business Elective; Social Science Major Foundational Courses; BUSF/BUSM Business Core Courses; Data Science Major Concentration in Finance/Marketing/Economics."
+    "fulfillmentText": "Economics Major Requirements; IMB Major Business Elective; Social Science Major Foundational Courses; BUSF/BUSM Business Core Courses; Data Science Major Concentration in Finance/Marketing/Economics.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "ECON-SHU-301",
@@ -5993,7 +7034,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "BUSF-SHU 101 or MATH-SHU 233 or MATH-SHU 234 or MATH-SHU 235 or MATH-SHU 238 or SOCS-SHU 210 or SOCSC-UH 1010Q or ECON-UA 18 or ECON-UA 20 or STAT-UB 1 or STAT-UB 103 or an equivalent statistics course.",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": "Core AT; Economics Major Requirement; Social Science Major Requirement; Data Science Major Required Courses."
+    "fulfillmentText": "Core AT; Economics Major Requirement; Social Science Major Requirement; Data Science Major Required Courses.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "ECON-SHU-315",
@@ -6009,7 +7053,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Microeconomics",
     "offeringText": "occasionally",
-    "fulfillmentText": "Economics Advanced elective; BUSF Non-Finance elective; BUSM-Non-Marketing elective; IMB Business elective."
+    "fulfillmentText": "Economics Advanced elective; BUSF Non-Finance elective; BUSM-Non-Marketing elective; IMB Business elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "ECON-SHU-317",
@@ -6028,7 +7075,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "ECON-SHU 3 Microeconomics OR ECON-SHU 301 Econometrics.",
     "offeringText": "Fall",
-    "fulfillmentText": ""
+    "fulfillmentText": "",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "ECON-SHU-335",
@@ -6049,7 +7099,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "ECON-SHU 1 Principles of Macroeconomics or ECON-SHU 3 Microeconomics or ECON-SHU 202 Intermediate Macroeconomics or ECON-SHU 301 Econometrics.",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": "Economics elective; Social Science Focus Political Economy 300 level."
+    "fulfillmentText": "Economics elective; Social Science Focus Political Economy 300 level.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "ECON-SHU-336",
@@ -6069,7 +7122,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "ECON-SHU 3 (or an equivalent microeconomics course) and ECON-SHU 1 (or ECON-SHU 251 or an equivalent macroeconomics course)",
     "offeringText": "every year",
-    "fulfillmentText": "Economics Advanced elective."
+    "fulfillmentText": "Economics Advanced elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "ECON-SHU-342",
@@ -6093,7 +7149,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "Microeconomics courses: ECON-SHU 3 or ECON-SHU 150 and Statistics courses: BUSF-SHU 101 or MATH-SHU 20 or MATH-SHU 235 or MATH-SHU 170 or BIOL-SHU 42 or other equivalent courses in statistics.",
     "offeringText": "occasionally",
-    "fulfillmentText": "Economics Major Elective."
+    "fulfillmentText": "Economics Major Elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "ECON-SHU-351",
@@ -6109,7 +7168,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Microeconomics, Econometrics",
     "offeringText": "",
-    "fulfillmentText": "Economics elective."
+    "fulfillmentText": "Economics elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "ECON-SHU-353",
@@ -6127,7 +7189,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "ECON-SHU 3 Microeconomics.",
     "offeringText": "occasionally",
-    "fulfillmentText": "Economics elective; Social Science Focus Political Economy 300 level course."
+    "fulfillmentText": "Economics elective; Social Science Focus Political Economy 300 level course.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "ECON-SHU-356",
@@ -6149,7 +7214,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "ECON-SHU 10 Intermediate Microeconomics OR ECON-SHU 3 Microeconomics with the minimum grade B OR BUSF-SHU 202 Foundations of Finance OR BUSF-SHU 303 Corporate Finance OR CSCI-SHU 360 Machine Learning.",
     "offeringText": "every year",
-    "fulfillmentText": "Economics elective; IMB Business elective."
+    "fulfillmentText": "Economics elective; IMB Business elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "ECON-SHU-360",
@@ -6168,7 +7236,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "ECON-SHU 10 OR ECON-SHU 3.",
     "offeringText": "occasionally",
-    "fulfillmentText": "Economics Major Elective."
+    "fulfillmentText": "Economics Major Elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "ECON-SHU-368",
@@ -6184,7 +7255,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "occasionally",
-    "fulfillmentText": "Economics elective; Social Science Focus Political Economy 300 level course."
+    "fulfillmentText": "Economics elective; Social Science Focus Political Economy 300 level course.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "ECON-SHU-400",
@@ -6200,7 +7274,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Senior Standing and primary major in Economics.",
     "offeringText": "Spring",
-    "fulfillmentText": "Economics Capstone."
+    "fulfillmentText": "Economics Capstone.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "ECON-SHU-402",
@@ -6222,7 +7299,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "ECON-SHU 301 Econometrics OR BUSF-SHU 101 Statistics for Business and Economics OR MATH-SHU 235 Probability and Statistics OR MATH-SHU 238 Honors Theory of Probability OR MATH-SHU 234 Mathematical Statistics",
     "offeringText": "",
-    "fulfillmentText": "Economics Major Advanced Economics Electives."
+    "fulfillmentText": "Economics Major Advanced Economics Electives.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "ECON-SHU-416",
@@ -6245,7 +7325,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "ECON-SHU 3 Microeconomics,or ECON-SHU 216 Introduction to Game Theory, or MATH-SHU 140 Linear Algebra, or MATH-SHU 235 Probability and Statistics, or MATH-SHU 238 Honors Theory of Probability, or BUSF-SHU 101 Statistics for Business & Econ",
     "offeringText": "occasionally",
-    "fulfillmentText": "Economics advanced elective; Social Science Methods or Political Economy 400 level course."
+    "fulfillmentText": "Economics advanced elective; Social Science Methods or Political Economy 400 level course.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "ECON-SHU-453",
@@ -6261,7 +7344,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "department consent is required.",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": "ECON Capstone Electives; Business China Business Studies (depending on topic); IMB Business elective."
+    "fulfillmentText": "ECON Capstone Electives; Business China Business Studies (depending on topic); IMB Business elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "ECON-SHU-9239",
@@ -6277,7 +7363,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "This course assumes no prior background in economics. However, if you are already familiar with basic algebra and basic calculus, supply and demand curves, basic economics concepts, it will help you to understand this course better. Prereq: None.",
     "offeringText": "Spring",
-    "fulfillmentText": "CORE IPC; Economics Elective; Social Science Focus Political Economy 200 level."
+    "fulfillmentText": "CORE IPC; Economics Elective; Social Science Focus Political Economy 200 level.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "ECON-SHU-9301",
@@ -6303,7 +7392,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "Statistics (BUSF-SHU 101 OR MATH-SHU 235 OR MATH-SHU 233 OR ECON-UA 18 OR STAT-UB 103 OR STAT-UB 1 OR MATH-GA 2901 OR SOCSC-UH 1010Q OR ECON-UA 20).",
     "offeringText": "",
-    "fulfillmentText": "Economics Required; Data Science Major Data Analysis Courses."
+    "fulfillmentText": "Economics Required; Data Science Major Data Analysis Courses.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "ECON-SHU-997",
@@ -6319,7 +7411,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None. department consent is required.",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": "Economics Major Elective."
+    "fulfillmentText": "Economics Major Elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "EENG-SHU-251",
@@ -6338,7 +7433,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "MATH-SHU 131 or MATH-SHU 201.",
     "offeringText": "Spring",
-    "fulfillmentText": "CE required; EE required; Core Curriculum Science Experimental Discovery in the Natural World."
+    "fulfillmentText": "CE required; EE required; Core Curriculum Science Experimental Discovery in the Natural World.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "EENG-SHU-400",
@@ -6354,7 +7452,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Senior Standing and primary major in Electrical & Syst Engineering or Computer Systems Engineering.",
     "offeringText": "Fall",
-    "fulfillmentText": "CE/EE Required."
+    "fulfillmentText": "CE/EE Required.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "EENG-SHU-997",
@@ -6370,7 +7471,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "permission of the department.",
     "offeringText": "APP",
-    "fulfillmentText": "EE Additional Elective."
+    "fulfillmentText": "EE Additional Elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "ENGD-SHU-101A",
@@ -6386,7 +7490,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Fall",
-    "fulfillmentText": "General Elective."
+    "fulfillmentText": "General Elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "ENGD-SHU-101B",
@@ -6404,7 +7511,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "ENGD-SHU 101A.",
     "offeringText": "Spring",
-    "fulfillmentText": "general elective."
+    "fulfillmentText": "general elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "EXLI-SHU-9301",
@@ -6420,7 +7530,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Only study-away Juniors in the GLS program may take this course.",
     "offeringText": "Fall",
-    "fulfillmentText": "general elective"
+    "fulfillmentText": "general elective",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "EXLI-SHU-9302",
@@ -6438,7 +7551,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "EXLI-SHU 9301 City as Text.",
     "offeringText": "occasionally",
-    "fulfillmentText": "general elective"
+    "fulfillmentText": "general elective",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "FREN-SHU-1",
@@ -6454,7 +7570,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None",
     "offeringText": "all terms",
-    "fulfillmentText": "general elective"
+    "fulfillmentText": "general elective",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "FREN-SHU-10",
@@ -6470,7 +7589,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": "general elective"
+    "fulfillmentText": "general elective",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "FREN-SHU-11",
@@ -6489,7 +7611,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "FREN-SHU 2 or FREN-SHU 10 (or the equivalent or by placement exam)",
     "offeringText": "every year",
-    "fulfillmentText": "General Elective"
+    "fulfillmentText": "General Elective",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "FREN-SHU-110",
@@ -6507,7 +7632,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "FREN-SHU 30 French Grammar and Composition or the equivalent or take the NYU placement test (http://www.nyu.edu/cas/flpexam/).",
     "offeringText": "",
-    "fulfillmentText": "general elective"
+    "fulfillmentText": "general elective",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "FREN-SHU-12",
@@ -6526,7 +7654,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "FREN-SHU 11 or FREN-UA 11 Intermediate French I, or the equivalent or by placement exam",
     "offeringText": "every year",
-    "fulfillmentText": "General Elective."
+    "fulfillmentText": "General Elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "FREN-SHU-2",
@@ -6544,7 +7675,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "FREN-SHU 1 or the equivalent",
     "offeringText": "every year",
-    "fulfillmentText": "General elective"
+    "fulfillmentText": "General elective",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "FREN-SHU-20",
@@ -6560,7 +7694,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "",
     "offeringText": "",
-    "fulfillmentText": "general elective"
+    "fulfillmentText": "general elective",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "FREN-SHU-30",
@@ -6579,7 +7716,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "FREN-SHU 20 or FREN-SHU 12 [or the equivalent or by placement exam (http://www.nyu.edu/cas/flpexam/)]",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": "General Elective"
+    "fulfillmentText": "General Elective",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "GCHN-SHU-101",
@@ -6595,7 +7735,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "every year",
-    "fulfillmentText": "CORE SSPC, HPC or IPC; GCS Elective Chinese History, Society, and Culture."
+    "fulfillmentText": "CORE SSPC, HPC or IPC; GCS Elective Chinese History, Society, and Culture.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "GCHN-SHU-102",
@@ -6611,7 +7754,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": "CORE HPC or IPC; GCS Chinese History, Society, and Culture; Humanities Introductory course (18-19: survey)."
+    "fulfillmentText": "CORE HPC or IPC; GCS Chinese History, Society, and Culture; Humanities Introductory course (18-19: survey).",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "GCHN-SHU-108",
@@ -6627,7 +7773,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "every year",
-    "fulfillmentText": "CORE HPC/IPC; GCS Elective Chinese History, Society, and Culture"
+    "fulfillmentText": "CORE HPC/IPC; GCS Elective Chinese History, Society, and Culture",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "GCHN-SHU-110",
@@ -6643,7 +7792,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": "Core Curriculum Humanistic Perspectives on China or Interdisciplinary Perspectives on China; GCS Major Requirement; Humanities Major Other Introductory Courses (18-19 Critical Concepts Core Course/Survey Courses)."
+    "fulfillmentText": "Core Curriculum Humanistic Perspectives on China or Interdisciplinary Perspectives on China; GCS Major Requirement; Humanities Major Other Introductory Courses (18-19 Critical Concepts Core Course/Survey Courses).",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "GCHN-SHU-111",
@@ -6659,7 +7811,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Fall",
-    "fulfillmentText": "CORE HPC or IPC; GCS Chinese Media, Arts, and Literature; Humanities Major Other Introductory Courses."
+    "fulfillmentText": "CORE HPC or IPC; GCS Chinese Media, Arts, and Literature; Humanities Major Other Introductory Courses.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "GCHN-SHU-112",
@@ -6675,7 +7830,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "every year",
-    "fulfillmentText": "Core HPC/IPC; GCS Major/minor; GCS Elective: Chinese Literature, Art, and Media."
+    "fulfillmentText": "Core HPC/IPC; GCS Major/minor; GCS Elective: Chinese Literature, Art, and Media.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "GCHN-SHU-116",
@@ -6691,7 +7849,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "every year",
-    "fulfillmentText": "1. CORE HPC/IPC 2. GCS Elective: Chinese Media, Art, and Literature; Chinese Language and Literature Minor."
+    "fulfillmentText": "1. CORE HPC/IPC 2. GCS Elective: Chinese Media, Art, and Literature; Chinese Language and Literature Minor.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "GCHN-SHU-123",
@@ -6707,7 +7868,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": "Core Curriculum Social Science Perspective on China/Humanistic Perspectives on China or Interdisciplinary Perspectives on China; GCS Elective The Politics, Economy, and Environment of China; Humanities Major Advanced Courses (old Topic Course); Social Science Major Focus Courses Political Science - 200 level."
+    "fulfillmentText": "Core Curriculum Social Science Perspective on China/Humanistic Perspectives on China or Interdisciplinary Perspectives on China; GCS Elective The Politics, Economy, and Environment of China; Humanities Major Advanced Courses (old Topic Course); Social Science Major Focus Courses Political Science - 200 level.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "GCHN-SHU-126",
@@ -6723,7 +7887,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": "CORE IPC; GCS Chinese Media, Arts, and Literature; Social Science Major Focus Courses Sociology - 200 level/ Self-Designed/Media Studies - 200 level; (18-19 Humanities Major Digital Approaches Core Course)."
+    "fulfillmentText": "CORE IPC; GCS Chinese Media, Arts, and Literature; Social Science Major Focus Courses Sociology - 200 level/ Self-Designed/Media Studies - 200 level; (18-19 Humanities Major Digital Approaches Core Course).",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "GCHN-SHU-128",
@@ -6739,7 +7906,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "every year",
-    "fulfillmentText": "GCS Major/Minor; GCS Elective: Chinese History, Society, and Culture."
+    "fulfillmentText": "GCS Major/Minor; GCS Elective: Chinese History, Society, and Culture.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "GCHN-SHU-133",
@@ -6755,7 +7925,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "every year",
-    "fulfillmentText": "CORE SSPC/IPC; GCS Major Elective: Politics, Economy, and Environment of China; GCS Major: China and the World; Social Science Methods course."
+    "fulfillmentText": "CORE SSPC/IPC; GCS Major Elective: Politics, Economy, and Environment of China; GCS Major: China and the World; Social Science Methods course.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "GCHN-SHU-145",
@@ -6771,7 +7944,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Not open to first-semester students.",
     "offeringText": "",
-    "fulfillmentText": "CORE SSPC/HPC or CORE IPC; GCS Elective Chinese History, Society, and Culture; Humanities Major Advanced course (18-19 Topic Courses)."
+    "fulfillmentText": "CORE SSPC/HPC or CORE IPC; GCS Elective Chinese History, Society, and Culture; Humanities Major Advanced course (18-19 Topic Courses).",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "GCHN-SHU-156",
@@ -6787,7 +7963,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None",
     "offeringText": "every year",
-    "fulfillmentText": "CORE HPC/IPC; GCS Elective Chinese Media, Arts and Literature; Humanities Major Other Introductory Courses (18-19 Survey Courses)."
+    "fulfillmentText": "CORE HPC/IPC; GCS Elective Chinese Media, Arts and Literature; Humanities Major Other Introductory Courses (18-19 Survey Courses).",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "GCHN-SHU-164",
@@ -6803,7 +7982,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "occasionally",
-    "fulfillmentText": "CORE SSPC or HPC; IPC; GCS China and the World; Humanities Other Introductory Courses / Survey Courses (18-19)."
+    "fulfillmentText": "CORE SSPC or HPC; IPC; GCS China and the World; Humanities Other Introductory Courses / Survey Courses (18-19).",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "GCHN-SHU-165",
@@ -6819,7 +8001,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "",
-    "fulfillmentText": "CORE HPC/IPC; GCS China and the World/ Electives Chinese History, Society, and Culture; Humanities Major Other Introductory Courses (18-19 Topic Courses/ Survey Courses)."
+    "fulfillmentText": "CORE HPC/IPC; GCS China and the World/ Electives Chinese History, Society, and Culture; Humanities Major Other Introductory Courses (18-19 Topic Courses/ Survey Courses).",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "GCHN-SHU-182",
@@ -6835,7 +8020,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "every year",
-    "fulfillmentText": "CORE HPC/IPC; GCS Major: Chinese Media, Arts, and Literature."
+    "fulfillmentText": "CORE HPC/IPC; GCS Major: Chinese Media, Arts, and Literature.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "GCHN-SHU-185",
@@ -6851,7 +8039,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "GPS or sophomore standing (or not open to first semester students).",
     "offeringText": "every year",
-    "fulfillmentText": "CORE SSPC or IPC; GCS Elective Chinese Media, Arts, and Literature."
+    "fulfillmentText": "CORE SSPC or IPC; GCS Elective Chinese Media, Arts, and Literature.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "GCHN-SHU-200",
@@ -6867,7 +8058,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "",
     "offeringText": "occasionally",
-    "fulfillmentText": "GCS Chinese History, Society, and Culture"
+    "fulfillmentText": "GCS Chinese History, Society, and Culture",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "GCHN-SHU-200A",
@@ -6883,7 +8077,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "occasionally",
-    "fulfillmentText": "GCS Chinese History, Society, and Culture: Historical Tourism in Shanghai; GCS Chinese Media, Arts, and Literature: Exploring Art Spaces in the City."
+    "fulfillmentText": "GCS Chinese History, Society, and Culture: Historical Tourism in Shanghai; GCS Chinese Media, Arts, and Literature: Exploring Art Spaces in the City.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "GCHN-SHU-205",
@@ -6899,7 +8096,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "GPS or sophomore standing (or not open to first semester students).",
     "offeringText": "",
-    "fulfillmentText": "CORE HPC or IPC; GCS Chinese Media, Arts, and Literature; Humanities Advanced course."
+    "fulfillmentText": "CORE HPC or IPC; GCS Chinese Media, Arts, and Literature; Humanities Advanced course.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "GCHN-SHU-206",
@@ -6915,7 +8115,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "GPS",
     "offeringText": "every year",
-    "fulfillmentText": "CORE IPC/HPC; GCS Elective Chinese Media, Arts, and Literature; Chinese Language and Literature Minor."
+    "fulfillmentText": "CORE IPC/HPC; GCS Elective Chinese Media, Arts, and Literature; Chinese Language and Literature Minor.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "GCHN-SHU-207",
@@ -6931,7 +8134,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Spring",
-    "fulfillmentText": "CORE HPC or IPC; GCS elective Media, Arts and Literature; Chinese Language and Literature Minor."
+    "fulfillmentText": "CORE HPC or IPC; GCS elective Media, Arts and Literature; Chinese Language and Literature Minor.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "GCHN-SHU-210",
@@ -6947,7 +8153,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "occasionally",
-    "fulfillmentText": "CORE HPC or IPC; GCS China and the World; Humanities Introductory course (18-19: survey)."
+    "fulfillmentText": "CORE HPC or IPC; GCS China and the World; Humanities Introductory course (18-19: survey).",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "GCHN-SHU-211",
@@ -6965,7 +8174,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "At least one prior course in GCHN-SHU, HIST-SHU, HUMN-SHU or LIT-SHU or ECON-SHU 238.",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": "CORE HPC or IPC, GCS Chinese Media, Arts, and Literature; Humanities Introductory course (18-19: Survey course)."
+    "fulfillmentText": "CORE HPC or IPC, GCS Chinese Media, Arts, and Literature; Humanities Introductory course (18-19: Survey course).",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "GCHN-SHU-216",
@@ -6981,7 +8193,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Sophomore standing or above.",
     "offeringText": "every year",
-    "fulfillmentText": "CORE STS; GCS Elective: Chinese History, Society, and Culture; Social Science Focus Anthropology 200 level."
+    "fulfillmentText": "CORE STS; GCS Elective: Chinese History, Society, and Culture; Social Science Focus Anthropology 200 level.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "GCHN-SHU-220",
@@ -6997,7 +8212,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Spring term of odd numbered years",
-    "fulfillmentText": "CORE HPC or IPC; GCS Chinese Media, Arts, and Literature."
+    "fulfillmentText": "CORE HPC or IPC; GCS Chinese Media, Arts, and Literature.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "GCHN-SHU-225",
@@ -7013,7 +8231,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None",
     "offeringText": "every year",
-    "fulfillmentText": "CORE HPC/IPC; GCS Chinese Media, Arts, and Literature."
+    "fulfillmentText": "CORE HPC/IPC; GCS Chinese Media, Arts, and Literature.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "GCHN-SHU-226",
@@ -7029,7 +8250,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "POH",
     "offeringText": "",
-    "fulfillmentText": "CORE HPC or IPC; GCS Elective: Chinese History, Society, and Culture; Social Science Focus Anthropology 200 level."
+    "fulfillmentText": "CORE HPC or IPC; GCS Elective: Chinese History, Society, and Culture; Social Science Focus Anthropology 200 level.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "GCHN-SHU-233",
@@ -7047,7 +8271,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "CHIN-SHU 402 (Classical Chinese II) or equivalent; OR Chinese students who have studied classical Chinese before; OR Instructor Permission",
     "offeringText": "occasionally",
-    "fulfillmentText": "CORE HPC/IPC; GCS advanced track Language course for Native Chinese speakers; Humanities Advanced course (18-19: topic course)."
+    "fulfillmentText": "CORE HPC/IPC; GCS advanced track Language course for Native Chinese speakers; Humanities Advanced course (18-19: topic course).",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "GCHN-SHU-234",
@@ -7063,7 +8290,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "occasionally",
-    "fulfillmentText": "CORE HPC or IPC; GCS China and the World."
+    "fulfillmentText": "CORE HPC or IPC; GCS China and the World.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "GCHN-SHU-236",
@@ -7079,7 +8309,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Sophomore standing",
     "offeringText": "every year",
-    "fulfillmentText": "CORE HPC/IPC; GCS Elective: Chinese Media, Art, and Literature, IMA major elective; IMB major IMA/B Elective."
+    "fulfillmentText": "CORE HPC/IPC; GCS Elective: Chinese Media, Art, and Literature, IMA major elective; IMB major IMA/B Elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "GCHN-SHU-243",
@@ -7097,7 +8330,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "Passing grade of CCSF-SHU 101L Global Perspectives on Society",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": "CORE SSPC or IPC; CORE STS; GCS The Politics, Economy, and Environment of China; Social Science Focus Environmental Studies 200 level course."
+    "fulfillmentText": "CORE SSPC or IPC; CORE STS; GCS The Politics, Economy, and Environment of China; Social Science Focus Environmental Studies 200 level course.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "GCHN-SHU-246",
@@ -7113,7 +8349,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Sophomore standing.",
     "offeringText": "every year",
-    "fulfillmentText": "CORE SSPC/IPC; GCS Elective: The Politics, Economy, and Environment of China; Social Science focus Anthropology 200 level."
+    "fulfillmentText": "CORE SSPC/IPC; GCS Elective: The Politics, Economy, and Environment of China; Social Science focus Anthropology 200 level.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "GCHN-SHU-247",
@@ -7129,7 +8368,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": "CORE SSPC or IPC; GCS Chinese History, Society, and Culture; Humanities Interdisciplinary/Advanced Courses (18-19: Topic)."
+    "fulfillmentText": "CORE SSPC or IPC; GCS Chinese History, Society, and Culture; Humanities Interdisciplinary/Advanced Courses (18-19: Topic).",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "GCHN-SHU-248",
@@ -7145,7 +8387,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Sophomore standing or above.",
     "offeringText": "every year",
-    "fulfillmentText": "CORE HPC or IPC; GCS Elective Chinese History, Society, and Culture; Social Science Focus Environmental Studies 200 level."
+    "fulfillmentText": "CORE HPC or IPC; GCS Elective Chinese History, Society, and Culture; Social Science Focus Environmental Studies 200 level.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "GCHN-SHU-250",
@@ -7161,7 +8406,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "GPS",
     "offeringText": "every year",
-    "fulfillmentText": "CORE SSPC or IPC; GCS elective The Politics, Economy, and Environment of China; Social Science Focus Environmental Studies 200 level; Humanities Interdisciplinary or other Advanced course ( 18-19: Critical Concepts or Topic)."
+    "fulfillmentText": "CORE SSPC or IPC; GCS elective The Politics, Economy, and Environment of China; Social Science Focus Environmental Studies 200 level; Humanities Interdisciplinary or other Advanced course ( 18-19: Critical Concepts or Topic).",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "GCHN-SHU-255",
@@ -7177,7 +8425,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "",
-    "fulfillmentText": "CORE HPC or IPC; GCS Advanced track Language course for Native Chinese Speakers or Chinese History, Society, and Culture; Humanities Introductory course (18-19: survey/topic)."
+    "fulfillmentText": "CORE HPC or IPC; GCS Advanced track Language course for Native Chinese Speakers or Chinese History, Society, and Culture; Humanities Introductory course (18-19: survey/topic).",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "GCHN-SHU-263",
@@ -7193,7 +8444,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Spring",
-    "fulfillmentText": "CORE IPC/HPC; GCS China and the World or Chinese Media, Arts, and Literature; Humanities Introductory course; Chinese Language and Literature Minor."
+    "fulfillmentText": "CORE IPC/HPC; GCS China and the World or Chinese Media, Arts, and Literature; Humanities Introductory course; Chinese Language and Literature Minor.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "GCHN-SHU-264",
@@ -7209,7 +8463,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "GPS.",
     "offeringText": "Spring",
-    "fulfillmentText": "CORE HPC/IPC; GCS China and the World; Humanities Introductory course (18-19: topic)."
+    "fulfillmentText": "CORE HPC/IPC; GCS China and the World; Humanities Introductory course (18-19: topic).",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "GCHN-SHU-265",
@@ -7225,7 +8482,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "every year",
-    "fulfillmentText": "CORE HPC/IPC; GCS The Politics, Economy, and Environment of China."
+    "fulfillmentText": "CORE HPC/IPC; GCS The Politics, Economy, and Environment of China.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "GCHN-SHU-267",
@@ -7241,7 +8501,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "GPS or sophomore standing (or not open to first semester students)",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": "CORE SSPC/IPC; GCS Major Elective: Chinese History, Society, and Culture."
+    "fulfillmentText": "CORE SSPC/IPC; GCS Major Elective: Chinese History, Society, and Culture.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "GCHN-SHU-277",
@@ -7257,7 +8520,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "GPS or sophomore standing (or not open to first semester students).",
     "offeringText": "Spring",
-    "fulfillmentText": "Fulfillment: Core IPC; GCS Major/Minor Elective Chinese History, Society, and Culture; Social Science Focus Anthropology or Global Public Health 200 level course."
+    "fulfillmentText": "Fulfillment: Core IPC; GCS Major/Minor Elective Chinese History, Society, and Culture; Social Science Focus Anthropology or Global Public Health 200 level course.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "GCHN-SHU-283",
@@ -7273,7 +8539,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Native Chinese fluency OR confirmation of adequate language competency for the course through a pre-enrollment test. All interested non-native speakers should contact the Chinese Language Program for an advanced proficiency placement test.",
     "offeringText": "",
-    "fulfillmentText": "CORE HPC or IPC; GCS elective in Chinese History, Society and Culture; GCS Advanced track Language course for Native Chinese Speakers; Chinese for Advanced Undergraduate Research."
+    "fulfillmentText": "CORE HPC or IPC; GCS elective in Chinese History, Society and Culture; GCS Advanced track Language course for Native Chinese Speakers; Chinese for Advanced Undergraduate Research.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "GCHN-SHU-311",
@@ -7289,7 +8558,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Sophomore Standing.",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": "CORE SSPC/HPC or IPC; GCS China and the World; Humanities Interdisciplinary/Advanced Courses (18-19 Topic); Social Science Focus Self-Designed/Urban Studies - 200 level."
+    "fulfillmentText": "CORE SSPC/HPC or IPC; GCS China and the World; Humanities Interdisciplinary/Advanced Courses (18-19 Topic); Social Science Focus Self-Designed/Urban Studies - 200 level.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "GCHN-SHU-316",
@@ -7305,7 +8577,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Sophomore standing or above. language prerequisite: Intermediate II or Chinese native speaker.",
     "offeringText": "every year",
-    "fulfillmentText": "GCS Major Requirement Chinese for Advanced Undergraduate Research or Language requirement course for Native Chinese Speakers for Advanced GCS Track."
+    "fulfillmentText": "GCS Major Requirement Chinese for Advanced Undergraduate Research or Language requirement course for Native Chinese Speakers for Advanced GCS Track.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "GCHN-SHU-318",
@@ -7323,7 +8598,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "CHIN-SHU 201 Intermediate Chinese I or native speakers",
     "offeringText": "every year",
-    "fulfillmentText": "Core IPC; GCS Major Elective: Chinese History, Society, and Culture; GCS Advanced Track: Advanced Undergraduate Research; Chinese Language and Literature Minor."
+    "fulfillmentText": "Core IPC; GCS Major Elective: Chinese History, Society, and Culture; GCS Advanced Track: Advanced Undergraduate Research; Chinese Language and Literature Minor.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "GCHN-SHU-350",
@@ -7339,7 +8617,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "at least one GCS course.",
     "offeringText": "Spring term of even numbered years",
-    "fulfillmentText": "CORE HPC or IPC; GCS China and the World; Humanities 18-19 Topic."
+    "fulfillmentText": "CORE HPC or IPC; GCS China and the World; Humanities 18-19 Topic.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "GCHN-SHU-360",
@@ -7357,7 +8638,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "CHIN-SHU 301 Advanced Chinese I or placed out of Advanced Chinese I or native Chinese speakers.",
     "offeringText": "",
-    "fulfillmentText": "Core HPC/IPC; GCS Chinese for Advanced Undergraduate Research; GCS Advanced-track Language course for Native Chinese Speakers. (Fulfill the language requirement for study away students who are native speakers of Chinese)."
+    "fulfillmentText": "Core HPC/IPC; GCS Chinese for Advanced Undergraduate Research; GCS Advanced-track Language course for Native Chinese Speakers. (Fulfill the language requirement for study away students who are native speakers of Chinese).",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "GCHN-SHU-397",
@@ -7373,7 +8657,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "",
     "offeringText": "",
-    "fulfillmentText": "general elective."
+    "fulfillmentText": "general elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "GCHN-SHU-400",
@@ -7389,7 +8676,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Senior Standing in GCS Primary Major",
     "offeringText": "Fall",
-    "fulfillmentText": "GCS Two-semester Capstone Course."
+    "fulfillmentText": "GCS Two-semester Capstone Course.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "GCHN-SHU-401",
@@ -7407,7 +8697,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "Senior Standing GCS Primary Major AND completion of GCHN-SHU 400.",
     "offeringText": "Spring",
-    "fulfillmentText": "GCS capstone requirement."
+    "fulfillmentText": "GCS capstone requirement.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "GCHN-SHU-997",
@@ -7423,7 +8716,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "",
     "offeringText": "occasionally",
-    "fulfillmentText": "general elective."
+    "fulfillmentText": "general elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "GLBL-SHU-10",
@@ -7439,7 +8735,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "",
     "offeringText": "Summer term",
-    "fulfillmentText": ""
+    "fulfillmentText": "",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "HIST-SHU-101",
@@ -7455,7 +8754,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Fall",
-    "fulfillmentText": "Humanities Foundations/Introductory Courses (18-19 Critical Concepts Core Course)."
+    "fulfillmentText": "Humanities Foundations/Introductory Courses (18-19 Critical Concepts Core Course).",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "HIST-SHU-102",
@@ -7471,7 +8773,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Spring",
-    "fulfillmentText": "Humanities Foundations or Introductory Course."
+    "fulfillmentText": "Humanities Foundations or Introductory Course.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "HIST-SHU-103",
@@ -7487,7 +8792,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "",
     "offeringText": "Fall of even numbered years",
-    "fulfillmentText": "Humanities Introductory Course; Social Science Methods course; GCS elective Chinese History, Culture and Society."
+    "fulfillmentText": "Humanities Introductory Course; Social Science Methods course; GCS elective Chinese History, Culture and Society.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "HIST-SHU-110",
@@ -7503,7 +8811,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "occasionally",
-    "fulfillmentText": "Humanities Introductory course (18-19: survey/topic)."
+    "fulfillmentText": "Humanities Introductory course (18-19: survey/topic).",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "HIST-SHU-130",
@@ -7519,7 +8830,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Fall of odd numbered years",
-    "fulfillmentText": "Humanities Major Other Introductory Courses; Social Science International Relations Track 200 level focus course."
+    "fulfillmentText": "Humanities Major Other Introductory Courses; Social Science International Relations Track 200 level focus course.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "HIST-SHU-150",
@@ -7535,7 +8849,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "occasionally",
-    "fulfillmentText": "Humanities Introductory Course."
+    "fulfillmentText": "Humanities Introductory Course.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "HIST-SHU-155",
@@ -7551,7 +8868,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "every year",
-    "fulfillmentText": "CORE HPC/IPC; GCS China and the World; Humanities Introductory course (18-19: topic)."
+    "fulfillmentText": "CORE HPC/IPC; GCS China and the World; Humanities Introductory course (18-19: topic).",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "HIST-SHU-156",
@@ -7567,7 +8887,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None",
     "offeringText": "occasionally",
-    "fulfillmentText": "Humanities Major Other Introductory Courses (18-19 Survey Courses)."
+    "fulfillmentText": "Humanities Major Other Introductory Courses (18-19 Survey Courses).",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "HIST-SHU-157",
@@ -7583,7 +8906,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Fall of even numbered years",
-    "fulfillmentText": "CORE STS or Math requirement; Humanities Introductory course."
+    "fulfillmentText": "CORE STS or Math requirement; Humanities Introductory course.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "HIST-SHU-158",
@@ -7599,7 +8925,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Writing as Inquiry or Sophomore standing.",
     "offeringText": "Spring",
-    "fulfillmentText": "Humanities Advanced course; IMA elective; IMB major IMA/B elective."
+    "fulfillmentText": "Humanities Advanced course; IMA elective; IMB major IMA/B elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "HIST-SHU-188",
@@ -7615,7 +8944,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "occasionally",
-    "fulfillmentText": "Core IPC; Humanities Introductory course; Social Science Focus International Relations 200 level course; GCS elective China and the World."
+    "fulfillmentText": "Core IPC; Humanities Introductory course; Social Science Focus International Relations 200 level course; GCS elective China and the World.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "HIST-SHU-200",
@@ -7631,7 +8963,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "occasionally",
-    "fulfillmentText": "Humanities Advanced Interdisciplinary Course, other Humanities Advanced Course"
+    "fulfillmentText": "Humanities Advanced Interdisciplinary Course, other Humanities Advanced Course",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "HIST-SHU-205",
@@ -7647,7 +8982,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Fall of even numbered years",
-    "fulfillmentText": "CORE STS; Humanities Other Introductory course; Social Science Focus Global Health 200 level."
+    "fulfillmentText": "CORE STS; Humanities Other Introductory course; Social Science Focus Global Health 200 level.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "HIST-SHU-208",
@@ -7663,7 +9001,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None. Previous knowledge or experience is welcome but not required",
     "offeringText": "occasionally",
-    "fulfillmentText": "Humanities Introductory course."
+    "fulfillmentText": "Humanities Introductory course.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "HIST-SHU-209",
@@ -7679,7 +9020,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Fall",
-    "fulfillmentText": "Humanities Advanced course (18-19: survey)."
+    "fulfillmentText": "Humanities Advanced course (18-19: survey).",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "HIST-SHU-210",
@@ -7695,7 +9039,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Not open to first-year students.",
     "offeringText": "occasionally",
-    "fulfillmentText": "Humanities 18-19 Topic Course."
+    "fulfillmentText": "Humanities 18-19 Topic Course.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "HIST-SHU-220",
@@ -7711,7 +9058,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "every year",
-    "fulfillmentText": "Humanities Advanced course (18-19:Topics)."
+    "fulfillmentText": "Humanities Advanced course (18-19:Topics).",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "HIST-SHU-225",
@@ -7727,7 +9077,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "POH OR any HIST-SHU OR any HUMN-SHU course",
     "offeringText": "occasionally",
-    "fulfillmentText": "CORE STS; Humanities Advanced course (18-19: Digital Approaches or Topic)"
+    "fulfillmentText": "CORE STS; Humanities Advanced course (18-19: Digital Approaches or Topic)",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "HIST-SHU-230",
@@ -7743,7 +9096,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "any HUMN-SHU OR any HIST-SHU course OR POH.",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": "Humanities Interdisciplinary course or Advanced course; Social Science Anthropology track 300 level."
+    "fulfillmentText": "Humanities Interdisciplinary course or Advanced course; Social Science Anthropology track 300 level.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "HIST-SHU-239",
@@ -7759,7 +9115,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None",
     "offeringText": "occasionally",
-    "fulfillmentText": "CORE STS; Humanities Advanced course (18-19: Digital Approaches or Topic)."
+    "fulfillmentText": "CORE STS; Humanities Advanced course (18-19: Digital Approaches or Topic).",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "HIST-SHU-265",
@@ -7775,7 +9134,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "every year",
-    "fulfillmentText": "Humanities Advanced course; 200 level focus course for the Social Science International Relations track."
+    "fulfillmentText": "Humanities Advanced course; 200 level focus course for the Social Science International Relations track.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "HIST-SHU-280",
@@ -7791,7 +9153,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None",
     "offeringText": "Spring term of odd numbered years",
-    "fulfillmentText": "Humanities Advanced course."
+    "fulfillmentText": "Humanities Advanced course.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "HIST-SHU-301",
@@ -7807,7 +9172,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Spring term of odd numbered years",
-    "fulfillmentText": "Humanities Advanced Course."
+    "fulfillmentText": "Humanities Advanced Course.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "HIST-SHU-303",
@@ -7823,7 +9191,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "occasionally",
-    "fulfillmentText": "Humanities Interdisciplinary/Advanced course (18-19: Critical Concept/Topic)"
+    "fulfillmentText": "Humanities Interdisciplinary/Advanced course (18-19: Critical Concept/Topic)",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "HIST-SHU-305",
@@ -7839,7 +9210,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Perspectives on Humanities or any HIST-SHU course OR any HUMN-SHU course OR any PHIL-SHU course OR any LIT-SHU",
     "offeringText": "Spring",
-    "fulfillmentText": "Core STS; Humanities Advanced course."
+    "fulfillmentText": "Core STS; Humanities Advanced course.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "HIST-SHU-310",
@@ -7855,7 +9229,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Perspectives on Humanities or any HIST-SHU course OR any HUMN-SHU course OR any PHIL-SHU course OR any LIT-SHU",
     "offeringText": "Fall of odd numbered years",
-    "fulfillmentText": "CORE STS; Humanities Advanced Interdisciplinary course; Social Science Focus Psychology 200 level."
+    "fulfillmentText": "CORE STS; Humanities Advanced Interdisciplinary course; Social Science Focus Psychology 200 level.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "HIST-SHU-325",
@@ -7871,7 +9248,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "occasionally",
-    "fulfillmentText": "18-19 Humanities Major Topic Courses; Social Science Focus 300 level International Relations."
+    "fulfillmentText": "18-19 Humanities Major Topic Courses; Social Science Focus 300 level International Relations.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "HIST-SHU-330",
@@ -7887,7 +9267,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "GPS or Sophomore standing.",
     "offeringText": "Spring",
-    "fulfillmentText": "CORE STS; Humanities Advanced Course (18-19: topic)."
+    "fulfillmentText": "CORE STS; Humanities Advanced Course (18-19: topic).",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "HUMN-SHU-101",
@@ -7903,7 +9286,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None",
     "offeringText": "Spring",
-    "fulfillmentText": "Humanities Foundations/Introductory course(18-19: Critical Concepts/Survey)."
+    "fulfillmentText": "Humanities Foundations/Introductory course(18-19: Critical Concepts/Survey).",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "HUMN-SHU-110",
@@ -7919,7 +9305,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Fall",
-    "fulfillmentText": "CORE STS; Humanities Foundations/Introductory course."
+    "fulfillmentText": "CORE STS; Humanities Foundations/Introductory course.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "HUMN-SHU-112",
@@ -7935,7 +9324,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Fall",
-    "fulfillmentText": "Humanities Foundational course, Social Sciences Core"
+    "fulfillmentText": "Humanities Foundational course, Social Sciences Core",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "HUMN-SHU-125",
@@ -7951,7 +9343,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Spring",
-    "fulfillmentText": "Humanities Major Other Introductory Courses (18-19 Survey Courses)."
+    "fulfillmentText": "Humanities Major Other Introductory Courses (18-19 Survey Courses).",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "HUMN-SHU-135",
@@ -7967,7 +9362,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "every year",
-    "fulfillmentText": "Humanities Introductory Course; Humanities Minor."
+    "fulfillmentText": "Humanities Introductory Course; Humanities Minor.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "HUMN-SHU-140",
@@ -7983,7 +9381,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Fall",
-    "fulfillmentText": "Humanities Introductory Elective."
+    "fulfillmentText": "Humanities Introductory Elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "HUMN-SHU-160",
@@ -7999,7 +9400,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Spring",
-    "fulfillmentText": "Humanities Major introductory course"
+    "fulfillmentText": "Humanities Major introductory course",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "HUMN-SHU-168",
@@ -8015,7 +9419,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None",
     "offeringText": "occasionally",
-    "fulfillmentText": "Humanities Introductory course."
+    "fulfillmentText": "Humanities Introductory course.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "HUMN-SHU-180",
@@ -8031,7 +9438,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None",
     "offeringText": "Spring term of even numbered years",
-    "fulfillmentText": "Humanities Introductory Course (18-19 Topic Courses)."
+    "fulfillmentText": "Humanities Introductory Course (18-19 Topic Courses).",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "HUMN-SHU-181",
@@ -8047,7 +9457,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Spring",
-    "fulfillmentText": "Humanities Introductory course."
+    "fulfillmentText": "Humanities Introductory course.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "HUMN-SHU-182",
@@ -8063,7 +9476,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Writing as Inquiry or Sophomore standing",
     "offeringText": "Fall",
-    "fulfillmentText": "Humanities Introductory course; IMB major IMA/B elective; Social Science Focus Enviornmental Studies 200 level."
+    "fulfillmentText": "Humanities Introductory course; IMB major IMA/B elective; Social Science Focus Enviornmental Studies 200 level.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "HUMN-SHU-183",
@@ -8079,7 +9495,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Spring term of even numbered years",
-    "fulfillmentText": "Humanities introductory course."
+    "fulfillmentText": "Humanities introductory course.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "HUMN-SHU-184",
@@ -8095,7 +9514,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "every year",
-    "fulfillmentText": "Humanities Introductory course, Humanities minor requirement; Social Science focus Urban studies 200 level."
+    "fulfillmentText": "Humanities Introductory course, Humanities minor requirement; Social Science focus Urban studies 200 level.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "HUMN-SHU-190",
@@ -8111,7 +9533,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Global Perspectives on Society (GPS) or Sophomore standing.",
     "offeringText": "every year",
-    "fulfillmentText": "Humanities Major Advanced Course; Topics Course (18-19 bulletin)."
+    "fulfillmentText": "Humanities Major Advanced Course; Topics Course (18-19 bulletin).",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "HUMN-SHU-200",
@@ -8127,7 +9552,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "occasionally",
-    "fulfillmentText": "French Cinema: Humanities Introductory course. History Makers: Humanities Introductory course."
+    "fulfillmentText": "French Cinema: Humanities Introductory course. History Makers: Humanities Introductory course.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "HUMN-SHU-205",
@@ -8143,7 +9571,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Spring",
-    "fulfillmentText": "Humanities Advanced course (18-19: topic)."
+    "fulfillmentText": "Humanities Advanced course (18-19: topic).",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "HUMN-SHU-212",
@@ -8159,7 +9590,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "At least one courses in HUMN-SHU, SOCS-SHU, or HIST-SHU",
     "offeringText": "every year",
-    "fulfillmentText": "Humanities Advanced Interdisciplinary course or other Advanced course; Social Science Focus Urban studies/Anthropology 300 level course."
+    "fulfillmentText": "Humanities Advanced Interdisciplinary course or other Advanced course; Social Science Focus Urban studies/Anthropology 300 level course.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "HUMN-SHU-214",
@@ -8175,7 +9609,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "occasionally",
-    "fulfillmentText": "Humanities Advanced course (18-19: topic)."
+    "fulfillmentText": "Humanities Advanced course (18-19: topic).",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "HUMN-SHU-215",
@@ -8191,7 +9628,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "GPS or Sophomore standing.",
     "offeringText": "every year",
-    "fulfillmentText": "Humanities Major Advanced Course."
+    "fulfillmentText": "Humanities Major Advanced Course.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "HUMN-SHU-229",
@@ -8207,7 +9647,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "occasionally",
-    "fulfillmentText": "CORE HPC; GCS Chinese Media, Arts, and Literature; Humanities Introductory course."
+    "fulfillmentText": "CORE HPC; GCS Chinese Media, Arts, and Literature; Humanities Introductory course.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "HUMN-SHU-231",
@@ -8223,7 +9666,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Spring",
-    "fulfillmentText": "Humanities Introductory course; IMA elective; IMB major IMA/IMB elective."
+    "fulfillmentText": "Humanities Introductory course; IMA elective; IMB major IMA/IMB elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "HUMN-SHU-235",
@@ -8239,7 +9685,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "every other year",
-    "fulfillmentText": "Humanities Interdisciplinary/Advanced Courses (18-19 Topic Courses)."
+    "fulfillmentText": "Humanities Interdisciplinary/Advanced Courses (18-19 Topic Courses).",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "HUMN-SHU-240",
@@ -8255,7 +9704,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Fall",
-    "fulfillmentText": "Humanities Interdisciplinary/Advanced Courses (18-19 Critical Concepts/Topic Courses)."
+    "fulfillmentText": "Humanities Interdisciplinary/Advanced Courses (18-19 Critical Concepts/Topic Courses).",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "HUMN-SHU-250",
@@ -8271,7 +9723,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Spring",
-    "fulfillmentText": "Humanities Introductory course (18-19: Topics)"
+    "fulfillmentText": "Humanities Introductory course (18-19: Topics)",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "HUMN-SHU-270",
@@ -8287,7 +9742,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "occasionally",
-    "fulfillmentText": "Japan's Empire in Asia: Humanities Advanced course, 18-19: Topic. China and Global Feminism: Humanities 18-19 Critical Concepts."
+    "fulfillmentText": "Japan's Empire in Asia: Humanities Advanced course, 18-19: Topic. China and Global Feminism: Humanities 18-19 Critical Concepts.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "HUMN-SHU-280",
@@ -8303,7 +9761,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "GPS or Sophomore standing.",
     "offeringText": "Fall",
-    "fulfillmentText": "Humanities Advanced Course."
+    "fulfillmentText": "Humanities Advanced Course.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "HUMN-SHU-284",
@@ -8319,7 +9780,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "occasionally",
-    "fulfillmentText": "Humanities Introductory course(18-19: topic)."
+    "fulfillmentText": "Humanities Introductory course(18-19: topic).",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "HUMN-SHU-308",
@@ -8335,7 +9799,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Any Humanities course. HIST-SHU, LIT-SHU, PHIL-SHU and HUM-SHU",
     "offeringText": "Fall",
-    "fulfillmentText": "Humanities Advanced course, Advanced Interdisciplinary course."
+    "fulfillmentText": "Humanities Advanced course, Advanced Interdisciplinary course.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "HUMN-SHU-400A",
@@ -8351,7 +9818,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Open only to Humanities primary major in the senior year.",
     "offeringText": "Fall",
-    "fulfillmentText": "Humanities Major Capstone."
+    "fulfillmentText": "Humanities Major Capstone.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "HUMN-SHU-401",
@@ -8367,7 +9837,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Open only to Humanities primary major in the senior year.",
     "offeringText": "Spring",
-    "fulfillmentText": "Humanities Major Capstone."
+    "fulfillmentText": "Humanities Major Capstone.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "HUMN-SHU-997",
@@ -8383,7 +9856,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": "Humanities Major Topic Course (18-19)."
+    "fulfillmentText": "Humanities Major Topic Course (18-19).",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "IDIS-SHU-997",
@@ -8399,7 +9875,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "permission of the Dean and Assistant Provost for Academic Affairs. 2 or 4 credits. Students are permitted to work on an individual basis under the supervision of a full-time faculty member in the academic discipline if they have maintained an overall GPA of 3.0 and have a study proposal that is approved by the professor. Students are expected to spend about ten to twelve hours a week on their project for 4 credits. The results of the study are embodied in a report of a type required by the instructor.",
     "offeringText": "",
-    "fulfillmentText": "general elective."
+    "fulfillmentText": "general elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "IMBX-SHU-1",
@@ -8415,7 +9894,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "",
     "offeringText": "",
-    "fulfillmentText": "General Elective."
+    "fulfillmentText": "General Elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "IMBX-SHU-100",
@@ -8431,7 +9913,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "",
-    "fulfillmentText": "general elective."
+    "fulfillmentText": "general elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "IMBX-SHU-102",
@@ -8447,7 +9932,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "",
-    "fulfillmentText": "IMB major IMA/IMB elective."
+    "fulfillmentText": "IMB major IMA/IMB elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "IMBX-SHU-103",
@@ -8463,7 +9951,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Sophomore standing or above",
     "offeringText": "",
-    "fulfillmentText": "IMB major IMA/IMB elective; Business and Finance Major Non-Finance Electives; Business and Marketing Major Non-Marketing Electives."
+    "fulfillmentText": "IMB major IMA/IMB elective; Business and Finance Major Non-Finance Electives; Business and Marketing Major Non-Marketing Electives.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "IMBX-SHU-105",
@@ -8479,7 +9970,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "every year",
-    "fulfillmentText": "IMB major IMA/IMB elective."
+    "fulfillmentText": "IMB major IMA/IMB elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "IMBX-SHU-106",
@@ -8495,7 +9989,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "every other year",
-    "fulfillmentText": "IMB major Emerging Media Foundation course or IMB major IMA/IMB elective."
+    "fulfillmentText": "IMB major Emerging Media Foundation course or IMB major IMA/IMB elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "IMBX-SHU-110",
@@ -8511,7 +10008,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": "IMB Foundation course; IMA elective."
+    "fulfillmentText": "IMB Foundation course; IMA elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "IMBX-SHU-201",
@@ -8527,7 +10027,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "‌ ‌Sophomore standing or above.",
     "offeringText": "every year",
-    "fulfillmentText": "IMB major IMA/IMB elective."
+    "fulfillmentText": "IMB major IMA/IMB elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "IMBX-SHU-210",
@@ -8543,7 +10046,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Sophomore standing or above.",
     "offeringText": "every year",
-    "fulfillmentText": "IMB Business elective; IMA/B elective for the IMB major; Creativity+Innovation Minor."
+    "fulfillmentText": "IMB Business elective; IMA/B elective for the IMB major; Creativity+Innovation Minor.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "IMBX-SHU-212",
@@ -8559,7 +10065,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Having completed at least one Business (BUSF, MKTG), Economics (ECON), or IMB (IMBX) course",
     "offeringText": "every year",
-    "fulfillmentText": "IMB major IMA/IMB elective."
+    "fulfillmentText": "IMB major IMA/IMB elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "IMBX-SHU-220",
@@ -8575,7 +10084,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "every year",
-    "fulfillmentText": "IMA elective; IMB major IMA/IMB elective; Creativity+Innovation Minor."
+    "fulfillmentText": "IMA elective; IMB major IMA/IMB elective; Creativity+Innovation Minor.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "IMBX-SHU-221",
@@ -8591,7 +10103,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "",
     "offeringText": "",
-    "fulfillmentText": "IMB major IMA/IMB elective."
+    "fulfillmentText": "IMB major IMA/IMB elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "IMBX-SHU-222",
@@ -8607,7 +10122,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "GPS or sophomore standing (or not open to first semester students).",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": "IMB major IMA/IMB elective."
+    "fulfillmentText": "IMB major IMA/IMB elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "IMBX-SHU-230",
@@ -8623,7 +10141,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "GPS or sophomore standing (or not open to first semester students).",
     "offeringText": "every year",
-    "fulfillmentText": "IMB major IMA/IMB elective; IMB Emerging Media Foundation."
+    "fulfillmentText": "IMB major IMA/IMB elective; IMB Emerging Media Foundation.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "IMBX-SHU-250",
@@ -8639,7 +10160,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Sophomore standing or above.",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": "IMB major IMA/IMB elective."
+    "fulfillmentText": "IMB major IMA/IMB elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "IMBX-SHU-254",
@@ -8655,7 +10179,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": "IMB major IMA/IMB elective."
+    "fulfillmentText": "IMB major IMA/IMB elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "IMBX-SHU-261",
@@ -8671,7 +10198,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Sophomore standing or above.",
     "offeringText": "occasionally",
-    "fulfillmentText": "IMB major IMA/IMB elective; Social Sciences International Relations track 200 level"
+    "fulfillmentText": "IMB major IMA/IMB elective; Social Sciences International Relations track 200 level",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "IMBX-SHU-262",
@@ -8687,7 +10217,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Sophomore standing or above.",
     "offeringText": "every year",
-    "fulfillmentText": "IMB major IMA/IMB elective."
+    "fulfillmentText": "IMB major IMA/IMB elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "IMBX-SHU-263",
@@ -8703,7 +10236,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Not suitable for first semester freshmen",
     "offeringText": "Spring",
-    "fulfillmentText": "CORE IPC; IMB major IMA/IMB Elective Courses."
+    "fulfillmentText": "CORE IPC; IMB major IMA/IMB Elective Courses.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "IMBX-SHU-360",
@@ -8719,7 +10255,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Sophomore standing or above.",
     "offeringText": "every year",
-    "fulfillmentText": "IMB major IMA/IMB elective."
+    "fulfillmentText": "IMB major IMA/IMB elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "IMBX-SHU-362",
@@ -8735,7 +10274,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Completion of at least one Business foundation course (BUSF, MKTG, MGMT); junior standing or above",
     "offeringText": "every year",
-    "fulfillmentText": "IMB Business elective, IMA/IMB elective for the IMB major; IMB minor; BUSF non-finance elective; BUSM non-marketing elective."
+    "fulfillmentText": "IMB Business elective, IMA/IMB elective for the IMB major; IMB minor; BUSF non-finance elective; BUSM non-marketing elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "IMBX-SHU-400",
@@ -8753,7 +10295,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "Senior students with a primary major in IMB + IMBX-SHU 110 Innovation Lab",
     "offeringText": "all terms",
-    "fulfillmentText": "IMB Major Capstone."
+    "fulfillmentText": "IMB Major Capstone.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "IMBX-SHU-401",
@@ -8771,7 +10316,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "IMBX-SHU 400 (IMB Capstone 1)",
     "offeringText": "every year",
-    "fulfillmentText": "IMB Capstone."
+    "fulfillmentText": "IMB Capstone.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "IMBX-SHU-501",
@@ -8787,7 +10335,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "every year",
-    "fulfillmentText": "IMA elective; IMB IMA/IMB elective."
+    "fulfillmentText": "IMA elective; IMB IMA/IMB elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "IMBX-SHU-9250",
@@ -8803,7 +10354,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Sophomore standing or above.",
     "offeringText": "Fall",
-    "fulfillmentText": "IMB major IMA/IMB elective."
+    "fulfillmentText": "IMB major IMA/IMB elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "IMBX-SHU-9251",
@@ -8819,7 +10373,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "",
     "offeringText": "Fall",
-    "fulfillmentText": ""
+    "fulfillmentText": "",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "IMBX-SHU-9501",
@@ -8835,7 +10392,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "every year",
-    "fulfillmentText": "IMA elective; IMB major IMA/IMB elective."
+    "fulfillmentText": "IMA elective; IMB major IMA/IMB elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "INTM-SHU-101",
@@ -8851,7 +10411,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": "CORE AT; IMA Major Other Foundation; IMB Major Emerging Media Foundation."
+    "fulfillmentText": "CORE AT; IMA Major Other Foundation; IMB Major Emerging Media Foundation.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "INTM-SHU-103",
@@ -8867,7 +10430,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": "CORE AT; IMA Major Other Foundation; IMB Major Emerging Media Foundation."
+    "fulfillmentText": "CORE AT; IMA Major Other Foundation; IMB Major Emerging Media Foundation.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "INTM-SHU-110",
@@ -8883,7 +10449,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "",
-    "fulfillmentText": ""
+    "fulfillmentText": "",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "INTM-SHU-120",
@@ -8899,7 +10468,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": "IMA Major Other Foundation; IMB Major Emerging Media Foundation."
+    "fulfillmentText": "IMA Major Other Foundation; IMB Major Emerging Media Foundation.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "INTM-SHU-124",
@@ -8915,7 +10487,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Fall",
-    "fulfillmentText": "CORE STS; IMA elective; IMB major IMA/IMB elective."
+    "fulfillmentText": "CORE STS; IMA elective; IMB major IMA/IMB elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "INTM-SHU-125",
@@ -8931,7 +10506,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "occasionally",
-    "fulfillmentText": "IMA elective; IMB major IMA/IMB elective."
+    "fulfillmentText": "IMA elective; IMB major IMA/IMB elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "INTM-SHU-126",
@@ -8947,7 +10525,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "",
-    "fulfillmentText": "IMA elective; IMB major IMA/IMB elective."
+    "fulfillmentText": "IMA elective; IMB major IMA/IMB elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "INTM-SHU-129",
@@ -8963,7 +10544,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Spring term of odd numbered years",
-    "fulfillmentText": "IMA elective; IMB major IMA/IMB elective."
+    "fulfillmentText": "IMA elective; IMB major IMA/IMB elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "INTM-SHU-129T",
@@ -8979,7 +10563,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Fall of odd numbered years",
-    "fulfillmentText": "IMA elective; IMB IMA/IMB elective."
+    "fulfillmentText": "IMA elective; IMB IMA/IMB elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "INTM-SHU-130",
@@ -8995,7 +10582,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None",
     "offeringText": "",
-    "fulfillmentText": "CORE ED; IMA elective; IMB IMA/IMB elective."
+    "fulfillmentText": "CORE ED; IMA elective; IMB IMA/IMB elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "INTM-SHU-132",
@@ -9013,7 +10603,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "INTM-SHU 101 Interaction Lab.",
     "offeringText": "Spring term of odd numbered years",
-    "fulfillmentText": "IMA elective; IMB major IMA/IMB elective."
+    "fulfillmentText": "IMA elective; IMB major IMA/IMB elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "INTM-SHU-134",
@@ -9029,7 +10622,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "",
-    "fulfillmentText": "IMA elective; IMB IMA/IMB elective."
+    "fulfillmentText": "IMA elective; IMB IMA/IMB elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "INTM-SHU-138",
@@ -9047,7 +10643,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "for INTM-SHU 138 is Creative Coding Lab OR Interaction Lab OR Application Lab OR Media Architecture",
     "offeringText": "occasionally",
-    "fulfillmentText": "IMA elective; IMB major IMA/IMB elective."
+    "fulfillmentText": "IMA elective; IMB major IMA/IMB elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "INTM-SHU-138T",
@@ -9065,7 +10664,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "for INTM-SHU 138T is Interaction Lab, Communications Lab, Creative Coding Lab, Application Lab, Media Architecture",
     "offeringText": "occasionally",
-    "fulfillmentText": "IMA elective; IMB IMA/IMB elective."
+    "fulfillmentText": "IMA elective; IMB IMA/IMB elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "INTM-SHU-140T-A",
@@ -9081,7 +10683,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None",
     "offeringText": "",
-    "fulfillmentText": "IMA elective; IMB IMA/IMB elective."
+    "fulfillmentText": "IMA elective; IMB IMA/IMB elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "INTM-SHU-140T-B",
@@ -9097,7 +10702,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None",
     "offeringText": "",
-    "fulfillmentText": "IMA elective; IMB IMA/IMB elective."
+    "fulfillmentText": "IMA elective; IMB IMA/IMB elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "INTM-SHU-141",
@@ -9113,7 +10721,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Fall of even numbered years",
-    "fulfillmentText": "IMA elective; IMB major IMA/IMB elective, Visual Arts elective."
+    "fulfillmentText": "IMA elective; IMB major IMA/IMB elective, Visual Arts elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "INTM-SHU-142",
@@ -9129,7 +10740,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Spring",
-    "fulfillmentText": "IMA elective; IMB IMA/IMB elective."
+    "fulfillmentText": "IMA elective; IMB IMA/IMB elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "INTM-SHU-150",
@@ -9145,7 +10759,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "",
-    "fulfillmentText": "IMA elective; IMB IMA/IMB elective."
+    "fulfillmentText": "IMA elective; IMB IMA/IMB elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "INTM-SHU-151",
@@ -9161,7 +10778,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "occasionally",
-    "fulfillmentText": "IMA elective; IMB major IMA/IMB elective."
+    "fulfillmentText": "IMA elective; IMB major IMA/IMB elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "INTM-SHU-152T",
@@ -9177,7 +10797,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None",
     "offeringText": "occasionally",
-    "fulfillmentText": "IMA elective; IMB IMA/IMB elective."
+    "fulfillmentText": "IMA elective; IMB IMA/IMB elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "INTM-SHU-166",
@@ -9193,7 +10816,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Fall of odd numbered years",
-    "fulfillmentText": "IMA major elective; IMB Major IMA/IMB Elective."
+    "fulfillmentText": "IMA major elective; IMB Major IMA/IMB Elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "INTM-SHU-185",
@@ -9211,7 +10837,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "INTM-SHU 101 Interaction Lab.",
     "offeringText": "Fall",
-    "fulfillmentText": "IMA elective; IMB major IMA/IMB elective."
+    "fulfillmentText": "IMA elective; IMB major IMA/IMB elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "INTM-SHU-187T",
@@ -9227,7 +10856,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "every year",
-    "fulfillmentText": "IMA elective; IMB major IMA/IMB elective."
+    "fulfillmentText": "IMA elective; IMB major IMA/IMB elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "INTM-SHU-194",
@@ -9243,7 +10875,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "sophomore standing",
     "offeringText": "every year",
-    "fulfillmentText": "IMA elective; IMB major IMA/IMB elective; Humanities Advanced Course/ Humanities Advanced Interdisciplinary Course."
+    "fulfillmentText": "IMA elective; IMB major IMA/IMB elective; Humanities Advanced Course/ Humanities Advanced Interdisciplinary Course.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "INTM-SHU-195",
@@ -9259,7 +10894,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Spring",
-    "fulfillmentText": "CORE STS; IMA elective; IMB major IMA/IMB elective."
+    "fulfillmentText": "CORE STS; IMA elective; IMB major IMA/IMB elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "INTM-SHU-200",
@@ -9275,7 +10913,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": "IMA elective; IMB major IMA/IMB elective."
+    "fulfillmentText": "IMA elective; IMB major IMA/IMB elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "INTM-SHU-201",
@@ -9291,7 +10932,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Spring",
-    "fulfillmentText": "IMA elective; IMB major IMA/IMB elective."
+    "fulfillmentText": "IMA elective; IMB major IMA/IMB elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "INTM-SHU-202",
@@ -9307,7 +10951,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "",
-    "fulfillmentText": "IMA elective; IMB major IMA/IMB elective."
+    "fulfillmentText": "IMA elective; IMB major IMA/IMB elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "INTM-SHU-203T",
@@ -9323,7 +10970,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "every year",
-    "fulfillmentText": "IMA elective; IMB IMA/IMB elective."
+    "fulfillmentText": "IMA elective; IMB IMA/IMB elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "INTM-SHU-204",
@@ -9339,7 +10989,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Creative Coding Lab.",
     "offeringText": "",
-    "fulfillmentText": "CORE AT; IMA elective; IMB IMA/IMB elective."
+    "fulfillmentText": "CORE AT; IMA elective; IMB IMA/IMB elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "INTM-SHU-205",
@@ -9355,7 +11008,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "WAI (or co-requisite).",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": "IMA Major Foundations; IMB Major Emerging Media Foundation."
+    "fulfillmentText": "IMA Major Foundations; IMB Major Emerging Media Foundation.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "INTM-SHU-205T",
@@ -9371,7 +11027,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Writing as Inquiry",
     "offeringText": "",
-    "fulfillmentText": "IMA elective; IMB IMA/IMB elective."
+    "fulfillmentText": "IMA elective; IMB IMA/IMB elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "INTM-SHU-206T",
@@ -9387,7 +11046,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None",
     "offeringText": "",
-    "fulfillmentText": "IMA elective; IMB IMA/IMB elective. Prerequisites: None"
+    "fulfillmentText": "IMA elective; IMB IMA/IMB elective. Prerequisites: None",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "INTM-SHU-207T",
@@ -9403,7 +11065,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "",
-    "fulfillmentText": "IMA elective; IMB IMA/IMB elective."
+    "fulfillmentText": "IMA elective; IMB IMA/IMB elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "INTM-SHU-208D",
@@ -9419,7 +11084,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Fall of even numbered years",
-    "fulfillmentText": "IMA elective; IMB IMA/IMB elective."
+    "fulfillmentText": "IMA elective; IMB IMA/IMB elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "INTM-SHU-214",
@@ -9435,7 +11103,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None",
     "offeringText": "Spring",
-    "fulfillmentText": "IMA elective; IMB major IMA/IMB elective."
+    "fulfillmentText": "IMA elective; IMB major IMA/IMB elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "INTM-SHU-215",
@@ -9454,7 +11125,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "INTM-SHU 103 Creative Coding Lab or CSCI-SHU 11 Introduction to Computer Programming",
     "offeringText": "",
-    "fulfillmentText": "IMA elective; IMB major IMA/IMB elective."
+    "fulfillmentText": "IMA elective; IMB major IMA/IMB elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "INTM-SHU-217",
@@ -9470,7 +11144,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Interaction Lab or Communications Lab",
     "offeringText": "occasionally",
-    "fulfillmentText": "IMA elective; IMB major IMA/IMB elective."
+    "fulfillmentText": "IMA elective; IMB major IMA/IMB elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "INTM-SHU-218",
@@ -9486,7 +11163,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "occasionally",
-    "fulfillmentText": "IMA elective; IMB IMA/IMB elective."
+    "fulfillmentText": "IMA elective; IMB IMA/IMB elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "INTM-SHU-222",
@@ -9502,7 +11182,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Interaction Lab or Creative Coding Lab.",
     "offeringText": "occasionally",
-    "fulfillmentText": "CORE ED; IMA elective; IMB major IMA/IMB elective."
+    "fulfillmentText": "CORE ED; IMA elective; IMB major IMA/IMB elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "INTM-SHU-223",
@@ -9520,7 +11203,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "INTM-SHU 103 Creative Coding Lab.",
     "offeringText": "occasionally",
-    "fulfillmentText": "IMA elective; IMB major IMA/IMB elective."
+    "fulfillmentText": "IMA elective; IMB major IMA/IMB elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "INTM-SHU-224",
@@ -9536,7 +11222,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "",
-    "fulfillmentText": "IMA elective; IMB IMA/IMB elective."
+    "fulfillmentText": "IMA elective; IMB IMA/IMB elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "INTM-SHU-226",
@@ -9552,7 +11241,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "",
-    "fulfillmentText": "IMA elective; IMB IMA/IMB elective."
+    "fulfillmentText": "IMA elective; IMB IMA/IMB elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "INTM-SHU-227",
@@ -9568,7 +11260,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Creative Coding Lab.",
     "offeringText": "Spring term of even numbered years",
-    "fulfillmentText": "IMA elective; IMB major IMA/IMB elective."
+    "fulfillmentText": "IMA elective; IMB major IMA/IMB elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "INTM-SHU-228",
@@ -9584,7 +11279,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Interaction Lab",
     "offeringText": "occasionally",
-    "fulfillmentText": "IMA elective; IMB major IMA/IMB elective."
+    "fulfillmentText": "IMA elective; IMB major IMA/IMB elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "INTM-SHU-234",
@@ -9600,7 +11298,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "occasionally",
-    "fulfillmentText": "IMA elective; IMB major IMA/IMB elective."
+    "fulfillmentText": "IMA elective; IMB major IMA/IMB elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "INTM-SHU-235",
@@ -9616,7 +11317,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Fall",
-    "fulfillmentText": "IMA elective; IMB major IMA/IMB elective."
+    "fulfillmentText": "IMA elective; IMB major IMA/IMB elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "INTM-SHU-238",
@@ -9632,7 +11336,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Interaction lab / Communication lab",
     "offeringText": "",
-    "fulfillmentText": "IMA elective; IMB major IMA/IMB elective."
+    "fulfillmentText": "IMA elective; IMB major IMA/IMB elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "INTM-SHU-239",
@@ -9648,7 +11355,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "occasionally",
-    "fulfillmentText": "IMA elective; IMB major IMA/IMB elective."
+    "fulfillmentText": "IMA elective; IMB major IMA/IMB elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "INTM-SHU-241",
@@ -9664,7 +11374,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Interaction Lab / Creative Coding Lab / Communications Lab",
     "offeringText": "every year",
-    "fulfillmentText": "IMA elective; IMB major IMA/IMB elective."
+    "fulfillmentText": "IMA elective; IMB major IMA/IMB elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "INTM-SHU-242",
@@ -9680,7 +11393,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Interaction Lab",
     "offeringText": "Fall",
-    "fulfillmentText": "IMA elective; IMB major IMA/IMB elective."
+    "fulfillmentText": "IMA elective; IMB major IMA/IMB elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "INTM-SHU-243",
@@ -9696,7 +11412,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "",
-    "fulfillmentText": "IMA elective; IMB major IMA/IMB elective."
+    "fulfillmentText": "IMA elective; IMB major IMA/IMB elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "INTM-SHU-244",
@@ -9712,7 +11431,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "every year",
-    "fulfillmentText": "CORE ED; IMA elective; IMB IMA/IMB elective."
+    "fulfillmentText": "CORE ED; IMA elective; IMB IMA/IMB elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "INTM-SHU-247",
@@ -9728,7 +11450,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Creative Coding Lab or Interaction Lab or Introduction to Computer Programming.",
     "offeringText": "",
-    "fulfillmentText": "IMA elective; IMB major IMA/IMB elective."
+    "fulfillmentText": "IMA elective; IMB major IMA/IMB elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "INTM-SHU-253",
@@ -9744,7 +11469,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Interaction Lab",
     "offeringText": "occasionally",
-    "fulfillmentText": "IMA elective; IMB IMA/IMB elective."
+    "fulfillmentText": "IMA elective; IMB IMA/IMB elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "INTM-SHU-254",
@@ -9763,7 +11491,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "INTM-SHU 101 Interaction Lab or INTM-SHU 103 Creative Coding Lab",
     "offeringText": "Spring",
-    "fulfillmentText": "IMA elective; IMB major IMA/IMB elective."
+    "fulfillmentText": "IMA elective; IMB major IMA/IMB elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "INTM-SHU-255",
@@ -9783,7 +11514,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "INTM-SHU 101 Interaction Lab or INTM-SHU 110 Application Lab or INTM-SHU 120 Communications Lab.",
     "offeringText": "Fall",
-    "fulfillmentText": "IMA elective; IMB major IMA/IMB elective."
+    "fulfillmentText": "IMA elective; IMB major IMA/IMB elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "INTM-SHU-257",
@@ -9801,7 +11535,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "INTM-SHU 120 Communications Lab.",
     "offeringText": "Spring",
-    "fulfillmentText": "IMA elective; IMB major IMA/IMB elective."
+    "fulfillmentText": "IMA elective; IMB major IMA/IMB elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "INTM-SHU-258",
@@ -9820,7 +11557,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "INTM-SHU 103 Creative Coding Lab OR CSCI-SHU 11 Intro to Computer Programming",
     "offeringText": "every year",
-    "fulfillmentText": "IMA elective; IMB major IMA/IMB elective."
+    "fulfillmentText": "IMA elective; IMB major IMA/IMB elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "INTM-SHU-259",
@@ -9836,7 +11576,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Communications Lab.",
     "offeringText": "every year",
-    "fulfillmentText": "IMA elective; IMB major IMA/IMB elective."
+    "fulfillmentText": "IMA elective; IMB major IMA/IMB elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "INTM-SHU-261",
@@ -9852,7 +11595,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Interaction Lab or Creative Coding Lab.",
     "offeringText": "Spring",
-    "fulfillmentText": "IMA elective; IMB major IMA/IMB elective."
+    "fulfillmentText": "IMA elective; IMB major IMA/IMB elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "INTM-SHU-262",
@@ -9870,7 +11616,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "INTM-SHU 101 Interaction Lab",
     "offeringText": "every year",
-    "fulfillmentText": "IMA elective; IMB major IMA/IMB elective."
+    "fulfillmentText": "IMA elective; IMB major IMA/IMB elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "INTM-SHU-265",
@@ -9886,7 +11635,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "occasionally",
-    "fulfillmentText": "IMA elective; IMB IMA/IMB elective."
+    "fulfillmentText": "IMA elective; IMB IMA/IMB elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "INTM-SHU-266",
@@ -9902,7 +11654,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None",
     "offeringText": "",
-    "fulfillmentText": "IMA elective; IMB major IMA/IMB elective; GCS Chinese Media, Arts, and Literature."
+    "fulfillmentText": "IMA elective; IMB major IMA/IMB elective; GCS Chinese Media, Arts, and Literature.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "INTM-SHU-267",
@@ -9918,7 +11673,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Writing as Inquiry",
     "offeringText": "",
-    "fulfillmentText": "CORE HPC or IPC; GCS Chinese History, Society, and Culture; IMA elective; IMB IMA/IMB elective; 18-19 Humanities Digital Approaches. Prerequisite: Writing as Inquiry"
+    "fulfillmentText": "CORE HPC or IPC; GCS Chinese History, Society, and Culture; IMA elective; IMB IMA/IMB elective; 18-19 Humanities Digital Approaches. Prerequisite: Writing as Inquiry",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "INTM-SHU-268",
@@ -9934,7 +11692,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None",
     "offeringText": "",
-    "fulfillmentText": "GCS Chinese Media, Arts, and Literature; IMA elective; IMB IMA/IMB elective."
+    "fulfillmentText": "GCS Chinese Media, Arts, and Literature; IMA elective; IMB IMA/IMB elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "INTM-SHU-271",
@@ -9950,7 +11711,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Fall",
-    "fulfillmentText": "IMA elective; IMB IMA/IMB elective."
+    "fulfillmentText": "IMA elective; IMB IMA/IMB elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "INTM-SHU-280C",
@@ -9966,7 +11730,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": "IMA elective; IMB major IMA/IMB elective."
+    "fulfillmentText": "IMA elective; IMB major IMA/IMB elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "INTM-SHU-280D",
@@ -9982,7 +11749,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Interaction Lab, Communications Lab or Creative Coding Lab",
     "offeringText": "occasionally",
-    "fulfillmentText": "IMA elective; IMB major IMA/IMB elective."
+    "fulfillmentText": "IMA elective; IMB major IMA/IMB elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "INTM-SHU-283",
@@ -9998,7 +11768,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Registration is limited to IMA/IMB Majors studying at NYU’s global sites other than New York or Abu Dhabi. Please email ima@nyu.edu for the permission of department consent.",
     "offeringText": "occasionally",
-    "fulfillmentText": "IMA elective; IMB IMA/IMB elective."
+    "fulfillmentText": "IMA elective; IMB IMA/IMB elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "INTM-SHU-284",
@@ -10014,7 +11787,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "occasionally",
-    "fulfillmentText": "IMA elective; IMB major IMA/IMB elective."
+    "fulfillmentText": "IMA elective; IMB major IMA/IMB elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "INTM-SHU-286",
@@ -10030,7 +11806,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Writing as Inquiry",
     "offeringText": "every year",
-    "fulfillmentText": "IMA elective; IMB IMA/IMB elective."
+    "fulfillmentText": "IMA elective; IMB IMA/IMB elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "INTM-SHU-287",
@@ -10046,7 +11825,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Interaction Lab",
     "offeringText": "Spring",
-    "fulfillmentText": "IMA elective; IMB IMA/IMB elective."
+    "fulfillmentText": "IMA elective; IMB IMA/IMB elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "INTM-SHU-289",
@@ -10062,7 +11844,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Communications Lab or Interaction Lab.",
     "offeringText": "occasionally",
-    "fulfillmentText": "IMA elective; IMB IMA/IMB elective."
+    "fulfillmentText": "IMA elective; IMB IMA/IMB elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "INTM-SHU-294",
@@ -10078,7 +11863,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Sophomore standing or above.",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": "CORE STS; IMA elective; IMB major IMA/IMB elective."
+    "fulfillmentText": "CORE STS; IMA elective; IMB major IMA/IMB elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "INTM-SHU-296",
@@ -10094,7 +11882,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Sophomore Standing.",
     "offeringText": "",
-    "fulfillmentText": "IMA elective; IMB major IMA/IMB elective.."
+    "fulfillmentText": "IMA elective; IMB major IMA/IMB elective..",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "INTM-SHU-297T",
@@ -10110,7 +11901,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Sophomore standing.",
     "offeringText": "every year",
-    "fulfillmentText": "IMA elective; IMB major IMA/IMB elective."
+    "fulfillmentText": "IMA elective; IMB major IMA/IMB elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "INTM-SHU-301",
@@ -10126,7 +11920,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Sophomore standing. Fulfilment: IMA elective or Advanced elective; IMB major IMA/IMB elective.",
     "offeringText": "Spring",
-    "fulfillmentText": ""
+    "fulfillmentText": "",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "INTM-SHU-303",
@@ -10152,7 +11949,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "INTM-SHU 138 Responsive Environments OR INTM-SHU 204 Critical Data & Visualization OR INTM-SHU 215 Machine Learning for New Interfaces OR INTM-SHU 227 ABC Browser Circus OR INTM-SHU 247 Creative Game Design & Development OR INTM-SHU 254 Nature of Code OR INTM-SHU 258 Machine Learning for Artists & Designers OR INTM-SHU 288 Kinetic Interfaces OR INTM-SHU 304 Web Page to Web Space. Fulfilment: IMA elective or Advanced elective; IMB IMA/IMB elective.",
     "offeringText": "every other year",
-    "fulfillmentText": ""
+    "fulfillmentText": "",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "INTM-SHU-304",
@@ -10170,7 +11970,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "Nature of Code or Machine Learning for New Interfaces or Critical Data and Visualization or ABC Browser Circus or Kinetic Interfaces or Machine Learning for Artists and Designers or Expanded Web or Movement Practices and Computing or CSCI-SHU 101 Introduction to Computer and Data Science",
     "offeringText": "every year",
-    "fulfillmentText": "IMA elective or Advanced IMA Elective; IMB major IMA/IMB elective."
+    "fulfillmentText": "IMA elective or Advanced IMA Elective; IMB major IMA/IMB elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "INTM-SHU-305",
@@ -10186,7 +11989,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "IMA Major with junior or senior standing.",
     "offeringText": "every year",
-    "fulfillmentText": "IMA elective; IMB major IMA/IMB elective."
+    "fulfillmentText": "IMA elective; IMB major IMA/IMB elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "INTM-SHU-306",
@@ -10206,7 +12012,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "INTM-SHU 120 Communications Lab OR INTM-SHU 205 What’s New Media OR INTM-SHU 124 Emerging Technologies & Computational Arts",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": "IMA elective or Advanced elective; IMB major IMA/IMB elective."
+    "fulfillmentText": "IMA elective or Advanced elective; IMB major IMA/IMB elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "INTM-SHU-307",
@@ -10222,7 +12031,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Sophomore standing or above.",
     "offeringText": "every year",
-    "fulfillmentText": "IMA Advanced elective; IMB major IMA/IMB elective."
+    "fulfillmentText": "IMA Advanced elective; IMB major IMA/IMB elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "INTM-SHU-308",
@@ -10238,7 +12050,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Sophomore standing or above.",
     "offeringText": "every year",
-    "fulfillmentText": "IMA Advanced Elective; IMB major IMA/IMB elective; GCS Elective: Media, Arts, and Literature."
+    "fulfillmentText": "IMA Advanced Elective; IMB major IMA/IMB elective; GCS Elective: Media, Arts, and Literature.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "INTM-SHU-350",
@@ -10254,7 +12069,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Junior standing OR What is New Media.",
     "offeringText": "every other year",
-    "fulfillmentText": "IMA elective or Advanced elective; IMB major IMA/IMB elective."
+    "fulfillmentText": "IMA elective or Advanced elective; IMB major IMA/IMB elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "INTM-SHU-351",
@@ -10270,7 +12088,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Sophomore status or above.",
     "offeringText": "every year",
-    "fulfillmentText": "IMA Advanced elective or elective; IMB IMA/IMB elective."
+    "fulfillmentText": "IMA Advanced elective or elective; IMB IMA/IMB elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "INTM-SHU-352",
@@ -10286,7 +12107,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Sophomore standing or above.",
     "offeringText": "Fall",
-    "fulfillmentText": "IMA advanced elective; IMB Major IMA/IMB Elective."
+    "fulfillmentText": "IMA advanced elective; IMB Major IMA/IMB Elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "INTM-SHU-400",
@@ -10302,7 +12126,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Seniors with primary major in IMA.",
     "offeringText": "Spring",
-    "fulfillmentText": "IMA Major Capstone."
+    "fulfillmentText": "IMA Major Capstone.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "INTM-SHU-401",
@@ -10320,7 +12147,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "INTM-SHU 400 Capstone Studio I.",
     "offeringText": "",
-    "fulfillmentText": "IMA Major Capstone."
+    "fulfillmentText": "IMA Major Capstone.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "INTM-SHU-997",
@@ -10336,7 +12166,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "permission of the department. Students majoring in IMA are permitted to work on an individual basis under the supervision of a full-time faculty member in the department if they have maintained an overall GPA of 3.0 and have a study proposal that is approved by an IMA professor. Students are expected to spend about ten to twelve hours a week on their project for 4 credits.",
     "offeringText": "",
-    "fulfillmentText": "general elective."
+    "fulfillmentText": "general elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "JAPN-SHU-10",
@@ -10355,7 +12188,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "JAPN-SHU 5 Elementary Japanese I or EAST-UA 247.",
     "offeringText": "",
-    "fulfillmentText": "General Elective."
+    "fulfillmentText": "General Elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "JAPN-SHU-15",
@@ -10373,7 +12209,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "JAPN-SHU 10 Elementary Japanese II.",
     "offeringText": "",
-    "fulfillmentText": "General Elective."
+    "fulfillmentText": "General Elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "JAPN-SHU-20",
@@ -10391,7 +12230,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "JAPN-SHU 15 or equivalent with a minimum grade of C-, or placement exam (http://www.nyu.edu/cas/flpexam/).",
     "offeringText": "all terms",
-    "fulfillmentText": "General Elective."
+    "fulfillmentText": "General Elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "JAPN-SHU-25",
@@ -10410,7 +12252,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "JAPN-SHU 20 or the equivalent (EAST-UA 250) with a minimum grade of C+",
     "offeringText": "every year",
-    "fulfillmentText": "Counts toward Japanese minor"
+    "fulfillmentText": "Counts toward Japanese minor",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "JAPN-SHU-30",
@@ -10429,7 +12274,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "JAPN-SHU 25 or the equivalent (EAST-UA 252) with a minimum grade of C+. 4 points per term",
     "offeringText": "every year",
-    "fulfillmentText": "Japanese Minor."
+    "fulfillmentText": "Japanese Minor.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "JAPN-SHU-5",
@@ -10445,7 +12293,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "",
-    "fulfillmentText": "General Elective."
+    "fulfillmentText": "General Elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "JOUR-SHU-201T",
@@ -10461,7 +12312,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "",
     "offeringText": "",
-    "fulfillmentText": "General Elective."
+    "fulfillmentText": "General Elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "JOUR-SHU-202",
@@ -10477,7 +12331,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Journalism: Methods and Practice (001 or 002); OR a grade of C or higher in Writing as Inquiry; OR their equivalents in New York or Abu Dhabi.",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": "General Elective."
+    "fulfillmentText": "General Elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "JOUR-SHU-203",
@@ -10493,7 +12350,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Fall",
-    "fulfillmentText": "GCS Chinese Media, Arts, and Literature; The Global Network Minor in Journalism Studies."
+    "fulfillmentText": "GCS Chinese Media, Arts, and Literature; The Global Network Minor in Journalism Studies.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "JOUR-SHU-9202",
@@ -10509,7 +12369,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "C or higher in Writing as Inquiry or Sophomore standing",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": "General Elective."
+    "fulfillmentText": "General Elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "KORE-SHU-10",
@@ -10527,7 +12390,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "Elementary Korean I (KORN-SHU 5) or the equivalent, or by placement exam .",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": "General elective."
+    "fulfillmentText": "General elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "KORE-SHU-15",
@@ -10543,7 +12409,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Elementary Korean II or the equivalent, or by placement exam",
     "offeringText": "every year",
-    "fulfillmentText": "General electives."
+    "fulfillmentText": "General electives.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "KORE-SHU-5",
@@ -10559,7 +12428,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": "General elective."
+    "fulfillmentText": "General elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "LIT-SHU-200",
@@ -10575,7 +12447,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "occasionally",
-    "fulfillmentText": "Identity, Gender, and Language: Humanities Advanced course."
+    "fulfillmentText": "Identity, Gender, and Language: Humanities Advanced course.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "MATH-SHU-10",
@@ -10591,7 +12466,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": "Core Mathematics requirement."
+    "fulfillmentText": "Core Mathematics requirement.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "MATH-SHU-121",
@@ -10611,7 +12489,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "Placement examination or a grade of C or above in MATH–SHU 009 Precalculus. Please note that this course is not equivalent to MATH-SHU 131 Calculus (formerly MATH-SHU 121) and will not be recognized as fulfilling the Calculus prerequisites of higher-level MATH-SHU courses. Students pursuing the following majors will therefore not be able to use MATH-SHU 131 to fulfill major requirements: Economics, Natural Sciences, Mathematics, Data Science, Computer Science, Engineering.",
     "offeringText": "occasionally",
-    "fulfillmentText": ""
+    "fulfillmentText": "",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "MATH-SHU-121L",
@@ -10627,7 +12508,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "",
     "offeringText": "Fall",
-    "fulfillmentText": ""
+    "fulfillmentText": "",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "MATH-SHU-131",
@@ -10646,7 +12530,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "Pre-placement by Faculty based on high-school grades, OR NYU SH “Calculus and Linear Algebra” placement exam, OR grade C or better in MATH-SHU 9 (Precalculus) Antirequisite: MATH-SHU 201 (Honors Calculus)",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": "Economics Core Math requirement; Math Core Math requirement."
+    "fulfillmentText": "Economics Core Math requirement; Math Core Math requirement.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "MATH-SHU-140",
@@ -10665,7 +12552,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "Sufficient high school grades, or NYU SH “Calculus and Linear Algebra” placement exam, or a grade of C or better in MATH-SHU 9 (Precalculus). Anti-Requisite: MATH-SHU 141.",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": "Math required, Honors Math required (with MATH-SHU 143); Engineering required, DS required Math course."
+    "fulfillmentText": "Math required, Honors Math required (with MATH-SHU 143); Engineering required, DS required Math course.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "MATH-SHU-141",
@@ -10684,7 +12574,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "Pre-placement by Faculty based on high-school grades, or NYUSH \"Honors Calculus and Honors Linear Algebra\" placement exam, or grade C or better in MATH-SHU 140 (Linear Algebra) or grade C or better in MATH-SHU 265 (Linear Algebra and Differential Equations).",
     "offeringText": "Fall",
-    "fulfillmentText": "Math Constrained Math Elective; Honors Math required, DS Math required course."
+    "fulfillmentText": "Math Constrained Math Elective; Honors Math required, DS Math required course.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "MATH-SHU-142",
@@ -10704,7 +12597,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "Grade C or better in MATH-SHU 141 (Honors Linear Algebra I), or grade C or better in MATH-SHU 140 (Linear Algebra) and grade C or better in MATH-SHU 143 (Foundations of Mathematical Methods)",
     "offeringText": "Spring",
-    "fulfillmentText": "Math Constrained Math Elective; Honors Math required; DS concentration in Math."
+    "fulfillmentText": "Math Constrained Math Elective; Honors Math required; DS concentration in Math.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "MATH-SHU-143",
@@ -10723,7 +12619,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "Pre-placement by faculty based on high-school grades, or NYUSH “Calculus and Linear Algebra” placement exam or grade C or better in MATH-SHU 131 Calculus. Antirequisite: MATH-SHU 201 (Honors Calculus).",
     "offeringText": "Spring",
-    "fulfillmentText": "Honors Math required (with MATH-SHU 140)."
+    "fulfillmentText": "Honors Math required (with MATH-SHU 140).",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "MATH-SHU-151",
@@ -10745,7 +12644,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "Grade C or better in either MATH-SHU 131 (Calculus) or MATH-SHU 201 (Honors Calculus) Antirequisite: MATH-SHU 329 (Honors Analysis II) Equivalent to MATH-UA 123, MATH-AD 112.",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": "CHEM required; PHYS required; Engineering required; MATH required; DS required Math course."
+    "fulfillmentText": "CHEM required; PHYS required; Engineering required; MATH required; DS required Math course.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "MATH-SHU-160",
@@ -10766,7 +12668,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "Grade C or better in either MATH-SHU 131 (Calculus) or MATH-SHU 201 (Honors Calculus), and grade C or better in either MATH-SHU 140 (Linear Algebra) or MATH-SHU 141 (Honors Linear Algebra I) .",
     "offeringText": "Spring",
-    "fulfillmentText": "Biology elective; Economics elective; Math additional Math elective; Honors Math elective; NS elective; Engineering required."
+    "fulfillmentText": "Biology elective; Economics elective; Math additional Math elective; Honors Math elective; NS elective; Engineering required.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "MATH-SHU-201",
@@ -10785,7 +12690,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "Pre-placement by Faculty based on high-school grades, or NYU SH “Honors Calculus and Honors Linear Algebra” placement exam, or grade A- or better in MATH-SHU 131 (Calculus). Antirequisite: MATH-SHU 143 (Foundations of Mathematical Methods)",
     "offeringText": "Fall",
-    "fulfillmentText": "Math required; Honors Core Math required; ECON Core Math required; DS Concentration in Math."
+    "fulfillmentText": "Math required; Honors Core Math required; ECON Core Math required; DS Concentration in Math.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "MATH-SHU-226",
@@ -10803,7 +12711,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "Grade C or better in MATH-SHU 339 (Real variables).",
     "offeringText": "occasionally",
-    "fulfillmentText": "Math Constrained Math elective; Honors Math elective."
+    "fulfillmentText": "Math Constrained Math elective; Honors Math elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "MATH-SHU-234",
@@ -10824,7 +12735,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "Grade C or better in either MATH-SHU 140 (Linear Algebra) or MATH-SHU 141 (Honors Linear Algebra I), and grade C or better in either MATH-SHU 235 (Probability and Statistics) or MATH-SHU 238 (Honors Theory of Probability).",
     "offeringText": "Fall",
-    "fulfillmentText": "Honors Math Electives, Math Additional electives; DS Data Analysis or concentration in Math."
+    "fulfillmentText": "Honors Math Electives, Math Additional electives; DS Data Analysis or concentration in Math.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "MATH-SHU-235",
@@ -10844,7 +12758,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "MATH-SHU 131 Calculus or 210 Honors Calculus. Not open to students who have taken MATH-SHU 238 Honors Theory of Probability and/or MATH-UA 234 Mathematical Statistics.",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": "Math required course, Social Science Methods, Business Core, CS & CE & EE required, Data Science foundational, Economics required, PHYS required, IMB Business elective."
+    "fulfillmentText": "Math required course, Social Science Methods, Business Core, CS & CE & EE required, Data Science foundational, Economics required, PHYS required, IMB Business elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "MATH-SHU-238",
@@ -10865,7 +12782,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "Grade C or better in either MATH-SHU 151 (Multivariable Calculus) or MATH-SHU 329 (Honors Analysis II), and grade C or better in either MATH-SHU 140 (Linear Algebra) or MATH-SHU 141 (Honors Linear Algebra I).",
     "offeringText": "Spring",
-    "fulfillmentText": "Math required; Honors Math required; CS, CE, EE required; DS Foundational course or concentration in Math; Economics required ."
+    "fulfillmentText": "Math required; Honors Math required; CS, CE, EE required; DS Foundational course or concentration in Math; Economics required .",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "MATH-SHU-239",
@@ -10884,7 +12804,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "MATH-SHU 140 Linear Algebra and CSCI-SHU 11 Introduction to Computer Programming",
     "offeringText": "Fall",
-    "fulfillmentText": "Math Additional Math elective; Honors Math Math elective."
+    "fulfillmentText": "Math Additional Math elective; Honors Math Math elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "MATH-SHU-250",
@@ -10906,7 +12829,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "Grade C or better in either MATH-SHU 151 (Multivariable Calculus) or MATH-SHU 329 (Honors Analysis II), and grade C or better in either MATH-SHU 235 (Probability and Statistics) or MATH-SHU 238 (Honors Theory of Probability) or grade B+ or above in BUSF-SHU 101(Statistics for Business and Economics).",
     "offeringText": "Spring",
-    "fulfillmentText": "BUSF Finance elective; BUSM Finance track; IMB Business elective; Math Additional elective; Honors Math elective."
+    "fulfillmentText": "BUSF Finance elective; BUSM Finance track; IMB Business elective; Math Additional elective; Honors Math elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "MATH-SHU-251",
@@ -10926,7 +12852,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "Grade C or better in either MATH-SHU 151 (Multivariable Calculus) or 329 (Honors Analysis II), and grade C or better in either MATH-SHU 140 (Linear Algebra) or MATH-SHU 141 (Honors Linear Algebra I).",
     "offeringText": "Fall",
-    "fulfillmentText": "MATH additional elective; Honors MATH elective."
+    "fulfillmentText": "MATH additional elective; Honors MATH elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "MATH-SHU-252",
@@ -10946,7 +12875,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "Grade C or better in either MATH-SHU 151 (Multivariable Calculus) or MATH-SHU 329 (Honors Analysis II), and grade C or better in either MATH-SHU 262 (Ordinary Differential Equation) or MATH-362 (Honors Ordinary Differential Equations).",
     "offeringText": "Spring",
-    "fulfillmentText": "CORE AT; Math Additional elective; Honors Math elective."
+    "fulfillmentText": "CORE AT; Math Additional elective; Honors Math elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "MATH-SHU-262",
@@ -10968,7 +12900,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "Grade C or better in either MATH-SHU 131 (Calculus) or MATH-SHU 201 (Honors Calculus), and grade C or better in either MATH-SHU 140 (Linear Algebra) or MATH-SHU 141 (Honors Linear Algebra I). Anti-requisite: Students who have taken MATH-SHU 362 Honors Ordinary Differential Equations are not eligible.",
     "offeringText": "Spring",
-    "fulfillmentText": "Math required course."
+    "fulfillmentText": "Math required course.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "MATH-SHU-263",
@@ -10989,7 +12924,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "Grade C or better in either MATH-SHU 262 (Ordinary Differential Equations) or MATH-SHU 362 (Honors Differential Equations), AND grade C or better in either MATH-SHU 151 (Multivariable Calculus) or MATH-SHU 329 (Honors Analysis II).",
     "offeringText": "Spring",
-    "fulfillmentText": "Math Additional Math elective; Honors Math elective."
+    "fulfillmentText": "Math Additional Math elective; Honors Math elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "MATH-SHU-264",
@@ -11009,7 +12947,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "MATH-SHU 140 Linear Algebra and MATH-SHU 151 Multi Calculus (Recommended: MATH-SHU 262 Ordinary Differential Equations)",
     "offeringText": "Spring",
-    "fulfillmentText": "Math additional elective, Honor Math elective."
+    "fulfillmentText": "Math additional elective, Honor Math elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "MATH-SHU-265",
@@ -11030,7 +12971,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "Calculus OR Honors Calculus. Anti-requisites: MATH-SHU 140, MATH-SHU 141, MATH-SHU 262, or MATH-SHU 362.",
     "offeringText": "occasionally",
-    "fulfillmentText": "PHYS additional required; CE required; EE required; DS Math required."
+    "fulfillmentText": "PHYS additional required; CE required; EE required; DS Math required.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "MATH-SHU-270",
@@ -11049,7 +12993,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "MATH-SHU 140 Linear Algebra and MATH-SHU 151 Multivariable Calculus.",
     "offeringText": "occasionally",
-    "fulfillmentText": "Math Additional Math Elective"
+    "fulfillmentText": "Math Additional Math Elective",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "MATH-SHU-282",
@@ -11068,7 +13015,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "Grade C or better in either MATH-SHU 151 (Multivariable Calculus) or MATH-SHU 329 (Honors Analysis II).",
     "offeringText": "Spring",
-    "fulfillmentText": "Math constrained Math elective; Honors Math elective."
+    "fulfillmentText": "Math constrained Math elective; Honors Math elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "MATH-SHU-328",
@@ -11087,7 +13037,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "Grade C or better in MATH-SHU 201 (Honors Calculus), or grade A- or better in MATH-SHU 131 (Calculus)",
     "offeringText": "Spring",
-    "fulfillmentText": "Math constrained Math elective; Honors Math required; DS required Mathematics course"
+    "fulfillmentText": "Math constrained Math elective; Honors Math required; DS required Mathematics course",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "MATH-SHU-329",
@@ -11109,7 +13062,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "Grade of A in [MATH-SHU 328 Honors Analysis 1] OR {Grade of C or better in [MATH-SHU 328 Honors Analysis 1] AND [MATH-SHU 141 Honors Linear Algebra I or (MATH-SHU 140 Linear Algebra and MATH-SHU 143 Foundations of Mathematical Methods)] }",
     "offeringText": "Fall",
-    "fulfillmentText": "Honors MATH Required, MATH Constrained Math electives, DS concentration in Math."
+    "fulfillmentText": "Honors MATH Required, MATH Constrained Math electives, DS concentration in Math.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "MATH-SHU-339",
@@ -11127,7 +13083,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "Grade C or better in MATH-SHU 328 (Honors Analysis I)",
     "offeringText": "Spring",
-    "fulfillmentText": "Constrained Math elective; Honors Math elective."
+    "fulfillmentText": "Constrained Math elective; Honors Math elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "MATH-SHU-345",
@@ -11148,7 +13107,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "Grade B or better in either MATH-SHU 140 (Linear algebra) or MATH-SHU 141 (Honors Linear Algebra I), and grade B or better in either MATH-SHU 235 (Probability and Statistics) or MATH-SHU 238 (Honors Theory of Probability)",
     "offeringText": "Fall",
-    "fulfillmentText": "Honors Math Electives, Math Additional electives; DS Concentration in Math."
+    "fulfillmentText": "Honors Math Electives, Math Additional electives; DS Concentration in Math.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "MATH-SHU-348",
@@ -11167,7 +13129,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "Grade C or better in MATH-SHU 141 (Honors Linear Algebra I, or grade B or better in MATH-SHU 140 (Linear Algebra)",
     "offeringText": "Fall",
-    "fulfillmentText": "Math constrained Math elective; Honors Math required course."
+    "fulfillmentText": "Math constrained Math elective; Honors Math required course.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "MATH-SHU-349",
@@ -11188,7 +13153,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": ">=Grade C in MATH-SHU 141 Honors Linear Algebra I, or >=grade B in MATH-SHU 140 Linear algebra and >=grade C in either MATH-SHU 201 Honors Calculus or MATH-SHU 143 Foundations of Mathematical Methods, or instructor consent",
     "offeringText": "occasionally",
-    "fulfillmentText": "Math Constrained Math Elective; Honors Math elective."
+    "fulfillmentText": "Math Constrained Math Elective; Honors Math elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "MATH-SHU-350",
@@ -11206,7 +13174,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "Grade C or better in MATH-SHU 328 (Honors Analysis 1).",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": "Math Constrained Math elective; Honors Math elective."
+    "fulfillmentText": "Math Constrained Math elective; Honors Math elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "MATH-SHU-351T",
@@ -11222,7 +13193,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "occasionally",
-    "fulfillmentText": "Math Constrained Math elective; Honors Math elective."
+    "fulfillmentText": "Math Constrained Math elective; Honors Math elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "MATH-SHU-362",
@@ -11244,7 +13218,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "Grade C or better in MATH-SHU 201 (Honors Calculus), or MATH-SHU 131 (Calculus) and MATH-SHU 143 (Foundations of Mathematical Methods), and grade C or better in either MATH-SHU 140 (Linear Algebra) or MATH-SHU 141 (honors Linear Algebra I).",
     "offeringText": "Fall",
-    "fulfillmentText": "Math Required; Honors Math Required."
+    "fulfillmentText": "Math Required; Honors Math Required.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "MATH-SHU-375",
@@ -11263,7 +13240,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "Grade C or better in MATH-SHU 328 (Honors Analysis I) or MATH-SHU 151 (Multivariable Calculus).",
     "offeringText": "Spring",
-    "fulfillmentText": "Math Constrained Math elective; Honors Math elective."
+    "fulfillmentText": "Math Constrained Math elective; Honors Math elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "MATH-SHU-377",
@@ -11282,7 +13262,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "Grade C or better in MATH-SHU 329 (Honors Analysis II) or MATH-SHU 151 (Multivariable Calculus).",
     "offeringText": "Spring",
-    "fulfillmentText": "Math Constrained Math elective; Honors Math elective."
+    "fulfillmentText": "Math Constrained Math elective; Honors Math elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "MATH-SHU-395",
@@ -11298,7 +13281,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "occasionally",
-    "fulfillmentText": "Math additional elective; Honors Math elective."
+    "fulfillmentText": "Math additional elective; Honors Math elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "MATH-SHU-5",
@@ -11314,7 +13300,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "occasionally",
-    "fulfillmentText": "CORE STS."
+    "fulfillmentText": "CORE STS.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "MATH-SHU-9",
@@ -11330,7 +13319,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Fall",
-    "fulfillmentText": "Core Curriculum Math requirement."
+    "fulfillmentText": "Core Curriculum Math requirement.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "MATH-SHU-997",
@@ -11346,7 +13338,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None. Department consent is needed.",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": "Math Additional Math elective; Honors Math elective."
+    "fulfillmentText": "Math Additional Math elective; Honors Math elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "MGMT-SHU-18",
@@ -11362,7 +13357,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "second year or above students.",
     "offeringText": "occasionally",
-    "fulfillmentText": "BUSF Non-Finance elective; BUSM Non-Marketing elective; Business Management track; IMB Business elective."
+    "fulfillmentText": "BUSF Non-Finance elective; BUSM Non-Marketing elective; Business Management track; IMB Business elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "MGMT-SHU-301",
@@ -11378,7 +13376,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Not open to first-semester students",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": "This course satisfies BUSM/BUSF business core elective, Business Management Track; IMB Business Flexible Core. This course can count for the CAS Business Studies Minor for Study Away Students."
+    "fulfillmentText": "This course satisfies BUSM/BUSF business core elective, Business Management Track; IMB Business Flexible Core. This course can count for the CAS Business Studies Minor for Study Away Students.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "MGMT-SHU-4",
@@ -11394,7 +13395,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Sophomore standing or above.",
     "offeringText": "",
-    "fulfillmentText": "BUSF Non-Finance elective; BUSM Non-Marketing elective; Business Management track; IMB Business elective."
+    "fulfillmentText": "BUSF Non-Finance elective; BUSM Non-Marketing elective; Business Management track; IMB Business elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "MGMT-SHU-401",
@@ -11413,7 +13417,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "Management and Organizations (MGMT-SHU 301) and Statistics for Business and Economics (BUSF-SHU 101) and junior standing or above.",
     "offeringText": "every year",
-    "fulfillmentText": "BUSF Non-Finance elective; BUSM Non-Marketing elective; Business Management track; IMB Business elective."
+    "fulfillmentText": "BUSF Non-Finance elective; BUSM Non-Marketing elective; Business Management track; IMB Business elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "MGMT-SHU-425",
@@ -11431,7 +13438,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "Management & Organizations (MGMT-SHU 301)",
     "offeringText": "every year",
-    "fulfillmentText": "BUSF Non-Finance elective; BUSM Non-Marketing elective; Business Management Track; IMB Business elective."
+    "fulfillmentText": "BUSF Non-Finance elective; BUSM Non-Marketing elective; Business Management Track; IMB Business elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "MKTG-SHU-1",
@@ -11447,7 +13457,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Not open to first-semester students.",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": "This course satisfies BUSM Marketing Core, BUSF: Business elective, IMB Business Flexible Core or elective; Data Science concentration in Marketing; Count for CAS Business Minor, Count for Stern Business Studies Minor."
+    "fulfillmentText": "This course satisfies BUSM Marketing Core, BUSF: Business elective, IMB Business Flexible Core or elective; Data Science concentration in Marketing; Count for CAS Business Minor, Count for Stern Business Studies Minor.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "MKTG-SHU-110",
@@ -11463,7 +13476,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Spring",
-    "fulfillmentText": "IMB Business elective; BUSM Marketing Elective if Intro to Marketing has been taken, otherwise Non-finance/Non-marketing Elective."
+    "fulfillmentText": "IMB Business elective; BUSM Marketing Elective if Intro to Marketing has been taken, otherwise Non-finance/Non-marketing Elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "MKTG-SHU-154",
@@ -11482,7 +13498,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "Statistics for Business and Economics (BUSF-SHU 101), and Introduction to Marketing (MKTG-SHU 1)",
     "offeringText": "",
-    "fulfillmentText": "BUSF Non-Finance Elective; BUSM Marketing elective; IMB Business Elective."
+    "fulfillmentText": "BUSF Non-Finance Elective; BUSM Marketing elective; IMB Business Elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "MKTG-SHU-2",
@@ -11500,7 +13519,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "MKTG-SHU 1 Intro to Marketing",
     "offeringText": "Fall",
-    "fulfillmentText": "BUSF Non-Finance elective; BUSM Marketing elective; Business Marketing track; IMB Business elective."
+    "fulfillmentText": "BUSF Non-Finance elective; BUSM Marketing elective; Business Marketing track; IMB Business elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "MKTG-SHU-200",
@@ -11516,7 +13538,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Introduction to Marketing, requires junior or senior standing.",
     "offeringText": "Fall",
-    "fulfillmentText": "Business: China Business Studies; BUSM Marketing Elective; BUSF Non-Finance Elective; IMB Business elective."
+    "fulfillmentText": "Business: China Business Studies; BUSM Marketing Elective; BUSF Non-Finance Elective; IMB Business elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "MKTG-SHU-228",
@@ -11532,7 +13557,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Intro to Marketing and Junior/Senior Level Standing",
     "offeringText": "Fall",
-    "fulfillmentText": "Business: China Business Studies; BUSM Marketing Elective; BUSF Non-Finance Elective; IMB Business elective."
+    "fulfillmentText": "Business: China Business Studies; BUSM Marketing Elective; BUSF Non-Finance Elective; IMB Business elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "MKTG-SHU-229",
@@ -11548,7 +13576,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "",
     "offeringText": "",
-    "fulfillmentText": "BUSM Marketing Elective; BUSF Non-Finance Elective; IMB Business elective."
+    "fulfillmentText": "BUSM Marketing Elective; BUSF Non-Finance Elective; IMB Business elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "MKTG-SHU-3",
@@ -11566,7 +13597,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "Intro to Marketing (MKTG-SHU 1)",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": "BUSF Non-Finance elective; BUSM Marketing elective; Business Marketing track; IMB Business elective."
+    "fulfillmentText": "BUSF Non-Finance elective; BUSM Marketing elective; Business Marketing track; IMB Business elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "MKTG-SHU-310",
@@ -11584,7 +13618,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "Introduction to Marketing (MKTG-SHU 1)",
     "offeringText": "every year",
-    "fulfillmentText": "BUSF Non-Finance elective or China Business Studies; BUSM Marketing elective or China Business Studies; IMB Business elective."
+    "fulfillmentText": "BUSF Non-Finance elective or China Business Studies; BUSM Marketing elective or China Business Studies; IMB Business elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "MKTG-SHU-53",
@@ -11602,7 +13639,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "MKTG-SHU 1 Introduction to Marketing.",
     "offeringText": "occasionally",
-    "fulfillmentText": "BUSF Non-Finance elective; BUSM Marketing elective; Business Marketing track; IMB Business elective."
+    "fulfillmentText": "BUSF Non-Finance elective; BUSM Marketing elective; Business Marketing track; IMB Business elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "MKTG-SHU-57",
@@ -11620,7 +13660,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "Intro to Marketing (MKTG-SHU 1)",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": "BUSM Marketing Elective; BUSF Non-Finance Elective; Business Marketing track; IMB Business elective."
+    "fulfillmentText": "BUSM Marketing Elective; BUSF Non-Finance Elective; Business Marketing track; IMB Business elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "MKTG-SHU-64",
@@ -11636,7 +13679,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Introduction to Marketing",
     "offeringText": "occasionally",
-    "fulfillmentText": "BUSF Non-Finance elective; BUSM Marketing elective; IMB Business elective."
+    "fulfillmentText": "BUSF Non-Finance elective; BUSM Marketing elective; IMB Business elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "MKTG-SHU-9",
@@ -11654,7 +13700,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "Intro to Marketing (MKTG-SHU 1)",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": "BUSM Marketing Elective; BUSF Non-Finance Elective; Business Marketing track; IMB Business elective."
+    "fulfillmentText": "BUSM Marketing Elective; BUSF Non-Finance Elective; Business Marketing track; IMB Business elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "MUS-SHU-103",
@@ -11670,7 +13719,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "occasionally",
-    "fulfillmentText": "General Elective."
+    "fulfillmentText": "General Elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "MUS-SHU-105",
@@ -11686,7 +13738,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "occasionally",
-    "fulfillmentText": "General Elective."
+    "fulfillmentText": "General Elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "MUS-SHU-150",
@@ -11702,7 +13757,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "occasionally",
-    "fulfillmentText": "General Elective. Repeat rule: Students can take this course up to two times in total (not necessarily consecutive) for credit during their study at NYUSH."
+    "fulfillmentText": "General Elective. Repeat rule: Students can take this course up to two times in total (not necessarily consecutive) for credit during their study at NYUSH.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "MUS-SHU-151",
@@ -11718,7 +13776,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "",
-    "fulfillmentText": "General Elective. Repeat rule: Students can take this course up to two times in total (not necessarily consecutive) for credit during their study at NYUSH."
+    "fulfillmentText": "General Elective. Repeat rule: Students can take this course up to two times in total (not necessarily consecutive) for credit during their study at NYUSH.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "MUS-SHU-152",
@@ -11734,7 +13795,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "",
-    "fulfillmentText": "General Elective. Repeat rule: Students can take this course up to two times in total (not necessarily consecutive) for credit during their study at NYUSH."
+    "fulfillmentText": "General Elective. Repeat rule: Students can take this course up to two times in total (not necessarily consecutive) for credit during their study at NYUSH.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "MUS-SHU-157",
@@ -11750,7 +13814,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": "General Elective. Repeat rule: Students can take this course indefinitely during their study at NYUSH."
+    "fulfillmentText": "General Elective. Repeat rule: Students can take this course indefinitely during their study at NYUSH.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "MUS-SHU-158",
@@ -11766,7 +13833,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": "General Elective. Repeat rule: Students can take this course up to two times in total (not necessarily consecutive) for credit during their study at NYUSH."
+    "fulfillmentText": "General Elective. Repeat rule: Students can take this course up to two times in total (not necessarily consecutive) for credit during their study at NYUSH.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "MUS-SHU-161",
@@ -11782,7 +13852,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "",
-    "fulfillmentText": "General Elective. Repeat rule: Students can take this course indefinitely during their study at NYUSH."
+    "fulfillmentText": "General Elective. Repeat rule: Students can take this course indefinitely during their study at NYUSH.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "MUS-SHU-162",
@@ -11798,7 +13871,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "",
-    "fulfillmentText": "General Elective. Repeat rule: Students can take this course up to two times in total (not necessarily consecutive) for credit during their study at NYUSH."
+    "fulfillmentText": "General Elective. Repeat rule: Students can take this course up to two times in total (not necessarily consecutive) for credit during their study at NYUSH.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "MUS-SHU-171",
@@ -11814,7 +13890,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "",
-    "fulfillmentText": "General Elective. Repeat rule: Students can take this course indefinitely during their study at NYUSH."
+    "fulfillmentText": "General Elective. Repeat rule: Students can take this course indefinitely during their study at NYUSH.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "MUS-SHU-172",
@@ -11830,7 +13909,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None. This class requires Instructor Consent.",
     "offeringText": "",
-    "fulfillmentText": "General Elective. Repeat rule: Students can take this course up to two times in total (not necessarily consecutive) for credit during their study at NYUSH."
+    "fulfillmentText": "General Elective. Repeat rule: Students can take this course up to two times in total (not necessarily consecutive) for credit during their study at NYUSH.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "MUS-SHU-175",
@@ -11846,7 +13928,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "",
     "offeringText": "all terms",
-    "fulfillmentText": "General Elective. Repeat rule: Students can take this course indefinitely during their study at NYUSH."
+    "fulfillmentText": "General Elective. Repeat rule: Students can take this course indefinitely during their study at NYUSH.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "MUS-SHU-176",
@@ -11862,7 +13947,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "",
     "offeringText": "every year",
-    "fulfillmentText": "General Elective. Repeat rule: Students can take this course up to two times in total (not necessarily consecutive) for credit during their study at NYUSH."
+    "fulfillmentText": "General Elective. Repeat rule: Students can take this course up to two times in total (not necessarily consecutive) for credit during their study at NYUSH.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "MUS-SHU-181",
@@ -11878,7 +13966,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "occasionally",
-    "fulfillmentText": "General Elective. Repeat rule: Students can take this course indefinitely during their study at NYUSH."
+    "fulfillmentText": "General Elective. Repeat rule: Students can take this course indefinitely during their study at NYUSH.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "MUS-SHU-182",
@@ -11894,7 +13985,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": "General Elective. Repeat rule: Students can take this course up to two times in total (not necessarily consecutive) for credit during their study at NYUSH."
+    "fulfillmentText": "General Elective. Repeat rule: Students can take this course up to two times in total (not necessarily consecutive) for credit during their study at NYUSH.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "MUS-SHU-192",
@@ -11910,7 +14004,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "occasionally",
-    "fulfillmentText": "General Elective."
+    "fulfillmentText": "General Elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "MUS-SHU-193",
@@ -11926,7 +14023,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Prior training. By audition.",
     "offeringText": "occasionally",
-    "fulfillmentText": "General Elective."
+    "fulfillmentText": "General Elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "MUS-SHU-194",
@@ -11942,7 +14042,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "",
     "offeringText": "occasionally",
-    "fulfillmentText": "General Elective."
+    "fulfillmentText": "General Elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "MUS-SHU-195",
@@ -11958,7 +14061,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Fall",
-    "fulfillmentText": "General elective."
+    "fulfillmentText": "General elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "MUS-SHU-200",
@@ -11974,7 +14080,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": "General Elective."
+    "fulfillmentText": "General Elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "MUS-SHU-206",
@@ -11990,7 +14099,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "every year",
-    "fulfillmentText": "General Elective."
+    "fulfillmentText": "General Elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "MUS-SHU-219",
@@ -12006,7 +14118,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": "General Elective. Repeat rule: Non-Repeatable. Students can only take this course once during their study at NYUSH."
+    "fulfillmentText": "General Elective. Repeat rule: Non-Repeatable. Students can only take this course once during their study at NYUSH.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "MUS-SHU-220",
@@ -12022,7 +14137,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "",
-    "fulfillmentText": "General Elective."
+    "fulfillmentText": "General Elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "MUS-SHU-221",
@@ -12038,7 +14156,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None. Some prior experience in music is recommended; students should contact instructor prior to registering.",
     "offeringText": "",
-    "fulfillmentText": "General Elective. Repeat rule: Non-Repeatable. Students can only take this course once during their study at NYUSH."
+    "fulfillmentText": "General Elective. Repeat rule: Non-Repeatable. Students can only take this course once during their study at NYUSH.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "MUS-SHU-225",
@@ -12054,7 +14175,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None. Prior musical study is recommended, but not necessary.",
     "offeringText": "occasionally",
-    "fulfillmentText": "General Elective."
+    "fulfillmentText": "General Elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "MUS-SHU-226",
@@ -12070,7 +14194,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "",
-    "fulfillmentText": "General Elective."
+    "fulfillmentText": "General Elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "MUS-SHU-227",
@@ -12086,7 +14213,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None",
     "offeringText": "Fall",
-    "fulfillmentText": "General Elective. Repeat rule: Non-Repeatable. Students can only take this course once during their study at NYUSH."
+    "fulfillmentText": "General Elective. Repeat rule: Non-Repeatable. Students can only take this course once during their study at NYUSH.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "MUS-SHU-260",
@@ -12102,7 +14232,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None",
     "offeringText": "Fall",
-    "fulfillmentText": "General Elective. Repeat rule: Non-Repeatable. Students can only take this course once during their study at NYUSH."
+    "fulfillmentText": "General Elective. Repeat rule: Non-Repeatable. Students can only take this course once during their study at NYUSH.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "MUS-SHU-56",
@@ -12118,7 +14251,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "",
     "offeringText": "occasionally",
-    "fulfillmentText": "General Elective."
+    "fulfillmentText": "General Elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "MUS-SHU-59",
@@ -12134,7 +14270,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": "General Elective. Repeat rule: Non-Repeatable. Students can only take this course once during their study at NYUSH."
+    "fulfillmentText": "General Elective. Repeat rule: Non-Repeatable. Students can only take this course once during their study at NYUSH.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "MUS-SHU-60",
@@ -12156,7 +14295,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "MUS-SHU 59 Group Piano for Beginners or one-year or more prior training in piano performance. Antirequisite for MUS-SHU 60: Students who have completed MUS-SHU 62 Group Piano for Intermediate, MUS-SHU 61 Group Piano for Advanced, or MUS-SHU 63 Performance Piano are not eligible.",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": "General Elective. Repeat rule: Students can take this course up to two times in total (not necessarily consecutive) for credit during their study at NYUSH."
+    "fulfillmentText": "General Elective. Repeat rule: Students can take this course up to two times in total (not necessarily consecutive) for credit during their study at NYUSH.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "MUS-SHU-61",
@@ -12172,7 +14314,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": "General Elective. Repeat rule: Students can take this course up to two times in total (not necessarily consecutive) for credit during their study at NYUSH."
+    "fulfillmentText": "General Elective. Repeat rule: Students can take this course up to two times in total (not necessarily consecutive) for credit during their study at NYUSH.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "MUS-SHU-62",
@@ -12193,7 +14338,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "MUS-SHU 60 Group Piano for Inter Beginner. Instructor consent required for students who did not take the prereq, but have 2 years previous experience. Anti-Requisite for MUS-SHU 62: Students who have completed MUS-SHU 61 Group Piano for Advanced or MUS-SHU 63 Performance Piano are not eligible.",
     "offeringText": "",
-    "fulfillmentText": "General Elective. Repeat rule: Students can take this course up to two times in total (not necessarily consecutive) for credit during their study at NYUSH."
+    "fulfillmentText": "General Elective. Repeat rule: Students can take this course up to two times in total (not necessarily consecutive) for credit during their study at NYUSH.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "MUS-SHU-63",
@@ -12209,7 +14357,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "",
     "offeringText": "",
-    "fulfillmentText": "General Elective. Repeat rule: Students can take this course up to two times in total (not necessarily consecutive) for credit during their study at NYUSH."
+    "fulfillmentText": "General Elective. Repeat rule: Students can take this course up to two times in total (not necessarily consecutive) for credit during their study at NYUSH.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "NEUR-SHU-10",
@@ -12225,7 +14376,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Not open to freshman.",
     "offeringText": "occasionally",
-    "fulfillmentText": "CORE STS; Neural Science elective."
+    "fulfillmentText": "CORE STS; Neural Science elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "NEUR-SHU-100",
@@ -12241,7 +14395,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Foundations of Biology I or Foundations of Biology II",
     "offeringText": "Spring",
-    "fulfillmentText": "Biology required; Neural Science required."
+    "fulfillmentText": "Biology required; Neural Science required.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "NEUR-SHU-120",
@@ -12259,7 +14416,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "None. Anti-requisite: Behavioral and integrative neuroscience (NEUR-SHU 251)",
     "offeringText": "Fall",
-    "fulfillmentText": "Neural Science elective; Social Science Focus Psychology track 200 level course."
+    "fulfillmentText": "Neural Science elective; Social Science Focus Psychology track 200 level course.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "NEUR-SHU-130",
@@ -12275,7 +14435,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "every year",
-    "fulfillmentText": "CORE STS; Neural Science Electives."
+    "fulfillmentText": "CORE STS; Neural Science Electives.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "NEUR-SHU-131",
@@ -12291,7 +14454,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "",
     "offeringText": "occasionally",
-    "fulfillmentText": "CORE STS; Neural Science Approved upper-level Psychology courses; Neural Science Electives; Social Science Focus Courses Psychology - 200 level."
+    "fulfillmentText": "CORE STS; Neural Science Approved upper-level Psychology courses; Neural Science Electives; Social Science Focus Courses Psychology - 200 level.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "NEUR-SHU-132",
@@ -12307,7 +14473,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "every year",
-    "fulfillmentText": "Core STS; Neural Science elective; Humanities Introductory course."
+    "fulfillmentText": "Core STS; Neural Science elective; Humanities Introductory course.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "NEUR-SHU-133",
@@ -12323,7 +14492,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None",
     "offeringText": "every year",
-    "fulfillmentText": "Neural Science elective."
+    "fulfillmentText": "Neural Science elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "NEUR-SHU-201",
@@ -12342,7 +14514,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "BIOL-SHU 21 Foundations of Biology I and BIOL-SHU 22 Foundations of Biology II (could be co-req).",
     "offeringText": "Fall",
-    "fulfillmentText": "Biology Electives; Neural Science Required Courses."
+    "fulfillmentText": "Biology Electives; Neural Science Required Courses.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "NEUR-SHU-210",
@@ -12362,7 +14537,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "NEUR-SHU 201 Introduction to Neural Science AND [PHYS-SHU 11 General Physics I or PHYS-SHU 91 Foundations of Physics I Honors].",
     "offeringText": "occasionally",
-    "fulfillmentText": "Neural Science Required Courses."
+    "fulfillmentText": "Neural Science Required Courses.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "NEUR-SHU-222",
@@ -12381,7 +14559,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "NEUR-SHU 201 Introduction to Neural Science OR PSYC-SHU 101 Introduction to Psychology or AP Psychology: Score of 5 or IB Psychology HL (Higher Level): Score of 7 or A Level Psychology: Score of A.",
     "offeringText": "occasionally",
-    "fulfillmentText": "Biology Electives; Neural Science Approved upper-level Psychology courses; Neural Science Electives; Social Science Focus Courses Psychology - 200 level."
+    "fulfillmentText": "Biology Electives; Neural Science Approved upper-level Psychology courses; Neural Science Electives; Social Science Focus Courses Psychology - 200 level.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "NEUR-SHU-251",
@@ -12399,7 +14580,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "NEUR-SHU 201.",
     "offeringText": "Spring",
-    "fulfillmentText": "Neural Science required."
+    "fulfillmentText": "Neural Science required.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "NEUR-SHU-261",
@@ -12417,7 +14601,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "or Co-requisite: NEUR-SHU 201 Introduction to Neural Science.",
     "offeringText": "occasionally",
-    "fulfillmentText": "Neural Science elective."
+    "fulfillmentText": "Neural Science elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "NEUR-SHU-270",
@@ -12437,7 +14624,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "Undergraduates: Mathematical Tools for Life Sciences (NEUR-SHU 100) or MATH-SHU 235 (Probability and Statistics), or MATH-SHU 238 (Honors Theory of Probability). Graduates: Mathematical Tools for Neural and Cognitive Science (NEURL-GA.2201).",
     "offeringText": "Fall",
-    "fulfillmentText": "Neural Science Electives."
+    "fulfillmentText": "Neural Science Electives.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "NEUR-SHU-301",
@@ -12453,7 +14643,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Introduction to Neuroscience AND Behavioral and Integrative Neuroscience",
     "offeringText": "every year",
-    "fulfillmentText": "Neural Science Electives."
+    "fulfillmentText": "Neural Science Electives.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "NEUR-SHU-305",
@@ -12469,7 +14662,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Students are expected to have taken core courses in the first two years of NYU shanghai curriculum, including Introduction to Neuroscience. Otherwise, students should first ask for the instructor’s permission.",
     "offeringText": "Fall",
-    "fulfillmentText": "Neural Science elective."
+    "fulfillmentText": "Neural Science elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "NEUR-SHU-401",
@@ -12485,7 +14681,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "",
     "offeringText": "Spring",
-    "fulfillmentText": "General Elective."
+    "fulfillmentText": "General Elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "NEUR-SHU-997",
@@ -12501,7 +14700,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "All Neural Science Major Required Courses (Introduction to Neural Science, Cellular and Molecular Neuroscience, Behavioral and Integrative Neuroscience, Math Tools for Behavioral Science), permission of a neural science faculty member (at NYU-Shanghai, NYU-Abu Dhabi, or NYU-New York) who will act as a sponsor and mentor, and approval of the Director of Undergraduate Studies for Neural Science. The faculty mentor must be selected in consultation with the Director of Undergraduate Studies for Neural Science. Offered in Fall or Spring. Can be repeated once. 2 to 4 credits per term for a maximum of 8 credits. Minimum 4 credits are required to fulfill the capstone course requirement. This course aims at engaging students in research. Taking the course for 4 credits requires 10-12 hours spent on conducting research per week (2 credits requires 5-6 hours per week). It is designed to offer students an opportunity to observe neuroscience research up close and gain hands-on research experience by working as a member in an active research team. Independent Study I and II can be done with the same supervisor or two different supervisors. No lectures will be given. Student researchers are expected to attend and actively participate in lab/supervision meetings. Prerequisite: None.",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": "Neural Science Required Courses."
+    "fulfillmentText": "Neural Science Required Courses.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "NEUR-SHU-998",
@@ -12517,7 +14719,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "All Neural Science Major Required Courses (Introduction to Neural Science, Cellular and Molecular Neuroscience, Behavioral and Integrative Neuroscience, Math Tools for Behavioral Science), permission of a neural science faculty member (at NYU-Shanghai, NYU-Abu Dhabi, or NYU-New York) who will act as a sponsor and mentor, and approval of the Director of Undergraduate Studies for Neural Science. The faculty mentor must be selected in consultation with the Director of Undergraduate Studies for Neural Science. Offered in Fall or Spring. Can be repeated once. 2 to 4 credits per term for a maximum of 8 credits. Minimum 4 credits are required to fulfill the capstone course requirement. This course aims at engaging students in research. Taking the course for 4 credits requires 10-12 hours spent on conducting research per week (2 credits requires 5-6 hours per week). It is designed to offer students an opportunity to observe neuroscience research up close and gain hands-on research experience by working as a member in an active research team. Independent Study I and II can be done with the same supervisor or two different supervisors. No lectures will be given. Student researchers are expected to attend and actively participate in lab/supervision meetings. Prerequisite: None.",
     "offeringText": "",
-    "fulfillmentText": "Neural Science Required Courses/ Electives."
+    "fulfillmentText": "Neural Science Required Courses/ Electives.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "NYU-SHU-101",
@@ -12533,7 +14738,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "",
     "offeringText": "",
-    "fulfillmentText": ""
+    "fulfillmentText": "",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "NYU-SHU-102",
@@ -12549,7 +14757,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "",
     "offeringText": "",
-    "fulfillmentText": ""
+    "fulfillmentText": "",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "PCIX-SHU-101",
@@ -12565,7 +14776,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "",
     "offeringText": "occasionally",
-    "fulfillmentText": "Business & Finance Major Non-Finance Elective, Business & Marketing Major Non-Marketing Elective, IMA Major Elective, IMB Major IMA/Business Elective."
+    "fulfillmentText": "Business & Finance Major Non-Finance Elective, Business & Marketing Major Non-Marketing Elective, IMA Major Elective, IMB Major IMA/Business Elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "PCIX-SHU-102",
@@ -12581,7 +14795,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": "IMB major IMA/IMB elective; Creativity+Innovation Minor."
+    "fulfillmentText": "IMB major IMA/IMB elective; Creativity+Innovation Minor.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "PCIX-SHU-103",
@@ -12597,7 +14814,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "",
-    "fulfillmentText": "IMB major IMA/IMB elective."
+    "fulfillmentText": "IMB major IMA/IMB elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "PCIX-SHU-201",
@@ -12613,7 +14833,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Not Suitable for First Semester Freshmen.",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": "IMA Major Electives; IMB Major Business Elective/Interactive Media Elective, IMB Emerging Media Foundation; Business and Finance Major Non-Finance Electives; Business and Marketing Major Non-Marketing Electives; Creativity+Innovation Minor."
+    "fulfillmentText": "IMA Major Electives; IMB Major Business Elective/Interactive Media Elective, IMB Emerging Media Foundation; Business and Finance Major Non-Finance Electives; Business and Marketing Major Non-Marketing Electives; Creativity+Innovation Minor.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "PCIX-SHU-202",
@@ -12629,7 +14852,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Spring",
-    "fulfillmentText": "IMA elective; IMB major IMA/IMB elective; IMB Emerging Media Foundation."
+    "fulfillmentText": "IMA elective; IMB major IMA/IMB elective; IMB Emerging Media Foundation.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "PCIX-SHU-241",
@@ -12645,7 +14871,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "occasionally",
-    "fulfillmentText": "IMA elective; IMB major IMA/IMB elective; Creativity+Innovation Minor."
+    "fulfillmentText": "IMA elective; IMB major IMA/IMB elective; Creativity+Innovation Minor.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "PCIX-SHU-301",
@@ -12661,7 +14890,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "‌ ‌Sophomore standing or above.",
     "offeringText": "occasionally",
-    "fulfillmentText": "IMB Major Business Elective or IMB major IMA/IMB Elective; Business and Finance Major Non-Finance Electives; Business and Marketing Major Non-Marketing Electives; Creativity+Innovation Minor."
+    "fulfillmentText": "IMB Major Business Elective or IMB major IMA/IMB Elective; Business and Finance Major Non-Finance Electives; Business and Marketing Major Non-Marketing Electives; Creativity+Innovation Minor.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "PCIX-SHU-302",
@@ -12677,7 +14909,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Not suitable for first semester freshmen or sophomore standing",
     "offeringText": "every year",
-    "fulfillmentText": "Creativity and Innovation Minor, General elective."
+    "fulfillmentText": "Creativity and Innovation Minor, General elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "PHIL-SHU-101",
@@ -12693,7 +14928,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Fall",
-    "fulfillmentText": "Humanities Foundational/Introductory Courses (18-19: Critical Concepts)."
+    "fulfillmentText": "Humanities Foundational/Introductory Courses (18-19: Critical Concepts).",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "PHIL-SHU-103",
@@ -12709,7 +14947,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "occasionally",
-    "fulfillmentText": "Humanities 18-19 Topic."
+    "fulfillmentText": "Humanities 18-19 Topic.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "PHIL-SHU-105",
@@ -12725,7 +14966,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None",
     "offeringText": "occasionally",
-    "fulfillmentText": "CORE HPC or IPC; GCS Chinese History, Society, and Culture; Humanities Introductory course."
+    "fulfillmentText": "CORE HPC or IPC; GCS Chinese History, Society, and Culture; Humanities Introductory course.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "PHIL-SHU-106",
@@ -12741,7 +14985,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "occasionally",
-    "fulfillmentText": "Humanities Introductory course."
+    "fulfillmentText": "Humanities Introductory course.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "PHIL-SHU-107",
@@ -12757,7 +15004,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Spring",
-    "fulfillmentText": "Humanities: New Major Introductory course; Old Major Survey"
+    "fulfillmentText": "Humanities: New Major Introductory course; Old Major Survey",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "PHIL-SHU-110",
@@ -12773,7 +15023,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "GPS or Sophomore standing.",
     "offeringText": "occasionally",
-    "fulfillmentText": "Core Curriculum SSPC/ HPC or IPC; GCS Elective Chinese History, Society, and Culture; Humanities Major Other Advanced Courses (18-19 Topic Courses)."
+    "fulfillmentText": "Core Curriculum SSPC/ HPC or IPC; GCS Elective Chinese History, Society, and Culture; Humanities Major Other Advanced Courses (18-19 Topic Courses).",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "PHIL-SHU-115",
@@ -12789,7 +15042,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "occasionally",
-    "fulfillmentText": "Humanities Major Introductory requirement."
+    "fulfillmentText": "Humanities Major Introductory requirement.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "PHIL-SHU-130",
@@ -12805,7 +15061,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Global Perspectives on Society (GPS) or Sophomore standing",
     "offeringText": "Spring",
-    "fulfillmentText": "CORE STS; Humanities Interdisciplinary or Advanced course; IMA elective; IMB major IMA/IMB elective."
+    "fulfillmentText": "CORE STS; Humanities Interdisciplinary or Advanced course; IMA elective; IMB major IMA/IMB elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "PHIL-SHU-200",
@@ -12821,7 +15080,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "occasionally",
-    "fulfillmentText": "Humanities 18-19 Topic."
+    "fulfillmentText": "Humanities 18-19 Topic.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "PHIL-SHU-201",
@@ -12837,7 +15099,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "GPS or Sophomore standing.",
     "offeringText": "occasionally",
-    "fulfillmentText": ""
+    "fulfillmentText": "",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "PHIL-SHU-204",
@@ -12853,7 +15118,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Writing as Inquiry or Sophomore standing.",
     "offeringText": "occasionally",
-    "fulfillmentText": "Humanities Advanced course."
+    "fulfillmentText": "Humanities Advanced course.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "PHIL-SHU-205",
@@ -12869,7 +15137,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "GPS or Sophomore standing.",
     "offeringText": "occasionally",
-    "fulfillmentText": "Humanities Advanced elective."
+    "fulfillmentText": "Humanities Advanced elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "PHIL-SHU-206",
@@ -12885,7 +15156,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "You must have completed at least one introductory course in philosophy.",
     "offeringText": "occasionally",
-    "fulfillmentText": "Humanities Advanced elective."
+    "fulfillmentText": "Humanities Advanced elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "PHIL-SHU-220",
@@ -12901,7 +15175,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "GPS or Sophomore standing.",
     "offeringText": "occasionally",
-    "fulfillmentText": "Humanities Introductory course (18-19 Survey course)."
+    "fulfillmentText": "Humanities Introductory course (18-19 Survey course).",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "PHIL-SHU-230",
@@ -12917,7 +15194,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Global Perspectives on Society (GPS) or Sophomore standing.",
     "offeringText": "occasionally",
-    "fulfillmentText": "CORE STS; Humanities Advanced Courses (18-19 Topic Courses)."
+    "fulfillmentText": "CORE STS; Humanities Advanced Courses (18-19 Topic Courses).",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "PHIL-SHU-255",
@@ -12933,7 +15213,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "occasionally",
-    "fulfillmentText": "Humanities Advanced Courses (18-19 Topic Courses); The Politics, Economy, and Environment of China."
+    "fulfillmentText": "Humanities Advanced Courses (18-19 Topic Courses); The Politics, Economy, and Environment of China.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "PHIL-SHU-300",
@@ -12949,7 +15232,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "One prior philosophy course",
     "offeringText": "Fall",
-    "fulfillmentText": "Humanities Advanced Course."
+    "fulfillmentText": "Humanities Advanced Course.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "PHIL-SHU-70",
@@ -12965,7 +15251,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "occasionally",
-    "fulfillmentText": "CORE AT; Humanities Introductory Courses (18-19 Survey Courses)."
+    "fulfillmentText": "CORE AT; Humanities Introductory Courses (18-19 Survey Courses).",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "PHIL-SHU-80",
@@ -12981,7 +15270,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Spring term of odd numbered years",
-    "fulfillmentText": "Humanities Introductory course."
+    "fulfillmentText": "Humanities Introductory course.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "PHIL-SHU-90",
@@ -12997,7 +15289,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "GPS or Sophomore standing.",
     "offeringText": "occasionally",
-    "fulfillmentText": "CORE STS; Humanities Interdisciplinary/Advanced course (18-19: Critical Concepts/Topic)"
+    "fulfillmentText": "CORE STS; Humanities Interdisciplinary/Advanced course (18-19: Critical Concepts/Topic)",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "PHIL-SHU-91",
@@ -13013,7 +15308,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Spring term of even numbered years",
-    "fulfillmentText": "CORE STS; Humanities Interdisciplinary/Advanced course (18-19:Topic)"
+    "fulfillmentText": "CORE STS; Humanities Interdisciplinary/Advanced course (18-19:Topic)",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "PHYS-SHU-106",
@@ -13029,7 +15327,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Spring",
-    "fulfillmentText": "Physics required course."
+    "fulfillmentText": "Physics required course.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "PHYS-SHU-11",
@@ -13049,7 +15350,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "OR Co-req: MATH-SHU 131 Calculus or MATH-SHU 201 Honors Calculus. Anti-Requisite: Students who have taken PHYS-SHU 91 Physics I Honors with grade of C or above are not eligible.",
     "offeringText": "Fall",
-    "fulfillmentText": "CORE ED; Biology Foundational Courses; Chemistry Foundational Courses; Mathematics Science Lecture sections; Honors Mathematics Science Lecture sections; Neural Science Foundational Courses; Physics Foundational Courses; Computer Systems Engineering Prerequisite Science; Electrical Systems Engineering Prerequisite Science."
+    "fulfillmentText": "CORE ED; Biology Foundational Courses; Chemistry Foundational Courses; Mathematics Science Lecture sections; Honors Mathematics Science Lecture sections; Neural Science Foundational Courses; Physics Foundational Courses; Computer Systems Engineering Prerequisite Science; Electrical Systems Engineering Prerequisite Science.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "PHYS-SHU-12",
@@ -13068,7 +15372,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "General Physics I (PHYS-SHU 11). Anti-Requisite: Students who have taken PHYS-SHU 93 Physics II Honors with grade of C or above are not eligible.",
     "offeringText": "Spring",
-    "fulfillmentText": "Biology Foundational Courses; Chemistry Foundational Courses; Mathematics Science Lecture sections; Honors Mathematics Science Lecture sections; Neural Science Foundational Courses; Computer Systems Engineering Prerequisite Science; Electrical Systems Engineering Prerequisite Science."
+    "fulfillmentText": "Biology Foundational Courses; Chemistry Foundational Courses; Mathematics Science Lecture sections; Honors Mathematics Science Lecture sections; Neural Science Foundational Courses; Computer Systems Engineering Prerequisite Science; Electrical Systems Engineering Prerequisite Science.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "PHYS-SHU-135",
@@ -13084,7 +15391,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "",
     "offeringText": "every other year",
-    "fulfillmentText": "Physics elective; Math Additional elective; Honors Math elective."
+    "fulfillmentText": "Physics elective; Math Additional elective; Honors Math elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "PHYS-SHU-1999",
@@ -13100,7 +15410,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "occasionally",
-    "fulfillmentText": "General Elective."
+    "fulfillmentText": "General Elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "PHYS-SHU-200",
@@ -13116,7 +15429,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Spring",
-    "fulfillmentText": "Physics elective."
+    "fulfillmentText": "Physics elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "PHYS-SHU-201",
@@ -13132,7 +15448,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Spring",
-    "fulfillmentText": "Physics elective; Math Additional elective; Honors Math elective."
+    "fulfillmentText": "Physics elective; Math Additional elective; Honors Math elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "PHYS-SHU-251",
@@ -13151,7 +15470,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "PHYS-SHU 95 Foundations of Physics III Honors and PHYS-SHU 106 Mathematical Physics.",
     "offeringText": "occasionally",
-    "fulfillmentText": "Physics required."
+    "fulfillmentText": "Physics required.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "PHYS-SHU-302",
@@ -13171,7 +15493,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "Foundation of Physics III Honors (PHYS-SHU 95) in SH or Physics III (PHYS-UA 95) in NY as the pre-req of PHYS-SHU 302 Statistical Mechanics",
     "offeringText": "occasionally",
-    "fulfillmentText": "Physics required."
+    "fulfillmentText": "Physics required.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "PHYS-SHU-303",
@@ -13189,7 +15514,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "PHYS-SHU 95 Found of Physics III Honors.",
     "offeringText": "occasionally",
-    "fulfillmentText": "Physics required."
+    "fulfillmentText": "Physics required.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "PHYS-SHU-71",
@@ -13205,7 +15533,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "OR Co-req: General Physics I OR Found of Physics Honors I",
     "offeringText": "Fall",
-    "fulfillmentText": "CORE ED; Biology Foundational Courses; Chemistry Foundational Courses; Mathematics Science Lab sections; Honors Mathematics Science Lab sections; Neural Science Foundational Courses; Physics Foundational Courses."
+    "fulfillmentText": "CORE ED; Biology Foundational Courses; Chemistry Foundational Courses; Mathematics Science Lab sections; Honors Mathematics Science Lab sections; Neural Science Foundational Courses; Physics Foundational Courses.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "PHYS-SHU-91",
@@ -13225,7 +15556,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "OR Co-req: MATH-SHU 131 Calculus or MATH-SHU 201 Honors Calculus. Anti-Requisite: PHYS-SHU 11 General Physics.",
     "offeringText": "Fall",
-    "fulfillmentText": "CORE ED; Biology Foundational Courses; Chemistry Foundational Courses; Mathematics Science Lecture sections; Honors Mathematics Science Lecture sections; Neural Science Foundational Courses; Physics Foundational Courses; Computer Systems Engineering Prerequisite Science; Electrical Systems Engineering Prerequisite Science."
+    "fulfillmentText": "CORE ED; Biology Foundational Courses; Chemistry Foundational Courses; Mathematics Science Lecture sections; Honors Mathematics Science Lecture sections; Neural Science Foundational Courses; Physics Foundational Courses; Computer Systems Engineering Prerequisite Science; Electrical Systems Engineering Prerequisite Science.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "PHYS-SHU-93",
@@ -13247,7 +15581,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "Foundation of Physics I Honors (PHYS-SHU 91), Freshman Math (including linear algebra, vectors, linear vector spaces and matrices, functions of several variables, partial derivatives, multiple integrals) Textbook: Young and Freedman, Sears and Zemansky's University Physics with Modern Physics, 14th Edition. Prerequisite: (MATH-SHU 121 or MATH-SHU 201) and PHYS-SHU 91 Anti-Requisite: PHYS-SHU 12 General Physics II.",
     "offeringText": "Spring",
-    "fulfillmentText": "Biology Foundational Courses; Chemistry Foundational Courses; Mathematics Science Lecture sections; Honors Mathematics Science Lecture sections; Neural Science Foundational Courses; Physics Foundational Courses; Computer Systems Engineering Prerequisite Science; Electrical Systems Engineering Prerequisite Science."
+    "fulfillmentText": "Biology Foundational Courses; Chemistry Foundational Courses; Mathematics Science Lecture sections; Honors Mathematics Science Lecture sections; Neural Science Foundational Courses; Physics Foundational Courses; Computer Systems Engineering Prerequisite Science; Electrical Systems Engineering Prerequisite Science.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "PHYS-SHU-94",
@@ -13263,7 +15600,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Science; Electrical Systems Engineering Prerequisite Science.",
     "offeringText": "Spring",
-    "fulfillmentText": "Biology Foundational Courses; Chemistry Foundational Courses; Mathematics Science Lecture sections; Honors Mathematics Science Lecture sections; Neural Science Foundational Courses; Physics Foundational Courses; Computer Systems Engineering Prerequisite Science; Electrical Systems Engineering Prerequisite Science."
+    "fulfillmentText": "Biology Foundational Courses; Chemistry Foundational Courses; Mathematics Science Lecture sections; Honors Mathematics Science Lecture sections; Neural Science Foundational Courses; Physics Foundational Courses; Computer Systems Engineering Prerequisite Science; Electrical Systems Engineering Prerequisite Science.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "PHYS-SHU-95",
@@ -13283,7 +15623,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "(MATH-SHU 121 or MATH-SHU 201) and PHYS-SHU 93.",
     "offeringText": "Fall",
-    "fulfillmentText": "Physics Foundational Courses."
+    "fulfillmentText": "Physics Foundational Courses.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "PHYS-SHU-96",
@@ -13301,7 +15644,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "PHYS-SHU 95 Found of Physics III Honors.",
     "offeringText": "Spring",
-    "fulfillmentText": "Physics Foundational Courses."
+    "fulfillmentText": "Physics Foundational Courses.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "PHYS-SHU-997",
@@ -13317,7 +15663,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Foundations of Science I-III (or Physics I&II, Foundations of Chemistry I&II, Foundations of Biology I&II), and a minimum GPA of 3.0 overall and in all science and mathematics courses required for the major, permission of a physics faculty member (at NYU-Shanghai, NYU-Abu Dhabi, or NYU-New York) who will act as a sponsor and mentor, and approval of the Director of Undergraduate Studies (DUS) in Physics. The faculty mentor must be selected in consultation with the DUS. Offered in the Fall, Spring or Summer. 2 to 4 points per term for a maximum of 4 points. This course aims at engaging students in research. It is designed to offer students an opportunity to observe physics research up close and gain hands-on research experience by working as a member in an active research team. Independent Study I and II can be done with the same supervisor or two different supervisors. No lectures will be given. Student researchers are expected to attend and actively participate in lab/supervision meetings. A Proposal for Independent Study form must be filled out, signed by the DUS, and submitted to the Registrar. Requires a written report on the research to be evaluated by the faculty sponsor, with a copy submitted to the DUS and a copy to the Dean of Arts & Sciences. Department consent is required.",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": "Physics elective."
+    "fulfillmentText": "Physics elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "PHYS-SHU-998",
@@ -13333,7 +15682,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "senior students with physics primary major.",
     "offeringText": "Fall",
-    "fulfillmentText": "Physics required."
+    "fulfillmentText": "Physics required.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "PHYS-SHU-999",
@@ -13352,7 +15704,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "Independent Study (PHYS-SHU 997 or 998), a minimum GPA of 3.65 overall, a minimum GPA of 3.65 in all science and mathematics courses required for the major, and permission of a faculty sponsor and the Dean of Arts & Sciences. Open to Physics majors only. The faculty mentor must be selected in consultation with the Dean of Arts & Sciences. May not be used for the major in physics. Offered in the fall, spring, and summer. 2 points. For physics majors who have completed at least one semester of laboratory research (PHYS-SHU 997 or 998) and are able to expand this work into a thesis. Requires writing a Thesis (i.e., a full literature search of the subject and a formal written report on the research in publication form), which is defended in front of a committee of three faculty (which includes the faculty sponsor), chosen by the student in consultation with the faculty mentor. (The defense may be a brief oral presentation followed by a question-and-answer session.) The Thesis and defense must be evaluated by the committee, with the cover page of the thesis signed by all committee members, with a copy of the Thesis submitted to the Dean of Arts & Sciences. (It is recommended that the student meet with the faculty committee at least once mid-semester to evaluate and guide the student's progress on the thesis work.) Prerequisite: none.",
     "offeringText": "Spring",
-    "fulfillmentText": "General Elective."
+    "fulfillmentText": "General Elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "PSYC-SHU-101",
@@ -13368,7 +15723,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None",
     "offeringText": "occasionally",
-    "fulfillmentText": "CORE ED; Social Science Foundational course; Data Science concentration in Social Science/Psychology."
+    "fulfillmentText": "CORE ED; Social Science Foundational course; Data Science concentration in Social Science/Psychology.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "PSYC-SHU-201",
@@ -13386,7 +15744,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "PSYC-SHU 101 Intro to Pscyhology or AP Psychology: Score of 5 or IB Psychology HL (Higher Level): Score of 7 or A Level Psychology: Score of A.",
     "offeringText": "",
-    "fulfillmentText": "Social Science Focus Psychology 200 level course."
+    "fulfillmentText": "Social Science Focus Psychology 200 level course.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "PSYC-SHU-210",
@@ -13404,7 +15765,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "PSYC-SHU 101 Introduction to Psychology",
     "offeringText": "every year",
-    "fulfillmentText": "Social Science Focus Psychology 200 level."
+    "fulfillmentText": "Social Science Focus Psychology 200 level.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "PSYC-SHU-220",
@@ -13422,7 +15786,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "PSYC-SHU 101 Introduction to Psychology.",
     "offeringText": "every other year",
-    "fulfillmentText": "Social Science Core or Focus Psychology 200 level."
+    "fulfillmentText": "Social Science Core or Focus Psychology 200 level.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "PSYC-SHU-234",
@@ -13440,7 +15807,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "PSYC-SHU 101 Intro to Pscyhology or AP Psychology: Score of 5 or IB Psychology HL (Higher Level): Score of 7 or A Level Psychology: Score of A.",
     "offeringText": "occasionally",
-    "fulfillmentText": "Social Science Focus Psychology 200 level course; DS concentration in Psychology."
+    "fulfillmentText": "Social Science Focus Psychology 200 level course; DS concentration in Psychology.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "PSYC-SHU-238",
@@ -13458,7 +15828,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "PSYC-SHU 101 Introduction to Psychology or AP Psychology: Score of 5 or IB Psychology HL (Higher Level): Score of 7 or A Level Psychology: Score of A.",
     "offeringText": "every year",
-    "fulfillmentText": "Social Science Focus Psychology 200 level."
+    "fulfillmentText": "Social Science Focus Psychology 200 level.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "PSYC-SHU-300",
@@ -13476,7 +15849,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "PSYC-SHU 101 Introduction to Psychology or AP Psychology: Score of 5 or IB Psychology HL (Higher Level): Score of 7 or A Level Psychology: Score of A AND Sophomore Standing.",
     "offeringText": "every other year",
-    "fulfillmentText": "Social Science Focus Psychology 300 level."
+    "fulfillmentText": "Social Science Focus Psychology 300 level.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "PSYC-SHU-317",
@@ -13492,7 +15868,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "",
     "offeringText": "every year",
-    "fulfillmentText": "Social Science focus Psychology/Global Health 300 level."
+    "fulfillmentText": "Social Science focus Psychology/Global Health 300 level.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "PSYC-SHU-329",
@@ -13510,7 +15889,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "PSYC-SHU 101 Intro to Psychology or AP Psychology: Score of 5 or IB Psychology HL (Higher Level): Score of 7 or A Level Psychology: Score of A.",
     "offeringText": "Fall",
-    "fulfillmentText": "CORE STS; Social Science Focus Psychology 300 level course."
+    "fulfillmentText": "CORE STS; Social Science Focus Psychology 300 level course.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "PSYC-SHU-337",
@@ -13529,7 +15911,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "PSYC-SHU 101 Intro to Psychology or AP Psychology: Score of 5 or IB Psychology HL (Higher Level): Score of 7 or A Level Psychology: Score of A, AND PSYC-SHU 234 Developmental Psychology as a pre- or co-requisite.",
     "offeringText": "occasionally",
-    "fulfillmentText": "Social Science Focus Psychology 300 level course."
+    "fulfillmentText": "Social Science Focus Psychology 300 level course.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "PSYC-SHU-344",
@@ -13549,7 +15934,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "Introduction to psychology (PSYC-SHU 101) or AP Psychology: Score of 5 or IB Psychology HL (Higher Level): Score of 7 or A Level Psychology: Score of A OR Introduction to Neural Science (NEUR-SHU 201) OR Introduction to Computer Science (CSCI-SHU 101)",
     "offeringText": "",
-    "fulfillmentText": "Core STS; IMA elective; IMB major IMA/IMB elective; Neural Science elective; Social Science Focus Psychology 300 level."
+    "fulfillmentText": "Core STS; IMA elective; IMB major IMA/IMB elective; Neural Science elective; Social Science Focus Psychology 300 level.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "PSYC-SHU-349",
@@ -13567,7 +15955,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "PSYC-SHU 101 Introduction to Psychology or AP Psychology: Score of 5 or IB Psychology HL (Higher Level): Score of 7 or A Level Psychology: Score of A.",
     "offeringText": "occasionally",
-    "fulfillmentText": "Social Science Focus Psychology 300 Level."
+    "fulfillmentText": "Social Science Focus Psychology 300 Level.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "PSYC-SHU-352",
@@ -13585,7 +15976,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "PSYC-SHU 101 Introduction to Psychology or AP Psychology: Score of 5 or IB Psychology HL (Higher Level): Score of 7 or A Level Psychology: Score of A.",
     "offeringText": "Fall",
-    "fulfillmentText": "Social Science Focus Psychology 300 level; Data Science Concentration in Psychology."
+    "fulfillmentText": "Social Science Focus Psychology 300 level; Data Science Concentration in Psychology.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "PSYC-SHU-360",
@@ -13603,7 +15997,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "PSYC-SHU 101 Introduction to Psychology or AP Psychology: Score of 5 or IB Psychology HL (Higher Level): Score of 7 or A Level Psychology: Score of A.",
     "offeringText": "every year",
-    "fulfillmentText": "CORE STS; Social Science Focus Psychology 300 level."
+    "fulfillmentText": "CORE STS; Social Science Focus Psychology 300 level.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "PSYC-SHU-365",
@@ -13622,7 +16019,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "PSYC-SHU 101 Introduction to Psychology OR PSYC-SHU 234 Developmental Psychology",
     "offeringText": "occasionally",
-    "fulfillmentText": "Social Science Focus Psychology 300 level."
+    "fulfillmentText": "Social Science Focus Psychology 300 level.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "PSYC-SHU-382",
@@ -13640,7 +16040,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "PSYC-SHU 101 Introduction to Psychology",
     "offeringText": "every year",
-    "fulfillmentText": "Social Science Focus course Psychology track 300 level."
+    "fulfillmentText": "Social Science Focus course Psychology track 300 level.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SAS-SHU-100",
@@ -13656,7 +16059,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "There are no prerequisites for the course but enrollment is limited to study away students.",
     "offeringText": "occasionally",
-    "fulfillmentText": ""
+    "fulfillmentText": "",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SDHM-SHU-410",
@@ -13672,7 +16078,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "",
     "offeringText": "Fall",
-    "fulfillmentText": "General Elective."
+    "fulfillmentText": "General Elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SOCS-SHU-101T",
@@ -13690,7 +16099,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "PSYC-SHU 101 Intro to Psychology or AP Psychology: Score of 5 or IB Psychology HL (Higher Level): Score of 7 or A Level Psychology: Score of A.",
     "offeringText": "",
-    "fulfillmentText": "Social Science Focus Psychology 200 level."
+    "fulfillmentText": "Social Science Focus Psychology 200 level.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SOCS-SHU-110",
@@ -13706,7 +16118,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "every year",
-    "fulfillmentText": "Social Science Foundational course."
+    "fulfillmentText": "Social Science Foundational course.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SOCS-SHU-130",
@@ -13725,7 +16140,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "None. Equivalent to POLSC-AD 120 and POL-UA 100 Political Theory",
     "offeringText": "every other year",
-    "fulfillmentText": "Humanities Introductory course; Social Science Foundational course."
+    "fulfillmentText": "Humanities Introductory course; Social Science Foundational course.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SOCS-SHU-133",
@@ -13741,7 +16159,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Fall",
-    "fulfillmentText": "CORE SSPC; Social Science Foundational course or Urban Studies 200 level; Humanities 18-19 Critical Concepts; GCS The Politics, Economy, and Environment of China."
+    "fulfillmentText": "CORE SSPC; Social Science Foundational course or Urban Studies 200 level; Humanities 18-19 Critical Concepts; GCS The Politics, Economy, and Environment of China.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SOCS-SHU-135",
@@ -13757,7 +16178,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Fall",
-    "fulfillmentText": "CORE STS; Social Science Foundation course."
+    "fulfillmentText": "CORE STS; Social Science Foundation course.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SOCS-SHU-136",
@@ -13773,7 +16197,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "occasionally",
-    "fulfillmentText": "Social Science Foundational course."
+    "fulfillmentText": "Social Science Foundational course.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SOCS-SHU-141",
@@ -13789,7 +16216,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "occasionally",
-    "fulfillmentText": "Social Science Methods; Data Science concentration in Social Science."
+    "fulfillmentText": "Social Science Methods; Data Science concentration in Social Science.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SOCS-SHU-145",
@@ -13805,7 +16235,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "every year",
-    "fulfillmentText": "Social Science Foundational Course."
+    "fulfillmentText": "Social Science Foundational Course.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SOCS-SHU-150",
@@ -13821,7 +16254,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "occasionally",
-    "fulfillmentText": "Social Science Foundational course; Data Science concentration in Political Science."
+    "fulfillmentText": "Social Science Foundational course; Data Science concentration in Political Science.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SOCS-SHU-151",
@@ -13837,7 +16273,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "every year",
-    "fulfillmentText": "Social Science Core course."
+    "fulfillmentText": "Social Science Core course.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SOCS-SHU-160",
@@ -13853,7 +16292,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "NONE.",
     "offeringText": "occasionally",
-    "fulfillmentText": "Social Science Foundation; GCS Politics, Economy and Environment of China; Data Science concentration in Social Science/Political Science. Pre-requisite: NONE."
+    "fulfillmentText": "Social Science Foundation; GCS Politics, Economy and Environment of China; Data Science concentration in Social Science/Political Science. Pre-requisite: NONE.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SOCS-SHU-170",
@@ -13869,7 +16311,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Fall",
-    "fulfillmentText": "CORE STS; Social Science Foundational course."
+    "fulfillmentText": "CORE STS; Social Science Foundational course.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SOCS-SHU-175",
@@ -13885,7 +16330,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "",
     "offeringText": "every year",
-    "fulfillmentText": "Social Science Methods course."
+    "fulfillmentText": "Social Science Methods course.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SOCS-SHU-190",
@@ -13901,7 +16349,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "every year",
-    "fulfillmentText": "Core AT; Social Science Foundational Course; Social Science Methods Course."
+    "fulfillmentText": "Core AT; Social Science Foundational Course; Social Science Methods Course.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SOCS-SHU-199",
@@ -13917,7 +16368,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "every year",
-    "fulfillmentText": "CORE STS; Social Science Urban Studies Focus 200 level course."
+    "fulfillmentText": "CORE STS; Social Science Urban Studies Focus 200 level course.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SOCS-SHU-201",
@@ -13935,7 +16389,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "None. SOCS-SHU 133 Urbanization in China is recommended but not required",
     "offeringText": "",
-    "fulfillmentText": "Social Science Focus Self-Designed/Urban Studies 200 level."
+    "fulfillmentText": "Social Science Focus Self-Designed/Urban Studies 200 level.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SOCS-SHU-203",
@@ -13953,7 +16410,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "Sophomore Standing. SOCS-SHU 133 Urbanization in China is recommended but not required.",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": "Social Science Focus Self-Designed/Urban Studies 200 level."
+    "fulfillmentText": "Social Science Focus Self-Designed/Urban Studies 200 level.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SOCS-SHU-204",
@@ -13971,7 +16431,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "None. Environment and Society is (SOCS-SHU 135) recommended but not required",
     "offeringText": "every year",
-    "fulfillmentText": "CORE STS; Social Science Focus Environmental Studies 200 level."
+    "fulfillmentText": "CORE STS; Social Science Focus Environmental Studies 200 level.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SOCS-SHU-205",
@@ -13987,7 +16450,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None. Sophomore status is recommended but not required.",
     "offeringText": "every year",
-    "fulfillmentText": "Social Science Methods."
+    "fulfillmentText": "Social Science Methods.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SOCS-SHU-206",
@@ -14003,7 +16469,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "every year",
-    "fulfillmentText": "Social Science Methods Course."
+    "fulfillmentText": "Social Science Methods Course.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SOCS-SHU-207",
@@ -14021,7 +16490,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "None. SOCS-SHU 133 Urbanization in China is recommended but not required",
     "offeringText": "every year",
-    "fulfillmentText": "Social Science Focus Urban Studies 200 level."
+    "fulfillmentText": "Social Science Focus Urban Studies 200 level.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SOCS-SHU-208",
@@ -14037,7 +16509,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "every year",
-    "fulfillmentText": "CORE STS; Social Science Focus Environmental Studies/Urban Studies 200 level."
+    "fulfillmentText": "CORE STS; Social Science Focus Environmental Studies/Urban Studies 200 level.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SOCS-SHU-210",
@@ -14053,7 +16528,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None",
     "offeringText": "Fall",
-    "fulfillmentText": "Social Science Methods course."
+    "fulfillmentText": "Social Science Methods course.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SOCS-SHU-211",
@@ -14069,7 +16547,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "sophomore standing or above.",
     "offeringText": "every other year",
-    "fulfillmentText": "Social Science Focus Political Science 200 level."
+    "fulfillmentText": "Social Science Focus Political Science 200 level.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SOCS-SHU-213",
@@ -14090,7 +16571,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "SOCS-SHU 190 Introduction to Computational Social Science OR CSCI-SHU 101 Introduction to Computer and Data Science OR MATH-SHU 235 Probability and Statistics OR BUSF-SHU 101 Statistics for Business and Economics",
     "offeringText": "every other year",
-    "fulfillmentText": "Social Science Methods course or Sociology track 200 level focus course.."
+    "fulfillmentText": "Social Science Methods course or Sociology track 200 level focus course..",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SOCS-SHU-215",
@@ -14106,7 +16590,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "",
     "offeringText": "every year",
-    "fulfillmentText": "Social Science Methods course."
+    "fulfillmentText": "Social Science Methods course.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SOCS-SHU-218",
@@ -14126,7 +16613,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "Statistic for Business and Economics (BUSF-SHU 101) OR Statistics for Behavioral and Social Sciences (SOCS-SHU 210) OR Probability and Statistics (MATH-SHU 235)",
     "offeringText": "every year",
-    "fulfillmentText": "Social Science Methods course."
+    "fulfillmentText": "Social Science Methods course.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SOCS-SHU-219",
@@ -14142,7 +16632,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "occasionally",
-    "fulfillmentText": "Social Science Focus Sociology 200 level."
+    "fulfillmentText": "Social Science Focus Sociology 200 level.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SOCS-SHU-220",
@@ -14158,7 +16651,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "",
-    "fulfillmentText": "Social Science Focus Political Science 200 level."
+    "fulfillmentText": "Social Science Focus Political Science 200 level.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SOCS-SHU-222",
@@ -14174,7 +16670,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "",
     "offeringText": "every year",
-    "fulfillmentText": "Social Science Focus Political Science/Political Economy/International Relations 200 level course."
+    "fulfillmentText": "Social Science Focus Political Science/Political Economy/International Relations 200 level course.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SOCS-SHU-223",
@@ -14190,7 +16689,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Sophomore standing or above",
     "offeringText": "every year",
-    "fulfillmentText": "Social Science Core (multidisciplinary) and Sociology 200 level focus course."
+    "fulfillmentText": "Social Science Core (multidisciplinary) and Sociology 200 level focus course.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SOCS-SHU-224",
@@ -14209,7 +16711,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "Passing grade D or above in Global Perspectives on Society (GPS) OR not open to first-semester students. Environment and Society (SOCS-SHU 135) or Environmental System Science (SOCS-SHU 204) are recommended but not required.",
     "offeringText": "every year",
-    "fulfillmentText": "CORE STS; Social Science Environmental Studies track 200 level focus course and Social Science Sociology track 200 level focus course."
+    "fulfillmentText": "CORE STS; Social Science Environmental Studies track 200 level focus course and Social Science Sociology track 200 level focus course.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SOCS-SHU-227",
@@ -14225,7 +16730,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "every year",
-    "fulfillmentText": "Social Science Focus Sociology/Political Economy 200 level."
+    "fulfillmentText": "Social Science Focus Sociology/Political Economy 200 level.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SOCS-SHU-228",
@@ -14241,7 +16749,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "every year",
-    "fulfillmentText": "Social Science New Challenges core course; Humanities Advanced (18-19: Topic) course."
+    "fulfillmentText": "Social Science New Challenges core course; Humanities Advanced (18-19: Topic) course.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SOCS-SHU-229",
@@ -14259,7 +16770,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "FOR SOCS-SHU 229 is Sophomore standing or above required.",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": "Humanities Interdisciplinary course (18-19: Topic); Social Science Core Classic Problems in Social Science/Focus Political Economy/Political Science 200 level."
+    "fulfillmentText": "Humanities Interdisciplinary course (18-19: Topic); Social Science Core Classic Problems in Social Science/Focus Political Economy/Political Science 200 level.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SOCS-SHU-230",
@@ -14275,7 +16789,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "",
-    "fulfillmentText": "Social Science Focus Environmental Studies 200 level course."
+    "fulfillmentText": "Social Science Focus Environmental Studies 200 level course.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SOCS-SHU-232",
@@ -14291,7 +16808,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None",
     "offeringText": "occasionally",
-    "fulfillmentText": "Social Science Focus International Relations/Political Science 200 level."
+    "fulfillmentText": "Social Science Focus International Relations/Political Science 200 level.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SOCS-SHU-234",
@@ -14307,7 +16827,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "occasionally",
-    "fulfillmentText": "Social Science Focus Core New Challenges in Social Science."
+    "fulfillmentText": "Social Science Focus Core New Challenges in Social Science.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SOCS-SHU-236",
@@ -14323,7 +16846,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Sophomore standing or above.",
     "offeringText": "every year",
-    "fulfillmentText": "CORE SSPC or IPC; Social Science Classic Problems core; GCS Chinese History, Society and Culture."
+    "fulfillmentText": "CORE SSPC or IPC; Social Science Classic Problems core; GCS Chinese History, Society and Culture.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SOCS-SHU-237",
@@ -14339,7 +16865,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None",
     "offeringText": "Spring",
-    "fulfillmentText": "Core IPC; Social Science International Relations track and Political Science track focus course 200 level."
+    "fulfillmentText": "Core IPC; Social Science International Relations track and Political Science track focus course 200 level.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SOCS-SHU-240",
@@ -14355,7 +16884,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Sophomore standing or above.",
     "offeringText": "every year",
-    "fulfillmentText": "Social Science Methods course."
+    "fulfillmentText": "Social Science Methods course.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SOCS-SHU-241",
@@ -14371,7 +16903,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "occasionally",
-    "fulfillmentText": "Social Science Focus Anthropology 200 level; Business Non-finance/Non-marketing elective; IMB Business elective."
+    "fulfillmentText": "Social Science Focus Anthropology 200 level; Business Non-finance/Non-marketing elective; IMB Business elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SOCS-SHU-242",
@@ -14387,7 +16922,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Spring",
-    "fulfillmentText": "Social Science International Relations track and Political Science track focus course 200 level."
+    "fulfillmentText": "Social Science International Relations track and Political Science track focus course 200 level.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SOCS-SHU-244",
@@ -14403,7 +16941,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Sophomore standing or above",
     "offeringText": "every other year",
-    "fulfillmentText": "Core STS; Social Science Anthropology and Global Health tracks 200 level focus course."
+    "fulfillmentText": "Core STS; Social Science Anthropology and Global Health tracks 200 level focus course.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SOCS-SHU-245",
@@ -14419,7 +16960,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "occasionally",
-    "fulfillmentText": "Social Science Core Classic Problems in Social Science; Humanities Introductory course (18-19: Topic)."
+    "fulfillmentText": "Social Science Core Classic Problems in Social Science; Humanities Introductory course (18-19: Topic).",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SOCS-SHU-247",
@@ -14435,7 +16979,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "or Co-requisite: None.",
     "offeringText": "every year",
-    "fulfillmentText": "Social Science Methods Course and 200 level Focus course for the Urban Studies Track."
+    "fulfillmentText": "Social Science Methods Course and 200 level Focus course for the Urban Studies Track.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SOCS-SHU-250",
@@ -14451,7 +16998,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None. Equivalent to CORES-AD-78",
     "offeringText": "every other year",
-    "fulfillmentText": "Social Science Core New Challenges in Social Science"
+    "fulfillmentText": "Social Science Core New Challenges in Social Science",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SOCS-SHU-252",
@@ -14467,7 +17017,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "occasionally",
-    "fulfillmentText": "Social Science Focus Political Science or International Relations 200 level; Humanities Interdisciplinary course."
+    "fulfillmentText": "Social Science Focus Political Science or International Relations 200 level; Humanities Interdisciplinary course.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SOCS-SHU-253",
@@ -14483,7 +17036,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Successful completion of GPS.",
     "offeringText": "",
-    "fulfillmentText": "Social Science Core Classic Problems in Social Science; Social Science Focus Environmental Studies 200 level."
+    "fulfillmentText": "Social Science Core Classic Problems in Social Science; Social Science Focus Environmental Studies 200 level.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SOCS-SHU-254",
@@ -14501,7 +17057,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "None. SOCS-SHU 136 recommended but not required",
     "offeringText": "",
-    "fulfillmentText": "CORE SSPC/HPC/IPC; Social Science Focus Anthropology 200 level; GCS Chinese History, Society, and Culture; Humanities Advanced Course (18-19: Topic)."
+    "fulfillmentText": "CORE SSPC/HPC/IPC; Social Science Focus Anthropology 200 level; GCS Chinese History, Society, and Culture; Humanities Advanced Course (18-19: Topic).",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SOCS-SHU-255",
@@ -14517,7 +17076,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None. Sophomore standing is recommended but not required.",
     "offeringText": "every year",
-    "fulfillmentText": "Social Science Focus Political Science and International Relations 300 level (only for Fall 2022)."
+    "fulfillmentText": "Social Science Focus Political Science and International Relations 300 level (only for Fall 2022).",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SOCS-SHU-260",
@@ -14535,7 +17097,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "SOCS-SHU 170 Introduction to Global Health.",
     "offeringText": "every year",
-    "fulfillmentText": "Social Science Focus Global Health 200 level."
+    "fulfillmentText": "Social Science Focus Global Health 200 level.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SOCS-SHU-262",
@@ -14551,7 +17116,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "every year",
-    "fulfillmentText": "Social Science Focus Global Public Health 200 level."
+    "fulfillmentText": "Social Science Focus Global Public Health 200 level.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SOCS-SHU-265",
@@ -14567,7 +17135,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "every other year",
-    "fulfillmentText": "GCS elective Chinese History, Society, and Culture; Social Science Focus Sociology 200 level."
+    "fulfillmentText": "GCS elective Chinese History, Society, and Culture; Social Science Focus Sociology 200 level.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SOCS-SHU-270",
@@ -14583,7 +17154,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Sophomore standing or above required.",
     "offeringText": "occasionally",
-    "fulfillmentText": "CORE SSPC or IPC; Social Science Core New Challenges in Social Science."
+    "fulfillmentText": "CORE SSPC or IPC; Social Science Core New Challenges in Social Science.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SOCS-SHU-272",
@@ -14599,7 +17173,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "occasionally",
-    "fulfillmentText": "CORE SSPC (before Fall 20); Humanities Interdisciplinary course (18-19: Topic); Social Science Focus Political Science 200 level."
+    "fulfillmentText": "CORE SSPC (before Fall 20); Humanities Interdisciplinary course (18-19: Topic); Social Science Focus Political Science 200 level.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SOCS-SHU-275",
@@ -14617,7 +17194,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "None. SOCS-SHU 160 is recommended, but not required.",
     "offeringText": "occasionally",
-    "fulfillmentText": "Core SSPC or IPC; GCS China and the World/The Politics, Economy, and Environment of China; SS Focus International Relations/Political Science 200 level; HUMN 18-19 Topic."
+    "fulfillmentText": "Core SSPC or IPC; GCS China and the World/The Politics, Economy, and Environment of China; SS Focus International Relations/Political Science 200 level; HUMN 18-19 Topic.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SOCS-SHU-278",
@@ -14633,7 +17213,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Sophomore standing or above.",
     "offeringText": "every year",
-    "fulfillmentText": "Core SSPC/IPC; Social Science focus Sociology or Urban Studies 200 level."
+    "fulfillmentText": "Core SSPC/IPC; Social Science focus Sociology or Urban Studies 200 level.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SOCS-SHU-280",
@@ -14649,7 +17232,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Sophomore Standing or above",
     "offeringText": "every year",
-    "fulfillmentText": "Social Science Focus Sociology 200 level."
+    "fulfillmentText": "Social Science Focus Sociology 200 level.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SOCS-SHU-289",
@@ -14665,7 +17251,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": "Core STS; Social Science Focus Environmental Studies 200 level."
+    "fulfillmentText": "Core STS; Social Science Focus Environmental Studies 200 level.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SOCS-SHU-291",
@@ -14684,7 +17273,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "SOCS-SHU 150 Introduction to Comparative Politics OR SOCS-SHU 160 Introduction to International Politics",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": "Social Science Core course and Political Science 200 level focus course."
+    "fulfillmentText": "Social Science Core course and Political Science 200 level focus course.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SOCS-SHU-294",
@@ -14700,7 +17292,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "every year",
-    "fulfillmentText": "Social Science Global Public Health Focus 200 level course."
+    "fulfillmentText": "Social Science Global Public Health Focus 200 level course.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SOCS-SHU-303",
@@ -14716,7 +17311,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Sophomore status.",
     "offeringText": "every year",
-    "fulfillmentText": "Social Science Focus Urban Studies 300 level."
+    "fulfillmentText": "Social Science Focus Urban Studies 300 level.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SOCS-SHU-306",
@@ -14732,7 +17330,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None",
     "offeringText": "occasionally",
-    "fulfillmentText": "CORE STS; Social Science Focus Global Health 300 level."
+    "fulfillmentText": "CORE STS; Social Science Focus Global Health 300 level.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SOCS-SHU-310",
@@ -14748,7 +17349,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Summer term",
-    "fulfillmentText": "General Elective."
+    "fulfillmentText": "General Elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SOCS-SHU-315",
@@ -14774,7 +17378,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "SOCS-SHU 160 Intro to International Politics OR SOCS-SHU 150 Intro to Comparative Politics OR SOCS-SHU 170 Intro to Global Health OR SOCS-SHU 110 Intro to Sociology OR SOCS-SHU 130 Intro to Political Theory OR SOCS-SHU 135 Environment and Society OR SOCS-SHU 133 Urbanization in China OR PSYC-SHU 101 Intro to Psychology OR SOCS-SHU 136 Human Society and Culture.",
     "offeringText": "occasionally",
-    "fulfillmentText": "Social Science Focus Global Health 300 level."
+    "fulfillmentText": "Social Science Focus Global Health 300 level.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SOCS-SHU-316",
@@ -14790,7 +17397,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "One Social Science Foundational or Introductory Course",
     "offeringText": "Fall",
-    "fulfillmentText": "Social Science Focus Anthropology, Global Public Health, and Political Science Track 300 level course."
+    "fulfillmentText": "Social Science Focus Anthropology, Global Public Health, and Political Science Track 300 level course.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SOCS-SHU-318",
@@ -14806,7 +17416,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Spring",
-    "fulfillmentText": "Social Science Methods; Humanities 18-19 Topics; Data Science concentration in Social Science."
+    "fulfillmentText": "Social Science Methods; Humanities 18-19 Topics; Data Science concentration in Social Science.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SOCS-SHU-326",
@@ -14822,7 +17435,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Sophomore standing or above.",
     "offeringText": "Fall",
-    "fulfillmentText": "Social Science Focus Political Economy/Sociology 300 level."
+    "fulfillmentText": "Social Science Focus Political Economy/Sociology 300 level.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SOCS-SHU-328",
@@ -14838,7 +17454,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Sophomore standing or above.",
     "offeringText": "",
-    "fulfillmentText": "CORE STS; Social Science Focus Anthropology 300 level."
+    "fulfillmentText": "CORE STS; Social Science Focus Anthropology 300 level.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SOCS-SHU-330",
@@ -14857,7 +17476,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "SOCS-SHU 135 Environment and Society or SOCS-SHU 133 Urbanization in China",
     "offeringText": "every other year",
-    "fulfillmentText": "Social Science Focus Environmental Studies, Political Science or Urban Studies 300 level."
+    "fulfillmentText": "Social Science Focus Environmental Studies, Political Science or Urban Studies 300 level.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SOCS-SHU-331",
@@ -14875,7 +17497,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "SOCS-SHU 150 OR 160",
     "offeringText": "",
-    "fulfillmentText": "CORE SSPC or IPC; Social Science Focus Political Science 300 level."
+    "fulfillmentText": "CORE SSPC or IPC; Social Science Focus Political Science 300 level.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SOCS-SHU-332",
@@ -14894,7 +17519,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "Sophomore standing AND SOCS-SHU 170 Introduction to Global Health or PSYC-SHU 101 Introduction to Psychology",
     "offeringText": "every year",
-    "fulfillmentText": "CORE STS; Social Science Focus Global Health or Psychology 300 level."
+    "fulfillmentText": "CORE STS; Social Science Focus Global Health or Psychology 300 level.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SOCS-SHU-333",
@@ -14912,7 +17540,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "None. It is recommended, but not required, that students take SOCS-SHU 135 Environment and Society prior to enrolling in this course.",
     "offeringText": "occasionally",
-    "fulfillmentText": "CORE STS; Social Science Focus Environmental Studies or International Relations 300 level."
+    "fulfillmentText": "CORE STS; Social Science Focus Environmental Studies or International Relations 300 level.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SOCS-SHU-334",
@@ -14931,7 +17562,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "PSYC-SHU 101 Intro to Psychology OR SOCS-SHU 220 Law and Society in the US.",
     "offeringText": "occasionally",
-    "fulfillmentText": "CORE STS; Social Science Core New Challenges in Social Science or Focus Psychology 300 level; Data Science Concentration in Psychology."
+    "fulfillmentText": "CORE STS; Social Science Core New Challenges in Social Science or Focus Psychology 300 level; Data Science Concentration in Psychology.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SOCS-SHU-339",
@@ -14950,7 +17584,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "SOCS-SHU 160 or SOCS-SHU 150.",
     "offeringText": "occasionally",
-    "fulfillmentText": "Social Science Focus Political Science 300 level."
+    "fulfillmentText": "Social Science Focus Political Science 300 level.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SOCS-SHU-340",
@@ -14966,7 +17603,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Sophomore standing required.",
     "offeringText": "",
-    "fulfillmentText": "Social Science Focus Political Science 300 level."
+    "fulfillmentText": "Social Science Focus Political Science 300 level.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SOCS-SHU-341",
@@ -14986,7 +17626,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "SOCS-SHU 150 Introduction to Comparative Politics or SOCS-SHU 160 Introduction to International Politics or GCHN-SHU 110 The Concept of China.",
     "offeringText": "occasionally",
-    "fulfillmentText": "CORE SSPC or IPC; GCS China and the World; Social Science Focus Courses International Relations/Political Science - 300 level; Humanities 18-19 Topic Courses."
+    "fulfillmentText": "CORE SSPC or IPC; GCS China and the World; Social Science Focus Courses International Relations/Political Science - 300 level; Humanities 18-19 Topic Courses.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SOCS-SHU-345",
@@ -15002,7 +17645,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Sophomore Standing.",
     "offeringText": "occasionally",
-    "fulfillmentText": "Social Science core or Sociology focus 300 level."
+    "fulfillmentText": "Social Science core or Sociology focus 300 level.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SOCS-SHU-350",
@@ -15020,7 +17666,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "Sophomore standing or above required. PSYC-SHU 101 recommended but not required.",
     "offeringText": "Fall",
-    "fulfillmentText": "Social Science Methods course; Data Science concentration in Psychology."
+    "fulfillmentText": "Social Science Methods course; Data Science concentration in Psychology.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SOCS-SHU-352",
@@ -15036,7 +17685,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Sophomore standing or above.",
     "offeringText": "Spring term of odd numbered years",
-    "fulfillmentText": "Social Science Core/Focus Political Science 300 level."
+    "fulfillmentText": "Social Science Core/Focus Political Science 300 level.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SOCS-SHU-353",
@@ -15052,7 +17704,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "",
     "offeringText": "every year",
-    "fulfillmentText": "Social Science Focus Self-Designed/Urban Studies 300 level; IMA/IMB elective."
+    "fulfillmentText": "Social Science Focus Self-Designed/Urban Studies 300 level; IMA/IMB elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SOCS-SHU-360",
@@ -15068,7 +17723,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Sophomore Standing or above.",
     "offeringText": "",
-    "fulfillmentText": "Social Science Focus Sociology/Self-Designed-Urban Studies 300 level."
+    "fulfillmentText": "Social Science Focus Sociology/Self-Designed-Urban Studies 300 level.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SOCS-SHU-361",
@@ -15084,7 +17742,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Introduction to Sociology or any other intro courses from Social Science ((Intro to Psych, Intro to Comparative Politics, Intro International Politics, Intro to Global Health, Intro to Political Theory, Urbanization in China, Human Society and Culture, Environment & Society).",
     "offeringText": "every year",
-    "fulfillmentText": "Social Science focus course in the Sociology track (300 level)."
+    "fulfillmentText": "Social Science focus course in the Sociology track (300 level).",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SOCS-SHU-370",
@@ -15103,7 +17764,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "SOCS-SHU 160 Introduction to International Politics or GCHN-SHU 252 20th-Century East Asia-U.S. Relations.",
     "offeringText": "",
-    "fulfillmentText": "CORE SSPC or IPC; Social Science Focus International Relations/Political Science 300 level; GCS China and the World/The Politics, Economy, and Environment of China."
+    "fulfillmentText": "CORE SSPC or IPC; Social Science Focus International Relations/Political Science 300 level; GCS China and the World/The Politics, Economy, and Environment of China.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SOCS-SHU-375",
@@ -15119,7 +17783,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Sophomore Standing or above.",
     "offeringText": "every year",
-    "fulfillmentText": "Social Science Focus Sociology 300 level."
+    "fulfillmentText": "Social Science Focus Sociology 300 level.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SOCS-SHU-378",
@@ -15135,7 +17802,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Sophomore Standing.",
     "offeringText": "every year",
-    "fulfillmentText": "Social Science Core Course Classic Problems and Political Science Focus 300 level course."
+    "fulfillmentText": "Social Science Core Course Classic Problems and Political Science Focus 300 level course.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SOCS-SHU-380",
@@ -15153,7 +17823,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "SOCS-SHU 160 Introduction to International Politics",
     "offeringText": "every year",
-    "fulfillmentText": "Social Science Focus International Relations or Political Science 300 level."
+    "fulfillmentText": "Social Science Focus International Relations or Political Science 300 level.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SOCS-SHU-383",
@@ -15171,7 +17844,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "PSYC-SHU 101 Introduction to Psychology",
     "offeringText": "Spring",
-    "fulfillmentText": "Social Science Focus Psychology 300 level."
+    "fulfillmentText": "Social Science Focus Psychology 300 level.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SOCS-SHU-388",
@@ -15190,7 +17866,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "Junior/senior standing or ONE related course (SOCS-SHU 110 “Introduction to Sociology” or SOCS-SHU 227 “Inequality and Society”.",
     "offeringText": "occasionally",
-    "fulfillmentText": "CORE IPC; Social Science Focus Sociology 300 level."
+    "fulfillmentText": "CORE IPC; Social Science Focus Sociology 300 level.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SOCS-SHU-391",
@@ -15206,7 +17885,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Sophomore standing or above",
     "offeringText": "",
-    "fulfillmentText": "CORE SSPC; IMB Business Elective; Social Science Focus International Relations/Political Economy/Political Science 300 level; Business and Finance Non-Finance Elective; Business and Marketing Non-Marketing Electives."
+    "fulfillmentText": "CORE SSPC; IMB Business Elective; Social Science Focus International Relations/Political Economy/Political Science 300 level; Business and Finance Non-Finance Elective; Business and Marketing Non-Marketing Electives.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SOCS-SHU-394",
@@ -15222,7 +17904,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Sophomore standing.",
     "offeringText": "every year",
-    "fulfillmentText": "Social Science Urban Studies Focus 300 level."
+    "fulfillmentText": "Social Science Urban Studies Focus 300 level.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SOCS-SHU-401",
@@ -15238,7 +17923,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Open only to Social Science primary major in the senior year.",
     "offeringText": "Fall",
-    "fulfillmentText": "Social Science Capstone Course."
+    "fulfillmentText": "Social Science Capstone Course.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SOCS-SHU-402",
@@ -15256,7 +17944,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "SOCS-SHU 401 Social Science Senior Seminar. Open only to Social Science primary major in the senior year.",
     "offeringText": "Spring",
-    "fulfillmentText": "Social Science Capstone Course."
+    "fulfillmentText": "Social Science Capstone Course.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SOCS-SHU-411",
@@ -15274,7 +17965,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "SOCS-SHU 410, Social Science Capstone Honors Seminar.",
     "offeringText": "Spring",
-    "fulfillmentText": "Social Science Capstone course."
+    "fulfillmentText": "Social Science Capstone course.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SOCS-SHU-430",
@@ -15290,7 +17984,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "",
     "offeringText": "Spring",
-    "fulfillmentText": "Social Science Capstone course."
+    "fulfillmentText": "Social Science Capstone course.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SOCS-SHU-431",
@@ -15306,7 +18003,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "",
     "offeringText": "Spring",
-    "fulfillmentText": "Social Science Capstone course."
+    "fulfillmentText": "Social Science Capstone course.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SOCS-SHU-432",
@@ -15322,7 +18022,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "",
     "offeringText": "",
-    "fulfillmentText": "Social Science Capstone course."
+    "fulfillmentText": "Social Science Capstone course.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SOCS-SHU-445",
@@ -15338,7 +18041,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Sophomore standing.",
     "offeringText": "occasionally",
-    "fulfillmentText": "Trauma & Memory: Social Science Focus Anthropology 400 level. Global Mental Health: Social Science Focus Global Health 400 level."
+    "fulfillmentText": "Trauma & Memory: Social Science Focus Anthropology 400 level. Global Mental Health: Social Science Focus Global Health 400 level.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SOCS-SHU-460",
@@ -15354,7 +18060,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "occasionally",
-    "fulfillmentText": ""
+    "fulfillmentText": "",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SOCS-SHU-9237",
@@ -15370,7 +18079,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": ""
+    "fulfillmentText": "",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SOCS-SHU-9275",
@@ -15388,7 +18100,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "None. SOCS-SHU 160 is recommended, but not required.",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": "Core SSPC or IPC; GCS China and the World/The Politics, Economy, and Environment of China; SS Focus International Relations/Political Science 200 level; HUMN 18-19 Topic."
+    "fulfillmentText": "Core SSPC or IPC; GCS China and the World/The Politics, Economy, and Environment of China; SS Focus International Relations/Political Science 200 level; HUMN 18-19 Topic.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SOCS-SHU-997",
@@ -15404,7 +18119,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "permission of the department.",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": "General Elective."
+    "fulfillmentText": "General Elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SOIM-SHU-65",
@@ -15420,7 +18138,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None, but priority to business majors; not open to freshmen.",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": "BUSF Non-Finance elective; BUSM Non-Marketing elective; IMB Business elective."
+    "fulfillmentText": "BUSF Non-Finance elective; BUSM Non-Marketing elective; IMB Business elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SOIM-SHU-9006",
@@ -15436,7 +18157,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Open to all Seniors, Juniors, with preference to Stern program students. Interested sophomores need to request permission from the instructor.",
     "offeringText": "Fall",
-    "fulfillmentText": "BUSF Non-Finance elective; BUSM Non-Marketing elective; IMB Business elective; Social Science Focus Political Economy 200 level."
+    "fulfillmentText": "BUSF Non-Finance elective; BUSM Non-Marketing elective; IMB Business elective; Social Science Focus Political Economy 200 level.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SPAN-SHU-1",
@@ -15452,7 +18176,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "",
     "offeringText": "",
-    "fulfillmentText": "General elective."
+    "fulfillmentText": "General elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SPAN-SHU-10",
@@ -15468,7 +18195,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "None.",
     "offeringText": "Fall and Spring",
-    "fulfillmentText": "General Elective."
+    "fulfillmentText": "General Elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SPAN-SHU-100",
@@ -15489,7 +18219,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "Intermediate Spanish II (SPAN-UA 4) OR Intensive Intermediate Spanish (SPAN-SHU 20), or assignment by placement test, or permission of the director of language programs. For non-native speakers only. Equivalent courses: SPAN-UA 100 (NY), SPAN-UA 9100 (Madrid & Buenos Aires)",
     "offeringText": "occasionally",
-    "fulfillmentText": "General elective."
+    "fulfillmentText": "General elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SPAN-SHU-101",
@@ -15509,7 +18242,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "SPAN-UA 4 or SPAN-SHU 20 or SPAN-UA 9020.",
     "offeringText": "all terms",
-    "fulfillmentText": "General elective."
+    "fulfillmentText": "General elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SPAN-SHU-110",
@@ -15528,7 +18264,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "SPAN-SHU 30 (SPAN-UA 100) Advanced Grammar and Composition, or permission of the instructor.",
     "offeringText": "occasionally",
-    "fulfillmentText": "General Elective."
+    "fulfillmentText": "General Elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SPAN-SHU-2",
@@ -15546,7 +18285,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "Spanish for Beginners I (SPAN-SHU 1, or equivalent) or placement.",
     "offeringText": "all terms",
-    "fulfillmentText": "General Elective."
+    "fulfillmentText": "General Elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SPAN-SHU-20",
@@ -15562,7 +18304,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Intensive Elementary Spanish or Instructor Permission.",
     "offeringText": "",
-    "fulfillmentText": "General elective."
+    "fulfillmentText": "General elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "SPAN-SHU-3",
@@ -15581,7 +18326,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "Spanish for Beginners II (SPAN-SHU 2 or equivalent), Intensive Elementary Spanish (SPAN-UA 10), or placement.",
     "offeringText": "every year",
-    "fulfillmentText": "General elective."
+    "fulfillmentText": "General elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "WRIT-SHU-101",
@@ -15597,7 +18345,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Writing placement result and Shanghai freshman.",
     "offeringText": "Spring",
-    "fulfillmentText": "CORE Writing requirement."
+    "fulfillmentText": "CORE Writing requirement.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "WRIT-SHU-102",
@@ -15613,7 +18364,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "Shanghai freshman.",
     "offeringText": "Spring",
-    "fulfillmentText": "CORE Writing requirement."
+    "fulfillmentText": "CORE Writing requirement.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "WRIT-SHU-201",
@@ -15631,7 +18385,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "C or better in WRIT-SHU 102 Writing as Inquiry. Students cannot register for more than one section of PoH.",
     "offeringText": "Fall",
-    "fulfillmentText": "CORE PoH."
+    "fulfillmentText": "CORE PoH.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "WRIT-SHU-240",
@@ -15650,7 +18407,10 @@ export const GENERATED_CATALOG = [
     ],
     "prerequisiteNote": "A final grade of C or higher in: Writing as Inquiry OR INTM-SHU 103 Creative Coding Lab OR CSCI-SHU 101 Introduction to Computer Science and Data Science.",
     "offeringText": "Spring",
-    "fulfillmentText": "IMA elective; IMB major IMA/IMB elective."
+    "fulfillmentText": "IMA elective; IMB major IMA/IMB elective.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "WRIT-SHU-245",
@@ -15666,7 +18426,10 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "A final grade of C or higher in Writing as Inquiry",
     "offeringText": "occasionally",
-    "fulfillmentText": "IMA elective; IMB major IMA/IMB Elective; designated elective for Creative Writing."
+    "fulfillmentText": "IMA elective; IMB major IMA/IMB Elective; designated elective for Creative Writing.",
+    "campuses": [
+      "Shanghai"
+    ]
   },
   {
     "id": "WRIT-SHU-275",
@@ -15682,6 +18445,9 @@ export const GENERATED_CATALOG = [
     "prerequisites": [],
     "prerequisiteNote": "A final grade of C or higher in Writing as Inquiry",
     "offeringText": "occasionally",
-    "fulfillmentText": "Creative Writing Minor."
+    "fulfillmentText": "Creative Writing Minor.",
+    "campuses": [
+      "Shanghai"
+    ]
   }
 ];

@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 
 /**
- * Generates src/data/courses.generated.js from scraped-data/shanghai.json so
- * the offline / local-fallback catalog covers the full bulletin (~900 courses)
- * instead of the hand-curated ~75-course CS-centric subset.
+ * Generates src/data/courses.generated.js from scraped-data/all-courses.json so
+ * the offline / local-fallback catalog covers all scraped undergraduate
+ * bulletin courses instead of the hand-curated ~75-course CS-centric subset.
  *
  * The hand-curated COURSE_CATALOG in src/data/courses.js is preserved and
  * merged on top at runtime (see src/lib/localCatalog.js) so explicit metadata
@@ -17,12 +17,18 @@
 
 import { readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
+import { pathToFileURL } from "node:url";
 import { fileURLToPath } from "node:url";
+import {
+  getCampusLabelForSchoolSlug,
+  normalizeCampuses,
+} from "../src/lib/campus.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const PROJECT_ROOT = join(__dirname, "..");
-const INPUT_PATH = join(PROJECT_ROOT, "scraped-data", "shanghai.json");
+const INPUT_PATH = join(PROJECT_ROOT, "scraped-data", "all-courses.json");
 const OUTPUT_PATH = join(PROJECT_ROOT, "src", "data", "courses.generated.js");
+const SHANGHAI_PRIORITY = 0;
 
 function stripSubjectSuffix(name) {
   // "Physics (PHYS-SHU)" → "Physics"
@@ -57,7 +63,14 @@ function normalizeCourseId(id) {
   return id.trim().replace(/\s+/g, "-").toUpperCase();
 }
 
-function buildCourseEntry(rawCourse, departmentName) {
+function campusPriority(campuses) {
+  if (campuses.includes("Shanghai")) return SHANGHAI_PRIORITY;
+  if (campuses.includes("Abu Dhabi")) return 1;
+  if (campuses.includes("New York")) return 2;
+  return 3;
+}
+
+function buildCourseEntry(rawCourse, departmentName, schoolSlug) {
   const id = normalizeCourseId(rawCourse.id || rawCourse.code);
   if (!id) return null;
 
@@ -96,38 +109,76 @@ function buildCourseEntry(rawCourse, departmentName) {
     fulfillmentText: typeof rawCourse.fulfillment === "string"
       ? rawCourse.fulfillment
       : "",
+    campuses: normalizeCampuses([getCampusLabelForSchoolSlug(schoolSlug)]),
   };
 
   return entry;
 }
 
-function buildCatalogFromScrape(scrape) {
-  const subjects = scrape?.courses;
-  if (!subjects || typeof subjects !== "object") {
+function normalizeScrapeSchools(scrape) {
+  if (scrape?.courses && typeof scrape.courses === "object") {
+    return [["shanghai", scrape]];
+  }
+
+  return Object.entries(scrape || {}).filter(
+    ([, schoolData]) => schoolData?.courses && typeof schoolData.courses === "object",
+  );
+}
+
+function mergeCourseEntry(existing, next) {
+  if (!existing) return next;
+
+  const campuses = normalizeCampuses([
+    ...normalizeCampuses(existing.campuses),
+    ...normalizeCampuses(next.campuses),
+  ]);
+  const existingPriority = campusPriority(normalizeCampuses(existing.campuses));
+  const nextPriority = campusPriority(normalizeCampuses(next.campuses));
+  const base = nextPriority < existingPriority ? next : existing;
+
+  return {
+    ...base,
+    campuses,
+  };
+}
+
+export function buildCatalogFromScrape(scrape) {
+  const schools = normalizeScrapeSchools(scrape);
+  if (schools.length === 0) {
     throw new Error(
-      `Unexpected scrape shape: expected { courses: { <slug>: { name, courses: [] } } }`,
+      "Unexpected scrape shape: expected all-courses data or { courses: { <slug>: ... } }",
     );
   }
 
-  const entries = [];
-  const seen = new Set();
+  const byId = new Map();
 
-  for (const [subjectSlug, subjectData] of Object.entries(subjects)) {
-    const departmentName = stripSubjectSuffix(subjectData?.name || subjectSlug);
-    const subjectCourses = Array.isArray(subjectData?.courses)
-      ? subjectData.courses
-      : [];
+  for (const [schoolSlug, schoolData] of schools) {
+    const subjects = schoolData?.courses;
+    if (!subjects || typeof subjects !== "object") {
+      throw new Error(
+        `Unexpected scrape shape for ${schoolSlug}: expected { courses: { <slug>: { name, courses: [] } } }`,
+      );
+    }
 
-    for (const rawCourse of subjectCourses) {
-      const entry = buildCourseEntry(rawCourse, departmentName);
-      if (!entry) continue;
-      if (seen.has(entry.id)) continue;
-      seen.add(entry.id);
-      entries.push(entry);
+    for (const [subjectSlug, subjectData] of Object.entries(subjects)) {
+      const departmentName = stripSubjectSuffix(
+        subjectData?.name || subjectSlug,
+      );
+      const subjectCourses = Array.isArray(subjectData?.courses)
+        ? subjectData.courses
+        : [];
+
+      for (const rawCourse of subjectCourses) {
+        const entry = buildCourseEntry(rawCourse, departmentName, schoolSlug);
+        if (!entry) continue;
+        byId.set(entry.id, mergeCourseEntry(byId.get(entry.id), entry));
+      }
     }
   }
 
-  entries.sort((a, b) => a.id.localeCompare(b.id));
+  const entries = Array.from(byId.values()).sort((a, b) =>
+    a.id.localeCompare(b.id),
+  );
   return entries;
 }
 
@@ -142,7 +193,7 @@ function formatCatalogModule(entries, source) {
 //
 // Run \`npm run generate:catalog\` (or
 // \`node scripts/generate-local-catalog.mjs\`) to refresh this file from the
-// latest \`scraped-data/shanghai.json\` produced by \`scripts/scrape-bulletin.mjs\`.
+// latest \`scraped-data/all-courses.json\` produced by \`scripts/scrape-bulletin.mjs\`.
 //
 // The hand-curated COURSE_CATALOG in src/data/courses.js is merged on top
 // of GENERATED_CATALOG at runtime by src/lib/localCatalog.js, so explicit
@@ -161,7 +212,7 @@ function main() {
   const scrapeRaw = readFileSync(INPUT_PATH, "utf8");
   const scrape = JSON.parse(scrapeRaw);
   const entries = buildCatalogFromScrape(scrape);
-  const output = formatCatalogModule(entries, "scraped-data/shanghai.json");
+  const output = formatCatalogModule(entries, "scraped-data/all-courses.json");
   writeFileSync(OUTPUT_PATH, output, "utf8");
 
   console.log(
@@ -169,4 +220,6 @@ function main() {
   );
 }
 
-main();
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+  main();
+}

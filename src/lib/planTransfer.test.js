@@ -18,6 +18,7 @@ test("importPlanFromJSON imports semesters, major, and student name", async () =
               name: "Foundations of Finance",
               credits: 4,
               category: "major-required",
+              campuses: ["Shanghai", "New York"],
             },
           ],
         },
@@ -31,4 +32,8 @@ test("importPlanFromJSON imports semesters, major, and student name", async () =
   assert.equal(imported.studentName, "Test Student");
   assert.equal(imported.plan["Y1-Fall"].length, 1);
   assert.equal(imported.plan["Y1-Fall"][0].id, "BUSF-SHU-202");
+  assert.deepEqual(imported.plan["Y1-Fall"][0].campuses, [
+    "Shanghai",
+    "New York",
+  ]);
 });

@@ -7,6 +7,7 @@ test("infers writing requirements from generated fulfillment text", () => {
 
   assert.equal(course.category, "writing");
   assert.deepEqual(course.requirementIds, ["writing"]);
+  assert.deepEqual(course.campuses, ["Shanghai"]);
 });
 
 test("infers science requirements from ED fulfillment text", () => {
