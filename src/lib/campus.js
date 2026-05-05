@@ -27,23 +27,41 @@ export function abbreviateCampus(label) {
   return CAMPUS_ABBREV[label] || label;
 }
 
+// Every NYU undergraduate school physically located in New York City.
+// The set contains both the human-readable school names (e.g. "tandon",
+// "steinhardt") and the actual bulletin URL slugs (e.g. "engineering",
+// "culture-education-human-development"). When the scraper writes a
+// course's source slug, the slug used is whichever path the bulletin
+// site exposes — those NYC-based slugs need to map to "New York" too,
+// otherwise courses end up tagged "Engineering", "Business", "Arts",
+// etc. instead of the city.
 const NEW_YORK_SCHOOL_SLUGS = new Set([
-  "arts-science",
+  // Human-readable school names (used in some downstream places).
   "college-arts-science",
-  "dentistry",
   "gallatin",
-  "liberal-studies",
   "meyers",
-  "professional-studies",
   "rory-meyers-nursing",
   "silver",
-  "social-work",
   "stern",
   "steinhardt",
   "tandon",
   "tandon-engineering",
   "tisch",
   "wagner",
+  // Actual bulletin URL slugs (https://bulletins.nyu.edu/undergraduate/<slug>/).
+  "arts", // Tisch School of the Arts
+  "arts-science", // College of Arts and Science
+  "business", // Stern School of Business
+  "culture-education-human-development", // Steinhardt
+  "dentistry", // College of Dentistry
+  "engineering", // Tandon School of Engineering
+  "global-public-health", // School of Global Public Health
+  "individualized-study", // Gallatin
+  "liberal-studies",
+  "nursing", // Rory Meyers College of Nursing
+  "professional-studies",
+  "public-service", // Wagner Graduate School of Public Service
+  "social-work", // Silver School of Social Work
 ]);
 
 const CANONICAL_LABELS_BY_KEY = new Map(
