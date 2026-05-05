@@ -15,11 +15,12 @@
  *   npm run generate:catalog
  */
 
-import { readFileSync, writeFileSync } from "node:fs";
+import { readFileSync, writeFileSync, existsSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { pathToFileURL } from "node:url";
 import { fileURLToPath } from "node:url";
 import {
+  compareCampuses,
   getCampusLabelForSchoolSlug,
   normalizeCampuses,
 } from "../src/lib/campus.js";
@@ -28,7 +29,47 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const PROJECT_ROOT = join(__dirname, "..");
 const INPUT_PATH = join(PROJECT_ROOT, "scraped-data", "all-courses.json");
 const OUTPUT_PATH = join(PROJECT_ROOT, "src", "data", "courses.generated.js");
+const OVERRIDES_PATH = join(
+  PROJECT_ROOT,
+  "src",
+  "data",
+  "crossCampusOverrides.js",
+);
 const SHANGHAI_PRIORITY = 0;
+
+// Subject prefix → family. Two prefixes that map to the same family are
+// considered the same field (e.g., "CSCI" and "CS" are both computer science).
+// Default for unmapped prefixes is the lowercased prefix itself.
+const SUBJECT_FAMILY_MAP = new Map([
+  ["CSCI", "cs"],
+  ["CS", "cs"],
+  ["MATH", "math"],
+  ["ECON", "econ"],
+  ["PHYS", "phys"],
+  ["CHEM", "chem"],
+  ["BIOL", "bio"],
+  ["BIO", "bio"],
+  ["PHIL", "phil"],
+  ["PSYC", "psych"],
+  ["SOCS", "soc"],
+  ["SOC", "soc"],
+  ["ANTH", "anth"],
+  ["BUSN", "bus"],
+  ["BUS", "bus"],
+  ["ACCT", "acct"],
+  ["FINC", "finc"],
+  ["MKTG", "mktg"],
+  ["MGMT", "mgmt"],
+  ["ARTH", "arth"],
+  ["MUSIC", "music"],
+  ["MUS", "music"],
+  ["FILM", "film"],
+  ["JOUR", "jour"],
+  ["NEUR", "neuro"],
+  ["NEURL", "neuro"],
+  ["WRIT", "writ"],
+  ["WRTNG", "writ"],
+]);
 
 function stripSubjectSuffix(name) {
   // "Physics (PHYS-SHU)" → "Physics"
@@ -142,7 +183,187 @@ function mergeCourseEntry(existing, next) {
   };
 }
 
-export function buildCatalogFromScrape(scrape) {
+function getSubjectPrefix(id) {
+  const m = String(id || "").match(/^([A-Z]+)-/);
+  return m ? m[1] : "";
+}
+
+function getSubjectFamily(id) {
+  const prefix = getSubjectPrefix(id);
+  if (!prefix) return "";
+  return SUBJECT_FAMILY_MAP.get(prefix) || prefix.toLowerCase();
+}
+
+function normalizeNameForMatch(name) {
+  return String(name || "")
+    .toLowerCase()
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function equivalenceKey(entry) {
+  const family = getSubjectFamily(entry.id);
+  if (!family) return null;
+  const name = normalizeNameForMatch(entry.name);
+  if (!name) return null;
+  const credits = entry.credits;
+  return `${family}|${name}|${credits}`;
+}
+
+class UnionFind {
+  constructor() {
+    this.parent = new Map();
+  }
+  ensure(x) {
+    if (!this.parent.has(x)) this.parent.set(x, x);
+  }
+  find(x) {
+    this.ensure(x);
+    let root = x;
+    while (this.parent.get(root) !== root) root = this.parent.get(root);
+    let cur = x;
+    while (this.parent.get(cur) !== root) {
+      const next = this.parent.get(cur);
+      this.parent.set(cur, root);
+      cur = next;
+    }
+    return root;
+  }
+  union(a, b) {
+    const ra = this.find(a);
+    const rb = this.find(b);
+    if (ra !== rb) this.parent.set(ra, rb);
+  }
+  groups() {
+    const map = new Map();
+    for (const id of this.parent.keys()) {
+      const root = this.find(id);
+      if (!map.has(root)) map.set(root, []);
+      map.get(root).push(id);
+    }
+    return Array.from(map.values());
+  }
+}
+
+function pickCanonical(group) {
+  // Prefer the campus with the lowest priority order (Shanghai > NY > AD).
+  let best = group[0];
+  for (const entry of group) {
+    if (
+      campusPriority(normalizeCampuses(entry.campuses)) <
+      campusPriority(normalizeCampuses(best.campuses))
+    ) {
+      best = entry;
+    }
+  }
+  return best;
+}
+
+function mergeEquivalentGroup(group) {
+  const canonical = pickCanonical(group);
+  const campuses = normalizeCampuses(
+    group.flatMap((e) => normalizeCampuses(e.campuses)),
+  ).sort(compareCampuses);
+
+  const equivalentCodes = {};
+  for (const entry of group) {
+    if (entry.id === canonical.id) continue;
+    for (const campus of normalizeCampuses(entry.campuses)) {
+      if (!equivalentCodes[campus]) {
+        equivalentCodes[campus] = entry.code || entry.id;
+      }
+    }
+  }
+
+  const merged = { ...canonical, campuses };
+  if (Object.keys(equivalentCodes).length > 0) {
+    merged.equivalentCodes = equivalentCodes;
+  }
+  return merged;
+}
+
+function buildEquivalenceGroups(entries, overrides) {
+  const { FORCE_EQUIVALENT = [], NOT_EQUIVALENT = [] } = overrides || {};
+  const idToEntry = new Map(entries.map((e) => [e.id, e]));
+
+  // IDs that should never be auto-merged with siblings in their heuristic
+  // group (force-split). Force-merge can still pull them together.
+  const isolated = new Set();
+  for (const list of NOT_EQUIVALENT) {
+    if (Array.isArray(list)) for (const id of list) isolated.add(id);
+  }
+
+  // Step 1: group by heuristic key
+  const heuristicGroups = new Map();
+  for (const entry of entries) {
+    const key = equivalenceKey(entry);
+    if (!key) continue;
+    if (!heuristicGroups.has(key)) heuristicGroups.set(key, []);
+    heuristicGroups.get(key).push(entry);
+  }
+
+  // Step 2: union-find — heuristic merges (skip isolated IDs)
+  const uf = new UnionFind();
+  for (const entry of entries) uf.ensure(entry.id);
+
+  for (const grp of heuristicGroups.values()) {
+    if (grp.length < 2) continue;
+    const participants = grp.filter((e) => !isolated.has(e.id));
+    for (let i = 1; i < participants.length; i++) {
+      uf.union(participants[0].id, participants[i].id);
+    }
+  }
+
+  // Step 3: force-equivalent overrides (precedence over isolation)
+  for (const list of FORCE_EQUIVALENT) {
+    if (!Array.isArray(list) || list.length < 2) continue;
+    for (let i = 1; i < list.length; i++) {
+      if (idToEntry.has(list[0]) && idToEntry.has(list[i])) {
+        uf.union(list[0], list[i]);
+      }
+    }
+  }
+
+  // Step 4: build groups, restricted to known IDs
+  const ufGroups = uf.groups();
+  const groupsOfEntries = ufGroups.map((ids) =>
+    ids.map((id) => idToEntry.get(id)).filter(Boolean),
+  );
+  return groupsOfEntries;
+}
+
+async function loadOverrides() {
+  if (!existsSync(OVERRIDES_PATH)) {
+    return { FORCE_EQUIVALENT: [], NOT_EQUIVALENT: [] };
+  }
+  const mod = await import(pathToFileURL(OVERRIDES_PATH).href);
+  return {
+    FORCE_EQUIVALENT: Array.isArray(mod.FORCE_EQUIVALENT)
+      ? mod.FORCE_EQUIVALENT
+      : [],
+    NOT_EQUIVALENT: Array.isArray(mod.NOT_EQUIVALENT) ? mod.NOT_EQUIVALENT : [],
+  };
+}
+
+function flagSuspiciousMerge(group) {
+  // Suspicious if course numbers within the group differ by more than a level.
+  // Course numbers vary in width across campuses (3 digits vs 4 digits), so
+  // compare the leading digit only.
+  const levels = group
+    .map((e) => {
+      const m = String(e.id || "").match(/-(\d+)/g);
+      if (!m) return null;
+      const last = m[m.length - 1].replace(/^-/, "");
+      return Number(last.charAt(0));
+    })
+    .filter((n) => Number.isInteger(n));
+  if (levels.length < 2) return false;
+  const min = Math.min(...levels);
+  const max = Math.max(...levels);
+  return max - min >= 2;
+}
+
+export function buildCatalogFromScrape(scrape, overrides) {
   const schools = normalizeScrapeSchools(scrape);
   if (schools.length === 0) {
     throw new Error(
@@ -176,10 +397,54 @@ export function buildCatalogFromScrape(scrape) {
     }
   }
 
-  const entries = Array.from(byId.values()).sort((a, b) =>
-    a.id.localeCompare(b.id),
-  );
-  return entries;
+  const rawEntries = Array.from(byId.values());
+
+  const groups = buildEquivalenceGroups(rawEntries, overrides || {});
+
+  const merged = [];
+  let mergeCount = 0;
+  let droppedCount = 0;
+  const suspicious = [];
+  for (const group of groups) {
+    if (group.length === 0) continue;
+    if (group.length === 1) {
+      merged.push(group[0]);
+      continue;
+    }
+    // Confirm group spans multiple campuses; if not, keep entries separate.
+    const campusSet = new Set();
+    for (const e of group) for (const c of e.campuses) campusSet.add(c);
+    if (campusSet.size < 2) {
+      for (const e of group) merged.push(e);
+      continue;
+    }
+    mergeCount += 1;
+    droppedCount += group.length - 1;
+    if (flagSuspiciousMerge(group)) {
+      suspicious.push(group.map((e) => e.id));
+    }
+    merged.push(mergeEquivalentGroup(group));
+  }
+
+  if (mergeCount > 0) {
+    console.log(
+      `Equivalence merge: ${mergeCount} cross-campus group(s) collapsed, ${droppedCount} duplicate entr${droppedCount === 1 ? "y" : "ies"} folded.`,
+    );
+    if (suspicious.length > 0) {
+      console.log(
+        `  ${suspicious.length} suspicious merge(s) (course numbers differ by ≥2 levels) — review and add to NOT_EQUIVALENT if wrong:`,
+      );
+      for (const ids of suspicious.slice(0, 20)) {
+        console.log(`    ${ids.join(", ")}`);
+      }
+      if (suspicious.length > 20) {
+        console.log(`    …and ${suspicious.length - 20} more`);
+      }
+    }
+  }
+
+  merged.sort((a, b) => a.id.localeCompare(b.id));
+  return merged;
 }
 
 function formatCatalogModule(entries, source) {
@@ -208,10 +473,11 @@ function formatCatalogModule(entries, source) {
   return banner + body;
 }
 
-function main() {
+async function main() {
   const scrapeRaw = readFileSync(INPUT_PATH, "utf8");
   const scrape = JSON.parse(scrapeRaw);
-  const entries = buildCatalogFromScrape(scrape);
+  const overrides = await loadOverrides();
+  const entries = buildCatalogFromScrape(scrape, overrides);
   const output = formatCatalogModule(entries, "scraped-data/all-courses.json");
   writeFileSync(OUTPUT_PATH, output, "utf8");
 
@@ -221,5 +487,8 @@ function main() {
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
-  main();
+  main().catch((err) => {
+    console.error(err);
+    process.exit(1);
+  });
 }

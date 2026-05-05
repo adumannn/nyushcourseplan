@@ -3,6 +3,7 @@ import { MapPin, MinusCircle } from "lucide-react";
 import { CATEGORIES, DEPARTMENTS, SEMESTERS, STUDY_AWAY } from "../../data/courses";
 import useCatalog from "../../hooks/useCatalog";
 import {
+  compareCampuses,
   formatCourseCampuses,
   getCourseCampuses,
   normalizeCampuses,
@@ -51,7 +52,7 @@ export default function CoursePicker({
     const campuses = availableCourses.flatMap((course) =>
       getCourseCampuses(course, []),
     );
-    return normalizeCampuses(campuses).sort((a, b) => a.localeCompare(b));
+    return normalizeCampuses(campuses).sort(compareCampuses);
   }, [availableCourses]);
   const customCampusOptions = useMemo(
     () =>

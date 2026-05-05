@@ -1,7 +1,11 @@
 import { useRef } from 'react';
 import { GripVertical, X, Info, AlertTriangle, MapPin } from 'lucide-react';
 import { CATEGORIES } from '../../data/courses';
-import { formatCourseCampuses } from '../../lib/campus';
+import {
+  abbreviateCampus,
+  compareCampuses,
+  getCourseCampuses,
+} from '../../lib/campus';
 import { getEffectiveCategory } from '../../lib/majorCourseRules';
 
 function withAlpha(color, alpha) {
@@ -56,7 +60,8 @@ export default function CourseCard({
     borderColor: withAlpha(categoryColor, 0.36),
     color: categoryColor,
   };
-  const campusLabel = formatCourseCampuses(course);
+  const courseCampuses = [...getCourseCampuses(course)].sort(compareCampuses);
+  const useAbbreviations = courseCampuses.length >= 2;
 
   return (
     <div
@@ -93,7 +98,7 @@ export default function CourseCard({
             {course.code}
           </span>
         </div>
-        {(categoryKey || campusLabel) && (
+        {(categoryKey || courseCampuses.length > 0) && (
           <div className="mt-1.5 flex flex-wrap items-center gap-1.5">
             {categoryKey && (
             <span
@@ -107,12 +112,18 @@ export default function CourseCard({
               {categoryLabel}
             </span>
             )}
-            {campusLabel && (
-              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full border border-border/45 bg-background/55 text-[10px] font-medium text-muted-foreground">
-                <MapPin className="h-3 w-3" aria-hidden="true" />
-                {campusLabel}
+            {courseCampuses.map((campus, index) => (
+              <span
+                key={campus}
+                title={campus}
+                className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full border border-border/45 bg-background/55 text-[10px] font-medium text-muted-foreground"
+              >
+                {index === 0 && (
+                  <MapPin className="h-3 w-3" aria-hidden="true" />
+                )}
+                {useAbbreviations ? abbreviateCampus(campus) : campus}
               </span>
-            )}
+            ))}
           </div>
         )}
         {course.prerequisiteNote && (
