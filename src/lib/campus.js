@@ -6,6 +6,27 @@ export const CAMPUS_LABELS = {
   "new-york": "New York",
 };
 
+export const CAMPUS_ABBREV = {
+  Shanghai: "SH",
+  "New York": "NY",
+  "Abu Dhabi": "AD",
+};
+
+const CAMPUS_ORDER = ["Shanghai", "New York", "Abu Dhabi"];
+
+export function compareCampuses(a, b) {
+  const ai = CAMPUS_ORDER.indexOf(a);
+  const bi = CAMPUS_ORDER.indexOf(b);
+  if (ai === -1 && bi === -1) return String(a).localeCompare(String(b));
+  if (ai === -1) return 1;
+  if (bi === -1) return -1;
+  return ai - bi;
+}
+
+export function abbreviateCampus(label) {
+  return CAMPUS_ABBREV[label] || label;
+}
+
 const NEW_YORK_SCHOOL_SLUGS = new Set([
   "arts-science",
   "college-arts-science",

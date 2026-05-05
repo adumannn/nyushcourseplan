@@ -638,16 +638,60 @@ async function main() {
       allData[schoolSlug] = { courses: schoolCourses };
     }
 
-    // Save per-school file
+    // Save per-school file. If only a subject was scraped, merge into the
+    // existing file (if any) so we don't drop the school's other subjects.
     const schoolFile = join(OUTPUT_DIR, `${schoolSlug}.json`);
-    writeFileSync(schoolFile, JSON.stringify(allData[schoolSlug], null, 2));
+    let dataToWrite = allData[schoolSlug];
+    if (flags.subject) {
+      const { existsSync, readFileSync } = await import("node:fs");
+      if (existsSync(schoolFile)) {
+        try {
+          const existing = JSON.parse(readFileSync(schoolFile, "utf8"));
+          dataToWrite = {
+            courses: { ...(existing.courses || {}), ...(dataToWrite.courses || {}) },
+            programs: { ...(existing.programs || {}), ...(dataToWrite.programs || {}) },
+          };
+          // Reflect merged data back so all-courses.json (when written) is consistent.
+          allData[schoolSlug] = dataToWrite;
+        } catch (err) {
+          console.error(
+            `  ✗ Could not merge with existing ${schoolFile}: ${err.message}`,
+          );
+        }
+      }
+    }
+    writeFileSync(schoolFile, JSON.stringify(dataToWrite, null, 2));
     console.log(`  Saved → ${schoolFile}`);
   }
 
-  // Save combined file
+  // Save combined file. When scraping a single school, do NOT overwrite
+  // all-courses.json — that would clobber other schools' data. Run without
+  // --school (or pass --combine) to rebuild the combined file from every
+  // per-school file in OUTPUT_DIR.
   const combinedFile = join(OUTPUT_DIR, "all-courses.json");
-  writeFileSync(combinedFile, JSON.stringify(allData, null, 2));
-  console.log(`\nAll data saved → ${combinedFile}`);
+  if (!flags.school || flags.combine) {
+    if (flags.combine) {
+      const { readdirSync, readFileSync } = await import("node:fs");
+      for (const f of readdirSync(OUTPUT_DIR)) {
+        if (!f.endsWith(".json") || f === "all-courses.json") continue;
+        const slug = f.replace(/\.json$/, "");
+        if (allData[slug]) continue;
+        try {
+          allData[slug] = JSON.parse(
+            readFileSync(join(OUTPUT_DIR, f), "utf8"),
+          );
+        } catch (err) {
+          console.error(`  ✗ Could not merge ${f}: ${err.message}`);
+        }
+      }
+    }
+    writeFileSync(combinedFile, JSON.stringify(allData, null, 2));
+    console.log(`\nAll data saved → ${combinedFile}`);
+  } else {
+    console.log(
+      `\nSkipped writing ${combinedFile} (single-school run). Re-run without --school, or with --combine, to rebuild it.`,
+    );
+  }
 
   // Print summary
   let totalCourses = 0;
