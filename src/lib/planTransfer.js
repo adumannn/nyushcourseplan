@@ -6,6 +6,7 @@ import {
   MAX_CREDITS_PER_SEMESTER,
   MIN_CREDITS_PER_SEMESTER,
   getMajorLabel,
+  normalizeSecondMajor,
 } from "../data/courses.js";
 import {
   LOCAL_CATALOG_BY_ID,
@@ -169,6 +170,7 @@ function resolveCourse(courseId, fallback) {
 export function exportPlanAsJSON({
   plan,
   major,
+  secondMajor,
   studentName,
   studyAway,
 }) {
@@ -178,6 +180,7 @@ export function exportPlanAsJSON({
     version: PLAN_EXPORT_VERSION,
     exportedAt: new Date().toISOString(),
     major: major || "cs",
+    secondMajor: normalizeSecondMajor(secondMajor, major),
     studentName: studentName || "",
     studyAway: normalizeStudyAwayPayload(studyAway),
     semesters: Object.fromEntries(
@@ -321,6 +324,7 @@ function semesterCreditState(credits, courseCount) {
 export function exportPlanAsPDF({
   plan,
   major,
+  secondMajor,
   studentName,
   studyAway,
   totalCredits,
@@ -366,7 +370,10 @@ export function exportPlanAsPDF({
   const filledSemesterCount = semesters.filter(
     (semester) => semester.courses.length > 0,
   ).length;
-  const majorLabel = getMajorLabel(major || "");
+  const resolvedSecondMajor = normalizeSecondMajor(secondMajor, major);
+  const majorLabel = resolvedSecondMajor
+    ? `${getMajorLabel(major || "")} · ${getMajorLabel(resolvedSecondMajor)}`
+    : getMajorLabel(major || "");
   const progressPercent = Math.max(
     0,
     Math.min(100, (resolvedTotalCredits / GRADUATION_CREDITS) * 100),
@@ -912,6 +919,7 @@ export async function importPlanFromJSON(file) {
   }
 
   const major = typeof parsed.major === "string" ? parsed.major : "cs";
+  const secondMajor = normalizeSecondMajor(parsed.secondMajor, major);
   const studentName =
     typeof parsed.studentName === "string" ? parsed.studentName : "";
   const studyAway = normalizeStudyAwayPayload(parsed.studyAway);
@@ -921,6 +929,7 @@ export async function importPlanFromJSON(file) {
   return {
     plan,
     major,
+    secondMajor,
     studentName,
     studyAway,
     summary,

@@ -3,10 +3,14 @@ import {
   SEMESTERS,
   CORE_REQUIREMENTS,
   getMajorRequirement,
+  normalizeSecondMajor,
   STUDY_AWAY,
 } from "../data/courses";
 import { mergeCourseWithLocalCatalog } from "../lib/localCatalog";
-import { getEffectiveCategory } from "../lib/majorCourseRules";
+import {
+  getEffectiveCategory,
+  getEffectiveCategoryForMajors,
+} from "../lib/majorCourseRules";
 import { localStoragePlan, supabasePlan } from "../lib/planStorage";
 import { buildPrerequisiteWarnings } from "../lib/prerequisites";
 
@@ -87,7 +91,7 @@ function getUserProfileName(user) {
   return typeof rawName === "string" ? rawName.trim() : "";
 }
 
-function courseFulfillsRequirement(course, requirement, majorId) {
+function courseFulfillsRequirement(course, requirement, majorIds) {
   const requirementIds = Array.isArray(course?.requirementIds)
     ? course.requirementIds
     : [];
@@ -95,7 +99,7 @@ function courseFulfillsRequirement(course, requirement, majorId) {
     return true;
   }
 
-  const category = getEffectiveCategory(course, majorId);
+  const category = getEffectiveCategoryForMajors(course, majorIds);
   if (requirement.category === "core") {
     return false;
   }
@@ -108,13 +112,15 @@ function isEffectiveMajorCourse(course, majorId) {
   return category === "major-required" || category === "major-elective";
 }
 
-function isEffectiveElectiveCourse(course, majorId) {
-  return getEffectiveCategory(course, majorId) === "elective";
+function isEffectiveMajorCourseForMajors(course, majorIds) {
+  const category = getEffectiveCategoryForMajors(course, majorIds);
+  return category === "major-required" || category === "major-elective";
 }
 
 export default function usePlanner(user, getToken) {
   const [plan, setPlan] = useState(createEmptyPlan);
-  const [major, setMajor] = useState("cs");
+  const [major, setMajorState] = useState("cs");
+  const [secondMajor, setSecondMajorState] = useState(null);
   const [studentName, setStudentName] = useState("");
   const [studyAway, setStudyAway] = useState(createDefaultStudyAway);
   const [planId, setPlanId] = useState(null);
@@ -125,6 +131,25 @@ export default function usePlanner(user, getToken) {
   const skipNextSave = useRef(false);
 
   const isCloud = !!user;
+
+  // Selecting the current second major as primary drops the second major
+  // rather than leaving the same major declared twice.
+  const setMajor = useCallback((value) => {
+    setMajorState(value);
+    setSecondMajorState((prev) => (prev === value ? null : prev));
+  }, []);
+
+  const setSecondMajor = useCallback(
+    (value) => {
+      setSecondMajorState(normalizeSecondMajor(value, major));
+    },
+    [major],
+  );
+
+  const activeMajors = useMemo(
+    () => (secondMajor ? [major, secondMajor] : [major]),
+    [major, secondMajor],
+  );
 
   const flushSaveQueue = useCallback(async () => {
     if (saveInProgress.current) return;
@@ -138,6 +163,7 @@ export default function usePlanner(user, getToken) {
         await localStoragePlan.save({
           plan: snapshot.plan,
           major: snapshot.major,
+          secondMajor: snapshot.secondMajor,
           studentName: snapshot.studentName,
           studyAway: snapshot.studyAway,
         });
@@ -150,6 +176,7 @@ export default function usePlanner(user, getToken) {
                 planId: snapshot.planId,
                 plan: snapshot.plan,
                 major: snapshot.major,
+                secondMajor: snapshot.secondMajor,
                 studentName: snapshot.studentName,
                 studyAway: snapshot.studyAway,
               },
@@ -192,7 +219,8 @@ export default function usePlanner(user, getToken) {
           const didAutoFillName = !storedStudentName && !!profileStudentName;
 
           setPlan(deduplicatePlan(data.plan));
-          setMajor(data.major);
+          setMajorState(data.major);
+          setSecondMajorState(normalizeSecondMajor(data.secondMajor, data.major));
           setStudentName(resolvedStudentName);
           setStudyAway(normalizeStudyAway(data.studyAway));
           setPlanId(data.planId);
@@ -205,7 +233,10 @@ export default function usePlanner(user, getToken) {
         if (cancelled) return;
         if (data) {
           setPlan(deduplicatePlan(data.plan || createEmptyPlan()));
-          setMajor(data.major || "cs");
+          setMajorState(data.major || "cs");
+          setSecondMajorState(
+            normalizeSecondMajor(data.secondMajor, data.major || "cs"),
+          );
           setStudentName(data.studentName || "");
           setStudyAway(normalizeStudyAway(data.studyAway));
         }
@@ -236,6 +267,7 @@ export default function usePlanner(user, getToken) {
     const snapshot = {
       plan,
       major,
+      secondMajor,
       studentName,
       studyAway,
       isCloud,
@@ -254,6 +286,7 @@ export default function usePlanner(user, getToken) {
   }, [
     plan,
     major,
+    secondMajor,
     studentName,
     studyAway,
     isCloud,
@@ -338,22 +371,36 @@ export default function usePlanner(user, getToken) {
     setPlan(createEmptyPlan());
   }, []);
 
-  const replacePlan = useCallback((incoming) => {
-    if (!incoming || typeof incoming !== "object") return;
-    if (incoming.plan && typeof incoming.plan === "object") {
-      const merged = { ...createEmptyPlan(), ...incoming.plan };
-      setPlan(deduplicatePlan(merged));
-    }
-    if (typeof incoming.major === "string" && incoming.major) {
-      setMajor(incoming.major);
-    }
-    if (typeof incoming.studentName === "string") {
-      setStudentName(incoming.studentName);
-    }
-    if (incoming.studyAway !== undefined) {
-      setStudyAway(normalizeStudyAway(incoming.studyAway));
-    }
-  }, []);
+  const replacePlan = useCallback(
+    (incoming) => {
+      if (!incoming || typeof incoming !== "object") return;
+      if (incoming.plan && typeof incoming.plan === "object") {
+        const merged = { ...createEmptyPlan(), ...incoming.plan };
+        setPlan(deduplicatePlan(merged));
+      }
+      const nextMajor =
+        typeof incoming.major === "string" && incoming.major
+          ? incoming.major
+          : major;
+      if (nextMajor !== major) {
+        setMajorState(nextMajor);
+      }
+      if (incoming.secondMajor !== undefined) {
+        setSecondMajorState(normalizeSecondMajor(incoming.secondMajor, nextMajor));
+      } else {
+        // Imports without the field keep the current second major, unless the
+        // incoming primary collides with it.
+        setSecondMajorState((prev) => normalizeSecondMajor(prev, nextMajor));
+      }
+      if (typeof incoming.studentName === "string") {
+        setStudentName(incoming.studentName);
+      }
+      if (incoming.studyAway !== undefined) {
+        setStudyAway(normalizeStudyAway(incoming.studyAway));
+      }
+    },
+    [major],
+  );
 
   const mergePlan = useCallback((incoming) => {
     if (!incoming || typeof incoming !== "object") return;
@@ -501,7 +548,9 @@ export default function usePlanner(user, getToken) {
 
   const studyAwayWarnings = useMemo(() => {
     const warnings = [];
-    const isCsDsMajor = major === "cs" || major === "ds";
+    const isCsDsMajor = activeMajors.some(
+      (majorId) => majorId === "cs" || majorId === "data-science",
+    );
 
     if (studyAway.selectedSemesters.length > STUDY_AWAY.maxSemesters) {
       warnings.push({
@@ -538,7 +587,7 @@ export default function usePlanner(user, getToken) {
       if (!isCsDsMajor) return;
 
       const majorCourseCount = (plan[semesterId] || []).filter((course) =>
-        isEffectiveMajorCourse(course, major),
+        isEffectiveMajorCourseForMajors(course, activeMajors),
       ).length;
 
       if (majorCourseCount > STUDY_AWAY.maxMajorCoursesPerSemester) {
@@ -551,7 +600,7 @@ export default function usePlanner(user, getToken) {
     });
 
     return warnings;
-  }, [major, plan, studyAway]);
+  }, [activeMajors, plan, studyAway]);
 
   const allPlannedCourses = useMemo(() => {
     return Object.values(plan).flat();
@@ -574,7 +623,7 @@ export default function usePlanner(user, getToken) {
 
     CORE_REQUIREMENTS.forEach((req) => {
       const courses = allPlannedCourses.filter((course) =>
-        courseFulfillsRequirement(course, req, major),
+        courseFulfillsRequirement(course, req, activeMajors),
       );
       const creditsTaken = courses.reduce((sum, c) => sum + c.credits, 0);
       progress[req.id] = {
@@ -588,7 +637,8 @@ export default function usePlanner(user, getToken) {
     const languageProgress = progress.language;
     if (languageProgress) {
       const languageCourses = allPlannedCourses.filter(
-        (course) => courseFulfillsRequirement(course, languageProgress, major),
+        (course) =>
+          courseFulfillsRequirement(course, languageProgress, activeMajors),
       );
       const isEapCourse = (course) => EAP_COURSE_IDS.has(course.id);
 
@@ -658,8 +708,34 @@ export default function usePlanner(user, getToken) {
         : false,
     };
 
-    const electiveCourses = allPlannedCourses.filter((course) =>
-      isEffectiveElectiveCourse(course, major),
+    if (secondMajor) {
+      const secondMajorReq = getMajorRequirement(secondMajor);
+      const secondMajorCourses = allPlannedCourses.filter((course) =>
+        isEffectiveMajorCourse(course, secondMajor),
+      );
+      progress["second-major"] = {
+        id: "second-major",
+        label: secondMajorReq.label,
+        coursesNeeded: secondMajorReq.coursesNeeded,
+        creditsNeeded: secondMajorReq.creditsNeeded,
+        coursesTaken: secondMajorCourses.length,
+        creditsTaken: secondMajorCourses.reduce((sum, c) => sum + c.credits, 0),
+        fulfilled: secondMajorReq.isConfigured
+          ? secondMajorCourses.length >= secondMajorReq.coursesNeeded
+          : false,
+        doubleCountedCourses: secondMajorCourses
+          .filter((course) => isEffectiveMajorCourse(course, major))
+          .map((course) => ({
+            id: course.id,
+            name: course.name,
+            credits: course.credits,
+          })),
+      };
+    }
+
+    const electiveCourses = allPlannedCourses.filter(
+      (course) =>
+        getEffectiveCategoryForMajors(course, activeMajors) === "elective",
     );
     progress["electives"] = {
       id: "electives",
@@ -669,7 +745,7 @@ export default function usePlanner(user, getToken) {
     };
 
     return progress;
-  }, [allPlannedCourses, major]);
+  }, [allPlannedCourses, major, secondMajor, activeMajors]);
 
   const isCourseInPlan = useCallback(
     (courseId) => {
@@ -704,6 +780,8 @@ export default function usePlanner(user, getToken) {
     plan,
     major,
     setMajor,
+    secondMajor,
+    setSecondMajor,
     studentName,
     setStudentName,
     studyAway,

@@ -9,8 +9,8 @@ import {
   normalizeCampuses,
 } from "../../lib/campus";
 import {
-  getEffectiveCategory,
-  isCourseRelevantToMajor,
+  getEffectiveCategoryForMajors,
+  isCourseRelevantToMajors,
 } from "../../lib/majorCourseRules";
 import { LOCAL_CATALOG_COURSES } from "../../lib/localCatalog";
 
@@ -22,6 +22,7 @@ export default function CoursePicker({
   isCourseInPlan,
   getCourseSemester,
   major,
+  secondMajor = null,
   defaultCampus = "Shanghai",
 }) {
   const [tab, setTab] = useState("catalog");
@@ -68,6 +69,7 @@ export default function CoursePicker({
   );
 
   const filtered = useMemo(() => {
+    const activeMajors = [major, secondMajor];
     let list = availableCourses;
 
     if (filterDept) {
@@ -75,7 +77,7 @@ export default function CoursePicker({
     }
     if (filterCat) {
       list = list.filter(
-        (c) => getEffectiveCategory(c, major) === filterCat,
+        (c) => getEffectiveCategoryForMajors(c, activeMajors) === filterCat,
       );
     }
     if (filterCampus) {
@@ -92,12 +94,12 @@ export default function CoursePicker({
     }
 
     list = [...list].sort((a, b) => {
-      const aRel = isCourseRelevantToMajor(a, major) ? 0 : 1;
-      const bRel = isCourseRelevantToMajor(b, major) ? 0 : 1;
+      const aRel = isCourseRelevantToMajors(a, activeMajors) ? 0 : 1;
+      const bRel = isCourseRelevantToMajors(b, activeMajors) ? 0 : 1;
       if (aRel !== bRel) return aRel - bRel;
 
-      const aEffective = getEffectiveCategory(a, major);
-      const bEffective = getEffectiveCategory(b, major);
+      const aEffective = getEffectiveCategoryForMajors(a, activeMajors);
+      const bEffective = getEffectiveCategoryForMajors(b, activeMajors);
       const aCategoryLabel =
         CATEGORIES[aEffective]?.label || aEffective || "";
       const bCategoryLabel =
@@ -122,6 +124,7 @@ export default function CoursePicker({
     filterCat,
     filterCampus,
     major,
+    secondMajor,
     courseSortCollator,
   ]);
 
@@ -245,7 +248,10 @@ export default function CoursePicker({
                     getCourseSemester?.(course.id) ||
                     (isCourseInPlan(course.id) ? semesterId : null);
                   const inPlan = Boolean(placedSemesterId);
-                  const effectiveCategory = getEffectiveCategory(course, major);
+                  const effectiveCategory = getEffectiveCategoryForMajors(
+                    course,
+                    [major, secondMajor],
+                  );
                   const cat =
                     CATEGORIES[effectiveCategory] || CATEGORIES.elective;
                   const placedSemesterLabel =

@@ -62,6 +62,7 @@ function resolveImportParser(file) {
 export default function PlanMenu({
   plan,
   major,
+  secondMajor = null,
   studentName,
   studyAway,
   totalCredits,
@@ -135,6 +136,7 @@ export default function PlanMenu({
       const result = exportPlanAsPDF({
         plan,
         major,
+        secondMajor,
         studentName,
         studyAway,
         totalCredits,

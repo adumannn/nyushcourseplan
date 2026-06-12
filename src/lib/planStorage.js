@@ -177,13 +177,14 @@ export const localStoragePlan = {
     return null;
   },
 
-  async save({ plan, major, studentName, studyAway }) {
+  async save({ plan, major, secondMajor, studentName, studyAway }) {
     try {
       localStorage.setItem(
         STORAGE_KEY,
         JSON.stringify({
           plan,
           major,
+          secondMajor: secondMajor || null,
           studentName,
           studyAway: normalizeStudyAwayPayload(studyAway),
         }),
@@ -209,7 +210,7 @@ export const supabasePlan = {
     const { data: existing, error: existingError } = await db
       .from("plans")
       .select(
-        "id, name, major, student_name, study_away_semesters, study_away_locations",
+        "id, name, major, second_major, student_name, study_away_semesters, study_away_locations",
       )
       .eq("user_id", userId)
       .order("created_at", { ascending: true })
@@ -258,7 +259,7 @@ export const supabasePlan = {
         student_name: normalizedProfileName || "",
       })
       .select(
-        "id, name, major, student_name, study_away_semesters, study_away_locations",
+        "id, name, major, second_major, student_name, study_away_semesters, study_away_locations",
       )
       .single();
 
@@ -292,6 +293,7 @@ export const supabasePlan = {
         planId,
         plan,
         major: planRow.major || "cs",
+        secondMajor: planRow.second_major || null,
         studentName: planRow.student_name || "",
         studyAway: normalizeStudyAwayPayload({
           selectedSemesters: planRow.study_away_semesters || [],
@@ -304,7 +306,11 @@ export const supabasePlan = {
     }
   },
 
-  async save(userId, { planId, plan, major, studentName, studyAway }, getToken) {
+  async save(
+    userId,
+    { planId, plan, major, secondMajor, studentName, studyAway },
+    getToken,
+  ) {
     try {
       if (!userId) throw new Error("Cannot save a cloud plan without a user");
       const db = await getSupabaseDb(getToken);
@@ -312,6 +318,9 @@ export const supabasePlan = {
       const { error } = await db.rpc("save_plan_with_courses", {
         p_plan_id: planId,
         p_major: major,
+        // '' explicitly clears the second major; the RPC treats null (older
+        // clients that never send the param) as "keep the stored value".
+        p_second_major: secondMajor || "",
         p_student_name: studentName || "",
         p_study_away_semesters: normalizedStudyAway.selectedSemesters,
         p_study_away_locations: normalizedStudyAway.locations,
@@ -343,6 +352,7 @@ export const supabasePlan = {
       .update({
         name: buildPlanName(localStudentName),
         major: localData.major || "cs",
+        second_major: localData.secondMajor || null,
         student_name: localData.studentName || "",
         study_away_semesters: localData.studyAway?.selectedSemesters || [],
         study_away_locations: localData.studyAway?.locations || {},
@@ -357,6 +367,7 @@ export const supabasePlan = {
       planId: planRow.id,
       plan: localData.plan,
       major: localData.major || "cs",
+      secondMajor: localData.secondMajor || null,
       studentName: localData.studentName || "",
       studyAway: normalizeStudyAwayPayload(localData.studyAway),
     }, getToken);

@@ -60,6 +60,7 @@ function getSemesterHint(semesterId) {
 
 export default function StudyAwayPicker({
   major,
+  secondMajor = null,
   studyAway,
   warnings,
   initialSemester,
@@ -108,8 +109,13 @@ export default function StudyAwayPicker({
     (selectedCount / STUDY_AWAY.maxSemesters) * 100,
     100,
   );
-  const isCsDsMajor = major === "cs" || major === "ds";
-  const majorNote = MAJOR_REQUIREMENTS[major]?.studyAwayNotes;
+  const activeMajors = [major, secondMajor].filter(Boolean);
+  const isCsDsMajor = activeMajors.some(
+    (majorId) => majorId === "cs" || majorId === "data-science",
+  );
+  const majorNotes = activeMajors
+    .map((majorId) => MAJOR_REQUIREMENTS[majorId]?.studyAwayNotes)
+    .filter(Boolean);
   const missingSiteCount = sortedSelectedSemesters.filter(
     (semesterId) => !studyAway.locations[semesterId],
   ).length;
@@ -568,7 +574,9 @@ export default function StudyAwayPicker({
                     <Info className="h-3.5 w-3.5" />
                     <h3>CS/DS advising</h3>
                   </div>
-                  {majorNote ? <p>{majorNote}</p> : null}
+                  {majorNotes.map((note) => (
+                    <p key={note}>{note}</p>
+                  ))}
                   <ul>
                     {(STUDY_AWAY.csdsAdvisingNotes || []).map((note) => (
                       <li key={note}>{note}</li>
