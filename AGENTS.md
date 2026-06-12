@@ -4,7 +4,7 @@ Read this file before starting any task. Update it as part of every change (see 
 
 ## Overview
 
-A course planning tool for NYU Shanghai students, live at [nyushplanner.app](https://nyushplanner.app). Students pick a major, add courses into 8 semester slots (4 years), and track progress toward 128 graduation credits and requirement fulfillment. Plans sync to the cloud for signed-in users; `localStorage` acts as a write-through cache.
+A course planning tool for NYU Shanghai students, live at [nyushplanner.app](https://nyushplanner.app). Students pick a major (plus an optional second major for double majors), add courses into 8 semester slots (4 years), and track progress toward 128 graduation credits and requirement fulfillment. Plans sync to the cloud for signed-in users; `localStorage` acts as a write-through cache.
 
 **Tech stack:** React 19, Vite 8, Tailwind CSS 4 · Clerk (OAuth) + Supabase (Postgres, RLS) · Node built-in test runner.
 
@@ -25,13 +25,14 @@ src/
   hooks/
     useAuth.js            Bridge over Clerk's useAuth/useClerk/useUser
     useCatalog.js         Remote catalog fetch, paging, indexing
-    usePlanner.js         Plan state, persistence, derived credits/progress
+    usePlanner.js         Plan state, persistence, derived credits/progress,
+                          major + secondMajor
     useCourseReviews.js   Review fetch per course
     useTheme.js           Dark/light theme toggle
   lib/
     campus.js             Campus normalization/display helpers (+ tests)
     localCatalog.js       Local/generated catalog merge & fulfillment normalization (+ tests)
-    majorCourseRules.js   Active-major effective category resolution (+ tests)
+    majorCourseRules.js   Active-major(s) effective category resolution (+ tests)
     planStorage.js        localStorage + Supabase storage abstraction
     planTransfer.js       CSV/PDF export, CSV/legacy-JSON import (+ tests)
     prerequisites.js      Prerequisite parsing and unmet-prereq detection (+ tests)
@@ -51,7 +52,7 @@ scripts/
   lib/                           Shared normalize helpers for the scripts above
 scraped-data/             Committed snapshots: all-courses.json, shanghai.json
 supabase/
-  migrations/             001–017 (numbered, append-only)
+  migrations/             001–018 (numbered, append-only)
   functions/ingest-reviews/  Deno edge function for review ingestion
   snippets/catchup_remote.sql  Catch-up for hosted DBs behind on migrations
 docs/
@@ -70,12 +71,21 @@ The plan shape mirrors the Supabase schema so local and remote storage interchan
 {
   id: 'local' | uuid,
   major: 'cs',
+  secondMajor: 'economics' | null,
   studentName: 'Alice',
   semesters: { 'Y1-Fall': [{ courseId: 'CSCI-SHU-101', position: 0 }], ... }
 }
 ```
 
-Tables: `plans` (id, user_id text = Clerk ID, name, major, student_name) and `plan_courses` (plan_id FK, semester_id, course_id, custom_* fields, position). RLS policies check `auth.jwt()->>'sub' = user_id`. `src/lib/planStorage.js` abstracts localStorage vs Supabase; `usePlanner` picks the backend from auth state. After sign-in, Supabase is the source of truth and localStorage is a write-through cache.
+Tables: `plans` (id, user_id text = Clerk ID, name, major, second_major, student_name) and `plan_courses` (plan_id FK, semester_id, course_id, custom_* fields, position). RLS policies check `auth.jwt()->>'sub' = user_id`. `src/lib/planStorage.js` abstracts localStorage vs Supabase; `usePlanner` picks the backend from auth state. After sign-in, Supabase is the source of truth and localStorage is a write-through cache.
+
+### Double major
+
+- `usePlanner` exposes `secondMajor` / `setSecondMajor` next to `major` / `setMajor`. `normalizeSecondMajor(secondMajor, primaryMajor)` in `src/data/courses.js` enforces the invariants (known major id, distinct from the primary, otherwise `null`); picking the second major as the new primary clears the second major.
+- Persistence: localStorage payload field `secondMajor`; Supabase column `plans.second_major` (migration `018_add_second_major.sql`). The migration also extends `save_plan_with_courses` with `p_second_major` — `null` (stale clients that omit the param) preserves the stored value, `''` explicitly clears it. **Apply migration 018 before deploying the client**, since `planStorage` selects `second_major` explicitly.
+- Requirement tracking: `requirementProgress['second-major']` mirrors the `major` entry and carries `doubleCountedCourses` (courses that are major courses for *both* majors). The sidebar renders a "2nd Major" section and a double-count note; NYU Shanghai allows at most `DOUBLE_MAJOR_MAX_DOUBLE_COUNT` (2) double-counted courses between majors, so the note turns into an amber warning beyond that.
+- Free electives count only courses that are elective under the *combined* category; course cards, the picker, and the detail modal color by the combined category, so a course required by the second major shows as Major Required.
+- Header UI: "+ 2nd major" ghost button (desktop) / "+" icon (mobile) reveals the second select; "×" removes it. Each major select excludes the other's current value.
 
 ### Catalog pipeline
 
@@ -86,7 +96,7 @@ Tables: `plans` (id, user_id text = Clerk ID, name, major, student_name) and `pl
 
 **Campus labels:** always go through `src/lib/campus.js` — `getCourseCampuses()` / `formatCourseCampuses()` instead of reading `course.campuses` directly. NYC-located bulletin schools group under the `New York` label. `compareCampuses()` orders Shanghai → New York → Abu Dhabi; `abbreviateCampus()` gives SH/NY/AD for compact UI.
 
-**Categories:** `getEffectiveCategory(course, majorId)` in `src/lib/majorCourseRules.js` resolves the effective category (major-required, major-elective, …) for the active major. Requirement progress counts effective categories, not raw stored ones, so sidebar bars match course-card colors. Generated catalog fulfillment text is normalized in `localCatalog.js` (CORE Writing, Language, GPS/PoH/IPC/HPC/SSPC, Mathematics, Algorithmic Thinking, ED, STS → `requirementIds`).
+**Categories:** `getEffectiveCategory(course, majorId)` in `src/lib/majorCourseRules.js` resolves the effective category (major-required, major-elective, …) for the active major. With a double major, use `getEffectiveCategoryForMajors(course, [major, secondMajor])` / `isCourseRelevantToMajors()` — the strongest category across the active majors wins (required > elective), falling back to the primary major's view. Requirement progress counts effective categories, not raw stored ones, so sidebar bars match course-card colors. Generated catalog fulfillment text is normalized in `localCatalog.js` (CORE Writing, Language, GPS/PoH/IPC/HPC/SSPC, Mathematics, Algorithmic Thinking, ED, STS → `requirementIds`).
 
 ### Auth (Clerk + Supabase RLS)
 
@@ -101,14 +111,14 @@ Tables: `plans` (id, user_id text = Clerk ID, name, major, student_name) and `pl
 
 - `SuggestionModal` submits to `public.suggestions` (migrations 012/013) via the authenticated client, falling back to a plain message insert if enrichment columns aren't deployed. Uses dedicated `suggestion-modal` / `suggestion-submit` styles in `App.css`.
 - `SuggestionInbox` is the admin view (search, status/category filters, notes). Visibility is gated by `src/lib/feedbackAdmin.js` (`VITE_FEEDBACK_ADMIN_IDS` / `VITE_FEEDBACK_ADMIN_EMAILS`), but access is enforced by RLS: migration 014 creates `public.feedback_admins` — add an admin's Clerk user ID there to unlock the inbox.
-- `App.jsx` owns `suggestionOpen` / `suggestionInboxOpen` and passes `getToken`, `user`, `plan`, `major`, `totalCredits` down.
+- `App.jsx` owns `suggestionOpen` / `suggestionInboxOpen` and passes `getToken`, `user`, `plan`, `major`, `totalCredits` down (with a double major, the `major` string is combined, e.g. `cs + economics`).
 - `supabase/snippets/catchup_remote.sql` brings hosted DBs missing migrations 012–014 up to date.
 
 ### Plan transfer
 
 - UI exposes **CSV and PDF only**. JSON import/export helpers stay in `planTransfer.js` for legacy compatibility and tests.
-- `exportPlanAsPDF` builds a print document (summary header, credit progress, category/campus pills, study-away summary) then opens the browser print dialog.
-- CSV and legacy JSON include `campuses` so imported custom/remote-only courses keep their campus labels.
+- `exportPlanAsPDF` builds a print document (summary header, credit progress, category/campus pills, study-away summary) then opens the browser print dialog. With a double major the PDF shows both major labels.
+- CSV and legacy JSON include `campuses` so imported custom/remote-only courses keep their campus labels. JSON export/import round-trips `secondMajor`; CSV stays course-rows-only.
 
 ## UI Conventions
 
@@ -117,7 +127,7 @@ Tables: `plans` (id, user_id text = Clerk ID, name, major, student_name) and `pl
 - **Mobile breakpoint:** `lg:` (1024px) separates phone/tablet (single column + bottom sheet) from desktop (board + sidebar). The Header keeps TWO separate DOM layouts (mobile 2-row, desktop 1-row) — don't unify them via responsive classes; it clobbers `useRef`s. The requirements panel is a bottom sheet on mobile with a floating "Progress" pill.
 - **Course picker:** already-added courses stay visible with an inline remove button (`getCourseSemester(courseId)` + `removeCourse(semesterId, courseId)` from `usePlanner`). Rows show campus labels and a campus filter; custom course campus defaults to the semester's study-away site, else Shanghai.
 - **CourseCard:** one pill per campus for multi-campus courses, using `abbreviateCampus()` short labels when ≥2 campuses; the `MapPin` icon renders once on the leading pill.
-- **StudyAwayPicker:** desktop two-panel modal (summary metrics, semester rows, quick site chips, policy sidebar); on mobile it behaves as a bottom sheet with sticky actions. Preserve the status-first flow: pick semesters → resolve pending sites → review warnings.
+- **StudyAwayPicker:** desktop two-panel modal (summary metrics, semester rows, quick site chips, policy sidebar); on mobile it behaves as a bottom sheet with sticky actions. Preserve the status-first flow: pick semesters → resolve pending sites → review warnings. The CS/DS advisory (max 3 major courses per study-away semester, advising notes) triggers when *either* major is `cs` or `data-science`, and per-major `studyAwayNotes` from both majors are shown.
 
 ## Workflow (IMPORTANT)
 

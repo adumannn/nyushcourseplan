@@ -29,6 +29,8 @@ test("importPlanFromJSON imports semesters, major, and student name", async () =
   const imported = await importPlanFromJSON(file);
 
   assert.equal(imported.major, "business");
+  // Legacy export without a secondMajor field imports as single-major.
+  assert.equal(imported.secondMajor, null);
   assert.equal(imported.studentName, "Test Student");
   assert.equal(imported.plan["Y1-Fall"].length, 1);
   assert.equal(imported.plan["Y1-Fall"][0].id, "BUSF-SHU-202");
@@ -36,4 +38,41 @@ test("importPlanFromJSON imports semesters, major, and student name", async () =
     "Shanghai",
     "New York",
   ]);
+});
+
+test("importPlanFromJSON carries a valid secondMajor through", async () => {
+  const file = {
+    async text() {
+      return JSON.stringify({
+        kind: "nyu-shanghai-course-plan",
+        version: 2,
+        major: "cs",
+        secondMajor: "economics",
+        studentName: "",
+        semesters: {},
+      });
+    },
+  };
+
+  const imported = await importPlanFromJSON(file);
+  assert.equal(imported.major, "cs");
+  assert.equal(imported.secondMajor, "economics");
+});
+
+test("importPlanFromJSON drops an invalid or duplicate secondMajor", async () => {
+  const makeFile = (secondMajor) => ({
+    async text() {
+      return JSON.stringify({
+        kind: "nyu-shanghai-course-plan",
+        version: 2,
+        major: "cs",
+        secondMajor,
+        semesters: {},
+      });
+    },
+  });
+
+  assert.equal((await importPlanFromJSON(makeFile("not-a-major"))).secondMajor, null);
+  assert.equal((await importPlanFromJSON(makeFile("cs"))).secondMajor, null);
+  assert.equal((await importPlanFromJSON(makeFile(42))).secondMajor, null);
 });

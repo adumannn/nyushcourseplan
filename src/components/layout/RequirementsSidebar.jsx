@@ -1,7 +1,13 @@
 import { useState, useMemo } from 'react';
-import { ChevronDown, CheckCircle2, Circle, ChevronsLeft, ChevronsRight } from 'lucide-react';
-import { CORE_REQUIREMENTS, GRADUATION_CREDITS, CATEGORIES, getMajorRequirement } from '../../data/courses';
-import { getEffectiveCategory } from '../../lib/majorCourseRules';
+import { ChevronDown, CheckCircle2, Circle, ChevronsLeft, ChevronsRight, AlertTriangle, Info } from 'lucide-react';
+import {
+  CORE_REQUIREMENTS,
+  GRADUATION_CREDITS,
+  CATEGORIES,
+  DOUBLE_MAJOR_MAX_DOUBLE_COUNT,
+  getMajorRequirement,
+} from '../../data/courses';
+import { getEffectiveCategoryForMajors } from '../../lib/majorCourseRules';
 
 function RequirementCategory({ requirement }) {
   const hasItems = Array.isArray(requirement.items) && requirement.items.length > 0;
@@ -71,6 +77,31 @@ function RequirementCategory({ requirement }) {
         />
       </div>
 
+      {Array.isArray(requirement.doubleCounted) &&
+        requirement.doubleCounted.length > 0 && (
+          <div
+            className={`mb-4 flex items-start gap-2 text-xs ${
+              requirement.doubleCounted.length > DOUBLE_MAJOR_MAX_DOUBLE_COUNT
+                ? 'text-amber-600 dark:text-amber-400'
+                : 'text-muted-foreground'
+            }`}
+          >
+            {requirement.doubleCounted.length > DOUBLE_MAJOR_MAX_DOUBLE_COUNT ? (
+              <AlertTriangle className="h-3.5 w-3.5 shrink-0 mt-0.5" />
+            ) : (
+              <Info className="h-3.5 w-3.5 shrink-0 mt-0.5" />
+            )}
+            <span>
+              {requirement.doubleCounted.length} course
+              {requirement.doubleCounted.length === 1 ? '' : 's'} double-count
+              toward both majors
+              {requirement.doubleCounted.length > DOUBLE_MAJOR_MAX_DOUBLE_COUNT
+                ? ` — NYU Shanghai allows at most ${DOUBLE_MAJOR_MAX_DOUBLE_COUNT}; confirm with your advisor.`
+                : '.'}
+            </span>
+          </div>
+        )}
+
       {hasItems && isExpanded && (
         <div className="space-y-2 ml-1">
           {requirement.items.map((item, index) => (
@@ -110,8 +141,60 @@ function RequirementCategory({ requirement }) {
   );
 }
 
-function buildRequirements(requirementProgress, allPlannedCourses, major) {
+function buildMajorSection({ majorId, progress, planned, titlePrefix }) {
+  const majorDef = getMajorRequirement(majorId);
+  if (!majorDef || !progress) return null;
+
+  const majorItems = [];
+  for (const req of majorDef.requiredCourses || []) {
+    majorItems.push({
+      name: req.label,
+      completed: planned.some((c) => c.id === req.courseId),
+    });
+  }
+  for (const group of majorDef.selectOneCourses || []) {
+    const needed = group.count || 1;
+    const matchedCount = planned.filter((c) =>
+      group.courseIds.includes(c.id)
+    ).length;
+    majorItems.push({
+      name: group.label,
+      completed: matchedCount >= needed,
+      progress: needed > 1 ? `${matchedCount}/${needed}` : undefined,
+    });
+  }
+  if (majorDef.capstone) {
+    majorItems.push({
+      name: majorDef.capstone.label,
+      completed: planned.some((c) => c.id === majorDef.capstone.courseId),
+    });
+  }
+  if (!majorDef.isConfigured) {
+    majorItems.push({
+      name: majorDef.notes,
+      completed: false,
+    });
+  }
+
+  return {
+    category: `${titlePrefix} — ${majorDef.label}`,
+    completed: progress.creditsTaken,
+    required: progress.creditsNeeded,
+    requiredLabel: majorDef.isConfigured ? progress.creditsNeeded : 'TBD',
+    progressDenominator: majorDef.isConfigured ? progress.creditsNeeded : 1,
+    fulfilled: majorDef.isConfigured ? progress.fulfilled : false,
+    items: majorItems,
+  };
+}
+
+function buildRequirements(
+  requirementProgress,
+  allPlannedCourses,
+  major,
+  secondMajor
+) {
   const planned = allPlannedCourses || [];
+  const activeMajors = [major, secondMajor];
   const requirements = [];
 
   function isSubcourseCompleted(sub) {
@@ -131,7 +214,10 @@ function buildRequirements(requirementProgress, allPlannedCourses, major) {
     const requirement = CORE_REQUIREMENTS.find((r) => r.id === requirementId);
     if (!requirement || requirement.category === 'core') return false;
 
-    return getEffectiveCategory(course, major) === requirement.category;
+    return (
+      getEffectiveCategoryForMajors(course, activeMajors) ===
+      requirement.category
+    );
   }
 
   // Core Requirements
@@ -173,48 +259,31 @@ function buildRequirements(requirementProgress, allPlannedCourses, major) {
     items: coreItems,
   });
 
-  // Major
-  const majorDef = getMajorRequirement(major);
-  const majorProgress = requirementProgress['major'];
-  if (majorDef && majorProgress) {
-    const majorItems = [];
-    for (const req of majorDef.requiredCourses || []) {
-      majorItems.push({
-        name: req.label,
-        completed: planned.some((c) => c.id === req.courseId),
-      });
-    }
-    for (const group of majorDef.selectOneCourses || []) {
-      const needed = group.count || 1;
-      const matchedCount = planned.filter((c) => group.courseIds.includes(c.id)).length;
-      majorItems.push({
-        name: group.label,
-        completed: matchedCount >= needed,
-        progress: needed > 1 ? `${matchedCount}/${needed}` : undefined,
-      });
-    }
-    if (majorDef.capstone) {
-      majorItems.push({
-        name: majorDef.capstone.label,
-        completed: planned.some((c) => c.id === majorDef.capstone.courseId),
-      });
-    }
-    if (!majorDef.isConfigured) {
-      majorItems.push({
-        name: majorDef.notes,
-        completed: false,
-      });
-    }
+  // Major(s)
+  const majorSection = buildMajorSection({
+    majorId: major,
+    progress: requirementProgress['major'],
+    planned,
+    titlePrefix: 'Major',
+  });
+  if (majorSection) requirements.push(majorSection);
 
-    requirements.push({
-      category: `Major — ${majorDef.label}`,
-      completed: majorProgress.creditsTaken,
-      required: majorProgress.creditsNeeded,
-      requiredLabel: majorDef.isConfigured ? majorProgress.creditsNeeded : 'TBD',
-      progressDenominator: majorDef.isConfigured ? majorProgress.creditsNeeded : 1,
-      fulfilled: majorDef.isConfigured ? majorProgress.fulfilled : false,
-      items: majorItems,
+  if (secondMajor) {
+    const secondProgress = requirementProgress['second-major'];
+    const secondSection = buildMajorSection({
+      majorId: secondMajor,
+      progress: secondProgress,
+      planned,
+      titlePrefix: '2nd Major',
     });
+    if (secondSection) {
+      secondSection.doubleCounted = Array.isArray(
+        secondProgress?.doubleCountedCourses
+      )
+        ? secondProgress.doubleCountedCourses
+        : [];
+      requirements.push(secondSection);
+    }
   }
 
   // Writing
@@ -250,7 +319,9 @@ function buildRequirements(requirementProgress, allPlannedCourses, major) {
   const electives = requirementProgress['electives'];
   if (electives) {
     const electiveItems = planned
-      .filter((c) => getEffectiveCategory(c, major) === 'elective')
+      .filter(
+        (c) => getEffectiveCategoryForMajors(c, activeMajors) === 'elective'
+      )
       .map((c) => ({
         name: c.name,
         completed: true,
@@ -273,12 +344,19 @@ export default function RequirementsSidebar({
   totalCredits,
   allPlannedCourses,
   major,
+  secondMajor = null,
   collapsed = false,
   onToggleCollapsed,
 }) {
   const requirements = useMemo(
-    () => buildRequirements(requirementProgress, allPlannedCourses, major),
-    [requirementProgress, allPlannedCourses, major]
+    () =>
+      buildRequirements(
+        requirementProgress,
+        allPlannedCourses,
+        major,
+        secondMajor
+      ),
+    [requirementProgress, allPlannedCourses, major, secondMajor]
   );
 
   const completionPercent = Math.min(

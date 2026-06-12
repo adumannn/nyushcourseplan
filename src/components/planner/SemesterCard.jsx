@@ -36,6 +36,7 @@ export default function SemesterCard({
   prereqWarnings = {},
   onCourseClick,
   major,
+  secondMajor = null,
 }) {
   const [isExpanded, setIsExpanded] = useState(true);
   const isDragActive = Boolean(dragState?.courseId);
@@ -238,6 +239,7 @@ export default function SemesterCard({
                     hasPrereqWarning={Boolean(prereqWarnings[course.id])}
                     onClick={() => onCourseClick?.(course)}
                     major={major}
+                    secondMajor={secondMajor}
                   />
                 </div>
               ))}
