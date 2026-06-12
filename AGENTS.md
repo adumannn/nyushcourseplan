@@ -5,7 +5,7 @@ Keep looking to this file whenever I ask to do some tasks.
 
 ## Project Overview
 
-A course planning tool for NYU Shanghai students. React + Vite + Tailwind CSS v4. Students pick a major, drag/add courses into 8 semester slots (4 years), and track progress toward 128 graduation credits and requirement fulfillment.
+A course planning tool for NYU Shanghai students. React + Vite + Tailwind CSS v4. Students pick a major (plus an optional second major for double majors), drag/add courses into 8 semester slots (4 years), and track progress toward 128 graduation credits and requirement fulfillment.
 
 ## Tech Stack
 
@@ -102,6 +102,7 @@ create table public.plans (
   user_id text not null,
   name text not null default 'My Plan',
   major text not null default 'custom',
+  second_major text,                    -- optional double major (migration 018)
   student_name text default '',
   created_at timestamptz default now(),
   updated_at timestamptz default now()
@@ -262,7 +263,7 @@ src/
 - **SuggestionInbox** (`src/components/layout/SuggestionInbox.jsx`) — admin-only inbox with search, status/category filters, status updates, and private notes. Header shows it only for admins configured by `src/lib/feedbackAdmin.js` (`VITE_FEEDBACK_ADMIN_IDS`, `VITE_FEEDBACK_ADMIN_EMAILS`, plus the default feedback email), but Supabase access is enforced by RLS.
 - **Admin grants:** migration `014_feedback_admin_inbox_policies.sql` creates `public.feedback_admins` and admin read/update policies for `public.suggestions`. Add the admin's Clerk user ID to `public.feedback_admins` to unlock all suggestions in the inbox.
 - **Remote catch-up:** `supabase/snippets/catchup_remote.sql` includes the suggestions table, enrichment columns, feedback admin table, and inbox policies for projects whose hosted Supabase database has not run migrations `012`/`013`/`014` yet.
-- Header passes `onOpenSuggestion` and `onOpenSuggestionInbox` callbacks; `App.jsx` owns the `suggestionOpen` / `suggestionInboxOpen` state and passes `getToken`, `user`, `plan`, `major`, and `totalCredits` to the feedback components.
+- Header passes `onOpenSuggestion` and `onOpenSuggestionInbox` callbacks; `App.jsx` owns the `suggestionOpen` / `suggestionInboxOpen` state and passes `getToken`, `user`, `plan`, `major`, and `totalCredits` to the feedback components (with a double major, the `major` string is combined, e.g. `cs + economics`).
 
 ### Plan transfer exports
 
@@ -278,10 +279,20 @@ src/
 - `scripts/scrape-bulletin.mjs` crawls all 15 NYU undergraduate bulletins. Run it without `--school` to refresh everything and rebuild `scraped-data/all-courses.json`. Single-school runs (`--school <slug>`) preserve the combined file (and the per-school file when `--subject` is also set) — pass `--combine` to rebuild `all-courses.json` from per-school files without re-fetching.
 - Supabase multi-campus offerings live in `public.catalog_course_offerings` (migration `017_catalog_course_offerings.sql`). `catalog_courses.id` remains the canonical stable course ID used by saved plans; offerings carry `school_slug`, `subject_slug`, and `campus_label`.
 - `useCatalog()` loads all published catalog pages by default, pages through Supabase results, chunks relationship lookups, and merges remote offerings with local curated metadata so each runtime course has `campuses`.
-- Dynamic major-based categorization: `getEffectiveCategory(course, majorId)` in `src/lib/majorCourseRules.js` resolves the **effective** category (major-required, major-elective, etc.) based on the active major.
+- Dynamic major-based categorization: `getEffectiveCategory(course, majorId)` in `src/lib/majorCourseRules.js` resolves the **effective** category (major-required, major-elective, etc.) based on the active major. With a double major, use `getEffectiveCategoryForMajors(course, [major, secondMajor])` / `isCourseRelevantToMajors()` — the strongest category across the active majors wins (required > elective), falling back to the primary major's view.
 - Generated catalog fulfillment text is normalized in `src/lib/localCatalog.js`; common bulletin phrases for CORE Writing, Language, GPS/PoH/IPC/HPC/SSPC, Mathematics, Algorithmic Thinking, ED, and STS receive the corresponding `requirementIds`, and generated elective-category entries are promoted to the matching display category (`writing`, `language`, `gps`, or `core`) when appropriate.
 - Saved plans are refreshed through `mergeCourseWithLocalCatalog()` on load so existing catalog courses pick up current metadata, including inferred requirement IDs and campus labels, without losing selected credits.
 - Requirement progress counts active-major **effective** categories from `getEffectiveCategory()` rather than only raw stored course categories, so bars stay aligned with the category shown on course cards.
+
+### Double major
+
+- `usePlanner` exposes `secondMajor` / `setSecondMajor` next to `major` / `setMajor`. `normalizeSecondMajor(secondMajor, primaryMajor)` in `src/data/courses.js` enforces the invariants (known major id, distinct from the primary, otherwise `null`); picking the second major as the new primary clears the second major.
+- Persistence: localStorage payload field `secondMajor`; Supabase column `plans.second_major` (migration `018_add_second_major.sql`). The migration also extends `save_plan_with_courses` with `p_second_major` — `null` (stale clients that omit the param) preserves the stored value, `''` explicitly clears it. **Apply migration 018 before deploying the client**, since `planStorage` selects `second_major` explicitly.
+- Requirement tracking: `requirementProgress['second-major']` mirrors the `major` entry and carries `doubleCountedCourses` (courses that are major courses for *both* majors). The sidebar renders a "2nd Major" section and a double-count note; NYU Shanghai allows at most `DOUBLE_MAJOR_MAX_DOUBLE_COUNT` (2) double-counted courses between majors, so the note turns into an amber warning beyond that.
+- Free electives count only courses that are elective under the *combined* category; course cards, the picker, and the detail modal color by the combined category, so a course required by the second major shows as Major Required.
+- Study-away: the CS/DS advisory (max 3 major courses per study-away semester, advising notes) now triggers when either major is `cs` or `data-science` (this also fixed a dead `major === "ds"` check), and per-major `studyAwayNotes` from both majors are shown.
+- Transfer: JSON export/import round-trips `secondMajor`; PDF export shows both major labels. CSV stays course-rows-only.
+- Header UI: "+ 2nd major" ghost button (desktop) / "+" icon (mobile) reveals the second select; "×" removes it. Each major select excludes the other's current value.
 
 ### Course picker UX
 

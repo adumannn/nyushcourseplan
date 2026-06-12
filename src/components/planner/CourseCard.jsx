@@ -6,7 +6,7 @@ import {
   compareCampuses,
   getCourseCampuses,
 } from '../../lib/campus';
-import { getEffectiveCategory } from '../../lib/majorCourseRules';
+import { getEffectiveCategoryForMajors } from '../../lib/majorCourseRules';
 
 function withAlpha(color, alpha) {
   if (typeof color !== 'string' || !color.startsWith('#')) {
@@ -41,10 +41,14 @@ export default function CourseCard({
   isDragging = false,
   hasPrereqWarning = false,
   major,
+  secondMajor = null,
 }) {
   const didDragRef = useRef(false);
 
-  const resolvedCategory = getEffectiveCategory(course, major);
+  const resolvedCategory = getEffectiveCategoryForMajors(course, [
+    major,
+    secondMajor,
+  ]);
   const categoryKey = typeof resolvedCategory === 'string'
     ? resolvedCategory.toLowerCase()
     : 'elective';

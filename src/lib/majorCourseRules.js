@@ -153,6 +153,44 @@ export function getEffectiveCategory(course, majorId) {
   return fallback;
 }
 
+function normalizeMajorIds(majorIds) {
+  const seen = new Set();
+  const ids = [];
+  for (const id of Array.isArray(majorIds) ? majorIds : [majorIds]) {
+    if (typeof id !== "string" || !id || seen.has(id)) continue;
+    seen.add(id);
+    ids.push(id);
+  }
+  return ids;
+}
+
+/**
+ * Combined-major variant of getEffectiveCategory. The strongest category
+ * across the active majors wins (major-required > major-elective); when no
+ * major claims the course, the primary major's resolution applies so the
+ * "downgrade other majors' courses to elective" rule still holds.
+ */
+export function getEffectiveCategoryForMajors(course, majorIds) {
+  const ids = normalizeMajorIds(majorIds);
+  if (ids.length === 0) return getEffectiveCategory(course, null);
+
+  let sawMajorElective = false;
+  for (const id of ids) {
+    const category = getEffectiveCategory(course, id);
+    if (category === "major-required") return "major-required";
+    if (category === "major-elective") sawMajorElective = true;
+  }
+
+  if (sawMajorElective) return "major-elective";
+  return getEffectiveCategory(course, ids[0]);
+}
+
+export function isCourseRelevantToMajors(course, majorIds) {
+  const ids = normalizeMajorIds(majorIds);
+  if (ids.length === 0) return isCourseRelevantToMajor(course, null);
+  return ids.some((id) => isCourseRelevantToMajor(course, id));
+}
+
 export function isCourseRelevantToMajor(course, majorId) {
   if (!hasMajorCategory(course)) return false;
   if (!majorId || majorId === "custom") return true;

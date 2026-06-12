@@ -30,6 +30,8 @@ function AppContent() {
     plan,
     major,
     setMajor,
+    secondMajor,
+    setSecondMajor,
     studentName,
     addCourse,
     removeCourse,
@@ -119,6 +121,8 @@ function AppContent() {
       <Header
         major={major}
         setMajor={setMajor}
+        secondMajor={secondMajor}
+        setSecondMajor={setSecondMajor}
         totalCredits={totalCredits}
         theme={theme}
         toggleTheme={toggleTheme}
@@ -159,6 +163,7 @@ function AppContent() {
               prereqWarnings={prereqWarnings}
               onCourseClick={setDetailCourse}
               major={major}
+              secondMajor={secondMajor}
               onOpenStudyAway={(semesterId) => {
                 setStudyAwayFocusSemester(semesterId);
                 setStudyAwayPickerOpen(true);
@@ -178,6 +183,7 @@ function AppContent() {
             totalCredits={totalCredits}
             allPlannedCourses={allPlannedCourses}
             major={major}
+            secondMajor={secondMajor}
             collapsed={isSidebarCollapsed}
             onToggleCollapsed={() => setIsSidebarCollapsed((prev) => !prev)}
           />
@@ -239,6 +245,7 @@ function AppContent() {
                 totalCredits={totalCredits}
                 allPlannedCourses={allPlannedCourses}
                 major={major}
+                secondMajor={secondMajor}
                 collapsed={false}
               />
             </div>
@@ -255,6 +262,7 @@ function AppContent() {
           isCourseInPlan={isCourseInPlan}
           getCourseSemester={getCourseSemester}
           major={major}
+          secondMajor={secondMajor}
           defaultCampus={getDefaultCampusForSemester(pickerSemester, studyAway)}
         />
       )}
@@ -264,6 +272,7 @@ function AppContent() {
           course={detailCourse}
           prereqWarnings={prereqWarnings}
           major={major}
+          secondMajor={secondMajor}
           onClose={() => setDetailCourse(null)}
         />
       )}
@@ -271,6 +280,7 @@ function AppContent() {
       {studyAwayPickerOpen && (
         <StudyAwayPicker
           major={major}
+          secondMajor={secondMajor}
           studyAway={studyAway}
           warnings={studyAwayWarnings}
           initialSemester={studyAwayFocusSemester}
@@ -288,7 +298,7 @@ function AppContent() {
           getToken={getToken}
           user={user}
           plan={plan}
-          major={major}
+          major={secondMajor ? `${major} + ${secondMajor}` : major}
           totalCredits={totalCredits}
         />
       )}

@@ -1137,6 +1137,22 @@ export function getMajorLabel(majorId) {
   return MAJORS.find((major) => major.id === majorId)?.label || 'Selected Major';
 }
 
+export function isKnownMajorId(majorId) {
+  return MAJORS.some((major) => major.id === majorId);
+}
+
+// NYU Shanghai allows at most two courses to be double-counted between the
+// requirements of two majors.
+export const DOUBLE_MAJOR_MAX_DOUBLE_COUNT = 2;
+
+// A second major must be a known major distinct from the primary; anything
+// else (unknown ids, the primary itself, non-strings) collapses to null.
+export function normalizeSecondMajor(secondMajor, primaryMajor) {
+  if (typeof secondMajor !== 'string' || !secondMajor) return null;
+  if (secondMajor === primaryMajor) return null;
+  return isKnownMajorId(secondMajor) ? secondMajor : null;
+}
+
 export function getMajorRequirement(majorId) {
   const configured = MAJOR_REQUIREMENTS[majorId];
   if (configured) {

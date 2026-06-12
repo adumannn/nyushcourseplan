@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   Moon,
   Sun,
@@ -5,6 +6,8 @@ import {
   AlertTriangle,
   Inbox,
   MessageSquare,
+  Plus,
+  X,
 } from "lucide-react";
 import { UserButton } from "@clerk/react";
 import { MAJORS } from "../../data/courses";
@@ -23,6 +26,8 @@ const clerkAppearance = {
 export default function Header({
   major,
   setMajor,
+  secondMajor = null,
+  setSecondMajor,
   totalCredits,
   theme,
   toggleTheme,
@@ -40,6 +45,24 @@ export default function Header({
   canViewSuggestionInbox = false,
   onOpenSuggestionInbox,
 }) {
+  // Transient "choose your 2nd major" state before one is picked.
+  const [addingSecondMajor, setAddingSecondMajor] = useState(false);
+
+  const showSecondMajorSelect = !!secondMajor || addingSecondMajor;
+  const secondMajorOptions = MAJORS.filter((m) => m.id !== major);
+  const primaryMajorOptions = MAJORS.filter((m) => m.id !== secondMajor);
+
+  const handleSecondMajorChange = (value) => {
+    if (typeof setSecondMajor === "function") setSecondMajor(value);
+    // Once picked, the select stays visible because secondMajor is set.
+    setAddingSecondMajor(false);
+  };
+
+  const removeSecondMajor = () => {
+    setAddingSecondMajor(false);
+    if (typeof setSecondMajor === "function") setSecondMajor(null);
+  };
+
   const hasStudyAwayIssues =
     studyAwayWarningCount > 0 || hasIncompleteStudyAway;
   const studyAwayLabel =
@@ -84,12 +107,24 @@ export default function Header({
               backgroundPosition: "right 10px center",
             }}
           >
-            {MAJORS.map((m) => (
+            {primaryMajorOptions.map((m) => (
               <option key={m.id} value={m.id}>
                 {m.label}
               </option>
             ))}
           </select>
+
+          {!showSecondMajorSelect && (
+            <button
+              type="button"
+              onClick={() => setAddingSecondMajor(true)}
+              className="p-2 rounded-md hover:bg-accent transition-colors text-muted-foreground cursor-pointer min-h-[36px] min-w-[36px] flex items-center justify-center border border-border/50 shrink-0"
+              title="Add second major"
+              aria-label="Add second major"
+            >
+              <Plus className="h-4 w-4" />
+            </button>
+          )}
 
           <div className="flex items-baseline gap-1 shrink-0">
             <span className="text-lg tabular-nums leading-none">
@@ -98,6 +133,46 @@ export default function Header({
             <span className="text-[11px] text-muted-foreground">cr</span>
           </div>
         </div>
+
+        {showSecondMajorSelect && (
+          <div className="flex items-center gap-2">
+            <span className="shrink-0 text-[11px] uppercase tracking-wider text-muted-foreground">
+              2nd major
+            </span>
+            <select
+              className="flex-1 min-w-0 text-sm text-foreground bg-transparent border border-border/50 rounded-md pl-3 pr-8 py-2 outline-none cursor-pointer appearance-none truncate"
+              value={secondMajor || ""}
+              onChange={(e) => handleSecondMajorChange(e.target.value)}
+              aria-label="Select second major"
+              style={{
+                backgroundImage:
+                  "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>\")",
+                backgroundRepeat: "no-repeat",
+                backgroundPosition: "right 10px center",
+              }}
+            >
+              {!secondMajor && (
+                <option value="" disabled>
+                  Choose 2nd major…
+                </option>
+              )}
+              {secondMajorOptions.map((m) => (
+                <option key={m.id} value={m.id}>
+                  {m.label}
+                </option>
+              ))}
+            </select>
+            <button
+              type="button"
+              onClick={removeSecondMajor}
+              className="p-2 rounded-md hover:bg-accent transition-colors text-muted-foreground cursor-pointer min-h-[36px] min-w-[36px] flex items-center justify-center border border-border/50 shrink-0"
+              title="Remove second major"
+              aria-label="Remove second major"
+            >
+              <X className="h-4 w-4" />
+            </button>
+          </div>
+        )}
 
         <div className="flex items-center gap-1.5">
           <button
@@ -136,6 +211,7 @@ export default function Header({
           <PlanMenu
             plan={plan}
             major={major}
+            secondMajor={secondMajor}
             studentName={studentName}
             studyAway={studyAway}
             totalCredits={totalCredits}
@@ -203,12 +279,57 @@ export default function Header({
             onChange={(e) => setMajor(e.target.value)}
             aria-label="Select major"
           >
-            {MAJORS.map((m) => (
+            {primaryMajorOptions.map((m) => (
               <option key={m.id} value={m.id}>
                 {m.label}
               </option>
             ))}
           </select>
+
+          {showSecondMajorSelect ? (
+            <div className="flex min-w-0 items-center gap-1">
+              <span className="text-sm text-muted-foreground/70" aria-hidden="true">
+                +
+              </span>
+              <select
+                className="min-w-0 max-w-44 lg:max-w-none text-sm text-muted-foreground bg-transparent border-none outline-none cursor-pointer appearance-none pr-4"
+                value={secondMajor || ""}
+                onChange={(e) => handleSecondMajorChange(e.target.value)}
+                aria-label="Select second major"
+              >
+                {!secondMajor && (
+                  <option value="" disabled>
+                    Choose 2nd major…
+                  </option>
+                )}
+                {secondMajorOptions.map((m) => (
+                  <option key={m.id} value={m.id}>
+                    {m.label}
+                  </option>
+                ))}
+              </select>
+              <button
+                type="button"
+                onClick={removeSecondMajor}
+                className="p-1 rounded-md hover:bg-accent transition-colors text-muted-foreground cursor-pointer"
+                title="Remove second major"
+                aria-label="Remove second major"
+              >
+                <X className="h-3.5 w-3.5" />
+              </button>
+            </div>
+          ) : (
+            <button
+              type="button"
+              onClick={() => setAddingSecondMajor(true)}
+              className="inline-flex items-center gap-1 rounded-md border border-dashed border-border/60 px-2 py-1 text-xs text-muted-foreground hover:bg-accent hover:text-foreground transition-colors cursor-pointer whitespace-nowrap"
+              title="Add second major"
+              aria-label="Add second major"
+            >
+              <Plus className="h-3 w-3" />
+              <span>2nd major</span>
+            </button>
+          )}
         </div>
 
         <div className="flex items-center justify-end gap-3">
@@ -257,6 +378,7 @@ export default function Header({
           <PlanMenu
             plan={plan}
             major={major}
+            secondMajor={secondMajor}
             studentName={studentName}
             studyAway={studyAway}
             totalCredits={totalCredits}
