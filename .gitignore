@@ -1,3 +1,8 @@
+# Dependencies & build output
+node_modules
+dist
+dist-ssr
+
 # Logs
 logs
 *.log
@@ -7,11 +12,11 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-node_modules
-dist
-dist-ssr
+# Environment & secrets
+.env
 *.local
 
+# Editor / OS
 .vscode/*
 !.vscode/extensions.json
 .idea
@@ -22,22 +27,17 @@ dist-ssr
 *.sln
 *.sw?
 
-
-.env
+# Agent & tool state (local only)
 .claude/
 CLAUDE.md
-/fallow/
-/.mcp.json
-scraped-data/reports/
-
-/.fallow/*.bin
 .mcp.json
-.fallow/cache.bin
-
-# Local generated artifacts
+.fallow/
+.pi-lens/
 .github/agents/
+nothing-design-skill/
+
+# Scraped data: only the combined + Shanghai snapshots are committed
 scraped-data/*.json
+scraped-data/reports/
 !scraped-data/all-courses.json
 !scraped-data/shanghai.json
-nothing-design-skill/
-AGENTS.md

@@ -1,295 +1,132 @@
-Keep looking to this file whenever I ask to do some tasks.
+# NYU Shanghai Course Planner — Agent Guide
 
+Read this file before starting any task. Update it as part of every change (see Workflow).
 
-# NYU Shanghai Course Planner
+## Overview
 
-## Project Overview
+A course planning tool for NYU Shanghai students, live at [nyushplanner.app](https://nyushplanner.app). Students pick a major, add courses into 8 semester slots (4 years), and track progress toward 128 graduation credits and requirement fulfillment. Plans sync to the cloud for signed-in users; `localStorage` acts as a write-through cache.
 
-A course planning tool for NYU Shanghai students. React + Vite + Tailwind CSS v4. Students pick a major, drag/add courses into 8 semester slots (4 years), and track progress toward 128 graduation credits and requirement fulfillment.
+**Tech stack:** React 19, Vite 8, Tailwind CSS 4 · Clerk (OAuth) + Supabase (Postgres, RLS) · Node built-in test runner.
 
-## Tech Stack
+## Repository Map
 
-- **Frontend:** React 19, Vite 8, Tailwind CSS 4
-- **Data (MVP):** Local state + `localStorage` persistence
-- **Data (Phase 2):** Supabase (auth, Postgres, row-level security)
-
----
-
-## Phase 1 — MVP (Local-Only)
-
-All data lives in `localStorage`. No backend, no accounts. Ship a fully working planner first.
-
-### 1.1 Fix Existing Scaffolding
-
-App.jsx references `useTheme`, `major`, `studentName`, `totalCredits`, `handleClearAll` — none are defined. Wire these up:
-
-- [ ] Create `src/hooks/useTheme.js` — toggle light/dark, persist to `localStorage`
-- [ ] Create `src/hooks/useCoursePlan.js` — manages the full plan state:
-  - `plan`: object keyed by semester ID, each value is an array of course IDs
-  - `major`, `studentName`
-  - Derived: `totalCredits`, per-semester credits, requirement progress
-  - Actions: `addCourse`, `removeCourse`, `moveCourse`, `setMajor`, `setStudentName`, `clearAll`
-  - Persist entire plan to `localStorage` on every change
-- [ ] Fix `App.jsx` to use these hooks and pass props correctly
-
-### 1.2 Semester Grid
-
-- [ ] Create `src/components/SemesterGrid.jsx` — renders 8 semester columns (or 2x4 grid on desktop)
-- [ ] Create `src/components/SemesterCard.jsx` — one semester: title, list of courses, credit subtotal, drop target
-- [ ] Create `src/components/CourseChip.jsx` — displays one course (code, name, credits) color-coded by category, with a remove button
-- [ ] Credit subtotal per semester; warn if > 18 or < 12
-
-### 1.3 Course Picker
-
-- [ ] Create `src/components/CoursePicker.jsx` — sidebar/modal to browse `COURSE_CATALOG`
-  - Filter by department, category, and major relevance
-  - Search by name/code
-  - Click or drag a course to add it to a semester
-  - Already-placed courses shown as disabled
-
-### 1.4 Requirements Tracker
-
-- [ ] Create `src/components/RequirementsPanel.jsx` — shows progress for each `CORE_REQUIREMENTS` item + the selected major's requirements
-  - Progress bars or checklist style
-  - Green when fulfilled, amber when in-progress
-
-### 1.5 Drag & Drop (optional for first pass)
-
-- [ ] Use a lightweight DnD library (e.g., `@dnd-kit/core`) to reorder and move courses between semesters
-- [ ] Can defer this — click-to-add is sufficient for MVP
-
-### 1.6 Custom Course Entry
-
-- [ ] Allow adding a custom course (name, credits, category) for courses not in the catalog
-  - Store with `id: 'custom-<uuid>'`
-
----
-
-## Phase 2 — Supabase Integration
-
-Goal: users can sign in and their course plan persists across devices. The local-only MVP data model should map cleanly onto Supabase tables.
-
-### 2.1 Supabase Setup
-
-- [x] Create Supabase project
-- [x] Install `@supabase/supabase-js`
-- [x] Add `src/lib/supabase.js` — Supabase client init (reads `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` from env)
-- [x] Env vars live in `.env` (already git-ignored). Keep the anon key there; never commit the service-role key.
-
-### 2.2 Auth
-
-- [x] **Clerk OAuth** (replaced Supabase Auth) — custom domain support on free tier
-- [x] Clerk configuration — `VITE_CLERK_PUBLISHABLE_KEY` in `.env`, secret key for server-side functions
-- [x] Google OAuth via Clerk — custom domain available on free tier (no $10/mo Supabase upgrade cost)
-- [x] `src/hooks/useAuth.js` — bridge hook wrapping Clerk's `useAuth()`, exposes compatible interface (`user`, `loading`, `signOut`)
-- [x] `src/components/auth/AuthGate.jsx` — uses Clerk's prebuilt `<SignIn />` component inside the app's explicit auth branch
-- [x] Clerk JWT validation in Supabase RLS — `auth.jwt()->>'sub'` (Clerk user ID) replaces `auth.uid()` in all RLS policies
-- [x] Supabase Third-Party Auth for Clerk — app uses Clerk session tokens via Supabase's `accessToken` client option; do not use the deprecated Clerk JWT template flow
-- [x] Email domain restriction — configure in Clerk dashboard (allowed domains: `@nyu.edu`, `@nyu.edu.cn`)
-- [x] `src/lib/supabase.js` — `getSupabaseClientWithAuth()` creates a Supabase client backed by Clerk's `getToken()` callback for RLS validation
-- [x] `src/main.jsx` — wrapped app with `<ClerkProvider>` for app-wide Clerk context
-- [x] Supabase RLS migration `010_migrate_to_clerk_jwt.sql` — updated all policies to validate Clerk JWTs instead of Supabase sessions
-- [x] Supabase schema migration `011_clerk_user_ids_and_policies.sql` — converts `plans.user_id` to Clerk text IDs and recreates plan/review policies
-- [ ] Guest mode: unauthenticated users can use the planner locally via `localStorage` and import on first sign-in (not yet wired; `AuthGate` currently gates the whole app).
-
-### 2.3 Database Schema
-
-```sql
--- Clerk users are identified by auth.jwt()->>'sub' (e.g. 'user_...').
-
-create table public.plans (
-  id uuid primary key default gen_random_uuid(),
-  user_id text not null,
-  name text not null default 'My Plan',
-  major text not null default 'custom',
-  student_name text default '',
-  created_at timestamptz default now(),
-  updated_at timestamptz default now()
-);
-
-create table public.plan_courses (
-  id uuid primary key default gen_random_uuid(),
-  plan_id uuid references public.plans(id) on delete cascade not null,
-  semester_id text not null,           -- e.g. 'Y1-Fall'
-  course_id text not null,             -- matches COURSE_CATALOG id or 'custom-<uuid>'
-  custom_name text,                    -- only for custom courses
-  custom_credits int,                  -- only for custom courses
-  custom_category text,                -- only for custom courses
-  position int not null default 0,     -- ordering within semester
-  created_at timestamptz default now()
-);
-
--- Row-level security: users can only read/write their own data
-alter table public.plans enable row level security;
-alter table public.plan_courses enable row level security;
-
-create policy "Users manage own plans"
-  on public.plans for all to authenticated
-  using (auth.jwt()->>'sub' = user_id)
-  with check (auth.jwt()->>'sub' = user_id);
-
-create policy "Users manage own plan courses"
-  on public.plan_courses for all to authenticated
-  using (plan_id in (select id from public.plans where user_id = auth.jwt()->>'sub'))
-  with check (plan_id in (select id from public.plans where user_id = auth.jwt()->>'sub'));
+```
+src/
+  App.jsx                 Top-level state wiring (modals, auth, plan, catalog)
+  App.css                 Component styles that go beyond Tailwind utilities
+  main.jsx                Entry; wraps app in <ClerkProvider>
+  components/
+    auth/AuthGate.jsx     Clerk hosted sign-in redirect
+    layout/               Header, PlanMenu (import/export), RequirementsSidebar,
+                          SuggestionModal (feedback form), SuggestionInbox (admin)
+    planner/              SemesterGrid → SemesterCard → CourseCard,
+                          CoursePicker, CourseDetailModal, StudyAwayPicker
+    reviews/ReviewSummary.jsx
+  hooks/
+    useAuth.js            Bridge over Clerk's useAuth/useClerk/useUser
+    useCatalog.js         Remote catalog fetch, paging, indexing
+    usePlanner.js         Plan state, persistence, derived credits/progress
+    useCourseReviews.js   Review fetch per course
+    useTheme.js           Dark/light theme toggle
+  lib/
+    campus.js             Campus normalization/display helpers (+ tests)
+    localCatalog.js       Local/generated catalog merge & fulfillment normalization (+ tests)
+    majorCourseRules.js   Active-major effective category resolution (+ tests)
+    planStorage.js        localStorage + Supabase storage abstraction
+    planTransfer.js       CSV/PDF export, CSV/legacy-JSON import (+ tests)
+    prerequisites.js      Prerequisite parsing and unmet-prereq detection (+ tests)
+    supabase.js           Supabase client init, getSupabaseClientWithAuth()
+    feedbackAdmin.js      Admin visibility for the feedback inbox
+  data/
+    courses.js            Curated catalog, requirements, majors, study-away rules
+    courses.generated.js  Generated bulletin fallback catalog (do not hand-edit)
+    crossCampusOverrides.js  Manual merge/split overrides for the generator
+scripts/
+  scrape-bulletin.mjs            Crawls all 15 NYU bulletins → scraped-data/
+  generate-local-catalog.mjs     scraped-data → src/data/courses.generated.js (+ tests)
+  generate-major-requirements.mjs  One-off requirement extraction helper
+  validate-scraped-data.mjs      Sanity checks on scraped JSON
+  import-scraped-to-supabase.mjs Push scraped catalog into Supabase tables
+  sync-local-credits.mjs         Reconcile local credit values
+  lib/                           Shared normalize helpers for the scripts above
+scraped-data/             Committed snapshots: all-courses.json, shanghai.json
+supabase/
+  migrations/             001–017 (numbered, append-only)
+  functions/ingest-reviews/  Deno edge function for review ingestion
+  snippets/catchup_remote.sql  Catch-up for hosted DBs behind on migrations
+docs/
+  clerk-setup.md          Clerk dashboard/OAuth/domain setup walkthrough
 ```
 
-### 2.4 Data Layer Swap
+**npm scripts:** `dev`, `build`, `preview`, `lint`, `test` (Node test runner over `src` + `scripts`), `generate:catalog`, `validate:catalog`, `import:catalog`, `sync-credits`.
 
-- [x] Create `src/lib/planStorage.js` with a unified interface:
-  - `loadPlan(planId)` / `savePlan(plan)` / `deletePlan(planId)`
-  - Two implementations: `localStoragePlan` (MVP) and `supabasePlan` (Phase 2)
-  - `usePlanner` hook calls whichever backend is active based on auth state
-- [ ] On first sign-in, offer to import the guest `localStorage` plan into Supabase
-- [x] After sign-in, all plan reads/writes go to Supabase; `localStorage` becomes a write-through cache for offline resilience
+## Architecture
 
-### 2.5 Multiple Plans (stretch)
+### Plan state & persistence
 
-- [ ] Allow users to have multiple saved plans (e.g., "Plan A — CS", "Plan B — DS")
-- [ ] Plan switcher in the header
-
----
-
-## Architecture Notes
-
-**Design the MVP state shape to match the Supabase schema.** The `useCoursePlan` hook should work with this shape from day one:
+The plan shape mirrors the Supabase schema so local and remote storage interchange cleanly:
 
 ```js
 {
   id: 'local' | uuid,
   major: 'cs',
   studentName: 'Alice',
-  semesters: {
-    'Y1-Fall': [{ courseId: 'CSCI-SHU-101', position: 0 }, ...],
-    'Y1-Spring': [...],
-    ...
-  }
+  semesters: { 'Y1-Fall': [{ courseId: 'CSCI-SHU-101', position: 0 }], ... }
 }
 ```
 
-This maps directly to `plans` + `plan_courses` tables, making the Phase 2 swap minimal.
+Tables: `plans` (id, user_id text = Clerk ID, name, major, student_name) and `plan_courses` (plan_id FK, semester_id, course_id, custom_* fields, position). RLS policies check `auth.jwt()->>'sub' = user_id`. `src/lib/planStorage.js` abstracts localStorage vs Supabase; `usePlanner` picks the backend from auth state. After sign-in, Supabase is the source of truth and localStorage is a write-through cache.
 
-**File structure target:**
+### Catalog pipeline
 
-```
-src/
-  components/
-    auth/
-      AuthGate.jsx
-    layout/
-      Header.jsx
-      PlanMenu.jsx
-      RequirementsSidebar.jsx
-      SuggestionInbox.jsx
-      SuggestionModal.jsx
-    planner/
-      CourseCard.jsx
-      CourseDetailModal.jsx
-      CoursePicker.jsx
-      SemesterCard.jsx
-      SemesterGrid.jsx
-      StudyAwayPicker.jsx
-    reviews/
-      ReviewSummary.jsx
-  hooks/
-    useTheme.js
-    usePlanner.js
-    useCatalog.js
-    useCourseReviews.js
-    useAuth.js           (Phase 2)
-  lib/
-    campus.js            (course campus normalization and display helpers)
-    campus.test.js
-    supabase.js          (Phase 2)
-    planStorage.js       (Phase 2 — abstracts local vs remote)
-    feedbackAdmin.js     (admin visibility helpers for the feedback inbox)
-    localCatalog.js      (local/generated catalog merge and fulfillment normalization)
-    localCatalog.test.js
-    majorCourseRules.js  (active-major category resolution)
-    majorCourseRules.test.js
-    planTransfer.js      (CSV/PDF export and CSV/legacy JSON import)
-    planTransfer.test.js
-  data/
-    courses.js           (exists)
-    courses.generated.js (generated bulletin fallback catalog with campus metadata)
-  App.jsx
-  main.jsx
-```
+1. `scripts/scrape-bulletin.mjs` crawls all 15 NYU undergraduate bulletins. Run without `--school` to refresh everything and rebuild `scraped-data/all-courses.json`. Single-school runs (`--school <slug>`) preserve the combined file; pass `--combine` to rebuild `all-courses.json` from per-school files without re-fetching.
+2. `npm run generate:catalog` reads `scraped-data/all-courses.json`, aggregates duplicate course IDs across schools, and detects cross-campus equivalents by `(normalizedName, credits, subjectFamily)` — e.g. Data Structures taught as `CSCI-SHU-210` / `CSCI-UA-102` / `CS-UH-1050` collapses into one entry with `campuses: ["Shanghai", "New York", "Abu Dhabi"]` and an `equivalentCodes` map. Manual overrides live in `src/data/crossCampusOverrides.js` (`FORCE_EQUIVALENT` / `NOT_EQUIVALENT`). The script logs merge counts and flags suspicious merges (course numbers differing by ≥2 levels) for review.
+3. At runtime, ownership is split: `src/lib/localCatalog.js` owns local merge/hydration, `src/hooks/useCatalog.js` owns remote fetch/indexing. Remote multi-campus offerings live in `public.catalog_course_offerings` (migration 017); `catalog_courses.id` remains the canonical stable ID used by saved plans.
+4. Saved plans are refreshed via `mergeCourseWithLocalCatalog()` on load so courses pick up current metadata (requirement IDs, campus labels) without losing selected credits.
 
-## Conventions
+**Campus labels:** always go through `src/lib/campus.js` — `getCourseCampuses()` / `formatCourseCampuses()` instead of reading `course.campuses` directly. NYC-located bulletin schools group under the `New York` label. `compareCampuses()` orders Shanghai → New York → Abu Dhabi; `abbreviateCampus()` gives SH/NY/AD for compact UI.
 
-- Functional components only, hooks for all state logic
-- Tailwind for styling; no CSS files beyond what exists for any global resets
-- All course data stays in `src/data/courses.js` — treat as the single source of truth for catalog
-- Keep components small and focused; one component per file
-- Use named exports for hooks, default exports for components
+**Categories:** `getEffectiveCategory(course, majorId)` in `src/lib/majorCourseRules.js` resolves the effective category (major-required, major-elective, …) for the active major. Requirement progress counts effective categories, not raw stored ones, so sidebar bars match course-card colors. Generated catalog fulfillment text is normalized in `localCatalog.js` (CORE Writing, Language, GPS/PoH/IPC/HPC/SSPC, Mathematics, Algorithmic Thinking, ED, STS → `requirementIds`).
+
+### Auth (Clerk + Supabase RLS)
+
+- Supabase validates Clerk session tokens via **Third-Party Auth**; RLS policies use `auth.jwt()->>'sub'` as the Clerk user ID. No webhook sync. Do not use the deprecated Clerk JWT template flow.
+- Always call `getSupabaseClientWithAuth(getToken)` from `src/lib/supabase.js` before queries needing RLS — it wires the client's `accessToken` option to Clerk's `getToken()`.
+- `AuthGate.jsx` renders `<RedirectToSignIn />` (Clerk Account Portal handles sign-in and sign-up; no in-app forms). `Header.jsx` uses Clerk's `<UserButton />` for avatar/sign-out/account management.
+- Env: `VITE_CLERK_PUBLISHABLE_KEY` (pk_test for localhost, pk_live only on the production domain), `VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY` in `.env` (git-ignored). Never commit the service-role key.
+- Allowed email domains (`@nyu.edu`, `@nyu.edu.cn`) are configured in the Clerk dashboard. Full setup walkthrough: `docs/clerk-setup.md`.
+- Migrations 010/011 moved RLS from Supabase Auth to Clerk JWTs and converted `plans.user_id` to text.
+
+### Feedback / suggestions
+
+- `SuggestionModal` submits to `public.suggestions` (migrations 012/013) via the authenticated client, falling back to a plain message insert if enrichment columns aren't deployed. Uses dedicated `suggestion-modal` / `suggestion-submit` styles in `App.css`.
+- `SuggestionInbox` is the admin view (search, status/category filters, notes). Visibility is gated by `src/lib/feedbackAdmin.js` (`VITE_FEEDBACK_ADMIN_IDS` / `VITE_FEEDBACK_ADMIN_EMAILS`), but access is enforced by RLS: migration 014 creates `public.feedback_admins` — add an admin's Clerk user ID there to unlock the inbox.
+- `App.jsx` owns `suggestionOpen` / `suggestionInboxOpen` and passes `getToken`, `user`, `plan`, `major`, `totalCredits` down.
+- `supabase/snippets/catchup_remote.sql` brings hosted DBs missing migrations 012–014 up to date.
+
+### Plan transfer
+
+- UI exposes **CSV and PDF only**. JSON import/export helpers stay in `planTransfer.js` for legacy compatibility and tests.
+- `exportPlanAsPDF` builds a print document (summary header, credit progress, category/campus pills, study-away summary) then opens the browser print dialog.
+- CSV and legacy JSON include `campuses` so imported custom/remote-only courses keep their campus labels.
+
+## UI Conventions
+
+- Functional components only; hooks for all state logic. Named exports for hooks, default exports for components. One component per file.
+- Tailwind for styling; `App.css` holds the styles that outgrow utilities.
+- **Mobile breakpoint:** `lg:` (1024px) separates phone/tablet (single column + bottom sheet) from desktop (board + sidebar). The Header keeps TWO separate DOM layouts (mobile 2-row, desktop 1-row) — don't unify them via responsive classes; it clobbers `useRef`s. The requirements panel is a bottom sheet on mobile with a floating "Progress" pill.
+- **Course picker:** already-added courses stay visible with an inline remove button (`getCourseSemester(courseId)` + `removeCourse(semesterId, courseId)` from `usePlanner`). Rows show campus labels and a campus filter; custom course campus defaults to the semester's study-away site, else Shanghai.
+- **CourseCard:** one pill per campus for multi-campus courses, using `abbreviateCampus()` short labels when ≥2 campuses; the `MapPin` icon renders once on the leading pill.
+- **StudyAwayPicker:** desktop two-panel modal (summary metrics, semester rows, quick site chips, policy sidebar); on mobile it behaves as a bottom sheet with sticky actions. Preserve the status-first flow: pick semesters → resolve pending sites → review warnings.
 
 ## Workflow (IMPORTANT)
 
-- **Edit locally, do NOT create pull requests.** After finishing a task: `git add`, `git commit`, `git push` to the current branch — then stop. Never run `gh pr create` or invoke any /create-pr command unless the user explicitly asks in that same message.
-- **No `Co-Authored-By` trailers** in commit messages.
-- **Always update `AGENTS.md` after changes.** Before committing, review the change and update `AGENTS.md` to reflect any of the following that apply:
-  - New files, components, hooks, or libs added → update the file structure section and any relevant checklist
-  - Checklist items completed → mark them `[x]`
-  - New conventions, patterns, or workflow rules established → add them under Conventions / Workflow / Durable Implementation Notes
-  - Architecture or schema changes → update the Architecture Notes / schema sections
-  - Removed or renamed features → remove or update stale references
-  Treat the `AGENTS.md` update as part of the task itself, included in the same commit as the code change.
+- **Edit locally, do NOT create pull requests.** After finishing a task: `git add`, `git commit`, `git push` to the current branch — then stop. Never run `gh pr create` unless explicitly asked in the same message.
+- **No `Co-Authored-By` trailers** in commit messages. Commit as `Duman <da3762@nyu.edu>`.
+- **Update this file with every change**, in the same commit: new files/hooks/libs → Repository Map; architecture or schema changes → Architecture; new conventions → UI Conventions; removed features → delete stale references.
+- Verify before committing: `npm run lint` and `npm test`.
 
-## Durable Implementation Notes
+## Open Work
 
-### Clerk + Supabase RLS integration
-
-- **Clerk JWT in RLS policies:** Supabase validates Clerk session tokens through Third-Party Auth and policies use `auth.jwt()->>'sub'` as the Clerk user ID. No webhook sync is needed.
-- **Custom domain support:** Clerk's free tier includes one custom OAuth redirect domain (e.g., `auth.yourplan.com`). Configure in Clerk Dashboard → Domains, then update Google OAuth / other providers' redirect URIs to match.
-- **Environment setup:** `VITE_CLERK_PUBLISHABLE_KEY` goes in `.env` for client-side use; use a Clerk `pk_test_...` key for localhost development and a `pk_live_...` key only on the configured production domain. `CLERK_SECRET_KEY` is for server functions if needed later.
-- **AuthGate uses Clerk's Account Portal:** `src/components/auth/AuthGate.jsx` renders `<RedirectToSignIn />` from `@clerk/react`, which sends unauthenticated users to Clerk's hosted sign-in/sign-up UI. With a custom domain configured (e.g. `accounts.nyushplanner.app`), the publishable key resolves the redirect to the custom domain automatically — no `signInUrl` / `signUpUrl` overrides needed on `<ClerkProvider>`. The Account Portal handles both flows (sign-in and sign-up) so the app no longer maintains separate `/sign-up` routing or in-app form components.
-- **UserButton for avatar & profile:** `Header.jsx` uses Clerk's built-in `<UserButton />` component (from `@clerk/react`) instead of a custom `AccountMenu`. This automatically shows the user's Google avatar, provides sign-out, and includes a "Manage account" panel where users can customise their avatar, name, and connected accounts. The `user`/`onSignOut` props are no longer passed to `Header`.
-- **useAuth bridge:** `src/hooks/useAuth.js` wraps Clerk's `useAuth()`, `useClerk()`, and `useUser()` to expose a compatible interface for existing `App.jsx` code (`user`, `loading`, `getToken`, `signOut`).
-- **getSupabaseClientWithAuth(getToken):** Always call this before making Supabase queries that need RLS validation. It creates a Supabase client with the `accessToken` option wired to Clerk's `getToken()` session-token callback.
-- **Migration 010/011:** Migration 010 replaces Supabase Auth checks with Clerk JWT checks; migration 011 converts `plans.user_id` from UUID/FK to text and tightens plan/review policies for Clerk session tokens.
-
-### Mobile UX patterns (see CLAUDE.md for full details)
-
-- **Breakpoint for layout shift:** `lg:` (1024px) is the cutover between phone/tablet (single column with bottom sheet) and desktop (board + sidebar side-by-side).
-- **Header has TWO independent layouts:** mobile 2-row vs. desktop 1-row; don't unify via responsive classes — keep both DOM instances separate to avoid `useRef` clobbering.
-- **Requirements panel is a bottom sheet on mobile** with a floating "Progress" pill trigger.
-
-### In-app suggestions
-
-- **SuggestionModal** (`src/components/layout/SuggestionModal.jsx`) — retryable modal form with category dropdown, reply email, and textarea. Submits to `public.suggestions` table via authenticated Supabase client and falls back to a plain message insert if the enriched columns are not deployed yet. The modal uses dedicated `suggestion-modal` / `suggestion-submit` styling in `src/App.css` so feedback form spacing and disabled states can be tuned without changing the shared course picker modal.
-- **Supabase table:** `public.suggestions` (migration `012_create_suggestions_table.sql`, enriched by `013_enrich_suggestions_for_triage.sql`) — base columns: `id`, `user_id` (auto-populated from Clerk JWT), `category`, `message`, `created_at`; triage columns: `contact_email`, `contact_name`, `page_path`, `plan_id`, `major`, `total_credits`, `user_agent`, `status`, `admin_notes`, `reviewed_at`. RLS allows insert + select for own rows only.
-- **SuggestionInbox** (`src/components/layout/SuggestionInbox.jsx`) — admin-only inbox with search, status/category filters, status updates, and private notes. Header shows it only for admins configured by `src/lib/feedbackAdmin.js` (`VITE_FEEDBACK_ADMIN_IDS`, `VITE_FEEDBACK_ADMIN_EMAILS`, plus the default feedback email), but Supabase access is enforced by RLS.
-- **Admin grants:** migration `014_feedback_admin_inbox_policies.sql` creates `public.feedback_admins` and admin read/update policies for `public.suggestions`. Add the admin's Clerk user ID to `public.feedback_admins` to unlock all suggestions in the inbox.
-- **Remote catch-up:** `supabase/snippets/catchup_remote.sql` includes the suggestions table, enrichment columns, feedback admin table, and inbox policies for projects whose hosted Supabase database has not run migrations `012`/`013`/`014` yet.
-- Header passes `onOpenSuggestion` and `onOpenSuggestionInbox` callbacks; `App.jsx` owns the `suggestionOpen` / `suggestionInboxOpen` state and passes `getToken`, `user`, `plan`, `major`, and `totalCredits` to the feedback components.
-
-### Plan transfer exports
-
-- **Visible export formats:** `PlanMenu` exposes CSV and PDF only. JSON import/export helpers remain in `src/lib/planTransfer.js` for legacy compatibility and tests, but JSON is not shown in the import/export UI.
-- **PDF export:** `exportPlanAsPDF` generates a polished print document with a summary header, credit progress, category/campus pills, semester credit status, and study-away summary before invoking the browser print dialog.
-- **Campus preservation:** CSV and legacy JSON transfer helpers include `campuses` so imported custom or remote-only courses keep their displayed campus labels.
-
-### Catalog architecture
-
-- Catalog ownership is split cleanly: `src/lib/localCatalog.js` owns local merge/hydration logic, `src/hooks/useCatalog.js` owns remote fetch/indexing, and the old orphaned `src/lib/catalog.js` module has been removed to avoid duplicate sources of truth.
-- Course campus labels are normalized through `src/lib/campus.js`. Use `getCourseCampuses()` / `formatCourseCampuses()` in UI and transfer code rather than reading `course.campuses` directly; New York bulletin schools are grouped under the `New York` campus label. `compareCampuses()` orders campuses canonically (Shanghai → New York → Abu Dhabi); `abbreviateCampus()` returns short labels (SH/NY/AD) for compact UI.
-- `scripts/generate-local-catalog.mjs` reads `scraped-data/all-courses.json`, aggregates duplicate course IDs across schools, **and detects cross-campus equivalents** by `(normalizedName, credits, subjectFamily)` so that a course like *Data Structures* — taught as `CSCI-SHU-210`, `CSCI-UA-102`, and `CS-UH-1050` — collapses into a single entry with `campuses: ["Shanghai", "New York", "Abu Dhabi"]` and an `equivalentCodes` map of the per-campus codes. Manual overrides live in `src/data/crossCampusOverrides.js` (`FORCE_EQUIVALENT` for missed merges, `NOT_EQUIVALENT` to keep same-named-but-different courses split). Run `npm run generate:catalog` after refreshing scraped bulletin data; the script logs how many groups merged and flags suspicious merges (course numbers differing by ≥2 levels) so you can review and add `NOT_EQUIVALENT` entries.
-- `scripts/scrape-bulletin.mjs` crawls all 15 NYU undergraduate bulletins. Run it without `--school` to refresh everything and rebuild `scraped-data/all-courses.json`. Single-school runs (`--school <slug>`) preserve the combined file (and the per-school file when `--subject` is also set) — pass `--combine` to rebuild `all-courses.json` from per-school files without re-fetching.
-- Supabase multi-campus offerings live in `public.catalog_course_offerings` (migration `017_catalog_course_offerings.sql`). `catalog_courses.id` remains the canonical stable course ID used by saved plans; offerings carry `school_slug`, `subject_slug`, and `campus_label`.
-- `useCatalog()` loads all published catalog pages by default, pages through Supabase results, chunks relationship lookups, and merges remote offerings with local curated metadata so each runtime course has `campuses`.
-- Dynamic major-based categorization: `getEffectiveCategory(course, majorId)` in `src/lib/majorCourseRules.js` resolves the **effective** category (major-required, major-elective, etc.) based on the active major.
-- Generated catalog fulfillment text is normalized in `src/lib/localCatalog.js`; common bulletin phrases for CORE Writing, Language, GPS/PoH/IPC/HPC/SSPC, Mathematics, Algorithmic Thinking, ED, and STS receive the corresponding `requirementIds`, and generated elective-category entries are promoted to the matching display category (`writing`, `language`, `gps`, or `core`) when appropriate.
-- Saved plans are refreshed through `mergeCourseWithLocalCatalog()` on load so existing catalog courses pick up current metadata, including inferred requirement IDs and campus labels, without losing selected credits.
-- Requirement progress counts active-major **effective** categories from `getEffectiveCategory()` rather than only raw stored course categories, so bars stay aligned with the category shown on course cards.
-
-### Course picker UX
-
-- Already-added catalog courses stay visible in `CoursePicker` with an inline remove button. Use `getCourseSemester(courseId)` from `usePlanner` plus `removeCourse(semesterId, courseId)` to remove the existing placement without closing the picker.
-- Course picker rows show campus labels and include a campus filter. Custom course campus defaults to the semester's study-away location when set, otherwise Shanghai.
-- `CourseCard` renders **one pill per campus** when a course is offered at multiple sites (e.g. Data Structures shows Shanghai · NY · AD). Two-or-more-campus rows use the `abbreviateCampus()` short labels to keep the row tidy on mobile widths; single-campus rows still show the full label. The `MapPin` icon is rendered once on the leading pill.
-
-### Study away picker UX
-
-- `StudyAwayPicker` uses a desktop two-panel planning modal with summary metrics, semester rows, quick site chips, and a policy/advising sidebar. Preserve the status-first flow: pick semesters, resolve pending sites, then review warnings.
-- On mobile/tablet, the same modal behaves like a bottom sheet with a single scrolling surface and sticky actions. Keep mobile controls full-width, avoid disabled selects for unselected semesters, and use the locked note pattern until a semester is selected.
+- Guest mode: let unauthenticated users plan locally and import on first sign-in (`AuthGate` currently gates the whole app).
+- Multiple saved plans per user with a header switcher.

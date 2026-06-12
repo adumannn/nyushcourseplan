@@ -38,14 +38,18 @@ Computer Science, Data Science, Business and Finance, Business and Marketing, Bi
 
 ```bash
 npm install
-npm run dev
+npm run dev    # start the dev server
+npm test       # run unit tests (Node built-in test runner)
+npm run lint   # eslint
 ```
 
-To regenerate the local fallback catalog from the latest Shanghai scrape:
+To regenerate the local fallback catalog from the latest bulletin scrape:
 
 ```bash
-node scripts/generate-local-catalog.mjs
+npm run generate:catalog
 ```
+
+Auth setup (Clerk + Supabase) is documented in [docs/clerk-setup.md](docs/clerk-setup.md). Contributor/agent documentation lives in [AGENTS.md](AGENTS.md).
 
 ## Use It
 
@@ -79,15 +83,24 @@ src/
     useAuth.js              Auth state bridge for Clerk
     useCatalog.js           Catalog loader / selector
     usePlanner.js           Plan state, persistence, derived data, replacePlan
+    useCourseReviews.js     Course review summaries loader
     useTheme.js             Dark/light theme toggle
   lib/
+    campus.js               Campus normalization and display helpers
     localCatalog.js         Local catalog merge/hydration helpers
+    majorCourseRules.js     Active-major effective category resolution
+    prerequisites.js        Prerequisite parsing and warnings
     supabase.js             Supabase client init
     planStorage.js          localStorage + Supabase storage abstraction
     planTransfer.js         Import/export helpers (CSV, PDF, legacy JSON import)
+    feedbackAdmin.js        Feedback inbox admin visibility
   data/
     courses.js              Curated course metadata, requirements, majors, study-away rules
-    courses.generated.js    Generated Shanghai bulletin catalog fallback
-scripts/
-  generate-local-catalog.mjs   Builds src/data/courses.generated.js
+    courses.generated.js    Generated bulletin catalog fallback
+    crossCampusOverrides.js Manual cross-campus merge/split overrides
+scripts/                    Bulletin scraper, catalog generator, Supabase importers
+supabase/                   Migrations, edge functions, SQL snippets
+docs/                       Setup guides (Clerk auth)
 ```
+
+A fuller annotated map and architecture notes are in [AGENTS.md](AGENTS.md).
