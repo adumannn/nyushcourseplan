@@ -22,6 +22,8 @@ src/
     planner/              SemesterGrid → SemesterCard → CourseCard,
                           CoursePicker, CourseDetailModal, StudyAwayPicker
     reviews/ReviewSummary.jsx
+    supporters/            SupporterBadge (wall/profile badge), SupportThanksToast
+                          (post-checkout name/opt-in), SupportersView (donate + wall)
   hooks/
     useAuth.js            Bridge over Clerk's useAuth/useClerk/useUser
     useCatalog.js         Remote catalog fetch, paging, indexing
