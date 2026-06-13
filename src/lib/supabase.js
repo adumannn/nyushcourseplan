@@ -1,7 +1,12 @@
 import { createClient } from '@supabase/supabase-js';
 
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+// `import.meta.env` is a Vite-injected object in the browser/build, but is
+// `undefined` under plain Node (e.g. the test runner importing a module that
+// transitively imports this file). Guard so module load never throws there;
+// the `supabaseUrl && supabaseAnonKey` check below then yields a null client.
+const env = import.meta.env ?? {};
+const supabaseUrl = env.VITE_SUPABASE_URL;
+const supabaseAnonKey = env.VITE_SUPABASE_ANON_KEY;
 const clerkClientCache = new WeakMap();
 
 /**
