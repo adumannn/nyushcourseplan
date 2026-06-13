@@ -58,8 +58,10 @@ scripts/
   lib/                           Shared normalize helpers for the scripts above
 scraped-data/             Committed snapshots: all-courses.json, shanghai.json
 supabase/
-  migrations/             001–018 (numbered, append-only)
+  migrations/             001–019 (numbered, append-only)
   functions/ingest-reviews/  Deno edge function for review ingestion
+  functions/gumroad-ping/    Deno edge function: verifies Gumroad sale Pings via
+                              the Gumroad API and records supporters via RPC (+ README)
   snippets/catchup_remote.sql  Catch-up for hosted DBs behind on migrations
 docs/
   clerk-setup.md          Clerk dashboard/OAuth/domain setup walkthrough
