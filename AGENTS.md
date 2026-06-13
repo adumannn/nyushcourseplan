@@ -28,6 +28,7 @@ src/
     usePlanner.js         Plan state, persistence, derived credits/progress,
                           major + secondMajor
     useCourseReviews.js   Review fetch per course
+    useSupporter.js       Signed-in user's supporter status + wall profile save
     useTheme.js           Dark/light theme toggle
   lib/
     campus.js             Campus normalization/display helpers (+ tests)
@@ -40,6 +41,7 @@ src/
     prerequisites.js      Prerequisite parsing and unmet-prereq detection (+ tests)
     supabase.js           Supabase client init, getSupabaseClientWithAuth()
     feedbackAdmin.js      Admin visibility for the feedback inbox
+    supporters.js         Supporter status read, public wall read, wall profile RPC (+ tests)
     payments/gumroad.js   Pure Gumroad checkout/ping/validation helpers (+ tests);
                           shared by the browser and the Deno gumroad-ping edge function
     payments/provider.js  Provider seam: getCheckoutUrl({ userId, productUrl }) wraps
