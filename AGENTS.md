@@ -42,6 +42,8 @@ src/
     feedbackAdmin.js      Admin visibility for the feedback inbox
     payments/gumroad.js   Pure Gumroad checkout/ping/validation helpers (+ tests);
                           shared by the browser and the Deno gumroad-ping edge function
+    payments/provider.js  Provider seam: getCheckoutUrl({ userId, productUrl }) wraps
+                          buildGumroadCheckoutUrl; swap providers here later (+ tests)
   data/
     courses.js            Curated catalog, requirements, majors, study-away rules
     courses.generated.js  Generated bulletin fallback catalog (do not hand-edit)
