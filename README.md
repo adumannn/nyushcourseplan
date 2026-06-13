@@ -28,6 +28,10 @@ Computer Science, Data Science, Business and Finance, Business and Marketing, Bi
 - **Dark/light theme** — System-aware with manual toggle
 - **Large local fallback catalog** — Uses generated Shanghai bulletin data merged with curated metadata
 
+## Supporting the Project
+
+This tool is and will stay free — nothing is gated behind support. If it helped with your planning, you can leave a small donation via the "Support ✦" link in the app (Gumroad, plus a manual Alipay/WeChat QR for mainland China); supporters get an optional badge and a spot on the supporters wall.
+
 ## Tech Stack
 
 - **Frontend:** React 19, Vite 8, Tailwind CSS 4
@@ -50,6 +54,19 @@ npm run generate:catalog
 ```
 
 Auth setup (Clerk + Supabase) is documented in [docs/clerk-setup.md](docs/clerk-setup.md). Contributor/agent documentation lives in [AGENTS.md](AGENTS.md).
+
+### Environment Variables
+
+Client-side (`.env`, prefixed `VITE_` so they're exposed to the browser):
+
+| Variable | Description |
+| --- | --- |
+| `VITE_CLERK_PUBLISHABLE_KEY` | Clerk publishable key for sign-in (see [docs/clerk-setup.md](docs/clerk-setup.md)) |
+| `VITE_SUPABASE_URL` | Supabase project URL |
+| `VITE_SUPABASE_ANON_KEY` | Supabase anon key (RLS-scoped) |
+| `VITE_GUMROAD_PRODUCT_URL` | Public Gumroad product URL used to build the supporter checkout link; optional — the support buttons disable themselves when unset |
+
+All payment secrets (`GUMROAD_SELLER_ID`, `GUMROAD_PRODUCT_ID`, `GUMROAD_ACCESS_TOKEN`) and the Supabase service-role key stay server-side, configured as Supabase Edge Function secrets — never in `.env`.
 
 ## Use It
 
