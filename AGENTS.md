@@ -34,7 +34,9 @@ src/
     localCatalog.js       Local/generated catalog merge & fulfillment normalization (+ tests)
     majorCourseRules.js   Active-major(s) effective category resolution (+ tests)
     planStorage.js        localStorage + Supabase storage abstraction
-    planTransfer.js       CSV/PDF export, CSV/legacy-JSON import (+ tests)
+    planTransfer.js       Thin re-export barrel for planTransfer/* (+ tests)
+    planTransfer/         CSV (csv.js), PDF (pdf.js), legacy-JSON (json.js)
+                          export/import; shared.js holds common helpers; index.js re-exports
     prerequisites.js      Prerequisite parsing and unmet-prereq detection (+ tests)
     supabase.js           Supabase client init, getSupabaseClientWithAuth()
     feedbackAdmin.js      Admin visibility for the feedback inbox
@@ -116,7 +118,8 @@ Tables: `plans` (id, user_id text = Clerk ID, name, major, second_major, student
 
 ### Plan transfer
 
-- UI exposes **CSV and PDF only**. JSON import/export helpers stay in `planTransfer.js` for legacy compatibility and tests.
+- UI exposes **CSV and PDF only**. JSON import/export helpers stay available for legacy compatibility and tests.
+- `planTransfer.js` is a thin re-export barrel; the implementation lives under `planTransfer/` split by concern — `csv.js`, `pdf.js`, `json.js`, with shared helpers in `shared.js` and the public API re-exported from `index.js`. Import from `../../lib/planTransfer` (the export names are unchanged).
 - `exportPlanAsPDF` builds a print document (summary header, credit progress, category/campus pills, study-away summary) then opens the browser print dialog. With a double major the PDF shows both major labels.
 - CSV and legacy JSON include `campuses` so imported custom/remote-only courses keep their campus labels. JSON export/import round-trips `secondMajor`; CSV stays course-rows-only.
 
