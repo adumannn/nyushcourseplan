@@ -4,6 +4,7 @@ import {
   Sun,
   PlaneTakeoff,
   AlertTriangle,
+  Heart,
   Inbox,
   MessageSquare,
   Plus,
@@ -12,6 +13,7 @@ import {
 import { UserButton } from "@clerk/react";
 import { MAJORS } from "../../data/courses";
 import PlanMenu from "./PlanMenu";
+import SupporterBadge from "../supporters/SupporterBadge";
 
 const clerkAppearance = {
   elements: {
@@ -42,6 +44,8 @@ export default function Header({
   semesterCredits,
   onImportPlan,
   onOpenSuggestion,
+  onOpenSupporters,
+  isSupporter = false,
   canViewSuggestionInbox = false,
   onOpenSuggestionInbox,
 }) {
@@ -253,7 +257,16 @@ export default function Header({
             </button>
           )}
 
-          <UserButton appearance={clerkAppearance} />
+          {isSupporter && <SupporterBadge className="mr-1" />}
+          <UserButton appearance={clerkAppearance}>
+            <UserButton.MenuItems>
+              <UserButton.Action
+                label="Support ✦"
+                labelIcon={<Heart size={16} />}
+                onClick={onOpenSupporters}
+              />
+            </UserButton.MenuItems>
+          </UserButton>
         </div>
       </div>
 
@@ -422,7 +435,16 @@ export default function Header({
             </button>
           )}
 
-          <UserButton appearance={clerkAppearance} />
+          {isSupporter && <SupporterBadge className="mr-1" />}
+          <UserButton appearance={clerkAppearance}>
+            <UserButton.MenuItems>
+              <UserButton.Action
+                label="Support ✦"
+                labelIcon={<Heart size={16} />}
+                onClick={onOpenSupporters}
+              />
+            </UserButton.MenuItems>
+          </UserButton>
         </div>
       </div>
     </header>

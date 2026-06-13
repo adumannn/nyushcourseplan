@@ -1,9 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
 import { Analytics } from "@vercel/analytics/react";
-import { ListChecks, X } from "lucide-react";
+import { Heart, ListChecks, X } from "lucide-react";
 import useTheme from "./hooks/useTheme";
 import useAuth from "./hooks/useAuth";
 import usePlanner from "./hooks/usePlanner";
+import useSupporter from "./hooks/useSupporter";
 import Header from "./components/layout/Header";
 import SemesterGrid from "./components/planner/SemesterGrid";
 import RequirementsSidebar from "./components/layout/RequirementsSidebar";
@@ -12,6 +13,8 @@ import StudyAwayPicker from "./components/planner/StudyAwayPicker";
 import CourseDetailModal from "./components/planner/CourseDetailModal";
 import SuggestionInbox from "./components/layout/SuggestionInbox";
 import SuggestionModal from "./components/layout/SuggestionModal";
+import SupportersView from "./components/supporters/SupportersView";
+import SupportThanksToast from "./components/supporters/SupportThanksToast";
 import AuthGate from "./components/auth/AuthGate";
 import { GRADUATION_CREDITS } from "./data/courses";
 import { getDefaultCampusForSemester } from "./lib/campus";
@@ -59,6 +62,50 @@ function AppContent() {
   const [requirementsSheetOpen, setRequirementsSheetOpen] = useState(false);
   const [suggestionOpen, setSuggestionOpen] = useState(false);
   const [suggestionInboxOpen, setSuggestionInboxOpen] = useState(false);
+  const isPostPurchaseReturn = () =>
+    typeof window !== "undefined" &&
+    new URLSearchParams(window.location.search).get("supported") === "1";
+
+  const [supportersOpen, setSupportersOpen] = useState(
+    () =>
+      isPostPurchaseReturn() ||
+      (typeof window !== "undefined" && window.location.hash === "#supporters"),
+  );
+  const [thanksOpen, setThanksOpen] = useState(() => isPostPurchaseReturn());
+  const { isSupporter, saveWallProfile, refetch: refetchSupporter } = useSupporter(getToken);
+
+  const openSupporters = () => {
+    window.location.hash = "supporters";
+  };
+  const closeSupporters = () => {
+    if (window.location.hash === "#supporters") {
+      history.replaceState(null, "", window.location.pathname + window.location.search);
+    }
+    setSupportersOpen(false);
+  };
+
+  // Hash is the source of truth for the supporters view.
+  useEffect(() => {
+    const sync = () => setSupportersOpen(window.location.hash === "#supporters");
+    window.addEventListener("hashchange", sync);
+    return () => window.removeEventListener("hashchange", sync);
+  }, []);
+
+  // Post-purchase return: ?supported=1 -> clean up the URL and poll until the badge lands.
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("supported") !== "1") return;
+    params.delete("supported");
+    const qs = params.toString();
+    history.replaceState(null, "", `${window.location.pathname}${qs ? `?${qs}` : ""}#supporters`);
+    let tries = 0;
+    const id = setInterval(() => {
+      tries += 1;
+      refetchSupporter();
+      if (tries >= 6) clearInterval(id); // ~30s of polling
+    }, 5000);
+    return () => clearInterval(id);
+  }, [refetchSupporter]);
 
   const hasIncompleteStudyAway =
     studyAway.selectedSemesters.length === 0 ||
@@ -140,6 +187,8 @@ function AppContent() {
         semesterCredits={semesterCredits}
         onImportPlan={importPlan}
         onOpenSuggestion={() => setSuggestionOpen(true)}
+        onOpenSupporters={openSupporters}
+        isSupporter={isSupporter}
         canViewSuggestionInbox={canViewSuggestionInbox}
         onOpenSuggestionInbox={() => setSuggestionInboxOpen(true)}
       />
@@ -307,6 +356,20 @@ function AppContent() {
           onClose={() => setSuggestionInboxOpen(false)}
           getToken={getToken}
           user={user}
+        />
+      )}
+
+      <footer className="mt-8 border-t border-border py-4 text-center text-xs text-muted-foreground">
+        <button onClick={openSupporters} className="inline-flex items-center gap-1 hover:text-foreground">
+          <Heart size={12} /> Support the planner
+        </button>
+      </footer>
+      {supportersOpen && <SupportersView user={user} onClose={closeSupporters} />}
+      {thanksOpen && (
+        <SupportThanksToast
+          isSupporter={isSupporter}
+          onSaveWallProfile={saveWallProfile}
+          onClose={() => setThanksOpen(false)}
         />
       )}
 
