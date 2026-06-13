@@ -40,6 +40,8 @@ src/
     prerequisites.js      Prerequisite parsing and unmet-prereq detection (+ tests)
     supabase.js           Supabase client init, getSupabaseClientWithAuth()
     feedbackAdmin.js      Admin visibility for the feedback inbox
+    payments/gumroad.js   Pure Gumroad checkout/ping/validation helpers (+ tests);
+                          shared by the browser and the Deno gumroad-ping edge function
   data/
     courses.js            Curated catalog, requirements, majors, study-away rules
     courses.generated.js  Generated bulletin fallback catalog (do not hand-edit)
