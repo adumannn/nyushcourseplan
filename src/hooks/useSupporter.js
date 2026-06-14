@@ -4,8 +4,10 @@ import { getMySupporterStatus, setWallProfile } from "../lib/supporters";
 /**
  * Tracks the signed-in user's supporter status. `getToken` comes from useAuth().
  * Pass a falsy `getToken` when signed out to stay in the non-supporter state.
+ * `enabled` gates the fetch entirely — used to keep the feature hidden (and avoid
+ * querying a not-yet-migrated `supporters` table) until it is configured.
  */
-export default function useSupporter(getToken) {
+export default function useSupporter(getToken, enabled = true) {
   const [status, setStatus] = useState({
     isSupporter: false,
     displayName: null,
@@ -16,14 +18,14 @@ export default function useSupporter(getToken) {
   const [loading, setLoading] = useState(false);
 
   const refetch = useCallback(async () => {
-    if (typeof getToken !== "function") return;
+    if (!enabled || typeof getToken !== "function") return;
     setLoading(true);
     try {
       setStatus(await getMySupporterStatus(getToken));
     } finally {
       setLoading(false);
     }
-  }, [getToken]);
+  }, [getToken, enabled]);
 
   useEffect(() => {
     refetch();

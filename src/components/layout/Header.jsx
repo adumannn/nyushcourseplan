@@ -46,6 +46,7 @@ export default function Header({
   onOpenSuggestion,
   onOpenSupporters,
   isSupporter = false,
+  supportersEnabled = false,
   canViewSuggestionInbox = false,
   onOpenSuggestionInbox,
 }) {
@@ -257,16 +258,20 @@ export default function Header({
             </button>
           )}
 
-          {isSupporter && <SupporterBadge className="mr-1" />}
-          <UserButton appearance={clerkAppearance}>
-            <UserButton.MenuItems>
-              <UserButton.Action
-                label="Support ✦"
-                labelIcon={<Heart size={16} />}
-                onClick={onOpenSupporters}
-              />
-            </UserButton.MenuItems>
-          </UserButton>
+          {supportersEnabled && isSupporter && <SupporterBadge className="mr-1" />}
+          {supportersEnabled ? (
+            <UserButton appearance={clerkAppearance}>
+              <UserButton.MenuItems>
+                <UserButton.Action
+                  label="Support ✦"
+                  labelIcon={<Heart size={16} />}
+                  onClick={onOpenSupporters}
+                />
+              </UserButton.MenuItems>
+            </UserButton>
+          ) : (
+            <UserButton appearance={clerkAppearance} />
+          )}
         </div>
       </div>
 
@@ -435,16 +440,20 @@ export default function Header({
             </button>
           )}
 
-          {isSupporter && <SupporterBadge className="mr-1" />}
-          <UserButton appearance={clerkAppearance}>
-            <UserButton.MenuItems>
-              <UserButton.Action
-                label="Support ✦"
-                labelIcon={<Heart size={16} />}
-                onClick={onOpenSupporters}
-              />
-            </UserButton.MenuItems>
-          </UserButton>
+          {supportersEnabled && isSupporter && <SupporterBadge className="mr-1" />}
+          {supportersEnabled ? (
+            <UserButton appearance={clerkAppearance}>
+              <UserButton.MenuItems>
+                <UserButton.Action
+                  label="Support ✦"
+                  labelIcon={<Heart size={16} />}
+                  onClick={onOpenSupporters}
+                />
+              </UserButton.MenuItems>
+            </UserButton>
+          ) : (
+            <UserButton appearance={clerkAppearance} />
+          )}
         </div>
       </div>
     </header>

@@ -62,6 +62,12 @@ function AppContent() {
   const [requirementsSheetOpen, setRequirementsSheetOpen] = useState(false);
   const [suggestionOpen, setSuggestionOpen] = useState(false);
   const [suggestionInboxOpen, setSuggestionInboxOpen] = useState(false);
+
+  // Supporter donations stay hidden until configured: VITE_GUMROAD_PRODUCT_URL is
+  // unset until launch, so this flag gates every supporter entry point and the
+  // status fetch. Setting that env var at launch reveals the whole feature.
+  const supportersEnabled = !!import.meta.env.VITE_GUMROAD_PRODUCT_URL;
+
   const isPostPurchaseReturn = () =>
     typeof window !== "undefined" &&
     new URLSearchParams(window.location.search).get("supported") === "1";
@@ -72,7 +78,10 @@ function AppContent() {
       (typeof window !== "undefined" && window.location.hash === "#supporters"),
   );
   const [thanksOpen, setThanksOpen] = useState(() => isPostPurchaseReturn());
-  const { isSupporter, saveWallProfile, refetch: refetchSupporter } = useSupporter(getToken);
+  const { isSupporter, saveWallProfile, refetch: refetchSupporter } = useSupporter(
+    getToken,
+    supportersEnabled,
+  );
 
   const openSupporters = () => {
     window.location.hash = "supporters";
@@ -189,6 +198,7 @@ function AppContent() {
         onOpenSuggestion={() => setSuggestionOpen(true)}
         onOpenSupporters={openSupporters}
         isSupporter={isSupporter}
+        supportersEnabled={supportersEnabled}
         canViewSuggestionInbox={canViewSuggestionInbox}
         onOpenSuggestionInbox={() => setSuggestionInboxOpen(true)}
       />
@@ -359,18 +369,22 @@ function AppContent() {
         />
       )}
 
-      <footer className="mt-8 border-t border-border py-4 text-center text-xs text-muted-foreground">
-        <button onClick={openSupporters} className="inline-flex items-center gap-1 hover:text-foreground">
-          <Heart size={12} /> Support the planner
-        </button>
-      </footer>
-      {supportersOpen && <SupportersView user={user} onClose={closeSupporters} />}
-      {thanksOpen && (
-        <SupportThanksToast
-          isSupporter={isSupporter}
-          onSaveWallProfile={saveWallProfile}
-          onClose={() => setThanksOpen(false)}
-        />
+      {supportersEnabled && (
+        <>
+          <footer className="mt-8 border-t border-border py-4 text-center text-xs text-muted-foreground">
+            <button onClick={openSupporters} className="inline-flex items-center gap-1 hover:text-foreground">
+              <Heart size={12} /> Support the planner
+            </button>
+          </footer>
+          {supportersOpen && <SupportersView user={user} onClose={closeSupporters} />}
+          {thanksOpen && (
+            <SupportThanksToast
+              isSupporter={isSupporter}
+              onSaveWallProfile={saveWallProfile}
+              onClose={() => setThanksOpen(false)}
+            />
+          )}
+        </>
       )}
 
       <Analytics />
