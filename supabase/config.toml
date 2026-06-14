@@ -382,3 +382,10 @@ s3_region = "env(S3_REGION)"
 s3_access_key = "env(S3_ACCESS_KEY)"
 # Configures AWS_SECRET_ACCESS_KEY for S3 bucket
 s3_secret_key = "env(S3_SECRET_KEY)"
+
+# gumroad-ping receives unauthenticated Gumroad Ping webhooks (no Supabase JWT),
+# so JWT verification must be off or the gateway 401s before our code runs. The
+# function re-verifies each sale against the Gumroad API instead. Keeping this
+# here means deploys don't depend on remembering the --no-verify-jwt flag.
+[functions.gumroad-ping]
+verify_jwt = false
