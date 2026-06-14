@@ -347,22 +347,22 @@ export const MAJOR_REQUIREMENTS = {
     ],
     selectOneCourses: [
       {
-        label: 'Foundational Courses',
+        label: 'Foundations of Chemistry Lab (I or II)',
         courseIds: ['CHEM-SHU-127', 'CHEM-SHU-128'],
         count: 1,
       },
       {
-        label: 'Foundational Courses',
+        label: 'General Physics I or Physics I Honors',
         courseIds: ['PHYS-SHU-11', 'PHYS-SHU-91'],
         count: 1,
       },
       {
-        label: 'Foundational Courses',
+        label: 'General Physics II or Physics II Honors',
         courseIds: ['PHYS-SHU-12', 'PHYS-SHU-93'],
         count: 1,
       },
       {
-        label: 'Select five elective courses from the list below',
+        label: 'Biology Electives',
         courseIds: ['BIOL-SHU-30', 'BIOL-SHU-31', 'BIOL-SHU-261', 'BIOL-SHU-263', 'BIOL-SHU-271', 'BIOL-SHU-314', 'BIOL-SHU-997', 'CHEM-SHU-881', 'CHEM-SHU-882', 'NEUR-SHU-201'],
         count: 5,
       },
@@ -396,17 +396,17 @@ export const MAJOR_REQUIREMENTS = {
     ],
     selectOneCourses: [
       {
-        label: 'Foundational Courses',
+        label: 'General Physics I or Physics I Honors',
         courseIds: ['PHYS-SHU-11', 'PHYS-SHU-91'],
         count: 1,
       },
       {
-        label: 'Foundational Courses',
+        label: 'General Physics II or Physics II Honors',
         courseIds: ['PHYS-SHU-12', 'PHYS-SHU-93'],
         count: 1,
       },
       {
-        label: 'Select three of the following',
+        label: 'Chemistry Electives',
         courseIds: ['CHEM-GA-9627', 'CHEM-GA-9666', 'CHEM-GA-9668', 'CHEM-SHU-312', 'CHEM-SHU-881', 'CHEM-SHU-882', 'CHEM-SHU-997'],
         count: 3,
       },
@@ -433,22 +433,22 @@ export const MAJOR_REQUIREMENTS = {
     ],
     selectOneCourses: [
       {
-        label: 'Required Courses',
+        label: 'Computer Architecture or Computer Systems Organization',
         courseIds: ['CENG-SHU-202', 'CSCI-UA-201'],
         count: 1,
       },
       {
-        label: 'Required Courses',
+        label: 'Probability & Statistics or Honors Theory of Probability',
         courseIds: ['MATH-SHU-235', 'MATH-SHU-238'],
         count: 1,
       },
       {
-        label: 'Required Courses',
+        label: 'Linear Algebra Requirement',
         courseIds: ['MATH-SHU-265', 'MATH-SHU-140', 'MATH-SHU-160'],
         count: 1,
       },
       {
-        label: 'CSCI-SHU Requirement',
+        label: 'Major Electives',
         courseIds: ['CSCI-SHU-213', 'CSCI-SHU-215', 'CSCI-SHU-254', 'CSCI-SHU-308', 'CSCI-SHU-361', 'CS-UY-3393', 'CS-UY-3933', 'ECE-UY-3114', 'ECE-UY-3193', 'ROB-UY-2004'],
         count: 2,
       },
@@ -472,27 +472,27 @@ export const MAJOR_REQUIREMENTS = {
     ],
     selectOneCourses: [
       {
-        label: 'Foundational Courses',
+        label: 'Statistics Requirement',
         courseIds: ['BUSF-SHU-101', 'MATH-SHU-235', 'MATH-SHU-238'],
         count: 1,
       },
       {
-        label: 'Mathematics',
+        label: 'Multivariable Calculus or Honors Analysis I',
         courseIds: ['MATH-SHU-151', 'MATH-SHU-328'],
         count: 1,
       },
       {
-        label: 'Mathematics',
+        label: 'Linear Algebra Requirement',
         courseIds: ['MATH-SHU-140', 'MATH-SHU-141', 'MATH-SHU-265'],
         count: 1,
       },
       {
-        label: 'Data Analysis',
+        label: 'Econometrics or Mathematical Statistics',
         courseIds: ['ECON-SHU-301', 'MATH-SHU-234'],
         count: 1,
       },
       {
-        label: 'Data Analysis',
+        label: 'Data Analysis Elective',
         courseIds: ['CSCI-SHU-220', 'DATS-SHU-235', 'DATS-SHU-240'],
         count: 1,
       },
@@ -601,12 +601,12 @@ export const MAJOR_REQUIREMENTS = {
     ],
     selectOneCourses: [
       {
-        label: 'Required Courses',
+        label: 'Principles of Macroeconomics or Economics of Global Business',
         courseIds: ['ECON-SHU-1', 'ECON-SHU-251'],
         count: 1,
       },
       {
-        label: 'Required Courses',
+        label: 'Probability & Statistics or Statistics for Business and Economics',
         courseIds: ['MATH-SHU-235', 'BUSF-SHU-101'],
         count: 1,
       },
@@ -629,37 +629,37 @@ export const MAJOR_REQUIREMENTS = {
     ],
     selectOneCourses: [
       {
-        label: 'Major Requirements',
+        label: 'Introduction to Programming Requirement',
         courseIds: ['CSCI-SHU-11', 'CSCI-SHU-101'],
         count: 1,
       },
       {
-        label: 'Major Requirements',
+        label: 'Signals and Systems',
         courseIds: ['ECE-UY-3054', 'ENGR-UH-3610'],
         count: 1,
       },
       {
-        label: 'Major Requirements',
+        label: 'Electronics',
         courseIds: ['ECE-UY-3114', 'ENGR-UH-3611'],
         count: 1,
       },
       {
-        label: 'Major Requirements',
+        label: 'Electricity and Magnetism',
         courseIds: ['ECE-UY-3604', 'PHYS-UH-2115'],
         count: 1,
       },
       {
-        label: 'Major Requirements',
+        label: 'Probability & Statistics or Honors Theory of Probability',
         courseIds: ['MATH-SHU-235', 'MATH-SHU-238'],
         count: 1,
       },
       {
-        label: 'Major Requirements',
+        label: 'Linear Algebra Requirement',
         courseIds: ['MATH-SHU-265', 'MATH-SHU-140', 'MATH-SHU-160'],
         count: 1,
       },
       {
-        label: 'Electives',
+        label: 'Major Electives',
         courseIds: ['ECE-UY-3404', 'ECE-UY-3064', 'ECE-UY-3124', 'ECE-UY-3824', 'CSCI-SHU-308', 'CSCI-SHU-350', 'ECE-UY-3193', 'ROB-UY-2004'],
         count: 2,
       },
@@ -709,7 +709,7 @@ export const MAJOR_REQUIREMENTS = {
     ],
     selectOneCourses: [
       {
-        label: 'Select five of the following',
+        label: 'Mathematics Electives',
         courseIds: ['MATH-SHU-160', 'MATH-SHU-226', 'MATH-SHU-234', 'MATH-SHU-250', 'MATH-SHU-251', 'MATH-SHU-252', 'MATH-SHU-263', 'MATH-SHU-282', 'MATH-SHU-329', 'MATH-SHU-345', 'MATH-SHU-349', 'MATH-SHU-350', 'MATH-SHU-377', 'MATH-SHU-997'],
         count: 5,
       },
@@ -730,22 +730,22 @@ export const MAJOR_REQUIREMENTS = {
     ],
     selectOneCourses: [
       {
-        label: 'Choose at least two of the following',
+        label: 'Foundation Courses',
         courseIds: ['ART-SHU-101', 'HIST-SHU-101', 'HIST-SHU-102', 'HUMN-SHU-101', 'HUMN-SHU-110', 'HUMN-SHU-112', 'PHIL-SHU-101'],
         count: 2,
       },
       {
-        label: 'Choose at least two of the following',
+        label: 'Introductory Courses',
         courseIds: ['HIST-SHU-130', 'HIST-SHU-205', 'HIST-SHU-310', 'HUMN-SHU-180', 'HUMN-SHU-182', 'HUMN-SHU-183', 'HUMN-SHU-205', 'HUMN-SHU-231', 'HUMN-SHU-140', 'HUMN-SHU-160', 'PHIL-SHU-70', 'PHIL-SHU-80', 'PHIL-SHU-107', 'PHIL-SHU-115'],
         count: 2,
       },
       {
-        label: 'Choose at least five of the following',
+        label: 'Advanced Courses',
         courseIds: ['ART-SHU-180', 'GCHN-SHU-210', 'HIST-SHU-158', 'HIST-SHU-188', 'HIST-SHU-209', 'HIST-SHU-265', 'HIST-SHU-305', 'HUMN-SHU-190', 'HUMN-SHU-280', 'PHIL-SHU-110', 'PHIL-SHU-200', 'PHIL-SHU-205'],
         count: 5,
       },
       {
-        label: 'Choose at least one of the following',
+        label: 'Advanced Interdisciplinary Course',
         courseIds: ['ART-SHU-222', 'HIST-SHU-330', 'HUMN-SHU-308', 'PHIL-SHU-91', 'PHIL-SHU-130'],
         count: 1,
       },
@@ -767,7 +767,7 @@ export const MAJOR_REQUIREMENTS = {
     ],
     selectOneCourses: [
       {
-        label: 'Foundations',
+        label: 'Foundations Labs',
         courseIds: ['INTM-SHU-101', 'INTM-SHU-103', 'INTM-SHU-120'],
         count: 2,
       },
@@ -833,12 +833,12 @@ export const MAJOR_REQUIREMENTS = {
         count: 1,
       },
       {
-        label: 'Select at least two of the following',
+        label: 'Constrained Electives',
         courseIds: ['MATH-SHU-141', 'MATH-SHU-142', 'MATH-SHU-226', 'MATH-SHU-282', 'MATH-SHU-328', 'MATH-SHU-329', 'MATH-SHU-339', 'MATH-SHU-348', 'MATH-SHU-349', 'MATH-SHU-350', 'MATH-SHU-375', 'MATH-SHU-377'],
         count: 2,
       },
       {
-        label: 'Select six of the following',
+        label: 'Additional Mathematics Electives',
         courseIds: ['CSCI-SHU-2314', 'MATH-SHU-160', 'MATH-SHU-234', 'MATH-SHU-250', 'MATH-SHU-251', 'MATH-SHU-252', 'MATH-SHU-263', 'MATH-SHU-345', 'MATH-SHU-395', 'MATH-SHU-997'],
         count: 6,
       },
@@ -869,17 +869,17 @@ export const MAJOR_REQUIREMENTS = {
     ],
     selectOneCourses: [
       {
-        label: 'Foundational Courses',
+        label: 'Foundations of Chemistry Lab (I or II)',
         courseIds: ['CHEM-SHU-127', 'CHEM-SHU-128'],
         count: 1,
       },
       {
-        label: 'Foundational Courses',
+        label: 'General Physics I or Physics I Honors',
         courseIds: ['PHYS-SHU-11', 'PHYS-SHU-91'],
         count: 1,
       },
       {
-        label: 'Foundational Courses',
+        label: 'General Physics II or Physics II Honors',
         courseIds: ['PHYS-SHU-12', 'PHYS-SHU-93'],
         count: 1,
       },
@@ -889,7 +889,7 @@ export const MAJOR_REQUIREMENTS = {
         count: 1,
       },
       {
-        label: 'Complete 4-8 credits of',
+        label: 'Neural Science Capstone (Independent Study)',
         courseIds: ['NEUR-SHU-997', 'NEUR-SHU-998'],
         count: 1,
       },
@@ -929,17 +929,17 @@ export const MAJOR_REQUIREMENTS = {
     ],
     selectOneCourses: [
       {
-        label: 'Foundational Courses',
+        label: 'Foundations of Chemistry Lab (I or II)',
         courseIds: ['CHEM-SHU-127', 'CHEM-SHU-128'],
         count: 1,
       },
       {
-        label: 'Foundational Courses',
+        label: 'General Physics I or Physics I Honors',
         courseIds: ['PHYS-SHU-11', 'PHYS-SHU-91'],
         count: 1,
       },
       {
-        label: 'Select three of the following',
+        label: 'Physics Electives',
         courseIds: ['PHYS-SHU-135', 'PHYS-SHU-201', 'PHYS-GA-7001'],
         count: 3,
       },
