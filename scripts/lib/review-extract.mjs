@@ -121,3 +121,86 @@ export function buildPrompt(catalogSlice, docText) {
     `"""`,
   ].join("\n");
 }
+
+export function normalizeCourses(parsed) {
+  const courses = Array.isArray(parsed?.courses) ? parsed.courses : [];
+  return courses.map((c) => ({
+    course_id: asString(c?.course_id).trim(),
+    summary_en: asString(c?.summary_en),
+    difficulty_en: asString(c?.difficulty_en),
+    workload_en: asString(c?.workload_en),
+    key_points_en: asStringArray(c?.key_points_en),
+    evidence: asStringArray(c?.evidence),
+    professors: (Array.isArray(c?.professors) ? c.professors : []).map((p) => ({
+      name: asString(p?.name),
+      summary_en: asString(p?.summary_en),
+      teaching_style_en: asString(p?.teaching_style_en),
+      pros_en: asStringArray(p?.pros_en),
+      cons_en: asStringArray(p?.cons_en),
+      evidence: asStringArray(p?.evidence),
+    })),
+  }));
+}
+
+function unionInto(target, items) {
+  const seen = new Set(target);
+  for (const x of items) {
+    if (!seen.has(x)) {
+      seen.add(x);
+      target.push(x);
+    }
+  }
+}
+
+function cloneProf(p) {
+  return {
+    ...p,
+    pros_en: [...p.pros_en],
+    cons_en: [...p.cons_en],
+    evidence: [...p.evidence],
+  };
+}
+
+// Defensive cross-slice merge. A course normally lives in exactly one slice,
+// so this mostly guards against the model echoing the same id/professor twice.
+export function mergeCourses(courseArrays) {
+  const byId = new Map();
+  for (const list of courseArrays) {
+    for (const c of list) {
+      if (!c?.course_id) continue;
+      const existing = byId.get(c.course_id);
+      if (!existing) {
+        byId.set(c.course_id, {
+          ...c,
+          key_points_en: [...c.key_points_en],
+          evidence: [...c.evidence],
+          professors: c.professors.map(cloneProf),
+        });
+        continue;
+      }
+      if (c.summary_en.length > existing.summary_en.length) existing.summary_en = c.summary_en;
+      if (!existing.difficulty_en) existing.difficulty_en = c.difficulty_en;
+      if (!existing.workload_en) existing.workload_en = c.workload_en;
+      unionInto(existing.key_points_en, c.key_points_en);
+      unionInto(existing.evidence, c.evidence);
+      const byName = new Map(existing.professors.map((p) => [p.name.trim().toLowerCase(), p]));
+      for (const p of c.professors) {
+        const k = p.name.trim().toLowerCase();
+        if (!k) continue;
+        const e = byName.get(k);
+        if (!e) {
+          const copy = cloneProf(p);
+          existing.professors.push(copy);
+          byName.set(k, copy);
+        } else {
+          if (p.summary_en.length > e.summary_en.length) e.summary_en = p.summary_en;
+          if (!e.teaching_style_en) e.teaching_style_en = p.teaching_style_en;
+          unionInto(e.pros_en, p.pros_en);
+          unionInto(e.cons_en, p.cons_en);
+          unionInto(e.evidence, p.evidence);
+        }
+      }
+    }
+  }
+  return [...byId.values()];
+}

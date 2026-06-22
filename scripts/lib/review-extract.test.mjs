@@ -9,6 +9,8 @@ import {
   buildCatalogSlices,
   buildPrompt,
   COMBINED_SCHEMA,
+  normalizeCourses,
+  mergeCourses,
 } from "./review-extract.mjs";
 
 test("sha256Hex is stable and hex", () => {
@@ -61,4 +63,53 @@ test("buildPrompt embeds the slice catalog, the doc, and key rules", () => {
   assert.match(prompt, /MUST come EXACTLY from the catalog/);
   assert.match(prompt, /verbatim/i);
   assert.match(prompt, /马什老师/); // bilingual same-person instruction present
+});
+
+test("normalizeCourses fills defaults and coerces shapes", () => {
+  const out = normalizeCourses({
+    courses: [
+      { course_id: " CSCI-SHU-101 ", summary_en: "ok" }, // missing arrays/profs
+      { nonsense: true },
+    ],
+  });
+  assert.equal(out.length, 2);
+  assert.equal(out[0].course_id, "CSCI-SHU-101");
+  assert.deepEqual(out[0].key_points_en, []);
+  assert.deepEqual(out[0].professors, []);
+  assert.equal(out[1].course_id, "");
+});
+
+test("normalizeCourses keeps nested professor fields", () => {
+  const out = normalizeCourses({
+    courses: [{
+      course_id: "X", professors: [
+        { name: "Marsh", pros_en: ["clear"], evidence: ["很好"] },
+      ],
+    }],
+  });
+  assert.equal(out[0].professors[0].name, "Marsh");
+  assert.deepEqual(out[0].professors[0].pros_en, ["clear"]);
+  assert.deepEqual(out[0].professors[0].evidence, ["很好"]);
+});
+
+test("mergeCourses dedupes by course_id, unions, longest summary wins", () => {
+  const a = normalizeCourses({ courses: [{ course_id: "X", summary_en: "short", key_points_en: ["k1"] }] });
+  const b = normalizeCourses({ courses: [{ course_id: "X", summary_en: "a longer summary", key_points_en: ["k1", "k2"] }] });
+  const merged = mergeCourses([a, b]);
+  assert.equal(merged.length, 1);
+  assert.equal(merged[0].summary_en, "a longer summary");
+  assert.deepEqual(merged[0].key_points_en, ["k1", "k2"]);
+});
+
+test("mergeCourses merges professors by lowercased name, unions pros", () => {
+  const a = normalizeCourses({ courses: [{ course_id: "X", professors: [{ name: "Marsh", pros_en: ["clear"] }] }] });
+  const b = normalizeCourses({ courses: [{ course_id: "X", professors: [
+    { name: "marsh", pros_en: ["funny"] },     // same person, different case
+    { name: "Chen", cons_en: ["strict"] },      // new person
+  ] }] });
+  const merged = mergeCourses([a, b]);
+  const profs = merged[0].professors;
+  assert.equal(profs.length, 2);
+  const marsh = profs.find((p) => p.name.toLowerCase() === "marsh");
+  assert.deepEqual(marsh.pros_en, ["clear", "funny"]);
 });
