@@ -59,19 +59,21 @@ scripts/
   validate-scraped-data.mjs      Sanity checks on scraped JSON
   import-scraped-to-supabase.mjs Push scraped catalog into Supabase tables
   sync-local-credits.mjs         Reconcile local credit values
-  lib/                           Shared normalize helpers for the scripts above
+  ingest-reviews.mjs             Extract course/professor reviews from the community doc via Gemini → Supabase
+  lib/                           Shared helpers: catalog/requirement normalize + review extract/providers (+ tests)
 scraped-data/             Committed snapshots: all-courses.json, shanghai.json
 supabase/
-  migrations/             001–019 (numbered, append-only)
-  functions/ingest-reviews/  Deno edge function for review ingestion
+  migrations/             001–020 (numbered, append-only)
   functions/gumroad-ping/    Deno edge function: verifies Gumroad sale Pings via
                               the Gumroad API and records supporters via RPC (+ README)
   snippets/catchup_remote.sql  Catch-up for hosted DBs behind on migrations
+.github/workflows/
+  ingest-reviews.yml      Weekly cron + manual dispatch that runs scripts/ingest-reviews.mjs
 docs/
   clerk-setup.md          Clerk dashboard/OAuth/domain setup walkthrough
 ```
 
-**npm scripts:** `dev`, `build`, `preview`, `lint`, `test` (Node test runner over `src` + `scripts`), `generate:catalog`, `validate:catalog`, `import:catalog`, `sync-credits`.
+**npm scripts:** `dev`, `build`, `preview`, `lint`, `test` (Node test runner over `src` + `scripts`), `generate:catalog`, `validate:catalog`, `import:catalog`, `sync-credits`, `ingest:reviews`.
 
 ## Architecture
 
@@ -111,6 +113,12 @@ Tables: `plans` (id, user_id text = Clerk ID, name, major, second_major, student
 **Categories:** `getEffectiveCategory(course, majorId)` in `src/lib/majorCourseRules.js` resolves the effective category (major-required, major-elective, …) for the active major. With a double major, use `getEffectiveCategoryForMajors(course, [major, secondMajor])` / `isCourseRelevantToMajors()` — the strongest category across the active majors wins (required > elective), falling back to the primary major's view. Requirement progress counts effective categories, not raw stored ones, so sidebar bars match course-card colors. Generated catalog fulfillment text is normalized in `localCatalog.js` (CORE Writing, Language, GPS/PoH/IPC/HPC/SSPC, Mathematics, Algorithmic Thinking, ED, STS → `requirementIds`).
 
 **Major requirements (`MAJOR_REQUIREMENTS` in `src/data/courses.js`):** hand-curated, not regenerated — `scripts/generate-major-requirements.mjs` is stale (its `requirement-normalize.mjs` helper no longer exports the functions it imports) and the curated data carries fixes the generator does not (e.g. data-science/social-science `concentrations`). Each `selectOneCourses` group's `label` is a **display-only** string shown verbatim as a row in `RequirementsSidebar`; matching is done by `courseId`, never by label. Labels must describe the actual choice (e.g. `'Statistics Requirement'`, `'Principles of Macroeconomics or Economics of Global Business'`), not echo a bulletin section header like "Required Courses"/"Foundational Courses". Source of truth for the choices is the program `curriculum` in `scraped-data/shanghai.json` (a course with `alternatives` or a `Select N of the following` comment → a `selectOneCourses` group). Keep labels distinct within a major so duplicate rows don't appear.
+
+### Review ingestion
+
+- `scripts/ingest-reviews.mjs` (run by `.github/workflows/ingest-reviews.yml` — weekly cron + manual dispatch) extracts course and professor reviews from the freeform, bilingual community Google Doc and upserts `course_reviews` / `course_professor_reviews`. It replaced the deleted `ingest-reviews` edge function, whose ~150s budget forced lossy pruning that wrecked professor extraction.
+- Pure helpers (slicing, prompt/schema, merge/dedupe, id-resolve, row-build) live in `scripts/lib/review-extract.mjs` (unit-tested); the model call is isolated in `scripts/lib/review-providers.mjs` with an injectable `fetch`. Default model `gemini-2.5-pro`, swappable via `REVIEW_MODEL` (e.g. `gemini-2.5-flash`).
+- The FULL doc is sent on every call; the catalog is sliced round-robin only to bound model output (auto-bisect on `MAX_TOKENS`). One combined pass extracts a course with its professors nested, so prof→course attribution happens in a single reasoning step. Grounding quotes (verbatim, original-language) are stored in `raw_zh` and shown via the "Show original" toggle. SHA-256 gate on `review_ingest_runs.doc_hash` skips unchanged docs; migration `020` unscheduled the old pg_cron job. Env: `VITE_SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, `GEMINI_API_KEY`, `REVIEW_DOC_ID` (GitHub repo secrets in CI).
 
 ### Auth (Clerk + Supabase RLS)
 
