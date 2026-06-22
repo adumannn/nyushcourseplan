@@ -11,6 +11,8 @@ import {
   COMBINED_SCHEMA,
   normalizeCourses,
   mergeCourses,
+  buildIdResolver,
+  buildRows,
 } from "./review-extract.mjs";
 
 test("sha256Hex is stable and hex", () => {
@@ -112,4 +114,58 @@ test("mergeCourses merges professors by lowercased name, unions pros", () => {
   assert.equal(profs.length, 2);
   const marsh = profs.find((p) => p.name.toLowerCase() === "marsh");
   assert.deepEqual(marsh.pros_en, ["clear", "funny"]);
+});
+
+const CATALOG = [
+  { id: "CSCI-SHU-220", code: "CSCI-SHU 220", name: "Algorithms" },
+];
+
+test("buildIdResolver maps id/code/space/dash variants, null for unknown", () => {
+  const r = buildIdResolver(CATALOG);
+  assert.equal(r("CSCI-SHU-220"), "CSCI-SHU-220");
+  assert.equal(r("CSCI-SHU 220"), "CSCI-SHU-220");
+  assert.equal(r("csci-shu220"), "CSCI-SHU-220");
+  assert.equal(r("WRIT-SHU-101"), null);
+  assert.equal(r(""), null);
+});
+
+test("buildRows shapes rows, drops unknown ids, joins evidence into raw_zh", () => {
+  const resolve = buildIdResolver(CATALOG);
+  const courses = normalizeCourses({ courses: [
+    {
+      course_id: "CSCI-SHU 220", summary_en: "Solid course", difficulty_en: "Hard",
+      workload_en: "N/A", key_points_en: ["curved", "none"], evidence: ["算法很难"],
+      professors: [
+        { name: "Prof Wang", summary_en: "Clear", teaching_style_en: "lecture", pros_en: ["fair"], cons_en: [], evidence: ["王老师讲得清楚"] },
+        { name: "", summary_en: "ghost" },               // no name -> skipped
+      ],
+    },
+    { course_id: "NOPE-SHU-999", summary_en: "x" },       // unknown -> dropped
+    { course_id: "CSCI-SHU 220", summary_en: "", professors: [] }, // dup id, empty -> no extra course row
+  ] });
+
+  const { courseRows, profRows, droppedIds } = buildRows(mergeCourses([courses]), resolve, "2026-06-22T00:00:00Z");
+
+  assert.equal(courseRows.length, 1);
+  assert.equal(courseRows[0].course_id, "CSCI-SHU-220");
+  assert.equal(courseRows[0].workload_en, "");                 // "N/A" cleaned
+  assert.deepEqual(courseRows[0].key_points_en, ["curved"]);   // "none" filtered
+  assert.equal(courseRows[0].raw_zh, "算法很难");
+  assert.match(courseRows[0].content_hash, /^[0-9a-f]{64}$/);
+
+  assert.equal(profRows.length, 1);
+  assert.equal(profRows[0].professor_name, "Prof Wang");
+  assert.equal(profRows[0].raw_zh, "王老师讲得清楚");
+  assert.deepEqual(droppedIds, ["NOPE-SHU-999"]);
+});
+
+test("buildRows skips a course with no content but still emits its professors", () => {
+  const resolve = buildIdResolver(CATALOG);
+  const courses = normalizeCourses({ courses: [
+    { course_id: "CSCI-SHU 220", summary_en: "", difficulty_en: "", workload_en: "", key_points_en: [],
+      professors: [{ name: "Wang", summary_en: "Great", pros_en: [], cons_en: [], evidence: [] }] },
+  ] });
+  const { courseRows, profRows } = buildRows(courses, resolve, "T");
+  assert.equal(courseRows.length, 0);
+  assert.equal(profRows.length, 1);
 });

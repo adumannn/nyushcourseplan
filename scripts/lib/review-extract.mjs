@@ -204,3 +204,89 @@ export function mergeCourses(courseArrays) {
   }
   return [...byId.values()];
 }
+
+// Maps any plausible spelling of an id/code back to the canonical catalog id.
+// Kept as a safety net even though the model is given exact ids.
+export function buildIdResolver(catalog) {
+  const map = new Map();
+  for (const c of catalog) {
+    const id = c.id;
+    map.set(id.toLowerCase(), id);
+    map.set(id.replace(/-/g, " ").toLowerCase(), id);
+    map.set(id.replace(/-/g, "").toLowerCase(), id);
+    if (c.code) {
+      map.set(c.code.toLowerCase(), id);
+      map.set(c.code.replace(/\s+/g, "").toLowerCase(), id);
+      map.set(c.code.replace(/\s+/g, "-").toLowerCase(), id);
+    }
+  }
+  return (raw) => {
+    if (!raw) return null;
+    const direct = map.get(String(raw).toLowerCase());
+    if (direct) return direct;
+    return map.get(String(raw).replace(/\s+/g, "").toLowerCase()) ?? null;
+  };
+}
+
+export function buildRows(courses, resolveId, nowIso) {
+  const courseRows = [];
+  const profRows = [];
+  const droppedIds = [];
+  const courseSeen = new Set();
+  const profSeen = new Set();
+
+  for (const c of courses) {
+    const id = resolveId(c.course_id);
+    if (!id) {
+      if (c.course_id) droppedIds.push(c.course_id);
+      continue;
+    }
+
+    if (!courseSeen.has(id)) {
+      const summary = cleanText(c.summary_en);
+      const difficulty = cleanText(c.difficulty_en);
+      const workload = cleanText(c.workload_en);
+      const keyPoints = asStringArray(c.key_points_en).filter((k) => !isStub(k));
+      const evidence = asStringArray(c.evidence).filter((e) => !isStub(e));
+      if (summary || difficulty || workload || keyPoints.length) {
+        courseSeen.add(id);
+        courseRows.push({
+          course_id: id,
+          summary_en: summary,
+          difficulty_en: difficulty,
+          workload_en: workload,
+          key_points_en: keyPoints,
+          content_hash: sha256Hex(JSON.stringify({ s: summary, d: difficulty, w: workload, k: keyPoints })),
+          raw_zh: evidence.join(EVIDENCE_SEP),
+          updated_at: nowIso,
+        });
+      }
+    }
+
+    for (const p of c.professors) {
+      const name = asString(p.name).trim();
+      if (!name) continue;
+      const key = `${id}::${name.toLowerCase()}`;
+      if (profSeen.has(key)) continue;
+      const summary = cleanText(p.summary_en);
+      const teaching = cleanText(p.teaching_style_en);
+      const pros = asStringArray(p.pros_en).filter((x) => !isStub(x));
+      const cons = asStringArray(p.cons_en).filter((x) => !isStub(x));
+      const evidence = asStringArray(p.evidence).filter((e) => !isStub(e));
+      if (!summary && !teaching && !pros.length && !cons.length) continue;
+      profSeen.add(key);
+      profRows.push({
+        course_id: id,
+        professor_name: name,
+        summary_en: summary,
+        teaching_style_en: teaching,
+        pros_en: pros,
+        cons_en: cons,
+        content_hash: sha256Hex(JSON.stringify({ s: summary, t: teaching, p: pros, c: cons })),
+        raw_zh: evidence.join(EVIDENCE_SEP),
+        updated_at: nowIso,
+      });
+    }
+  }
+  return { courseRows, profRows, droppedIds };
+}
