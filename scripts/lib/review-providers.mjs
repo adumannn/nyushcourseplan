@@ -1,5 +1,29 @@
 const GEMINI_RETRIES = 3;
+// Keep a single call comfortably under undici's ~300s headers timeout. A full
+// 65536-token generation over the full doc was observed to exceed it ("fetch
+// failed" at ~301s). The catalog-slice bisect handles any resulting truncation.
+const MAX_OUTPUT_TOKENS = 16384;
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+// Builds the Gemini generateContent request body. Flash / Flash-Lite default to
+// dynamic "thinking", which on a full-doc prompt can push one call past the
+// ~300s socket timeout. Disable thinking for flash models (Pro cannot disable
+// it — min budget 128 — so leave it unset there and rely on smaller slices).
+export function buildGeminiBody(model, prompt, schema) {
+  const generationConfig = {
+    temperature: 0.3,
+    responseMimeType: "application/json",
+    responseSchema: schema,
+    maxOutputTokens: MAX_OUTPUT_TOKENS,
+  };
+  if (String(model).includes("flash")) {
+    generationConfig.thinkingConfig = { thinkingBudget: 0 };
+  }
+  return {
+    contents: [{ role: "user", parts: [{ text: prompt }] }],
+    generationConfig,
+  };
+}
 
 export function parseRetryDelayMs(errText) {
   try {
@@ -25,22 +49,25 @@ export async function extract({ model, prompt, schema, apiKey, fetchImpl = globa
     throw new Error(`Provider for model "${model}" is not wired yet (only gemini-* supported in v1).`);
   }
   const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`;
-  const body = {
-    contents: [{ role: "user", parts: [{ text: prompt }] }],
-    generationConfig: {
-      temperature: 0.3,
-      responseMimeType: "application/json",
-      responseSchema: schema,
-      maxOutputTokens: 65536,
-    },
-  };
+  const body = buildGeminiBody(model, prompt, schema);
 
   for (let attempt = 0; attempt <= GEMINI_RETRIES; attempt++) {
-    const res = await fetchImpl(`${endpoint}?key=${apiKey}`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(body),
-    });
+    let res;
+    try {
+      res = await fetchImpl(`${endpoint}?key=${apiKey}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+    } catch (err) {
+      // Network-level failure (reset, DNS, undici timeout → "fetch failed").
+      // Treat as retriable rather than aborting the whole run.
+      if (attempt === GEMINI_RETRIES) {
+        throw new Error(`Gemini fetch failed after retries: ${err?.message || err}`);
+      }
+      await sleep(Math.min(30000, 1000 * 2 ** attempt) + 500);
+      continue;
+    }
 
     if (res.ok) {
       const json = await res.json();

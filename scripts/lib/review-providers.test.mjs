@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { extract, parseRetryDelayMs } from "./review-providers.mjs";
+import { extract, parseRetryDelayMs, buildGeminiBody } from "./review-providers.mjs";
 
 function geminiOk(obj, finishReason = "STOP") {
   return {
@@ -43,4 +43,26 @@ test("parseRetryDelayMs reads RetryInfo seconds", () => {
   const body = JSON.stringify({ error: { details: [{ "@type": "type.googleapis.com/google.rpc.RetryInfo", retryDelay: "7s" }] } });
   assert.equal(parseRetryDelayMs(body), 7000);
   assert.equal(parseRetryDelayMs("not json"), null);
+});
+
+test("buildGeminiBody disables thinking for flash, leaves it unset for pro", () => {
+  const flash = buildGeminiBody("gemini-2.5-flash", "p", { type: "object" });
+  assert.equal(flash.generationConfig.thinkingConfig.thinkingBudget, 0);
+  assert.equal(flash.generationConfig.maxOutputTokens, 16384);
+  assert.equal(flash.contents[0].parts[0].text, "p");
+
+  const pro = buildGeminiBody("gemini-2.5-pro", "p", { type: "object" });
+  assert.equal(pro.generationConfig.thinkingConfig, undefined);
+});
+
+test("extract retries a network-level failure then succeeds", async () => {
+  let calls = 0;
+  const fetchImpl = async () => {
+    calls += 1;
+    if (calls === 1) throw new TypeError("fetch failed");
+    return geminiOk({ courses: [] }, "STOP");
+  };
+  const { data } = await extract({ model: "gemini-2.5-flash", prompt: "p", schema: {}, apiKey: "k", fetchImpl });
+  assert.equal(calls, 2);
+  assert.deepEqual(data, { courses: [] });
 });
