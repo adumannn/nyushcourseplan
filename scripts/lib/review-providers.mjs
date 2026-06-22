@@ -94,7 +94,7 @@ export async function extract({ model, prompt, schema, apiKey, fetchImpl = globa
     const errText = await res.text();
     const retriable = res.status === 429 || (res.status >= 500 && res.status < 600);
     if (!retriable || attempt === GEMINI_RETRIES) {
-      throw new Error(`Gemini call failed: ${res.status} ${errText.slice(0, 300)}`);
+      throw new Error(`Gemini call failed: ${res.status} ${errText.slice(0, 1500)}`);
     }
     await sleep((parseRetryDelayMs(errText) ?? Math.min(30000, 1000 * 2 ** attempt)) + 500);
   }
