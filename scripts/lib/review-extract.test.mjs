@@ -7,6 +7,8 @@ import {
   asString,
   asStringArray,
   buildCatalogSlices,
+  buildPrompt,
+  COMBINED_SCHEMA,
 } from "./review-extract.mjs";
 
 test("sha256Hex is stable and hex", () => {
@@ -41,4 +43,22 @@ test("buildCatalogSlices distributes round-robin and drops empties", () => {
   assert.equal(slices.flat().length, 7);
   // k larger than catalog → no empty slices returned
   assert.equal(buildCatalogSlices(cat.slice(0, 2), 5).length, 2);
+});
+
+test("COMBINED_SCHEMA nests professors under courses", () => {
+  const courseProps = COMBINED_SCHEMA.properties.courses.items.properties;
+  assert.ok(courseProps.course_id);
+  assert.ok(courseProps.evidence);
+  assert.ok(courseProps.professors.items.properties.teaching_style_en);
+  assert.ok(courseProps.professors.items.properties.evidence);
+});
+
+test("buildPrompt embeds the slice catalog, the doc, and key rules", () => {
+  const slice = [{ id: "CSCI-SHU-101", code: "CSCI-SHU 101", name: "Intro to CS" }];
+  const prompt = buildPrompt(slice, "DOC-BODY-MARKER");
+  assert.match(prompt, /CSCI-SHU-101\tCSCI-SHU 101\tIntro to CS/);
+  assert.match(prompt, /DOC-BODY-MARKER/);
+  assert.match(prompt, /MUST come EXACTLY from the catalog/);
+  assert.match(prompt, /verbatim/i);
+  assert.match(prompt, /马什老师/); // bilingual same-person instruction present
 });
