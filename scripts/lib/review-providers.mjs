@@ -80,6 +80,12 @@ export async function extract({ model, prompt, schema, apiKey, fetchImpl = globa
       try {
         data = JSON.parse(text);
       } catch {
+        // Truncated output (hit the token cap) is invalid JSON. Don't fail the
+        // run — surface MAX_TOKENS with empty data so the caller bisects the
+        // slice and retries smaller. Only a non-truncated parse error is real.
+        if (finishReason === "MAX_TOKENS") {
+          return { data: { courses: [] }, finishReason };
+        }
         throw new Error(`Gemini returned non-JSON (finishReason=${finishReason}): ${text.slice(0, 300)}`);
       }
       return { data, finishReason };

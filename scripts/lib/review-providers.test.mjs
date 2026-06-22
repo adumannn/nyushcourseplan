@@ -55,6 +55,27 @@ test("buildGeminiBody disables thinking for flash, leaves it unset for pro", () 
   assert.equal(pro.generationConfig.thinkingConfig, undefined);
 });
 
+test("extract returns empty + MAX_TOKENS on truncated JSON (lets caller bisect)", async () => {
+  const fetchImpl = async () => ({
+    ok: true,
+    json: async () => ({ candidates: [{ finishReason: "MAX_TOKENS", content: { parts: [{ text: '{"courses":[{"course_id":"X' }] } }] }),
+  });
+  const { data, finishReason } = await extract({ model: "gemini-2.5-flash", prompt: "p", schema: {}, apiKey: "k", fetchImpl });
+  assert.equal(finishReason, "MAX_TOKENS");
+  assert.deepEqual(data, { courses: [] });
+});
+
+test("extract still throws on malformed JSON when not truncated", async () => {
+  const fetchImpl = async () => ({
+    ok: true,
+    json: async () => ({ candidates: [{ finishReason: "STOP", content: { parts: [{ text: "not json" }] } }] }),
+  });
+  await assert.rejects(
+    extract({ model: "gemini-2.5-flash", prompt: "p", schema: {}, apiKey: "k", fetchImpl }),
+    /non-JSON/,
+  );
+});
+
 test("extract retries a network-level failure then succeeds", async () => {
   let calls = 0;
   const fetchImpl = async () => {
