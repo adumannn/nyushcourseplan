@@ -20,10 +20,19 @@ import { extract } from "./lib/review-providers.mjs";
 
 const MODEL = process.env.REVIEW_MODEL || "gemini-2.5-pro";
 const SLICES = Number(process.env.REVIEW_CATALOG_SLICES || "4");
-const PACE_MS = 1500;        // gap between sequential calls (Pro free tier ~5 RPM)
+const MIN_CALL_INTERVAL_MS = 4000;   // free-tier Flash caps at 20 req/min; ~15/min keeps margin
 const MAX_BISECT_DEPTH = 3;
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+// Global throttle: enforces a minimum gap between ANY two Gemini calls, so a
+// burst of bisect calls can't exceed the per-minute request quota.
+let lastCallAt = 0;
+async function throttle() {
+  const wait = lastCallAt + MIN_CALL_INTERVAL_MS - Date.now();
+  if (wait > 0) await sleep(wait);
+  lastCallAt = Date.now();
+}
 
 function requireEnv(name) {
   const v = process.env[name];
@@ -43,11 +52,11 @@ async function fetchDocPlainText(docId) {
 // doc is re-sent each time, so nothing is lost; only output is split.
 async function extractSlice(slice, docText, apiKey, depth = 0) {
   const prompt = buildPrompt(slice, docText);
+  await throttle();
   const { data, finishReason } = await extract({ model: MODEL, prompt, schema: COMBINED_SCHEMA, apiKey });
   if (finishReason === "MAX_TOKENS" && slice.length > 1 && depth < MAX_BISECT_DEPTH) {
     const mid = Math.ceil(slice.length / 2);
     const left = await extractSlice(slice.slice(0, mid), docText, apiKey, depth + 1);
-    await sleep(PACE_MS);
     const right = await extractSlice(slice.slice(mid), docText, apiKey, depth + 1);
     return [...left, ...right];
   }
@@ -105,7 +114,6 @@ async function main() {
     for (let i = 0; i < slices.length; i++) {
       console.log(`Slice ${i + 1}/${slices.length} (${slices[i].length} courses)…`);
       perSlice.push(await extractSlice(slices[i], docText, apiKey));
-      if (i < slices.length - 1) await sleep(PACE_MS);
     }
 
     const merged = mergeCourses(perSlice);
