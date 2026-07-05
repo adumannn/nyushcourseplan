@@ -117,8 +117,34 @@ async function main() {
     const resolveId = buildIdResolver(catalog);
     console.log(`Catalog ${catalog.length} courses; model=${MODEL}; ≤${COURSES_PER_CALL} courses/round`);
 
-    const perRound = [];
+    // Cross-run continuation: skip courses already ingested for THIS doc
+    // version (any review row written since the first run that saw this
+    // doc_hash). A quota-limited key then converges across successive runs
+    // instead of redoing the same head of the catalog every time; a new doc
+    // version (new hash) naturally starts from scratch.
     let remaining = catalog;
+    const { data: firstRun } = await supabase
+      .from("review_ingest_runs")
+      .select("started_at")
+      .eq("doc_hash", docHash)
+      .order("started_at", { ascending: true })
+      .limit(1)
+      .maybeSingle();
+    if (firstRun?.started_at) {
+      const [cr, pr] = await Promise.all([
+        supabase.from("course_reviews").select("course_id").gte("updated_at", firstRun.started_at),
+        supabase.from("course_professor_reviews").select("course_id").gte("updated_at", firstRun.started_at),
+      ]);
+      if (cr.error) throw cr.error;
+      if (pr.error) throw pr.error;
+      const done = new Set([...(cr.data ?? []), ...(pr.data ?? [])].map((r) => r.course_id));
+      if (done.size > 0) {
+        remaining = catalog.filter((c) => !done.has(c.id));
+        console.log(`Resuming doc ${docHash.slice(0, 12)}…: ${done.size} courses already ingested; ${remaining.length} left to scan`);
+      }
+    }
+
+    const perRound = [];
     let cap = COURSES_PER_CALL;
     let partialReason = "";
     let sawEmptyStop = false;
