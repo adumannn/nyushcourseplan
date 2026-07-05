@@ -31,7 +31,10 @@ const COURSES_PER_CALL = Number(
     (MODEL.includes("2.5") ? "30" : "10"), // non-2.5 models cap output at 8192
 );
 const MIN_COURSES_PER_CALL = 3;
-const MAX_ROUNDS = 12;
+// The doc reviews 270+ courses, so completion needs ~20-30 rounds. On a
+// quota-restricted key the loop quota-breaks partway and the run is recorded
+// as partial (hash gate stays open), so the next run picks the work up again.
+const MAX_ROUNDS = Number(process.env.REVIEW_MAX_ROUNDS || "40");
 const MIN_CALL_INTERVAL_MS = 4000;   // also stay far under any per-minute cap
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -117,9 +120,24 @@ async function main() {
     const perRound = [];
     let remaining = catalog;
     let cap = COURSES_PER_CALL;
+    let partialReason = "";
+    let sawEmptyStop = false;
     for (let round = 1; round <= MAX_ROUNDS && remaining.length > 0; round++) {
       console.log(`Round ${round}: ${remaining.length} catalog courses remaining (cap ${cap})…`);
-      const { courses, finishReason } = await extractRound(remaining, docText, apiKey, cap);
+      let courses, finishReason;
+      try {
+        ({ courses, finishReason } = await extractRound(remaining, docText, apiKey, cap));
+      } catch (err) {
+        const msg = err instanceof Error ? err.message : String(err);
+        // Quota exhaustion mid-run: keep the rounds already extracted instead
+        // of losing them — upsert below, record the run as partial.
+        if (/429|RESOURCE_EXHAUSTED|quota/i.test(msg)) {
+          partialReason = "quota exhausted";
+          console.warn(`  quota exhausted at round ${round}; keeping ${perRound.length} completed rounds`);
+          break;
+        }
+        throw err;
+      }
       console.log(`  → ${finishReason ?? "?"}, extracted ${courses.length}`);
       if (courses.length === 0) {
         // A truncated empty round means even `cap` courses overflowed the
@@ -130,17 +148,25 @@ async function main() {
           console.warn(`  truncated with no data; shrinking cap to ${cap} and retrying`);
           continue;
         }
-        if (finishReason === "MAX_TOKENS") console.warn("  truncated at minimum cap; stopping");
+        if (finishReason === "MAX_TOKENS") {
+          console.warn("  truncated at minimum cap; stopping");
+          partialReason = "truncation at minimum cap";
+        } else {
+          sawEmptyStop = true;
+        }
         break;
       }
       perRound.push(courses);
       const next = removeExtracted(remaining, courses, resolveId);
       if (next.length === remaining.length) {
         console.warn("  round yielded no known catalog ids; stopping to avoid a loop");
+        partialReason = "no-progress round";
         break;
       }
       remaining = next;
     }
+    const complete = sawEmptyStop || remaining.length === 0;
+    if (!complete && !partialReason) partialReason = `round budget exhausted (MAX_ROUNDS=${MAX_ROUNDS})`;
 
     const merged = mergeCourses(perRound);
     const nowIso = new Date().toISOString();
@@ -170,12 +196,16 @@ async function main() {
       if (error) throw error;
     }
 
+    // A partial run records an error string so the doc-hash gate stays open
+    // and the next scheduled run resumes the remaining catalog (upserts are
+    // idempotent, so re-extracted courses just refresh in place).
     await supabase.from("review_ingest_runs").insert({
       started_at: runStartedAt, finished_at: new Date().toISOString(),
       sections_total: merged.length, sections_resummarized: courseRows.length + profRows.length,
       unknown_course_codes: droppedIds, doc_hash: docHash,
+      ...(complete ? {} : { error: `partial: ${partialReason}; ${remaining.length} catalog courses unprocessed` }),
     });
-    console.log("Done.");
+    console.log(complete ? "Done." : `Done (partial: ${partialReason}; ${remaining.length} catalog courses unprocessed).`);
   } catch (err) {
     const message = err instanceof Error ? err.message : String(err);
     if (!dryRun) {
