@@ -44,11 +44,14 @@ export function buildGeminiBody(model, prompt, schema) {
 
 // Parses a Gemini `streamGenerateContent?alt=sse` payload: one `data: {json}`
 // frame per chunk. Text parts are concatenated in order; finishReason comes
-// from the last frame that carries one. Malformed frames are skipped (JSON
-// strings never contain raw newlines, so line-splitting is safe).
+// from the last frame that carries one; an `error` frame (Gemini can abort a
+// stream mid-generation) is surfaced instead of silently skipped. Malformed
+// frames are skipped (JSON strings never contain raw newlines, so
+// line-splitting is safe).
 export function parseSseResponse(raw) {
   let text = "";
   let finishReason;
+  let error;
   for (const line of String(raw).split(/\r?\n/)) {
     if (!line.startsWith("data: ")) continue;
     let chunk;
@@ -57,13 +60,14 @@ export function parseSseResponse(raw) {
     } catch {
       continue;
     }
+    if (chunk?.error && !error) error = chunk.error;
     const cand = chunk?.candidates?.[0];
     for (const part of cand?.content?.parts ?? []) {
       if (typeof part.text === "string") text += part.text;
     }
     if (cand?.finishReason) finishReason = cand.finishReason;
   }
-  return { text, finishReason };
+  return { text, finishReason, error };
 }
 
 // Single model-call seam. `model` selects the provider. `fetchImpl` is
@@ -74,6 +78,7 @@ export async function extract({ model, prompt, schema, apiKey, fetchImpl = globa
   }
   const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${model}:streamGenerateContent`;
   const body = buildGeminiBody(model, prompt, schema);
+  let streamCutRetried = false;
 
   for (let attempt = 0; attempt <= GEMINI_RETRIES; attempt++) {
     let res;
@@ -97,7 +102,16 @@ export async function extract({ model, prompt, schema, apiKey, fetchImpl = globa
       // Consuming the SSE stream chunk-by-chunk resets undici's idle body
       // timeout, so long generations don't die at the ~300s socket limit.
       const raw = await res.text();
-      const { text, finishReason } = parseSseResponse(raw);
+      const { text, finishReason, error: streamError } = parseSseResponse(raw);
+      if (streamError) {
+        const code = Number(streamError.code) || 0;
+        const retriable = code === 429 || (code >= 500 && code < 600);
+        if (retriable && attempt < GEMINI_RETRIES) {
+          await sleep((parseRetryDelayMs(JSON.stringify({ error: streamError })) ?? Math.min(30000, 1000 * 2 ** attempt)) + 500);
+          continue;
+        }
+        throw new Error(`Gemini stream error: ${JSON.stringify(streamError).slice(0, 1500)}`);
+      }
       if (!text) {
         throw new Error(`Gemini returned no text (finishReason=${finishReason}): ${String(raw).slice(0, 600)}`);
       }
@@ -107,10 +121,24 @@ export async function extract({ model, prompt, schema, apiKey, fetchImpl = globa
       } catch {
         // Truncated output (hit the token cap) is invalid JSON. Don't fail the
         // run — surface MAX_TOKENS with empty data so the caller bisects the
-        // slice and retries smaller. Only a non-truncated parse error is real.
+        // slice and retries smaller.
         if (finishReason === "MAX_TOKENS") {
           return { data: { courses: [] }, finishReason };
         }
+        // No finishReason at all = the stream was cut mid-generation (transport
+        // drop or server abort without an error frame). Retry once — transient
+        // cuts usually clear — then let the caller bisect: halved slices stream
+        // for less time and are less exposed. Never kill the whole run for it.
+        if (!finishReason) {
+          if (!streamCutRetried) {
+            streamCutRetried = true;
+            console.warn("Gemini stream cut mid-generation; retrying once…");
+            await sleep(1500);
+            continue;
+          }
+          return { data: { courses: [] }, finishReason: "MAX_TOKENS" };
+        }
+        // finishReason present (e.g. STOP) but unparseable JSON — a real bug.
         throw new Error(`Gemini returned non-JSON (finishReason=${finishReason}): ${text.slice(0, 300)}`);
       }
       return { data, finishReason };

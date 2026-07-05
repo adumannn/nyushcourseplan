@@ -27,6 +27,56 @@ test("parseSseResponse accumulates text across chunks and takes last finishReaso
   assert.equal(finishReason, "STOP");
 });
 
+test("parseSseResponse surfaces a mid-stream error frame", () => {
+  const raw =
+    sseChunk('{"courses":') +
+    `data: ${JSON.stringify({ error: { code: 429, message: "quota" } })}\n\n`;
+  const { error } = parseSseResponse(raw);
+  assert.equal(error.code, 429);
+  assert.match(error.message, /quota/);
+});
+
+test("extract retries once on a cut stream, then succeeds", async () => {
+  let calls = 0;
+  const fetchImpl = async () => {
+    calls += 1;
+    if (calls === 1) {
+      // stream dies mid-JSON: no finishReason frame ever arrives
+      return { ok: true, text: async () => sseChunk('{"courses":[{"cou') };
+    }
+    return sseOk({ courses: [] }, "STOP");
+  };
+  const { data, finishReason } = await extract({ model: "gemini-2.5-flash", prompt: "p", schema: {}, apiKey: "k", fetchImpl });
+  assert.equal(calls, 2);
+  assert.equal(finishReason, "STOP");
+  assert.deepEqual(data, { courses: [] });
+});
+
+test("extract hands a repeatedly-cut stream to the caller as MAX_TOKENS (bisect)", async () => {
+  let calls = 0;
+  const fetchImpl = async () => {
+    calls += 1;
+    return { ok: true, text: async () => sseChunk('{"courses":[{"cou') };
+  };
+  const { data, finishReason } = await extract({ model: "gemini-2.5-flash", prompt: "p", schema: {}, apiKey: "k", fetchImpl });
+  assert.equal(calls, 2); // one retry, then give up and let the caller bisect
+  assert.equal(finishReason, "MAX_TOKENS");
+  assert.deepEqual(data, { courses: [] });
+});
+
+test("extract throws on a non-retriable mid-stream error frame", async () => {
+  const fetchImpl = async () => ({
+    ok: true,
+    text: async () =>
+      sseChunk('{"cour') +
+      `data: ${JSON.stringify({ error: { code: 400, message: "bad schema" } })}\n\n`,
+  });
+  await assert.rejects(
+    extract({ model: "gemini-2.5-flash", prompt: "p", schema: {}, apiKey: "k", fetchImpl }),
+    /Gemini stream error.*bad schema/,
+  );
+});
+
 test("extract returns parsed data + finishReason on success", async () => {
   const fetchImpl = async (url) => {
     assert.match(url, /streamGenerateContent\?alt=sse/);
