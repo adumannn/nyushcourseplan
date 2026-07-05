@@ -28,10 +28,6 @@ Computer Science, Data Science, Business and Finance, Business and Marketing, Bi
 - **Dark/light theme** — System-aware with manual toggle
 - **Large local fallback catalog** — Uses generated Shanghai bulletin data merged with curated metadata
 
-## Supporting the Project
-
-This tool is and will stay free — nothing is gated behind support. If it helped with your planning, you can leave a small donation via the "Support ✦" link in the app (Gumroad, plus a manual Alipay/WeChat QR for mainland China); supporters get an optional badge and a spot on the supporters wall.
-
 ## Tech Stack
 
 - **Frontend:** React 19, Vite 8, Tailwind CSS 4
