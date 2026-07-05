@@ -27,15 +27,16 @@ export function asStringArray(v) {
   return Array.isArray(v) ? v.map((x) => asString(x).trim()).filter(Boolean) : [];
 }
 
-// Round-robin: catalog[i] -> slice[i % k]. Spreads high-traffic departments
-// across slices so no single slice's model output is disproportionately large.
-// Slicing only bounds OUTPUT — every course is in exactly one slice and the
-// full doc is always sent, so no review context is lost.
-export function buildCatalogSlices(catalog, k) {
-  const n = Math.max(1, Number(k) || 1);
-  const slices = Array.from({ length: n }, () => []);
-  catalog.forEach((c, i) => slices[i % n].push(c));
-  return slices.filter((s) => s.length > 0);
+// Continuation-round support: after each extraction round, drop the catalog
+// rows already extracted (any id spelling, via the resolver) so the next
+// round's prompt only offers the courses still outstanding.
+export function removeExtracted(catalog, extractedCourses, resolveId) {
+  const got = new Set();
+  for (const c of extractedCourses) {
+    const id = resolveId(c?.course_id ?? "");
+    if (id) got.add(id);
+  }
+  return catalog.filter((c) => !got.has(c.id));
 }
 
 export const COMBINED_SCHEMA = {
@@ -81,7 +82,7 @@ export const COMBINED_SCHEMA = {
   required: ["courses"],
 };
 
-export function buildPrompt(catalogSlice, docText) {
+export function buildPrompt(catalogSlice, docText, { maxCourses = 30 } = {}) {
   const catalogText = catalogSlice
     .map((c) => `${c.id}\t${c.code}\t${c.name}`)
     .join("\n");
@@ -107,10 +108,12 @@ export function buildPrompt(catalogSlice, docText) {
     `  - difficulty_en, workload_en, teaching_style_en: <= 80 chars`,
     `  - key_points_en, pros_en, cons_en: <= 4 items, each <= 80 chars`,
     ``,
-    `Output: one entry in "courses" per course discussed in this slice, each with its professors nested under it.`,
+    `Output: one entry in "courses" per reviewed course, each with its professors nested under it.`,
+    `- This extraction runs in MULTIPLE ROUNDS over a shrinking catalog, so do not try to cover everything at once.`,
+    `- Return AT MOST ${maxCourses} courses in this response. Scan the catalog in catalog order (top to bottom) and return the FIRST up-to-${maxCourses} catalog courses that have real review content in the doc. Later rounds will handle the rest.`,
+    `- If NONE of the listed catalog courses have review content, return an empty "courses" array.`,
     `- difficulty_en / workload_en: short phrase ("Moderate", "10-15 hrs/week"); empty string if unstated.`,
     `- SKIP entries that are only unanswered questions or have no real review content.`,
-    `- An empty "courses" array is acceptable if nothing in this slice was reviewed.`,
     ``,
     `Catalog (TSV: course_id<TAB>code<TAB>name):`,
     catalogText,

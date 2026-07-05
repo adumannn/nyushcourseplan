@@ -6,13 +6,13 @@ import {
   cleanText,
   asString,
   asStringArray,
-  buildCatalogSlices,
   buildPrompt,
   COMBINED_SCHEMA,
   normalizeCourses,
   mergeCourses,
   buildIdResolver,
   buildRows,
+  removeExtracted,
 } from "./review-extract.mjs";
 
 test("sha256Hex is stable and hex", () => {
@@ -39,14 +39,19 @@ test("asString / asStringArray coerce defensively", () => {
   assert.deepEqual(asStringArray("nope"), []);
 });
 
-test("buildCatalogSlices distributes round-robin and drops empties", () => {
-  const cat = Array.from({ length: 7 }, (_, i) => ({ id: `C${i}`, code: `c ${i}`, name: `n${i}` }));
-  const slices = buildCatalogSlices(cat, 3);
-  assert.equal(slices.length, 3);
-  assert.deepEqual(slices.map((s) => s.length), [3, 2, 2]); // 0,3,6 | 1,4 | 2,5
-  assert.equal(slices.flat().length, 7);
-  // k larger than catalog → no empty slices returned
-  assert.equal(buildCatalogSlices(cat.slice(0, 2), 5).length, 2);
+test("removeExtracted drops catalog rows whose id was extracted (any spelling)", () => {
+  const catalog = [
+    { id: "CSCI-SHU-101", code: "CSCI-SHU 101", name: "Intro to CS" },
+    { id: "CSCI-SHU-210", code: "CSCI-SHU 210", name: "Data Structures" },
+    { id: "BUSF-SHU-101", code: "BUSF-SHU 101", name: "Stats" },
+  ];
+  const resolve = buildIdResolver(catalog);
+  const extracted = [
+    { course_id: "CSCI-SHU 101" },  // space variant still resolves
+    { course_id: "NOPE-999" },      // unknown id is ignored
+  ];
+  const remaining = removeExtracted(catalog, extracted, resolve);
+  assert.deepEqual(remaining.map((c) => c.id), ["CSCI-SHU-210", "BUSF-SHU-101"]);
 });
 
 test("COMBINED_SCHEMA nests professors under courses", () => {
@@ -57,14 +62,16 @@ test("COMBINED_SCHEMA nests professors under courses", () => {
   assert.ok(courseProps.professors.items.properties.evidence);
 });
 
-test("buildPrompt embeds the slice catalog, the doc, and key rules", () => {
+test("buildPrompt embeds the catalog, the doc, key rules, and the per-call cap", () => {
   const slice = [{ id: "CSCI-SHU-101", code: "CSCI-SHU 101", name: "Intro to CS" }];
-  const prompt = buildPrompt(slice, "DOC-BODY-MARKER");
+  const prompt = buildPrompt(slice, "DOC-BODY-MARKER", { maxCourses: 30 });
   assert.match(prompt, /CSCI-SHU-101\tCSCI-SHU 101\tIntro to CS/);
   assert.match(prompt, /DOC-BODY-MARKER/);
   assert.match(prompt, /MUST come EXACTLY from the catalog/);
   assert.match(prompt, /verbatim/i);
   assert.match(prompt, /马什老师/); // bilingual same-person instruction present
+  assert.match(prompt, /AT MOST 30 courses/);
+  assert.match(prompt, /catalog order/i); // pagination contract: first N in catalog order
 });
 
 test("normalizeCourses fills defaults and coerces shapes", () => {

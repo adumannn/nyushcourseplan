@@ -23,4 +23,4 @@ jobs:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           REVIEW_DOC_ID: ${{ secrets.REVIEW_DOC_ID }}
           REVIEW_MODEL: ${{ vars.REVIEW_MODEL }}   # optional repo variable; code defaults to gemini-2.5-flash when empty
-          REVIEW_CATALOG_SLICES: ${{ vars.REVIEW_CATALOG_SLICES }}   # optional; code defaults to 2 when empty
+          REVIEW_COURSES_PER_CALL: ${{ vars.REVIEW_COURSES_PER_CALL }}   # optional; code defaults per model when empty
