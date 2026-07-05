@@ -30,6 +30,7 @@ const COURSES_PER_CALL = Number(
   process.env.REVIEW_COURSES_PER_CALL ||
     (MODEL.includes("2.5") ? "30" : "10"), // non-2.5 models cap output at 8192
 );
+const MIN_COURSES_PER_CALL = 3;
 const MAX_ROUNDS = 12;
 const MIN_CALL_INTERVAL_MS = 4000;   // also stay far under any per-minute cap
 
@@ -58,10 +59,9 @@ async function fetchDocPlainText(docId) {
 }
 
 // One continuation round: full doc + the not-yet-extracted catalog, asking for
-// at most COURSES_PER_CALL courses (in catalog order) so output never hits the
-// token cap.
-async function extractRound(remaining, docText, apiKey) {
-  const prompt = buildPrompt(remaining, docText, { maxCourses: COURSES_PER_CALL });
+// at most `cap` courses (in catalog order) so output stays under the token cap.
+async function extractRound(remaining, docText, apiKey, cap) {
+  const prompt = buildPrompt(remaining, docText, { maxCourses: cap });
   await throttle();
   const { data, finishReason } = await extract({ model: MODEL, prompt, schema: COMBINED_SCHEMA, apiKey });
   return { courses: normalizeCourses(data), finishReason };
@@ -69,7 +69,7 @@ async function extractRound(remaining, docText, apiKey) {
 
 async function main() {
   const dryRun = process.argv.includes("--dry-run");
-  const force = process.argv.includes("--force");
+  const force = process.argv.includes("--force") || process.env.REVIEW_FORCE === "1";
 
   const supabase = createClient(
     requireEnv("VITE_SUPABASE_URL"),
@@ -116,14 +116,21 @@ async function main() {
 
     const perRound = [];
     let remaining = catalog;
+    let cap = COURSES_PER_CALL;
     for (let round = 1; round <= MAX_ROUNDS && remaining.length > 0; round++) {
-      console.log(`Round ${round}: ${remaining.length} catalog courses remaining…`);
-      const { courses, finishReason } = await extractRound(remaining, docText, apiKey);
+      console.log(`Round ${round}: ${remaining.length} catalog courses remaining (cap ${cap})…`);
+      const { courses, finishReason } = await extractRound(remaining, docText, apiKey, cap);
       console.log(`  → ${finishReason ?? "?"}, extracted ${courses.length}`);
       if (courses.length === 0) {
-        // Clean STOP with nothing left = done. A truncated empty round means
-        // the cap was ignored; keep what we have rather than loop forever.
-        if (finishReason === "MAX_TOKENS") console.warn("  round truncated with no data; stopping early");
+        // A truncated empty round means even `cap` courses overflowed the
+        // output budget (dense reviews / verbose model) — shrink and retry.
+        // A clean STOP with nothing extracted = genuinely done.
+        if (finishReason === "MAX_TOKENS" && cap > MIN_COURSES_PER_CALL) {
+          cap = Math.max(MIN_COURSES_PER_CALL, Math.floor(cap / 2));
+          console.warn(`  truncated with no data; shrinking cap to ${cap} and retrying`);
+          continue;
+        }
+        if (finishReason === "MAX_TOKENS") console.warn("  truncated at minimum cap; stopping");
         break;
       }
       perRound.push(courses);
@@ -145,6 +152,13 @@ async function main() {
       console.log(JSON.stringify({ courseRows, profRows, droppedIds }, null, 2));
       console.log("--dry-run: nothing written.");
       return;
+    }
+
+    // The doc is known to contain reviews, so extracting nothing is a failure.
+    // Throwing records the run WITH an error, which keeps the doc-hash gate
+    // open — a clean empty run would silently skip all future ingests.
+    if (courseRows.length === 0 && profRows.length === 0) {
+      throw new Error("Empty extraction: no course or professor rows produced");
     }
 
     if (courseRows.length) {

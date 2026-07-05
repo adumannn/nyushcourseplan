@@ -3,7 +3,12 @@ name: ingest-reviews
 on:
   schedule:
     - cron: "0 6 * * 1"   # Mondays 06:00 UTC
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      force:
+        description: "Ignore the doc-hash gate"
+        type: boolean
+        default: false
 
 jobs:
   ingest:
@@ -24,3 +29,4 @@ jobs:
           REVIEW_DOC_ID: ${{ secrets.REVIEW_DOC_ID }}
           REVIEW_MODEL: ${{ vars.REVIEW_MODEL }}   # optional repo variable; code defaults to gemini-2.5-flash when empty
           REVIEW_COURSES_PER_CALL: ${{ vars.REVIEW_COURSES_PER_CALL }}   # optional; code defaults per model when empty
+          REVIEW_FORCE: ${{ inputs.force && '1' || '' }}   # workflow_dispatch "force" checkbox; empty on cron
