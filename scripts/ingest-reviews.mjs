@@ -18,9 +18,12 @@ import {
 } from "./lib/review-extract.mjs";
 import { extract } from "./lib/review-providers.mjs";
 
-const MODEL = process.env.REVIEW_MODEL || "gemini-2.5-pro";
-const SLICES = Number(process.env.REVIEW_CATALOG_SLICES || "4");
-const MIN_CALL_INTERVAL_MS = 4000;   // free-tier Flash caps at 20 req/min; ~15/min keeps margin
+const MODEL = process.env.REVIEW_MODEL || "gemini-2.5-flash";
+// This key's free tier allows only 20 requests/DAY per model
+// (GenerateRequestsPerDayPerProjectPerModel-FreeTier), so a run must fit in a
+// handful of calls: 2 large streamed slices, bisecting only when truncated.
+const SLICES = Number(process.env.REVIEW_CATALOG_SLICES || "2");
+const MIN_CALL_INTERVAL_MS = 4000;   // also stay far under any per-minute cap
 const MAX_BISECT_DEPTH = 3;
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -54,13 +57,15 @@ async function extractSlice(slice, docText, apiKey, depth = 0) {
   const prompt = buildPrompt(slice, docText);
   await throttle();
   const { data, finishReason } = await extract({ model: MODEL, prompt, schema: COMBINED_SCHEMA, apiKey });
+  const courses = normalizeCourses(data);
+  console.log(`  call: ${slice.length}-course slice (depth ${depth}) → ${finishReason ?? "?"}, extracted ${courses.length}`);
   if (finishReason === "MAX_TOKENS" && slice.length > 1 && depth < MAX_BISECT_DEPTH) {
     const mid = Math.ceil(slice.length / 2);
     const left = await extractSlice(slice.slice(0, mid), docText, apiKey, depth + 1);
     const right = await extractSlice(slice.slice(mid), docText, apiKey, depth + 1);
     return [...left, ...right];
   }
-  return normalizeCourses(data);
+  return courses;
 }
 
 async function main() {
