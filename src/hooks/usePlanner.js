@@ -24,8 +24,6 @@ function createEmptyPlan() {
   return plan;
 }
 
-// Safety net: remove duplicate courses within each semester
-// Also refreshes course metadata from the catalog (e.g. category renames)
 function deduplicatePlan(plan) {
   const result = {};
   for (const [semId, courses] of Object.entries(plan)) {
@@ -151,7 +149,7 @@ export default function usePlanner(user, getToken) {
     [major, secondMajor],
   );
 
-  const flushSaveQueue = useCallback(async () => {
+  const flushCloudSave = useCallback(async () => {
     if (saveInProgress.current) return;
 
     saveInProgress.current = true;
@@ -159,14 +157,6 @@ export default function usePlanner(user, getToken) {
       while (pendingSave.current) {
         const snapshot = pendingSave.current;
         pendingSave.current = null;
-
-        await localStoragePlan.save({
-          plan: snapshot.plan,
-          major: snapshot.major,
-          secondMajor: snapshot.secondMajor,
-          studentName: snapshot.studentName,
-          studyAway: snapshot.studyAway,
-        });
 
         if (snapshot.isCloud && snapshot.planId && snapshot.userId) {
           try {
@@ -193,7 +183,7 @@ export default function usePlanner(user, getToken) {
     } finally {
       saveInProgress.current = false;
       if (pendingSave.current) {
-        void flushSaveQueue();
+        void flushCloudSave();
       }
     }
   }, []);
@@ -227,6 +217,19 @@ export default function usePlanner(user, getToken) {
 
           // Allow one save so the first cloud sign-in persists profile name into plans.student_name.
           shouldSkipInitialSave = !didAutoFillName;
+        } else {
+          // Cloud load failed — fall back to localStorage cache so the user
+          // sees their most recent plan instead of an empty grid.
+          const cached = await localStoragePlan.load();
+          if (!cancelled && cached) {
+            setPlan(deduplicatePlan(cached.plan || createEmptyPlan()));
+            setMajorState(cached.major || "cs");
+            setSecondMajorState(
+              normalizeSecondMajor(cached.secondMajor, cached.major || "cs"),
+            );
+            setStudentName(cached.studentName || "");
+            setStudyAway(normalizeStudyAway(cached.studyAway));
+          }
         }
       } else {
         const data = await localStoragePlan.load();
@@ -254,7 +257,9 @@ export default function usePlanner(user, getToken) {
     };
   }, [user, isCloud, getToken]);
 
-  // Debounced save on changes
+  // Save to localStorage immediately (synchronous, no debounce) so data
+  // survives a page refresh even if the Supabase call hasn't finished.
+  // Only the Supabase network call is debounced.
   useEffect(() => {
     if (!loaded) return;
 
@@ -264,6 +269,10 @@ export default function usePlanner(user, getToken) {
       return;
     }
 
+    // Synchronous localStorage write — always happens immediately
+    localStoragePlan.save({ plan, major, secondMajor, studentName, studyAway });
+
+    // Debounce the Supabase save
     const snapshot = {
       plan,
       major,
@@ -279,7 +288,7 @@ export default function usePlanner(user, getToken) {
     clearTimeout(saveTimeout.current);
     saveTimeout.current = setTimeout(() => {
       pendingSave.current = snapshot;
-      void flushSaveQueue();
+      void flushCloudSave();
     }, 500);
 
     return () => clearTimeout(saveTimeout.current);
@@ -294,8 +303,20 @@ export default function usePlanner(user, getToken) {
     user,
     getToken,
     loaded,
-    flushSaveQueue,
+    flushCloudSave,
   ]);
+
+  // Flush any pending Supabase save before the page unloads so data isn't
+  // lost when the user refreshes mid-debounce.
+  useEffect(() => {
+    const handleBeforeUnload = () => {
+      if (pendingSave.current) {
+        void flushCloudSave();
+      }
+    };
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    return () => window.removeEventListener("beforeunload", handleBeforeUnload);
+  }, [flushCloudSave]);
 
   const addCourse = useCallback((semesterId, course) => {
     setPlan((prev) => {
