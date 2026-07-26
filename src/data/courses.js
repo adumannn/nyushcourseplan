@@ -1228,6 +1228,7 @@ export const COURSE_CATALOG = [
     credits: 4,
     category: 'language',
     department: 'Chinese',
+    prerequisites: ['CHIN-SHU-102'],
     requirementIds: ['language'],
   },
   {
@@ -1237,6 +1238,7 @@ export const COURSE_CATALOG = [
     credits: 4,
     category: 'language',
     department: 'Chinese',
+    prerequisites: ['CHIN-SHU-201'],
     requirementIds: ['language'],
   },
   {
@@ -1246,6 +1248,7 @@ export const COURSE_CATALOG = [
     credits: 4,
     category: 'language',
     department: 'Chinese',
+    prerequisites: ['CHIN-SHU-202'],
     requirementIds: ['language'],
   },
   {
@@ -1255,6 +1258,7 @@ export const COURSE_CATALOG = [
     credits: 4,
     category: 'language',
     department: 'Chinese',
+    prerequisites: ['CHIN-SHU-301'],
     requirementIds: ['language'],
   },
 
