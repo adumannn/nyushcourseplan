@@ -128,3 +128,20 @@ test("planner warnings consider either BUSF-SHU 101 or MATH-SHU 235 sufficient",
 
   assert.deepEqual(warnings, {});
 });
+
+test("planner warnings strip trailing punctuation from prerequisite IDs", () => {
+  const plan = {
+    first: [{ id: "CHIN-SHU-102" }],
+    second: [
+      hydrateCoursePrerequisites({
+        id: "CHIN-SHU-201",
+        prerequisiteNote: "CHIN-SHU 102.",
+        prerequisites: ["CHIN-SHU-102."],
+      }),
+    ],
+  };
+
+  const warnings = buildPrerequisiteWarnings(plan, ["first", "second"]);
+
+  assert.deepEqual(warnings, {});
+});

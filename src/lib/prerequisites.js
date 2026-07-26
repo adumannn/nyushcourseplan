@@ -1,5 +1,5 @@
 const COURSE_REFERENCE_REGEX =
-  /[A-Z]{2,6}-[A-Z]{1,5}\s+\d+(?:[A-Z0-9.]*)/gi;
+  /[A-Z]{2,6}-[A-Z]{1,5}\s+\d+(?:[A-Z0-9]*)/gi;
 const STRUCTURE_HINT_REGEX = /\b(?:or|and|one of)\b|[/;()]/i;
 const UNTRACKABLE_ALTERNATIVE_REGEX =
   /\b(?:equivalent|placement|permission|approval|consent|exam|instructor|standing)\b/i;
@@ -70,7 +70,7 @@ function unique(values = []) {
 }
 
 export function normalizeCourseId(value) {
-  const cleaned = cleanText(value);
+  const cleaned = cleanText(value).replace(/[.,;:]+$/g, "");
   return cleaned ? cleaned.replace(/\s+/g, "-").toUpperCase() : "";
 }
 
@@ -115,7 +115,7 @@ function extractCourseIds(text) {
 function expandImplicitCourseAlternatives(text) {
   let expanded = cleanText(text);
   const pattern =
-    /([A-Z]{2,6}-[A-Z]{1,5})\s+(\d+(?:[A-Z0-9.]*)?)(\s*(?:\/|\bor\b)\s*)(\d+(?:[A-Z0-9.]*)?)/gi;
+    /([A-Z]{2,6}-[A-Z]{1,5})\s+(\d+(?:[A-Z0-9]*)?)(\s*(?:\/|\bor\b)\s*)(\d+(?:[A-Z0-9]*)?)/gi;
 
   while (true) {
     const next = expanded.replace(
