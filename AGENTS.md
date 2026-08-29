@@ -34,6 +34,7 @@ src/
     useTheme.js           Dark/light theme toggle
   lib/
     campus.js             Campus normalization/display helpers (+ tests)
+    courseSearch.js       Course-picker aliases and match-quality ranking (+ tests)
     localCatalog.js       Local/generated catalog merge & fulfillment normalization (+ tests)
     majorCourseRules.js   Active-major(s) effective category resolution (+ tests)
     planStorage.js        localStorage + Supabase storage abstraction
@@ -164,6 +165,7 @@ Cloud saves expose `saving` / `synced` / `error` state from `usePlanner`. A fail
 - Tailwind for styling; `App.css` holds the styles that outgrow utilities.
 - **Mobile breakpoint:** `lg:` (1024px) separates phone/tablet (single column + bottom sheet) from desktop (board + sidebar). The Header keeps TWO separate DOM layouts (mobile 2-row, desktop 1-row) — don't unify them via responsive classes; it clobbers `useRef`s. The requirements panel is a bottom sheet on mobile with a floating "Progress" pill.
 - **Course picker:** already-added courses stay visible with an inline remove button (`getCourseSemester(courseId)` + `removeCourse(semesterId, courseId)` from `usePlanner`). Rows show campus labels and a campus filter; custom course campus defaults to the semester's study-away site, else Shanghai.
+- **Course search:** exact and prefix matches rank before substring matches. Core aliases `poh` and `gps` surface WRIT-SHU 201 and CCSF-SHU 101L respectively without changing either course's requirement metadata.
 - **CourseCard:** one pill per campus for multi-campus courses, using `abbreviateCampus()` short labels when ≥2 campuses; the `MapPin` icon renders once on the leading pill.
 - **StudyAwayPicker:** desktop two-panel modal (summary metrics, semester rows, quick site chips, policy sidebar); on mobile it behaves as a bottom sheet with sticky actions. Preserve the status-first flow: pick semesters → resolve pending sites → review warnings. The CS/DS advisory (max 3 major courses per study-away semester, advising notes) triggers when *either* major is `cs` or `data-science`, and per-major `studyAwayNotes` from both majors are shown.
 

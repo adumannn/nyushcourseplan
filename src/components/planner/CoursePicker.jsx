@@ -13,6 +13,7 @@ import {
   isCourseRelevantToMajors,
 } from "../../lib/majorCourseRules";
 import { LOCAL_CATALOG_COURSES } from "../../lib/localCatalog";
+import { getCourseSearchRank } from "../../lib/courseSearch";
 
 export default function CoursePicker({
   semesterId,
@@ -71,6 +72,7 @@ export default function CoursePicker({
   const filtered = useMemo(() => {
     const activeMajors = [major, secondMajor];
     let list = availableCourses;
+    const searchRanks = new Map();
 
     if (filterDept) {
       list = list.filter((c) => c.department === filterDept);
@@ -86,14 +88,19 @@ export default function CoursePicker({
       );
     }
     if (search.trim()) {
-      const q = search.toLowerCase();
-      list = list.filter(
-        (c) =>
-          c.name.toLowerCase().includes(q) || c.code.toLowerCase().includes(q),
-      );
+      list = list.filter((course) => {
+        const rank = getCourseSearchRank(course, search);
+        if (rank === null) return false;
+        searchRanks.set(course.id, rank);
+        return true;
+      });
     }
 
     list = [...list].sort((a, b) => {
+      const searchCompare =
+        (searchRanks.get(a.id) ?? 0) - (searchRanks.get(b.id) ?? 0);
+      if (searchCompare !== 0) return searchCompare;
+
       const aRel = isCourseRelevantToMajors(a, activeMajors) ? 0 : 1;
       const bRel = isCourseRelevantToMajors(b, activeMajors) ? 0 : 1;
       if (aRel !== bRel) return aRel - bRel;
