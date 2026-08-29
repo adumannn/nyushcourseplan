@@ -34,6 +34,10 @@ function mergeCatalogs(generated, curated) {
   return Array.from(byId.values());
 }
 
+export function normalizeCourseName(name) {
+  return typeof name === "string" ? name.replace(/\s+[IVXLCDM]+$/, "") : name;
+}
+
 const CORE_REQUIREMENT_PATTERNS = [
   {
     id: "writing",
@@ -109,7 +113,9 @@ function normalizeRequirementIds(course) {
 const MERGED_CATALOG = mergeCatalogs(GENERATED_CATALOG, COURSE_CATALOG);
 
 export const LOCAL_CATALOG_COURSES = MERGED_CATALOG.map((course) =>
-  hydrateCoursePrerequisites(normalizeRequirementIds({ ...course })),
+  hydrateCoursePrerequisites(
+    normalizeRequirementIds({ ...course, name: normalizeCourseName(course.name) }),
+  ),
 );
 
 export const LOCAL_CATALOG_BY_ID = new Map(
@@ -132,7 +138,9 @@ export function mergeCourseWithLocalCatalog(
     ...(course && typeof course === "object" ? course : {}),
     id: id || catalogCourse?.id || "",
     code: course?.code || catalogCourse?.code || id,
-    name: course?.name || catalogCourse?.name || "Untitled Course",
+    name: normalizeCourseName(
+      course?.name || catalogCourse?.name || "Untitled Course",
+    ),
     credits: Number.isFinite(selectedCredits)
       ? selectedCredits
       : Number.isFinite(course?.credits)

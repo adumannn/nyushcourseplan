@@ -1,6 +1,9 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { supabase } from "../lib/supabase";
-import { LOCAL_CATALOG_COURSES } from "../lib/localCatalog";
+import {
+  LOCAL_CATALOG_COURSES,
+  normalizeCourseName,
+} from "../lib/localCatalog";
 import {
   getCampusLabelForSchoolSlug,
   normalizeCampuses,
@@ -195,7 +198,9 @@ function toRuntimeCourse(remoteCourse, prerequisiteMap) {
   return hydrateCoursePrerequisites({
     id: remoteCourse.id,
     code: remoteCourse.code || localCourse?.code || remoteCourse.id,
-    name: remoteCourse.name || localCourse?.name || remoteCourse.id,
+    name: normalizeCourseName(
+      remoteCourse.name || localCourse?.name || remoteCourse.id,
+    ),
     credits: resolvedCredits,
     creditsMin: creditsMin ?? resolvedCredits,
     creditsMax: creditsMax ?? resolvedCredits,

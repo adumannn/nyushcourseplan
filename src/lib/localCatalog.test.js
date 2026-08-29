@@ -1,6 +1,12 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { LOCAL_CATALOG_BY_ID } from "./localCatalog.js";
+import { LOCAL_CATALOG_BY_ID, normalizeCourseName } from "./localCatalog.js";
+
+test("removes trailing Roman numerals from runtime course names", () => {
+  assert.equal(normalizeCourseName("Elementary Chinese II"), "Elementary Chinese");
+  assert.equal(normalizeCourseName("Intermediate Chinese I"), "Intermediate Chinese");
+  assert.equal(normalizeCourseName("Civilization II: Rome"), "Civilization II: Rome");
+});
 
 test("infers writing requirements from generated fulfillment text", () => {
   const course = LOCAL_CATALOG_BY_ID.get("WRIT-SHU-101");
