@@ -29,10 +29,9 @@ const clerkProfileProps = {
   appearance: {
     variables: {
       colorPrimary: "#57068c",
-      colorBackground: "var(--card)",
+      colorBackground: "var(--sidebar)",
       colorForeground: "var(--card-foreground)",
       colorMutedForeground: "var(--muted-foreground)",
-      colorNeutral: "var(--muted-foreground)",
       colorRing: "var(--ring)",
       fontFamily: "'Geist Variable', sans-serif",
       borderRadius: "0.625rem",
@@ -40,7 +39,7 @@ const clerkProfileProps = {
     elements: {
       cardBox: "shadow-2xl",
       card: "border border-border",
-      navbar: "bg-muted/40 border-r border-border",
+      navbar: "bg-background/50 border-r border-border",
       navbarButton: "rounded-md hover:bg-accent",
       headerTitle: "text-foreground",
       profileSectionTitle: "text-foreground",
