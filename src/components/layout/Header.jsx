@@ -28,7 +28,7 @@ const clerkAppearance = {
 const clerkProfileProps = {
   appearance: {
     variables: {
-      colorPrimary: "#57068c",
+      colorPrimary: "#7f28b8",
       colorBackground: "var(--sidebar)",
       colorForeground: "var(--card-foreground)",
       colorMutedForeground: "var(--muted-foreground)",

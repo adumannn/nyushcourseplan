@@ -131,7 +131,7 @@ Cloud saves expose `saving` / `synced` / `error` state from `usePlanner`. A fail
 
 - Supabase validates Clerk session tokens via **Third-Party Auth**; RLS policies use `auth.jwt()->>'sub'` as the Clerk user ID. No webhook sync. Do not use the deprecated Clerk JWT template flow.
 - Always call `getSupabaseClientWithAuth(getToken)` from `src/lib/supabase.js` before queries needing RLS — it wires the client's `accessToken` option to Clerk's `getToken()`.
-- `AuthGate.jsx` renders `<RedirectToSignIn />` (Clerk Account Portal handles sign-in and sign-up; no in-app forms). `Header.jsx` uses Clerk's `<UserButton />` for avatar/sign-out/account management and passes shared `userProfileProps` so the account modal follows the planner's NYU purple, Geist typography, lighter elevated surfaces, borders, and dark mode.
+- `AuthGate.jsx` renders `<RedirectToSignIn />` (Clerk Account Portal handles sign-in and sign-up; no in-app forms). `Header.jsx` uses Clerk's `<UserButton />` for avatar/sign-out/account management and passes shared `userProfileProps` so the account modal follows the planner's brighter logo purple, Geist typography, lighter elevated surfaces, borders, and dark mode.
 - Env: `VITE_CLERK_PUBLISHABLE_KEY` (pk_test for localhost, pk_live only on the production domain), `VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY` in `.env` (git-ignored). Never commit the service-role key.
 - Allowed email domains (`@nyu.edu`, `@nyu.edu.cn`) are configured in the Clerk dashboard. Full setup walkthrough: `docs/clerk-setup.md`.
 - Migrations 010/011 moved RLS from Supabase Auth to Clerk JWTs and converted `plans.user_id` to text.
