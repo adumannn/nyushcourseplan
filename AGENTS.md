@@ -37,6 +37,7 @@ src/
     localCatalog.js       Local/generated catalog merge & fulfillment normalization (+ tests)
     majorCourseRules.js   Active-major(s) effective category resolution (+ tests)
     planStorage.js        localStorage + Supabase storage abstraction
+    planSyncError.js      User-visible Supabase save error formatting (+ tests)
     planTransfer.js       Thin re-export barrel for planTransfer/* (+ tests)
     planTransfer/         CSV (csv.js), PDF (pdf.js), legacy-JSON (json.js)
                           export/import; shared.js holds common helpers; index.js re-exports
@@ -92,6 +93,8 @@ The plan shape mirrors the Supabase schema so local and remote storage interchan
 ```
 
 Tables: `plans` (id, user_id text = Clerk ID, name, major, second_major, student_name) and `plan_courses` (plan_id FK, semester_id, course_id, custom_* fields, position). RLS policies check `auth.jwt()->>'sub' = user_id`. `src/lib/planStorage.js` abstracts localStorage vs Supabase; `usePlanner` picks the backend from auth state. After sign-in, Supabase is the source of truth and localStorage is a write-through cache.
+
+Cloud saves expose `saving` / `synced` / `error` state from `usePlanner`. A failed Supabase save keeps the failed snapshot available for retry and shows a non-blocking warning below the header; the warning states that the latest changes are only cached locally and includes the Supabase message, code, details, and hint when present. A later successful save clears it.
 
 ### Double major
 

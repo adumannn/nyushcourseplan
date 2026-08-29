@@ -12,6 +12,7 @@ import {
   getEffectiveCategoryForMajors,
 } from "../lib/majorCourseRules";
 import { localStoragePlan, supabasePlan } from "../lib/planStorage";
+import { formatPlanSyncError } from "../lib/planSyncError";
 import { buildPrerequisiteWarnings } from "../lib/prerequisites";
 
 const EAP_COURSE_IDS = new Set(["ENGL-SHU-100", "ENGL-SHU-101"]);
@@ -123,9 +124,11 @@ export default function usePlanner(user, getToken) {
   const [studyAway, setStudyAway] = useState(createDefaultStudyAway);
   const [planId, setPlanId] = useState(null);
   const [loaded, setLoaded] = useState(false);
+  const [syncStatus, setSyncStatus] = useState({ state: "synced", detail: "" });
   const saveTimeout = useRef(null);
   const pendingSave = useRef(null);
   const saveInProgress = useRef(false);
+  const failedSave = useRef(null);
   const skipNextSave = useRef(false);
 
   const isCloud = !!user;
@@ -159,6 +162,7 @@ export default function usePlanner(user, getToken) {
         pendingSave.current = null;
 
         if (snapshot.isCloud && snapshot.planId && snapshot.userId) {
+          setSyncStatus({ state: "saving", detail: "" });
           try {
             await supabasePlan.save(
               snapshot.userId,
@@ -172,7 +176,14 @@ export default function usePlanner(user, getToken) {
               },
               snapshot.getToken,
             );
+            failedSave.current = null;
+            setSyncStatus({ state: "synced", detail: "" });
           } catch (error) {
+            failedSave.current = snapshot;
+            setSyncStatus({
+              state: "error",
+              detail: formatPlanSyncError(error),
+            });
             console.error(
               "Cloud plan save failed; latest plan remains cached locally.",
               error,
@@ -188,6 +199,12 @@ export default function usePlanner(user, getToken) {
     }
   }, []);
 
+  const retryCloudSave = useCallback(() => {
+    if (!failedSave.current) return;
+    pendingSave.current = failedSave.current;
+    void flushCloudSave();
+  }, [flushCloudSave]);
+
   // Load plan on mount or auth change
   useEffect(() => {
     let cancelled = false;
@@ -196,6 +213,8 @@ export default function usePlanner(user, getToken) {
       setLoaded(false);
       clearTimeout(saveTimeout.current);
       pendingSave.current = null;
+      failedSave.current = null;
+      setSyncStatus({ state: "synced", detail: "" });
       let shouldSkipInitialSave = true;
 
       if (isCloud) {
@@ -825,5 +844,7 @@ export default function usePlanner(user, getToken) {
     allPlannedCourses,
     prereqWarnings,
     loaded,
+    syncStatus,
+    retryCloudSave,
   };
 }

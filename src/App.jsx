@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Analytics } from "@vercel/analytics/react";
-import { Heart, ListChecks, X } from "lucide-react";
+import { AlertTriangle, Heart, ListChecks, RefreshCw, X } from "lucide-react";
 import useTheme from "./hooks/useTheme";
 import useAuth from "./hooks/useAuth";
 import usePlanner from "./hooks/usePlanner";
@@ -52,6 +52,8 @@ function AppContent() {
     getCourseSemester,
     prereqWarnings,
     loaded,
+    syncStatus,
+    retryCloudSave,
   } = usePlanner(user, getToken);
 
   const [pickerSemester, setPickerSemester] = useState(null);
@@ -202,6 +204,28 @@ function AppContent() {
         canViewSuggestionInbox={canViewSuggestionInbox}
         onOpenSuggestionInbox={() => setSuggestionInboxOpen(true)}
       />
+
+      {syncStatus.state === "error" && (
+        <div
+          className="mx-3 sm:mx-6 mt-2 flex items-start gap-3 rounded-lg border border-amber-500/40 bg-amber-500/10 px-3 py-2.5 text-sm text-amber-950 dark:text-amber-100"
+          role="alert"
+          aria-live="polite"
+        >
+          <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
+          <div className="min-w-0 flex-1">
+            <p className="font-medium">Cloud sync failed. Your latest changes are cached only on this device.</p>
+            <p className="mt-0.5 break-words text-xs opacity-80">{syncStatus.detail}</p>
+          </div>
+          <button
+            type="button"
+            onClick={retryCloudSave}
+            className="inline-flex shrink-0 items-center gap-1.5 rounded-md border border-amber-500/40 px-2.5 py-1.5 text-xs font-medium hover:bg-amber-500/10"
+          >
+            <RefreshCw className="h-3.5 w-3.5" aria-hidden="true" />
+            Retry
+          </button>
+        </div>
+      )}
 
       <div className="planner-main relative z-0 flex-1 min-h-0 flex flex-col lg:flex-row">
         <div className="planner-board scrollbar-hidden flex-1 min-h-0 overflow-y-auto pb-20 lg:pb-0">
