@@ -25,6 +25,29 @@ const clerkAppearance = {
   },
 };
 
+const clerkProfileProps = {
+  appearance: {
+    variables: {
+      colorPrimary: "#57068c",
+      colorBackground: "var(--card)",
+      colorForeground: "var(--card-foreground)",
+      colorMutedForeground: "var(--muted-foreground)",
+      colorNeutral: "var(--muted-foreground)",
+      colorRing: "var(--ring)",
+      fontFamily: "'Geist Variable', sans-serif",
+      borderRadius: "0.625rem",
+    },
+    elements: {
+      cardBox: "shadow-2xl",
+      card: "border border-border",
+      navbar: "bg-muted/40 border-r border-border",
+      navbarButton: "rounded-md hover:bg-accent",
+      headerTitle: "text-foreground",
+      profileSectionTitle: "text-foreground",
+    },
+  },
+};
+
 export default function Header({
   major,
   setMajor,
@@ -260,7 +283,7 @@ export default function Header({
 
           {supportersEnabled && isSupporter && <SupporterBadge className="mr-1" />}
           {supportersEnabled ? (
-            <UserButton appearance={clerkAppearance}>
+            <UserButton appearance={clerkAppearance} userProfileProps={clerkProfileProps}>
               <UserButton.MenuItems>
                 <UserButton.Action
                   label="Support ✦"
@@ -270,7 +293,7 @@ export default function Header({
               </UserButton.MenuItems>
             </UserButton>
           ) : (
-            <UserButton appearance={clerkAppearance} />
+            <UserButton appearance={clerkAppearance} userProfileProps={clerkProfileProps} />
           )}
         </div>
       </div>
@@ -442,7 +465,7 @@ export default function Header({
 
           {supportersEnabled && isSupporter && <SupporterBadge className="mr-1" />}
           {supportersEnabled ? (
-            <UserButton appearance={clerkAppearance}>
+            <UserButton appearance={clerkAppearance} userProfileProps={clerkProfileProps}>
               <UserButton.MenuItems>
                 <UserButton.Action
                   label="Support ✦"
@@ -452,7 +475,7 @@ export default function Header({
               </UserButton.MenuItems>
             </UserButton>
           ) : (
-            <UserButton appearance={clerkAppearance} />
+            <UserButton appearance={clerkAppearance} userProfileProps={clerkProfileProps} />
           )}
         </div>
       </div>
