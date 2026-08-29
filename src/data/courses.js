@@ -207,11 +207,13 @@ export const CORE_REQUIREMENTS = [
         code: null,
         name: 'Experimental Discovery in the Natural World (ED)',
         credits: 4,
+        requirementId: 'science-ed',
       },
       {
         code: null,
         name: 'Science, Technology, and Society (STS)',
         credits: 4,
+        requirementId: 'science-sts',
       },
     ],
   },

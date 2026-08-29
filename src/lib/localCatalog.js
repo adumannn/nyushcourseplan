@@ -63,9 +63,14 @@ const CORE_REQUIREMENT_PATTERNS = [
     pattern: /\b(?:core\s+at|core\s+curriculum\s+requirement\s+algorithmic\s+thinking)\b/i,
   },
   {
-    id: "science",
+    id: "science-ed",
     pattern:
-      /\b(core\s+(?:ed|sts)|core\s+curriculum(?:\s+requirement|:)?\s+(?:science\s+)?(?:experimental\s+discovery|science,\s*technology,?\s+and\s+society|science\s+technology\s+and\s+society)|science,\s*technology,?\s+and\s+society|science\s+technology\s+and\s+society)\b/i,
+      /\b(?:core\s+ed|core\s+curriculum(?:\s+requirement|:)?\s+(?:science\s+)?experimental\s+discovery)\b/i,
+  },
+  {
+    id: "science-sts",
+    pattern:
+      /\b(?:core\s+sts|core\s+curriculum(?:\s+requirement|:)?\s+(?:science\s+)?(?:science,\s*technology,?\s+and\s+society|science\s+technology\s+and\s+society)|science,\s*technology,?\s+and\s+society|science\s+technology\s+and\s+society)\b/i,
   },
 ];
 
@@ -75,7 +80,8 @@ const CATEGORY_BY_REQUIREMENT_ID = {
   "social-and-cultural-foundations": "gps",
   mathematics: "core",
   "algorithmic-thinking": "core",
-  science: "core",
+  "science-ed": "core",
+  "science-sts": "core",
 };
 
 function inferRequirementIds(course) {
@@ -83,9 +89,11 @@ function inferRequirementIds(course) {
     typeof course?.fulfillmentText === "string" ? course.fulfillmentText : "";
   if (!fulfillmentText) return [];
 
-  return CORE_REQUIREMENT_PATTERNS.filter(({ pattern }) =>
+  const ids = CORE_REQUIREMENT_PATTERNS.filter(({ pattern }) =>
     pattern.test(fulfillmentText),
   ).map(({ id }) => id);
+  if (ids.some((id) => id.startsWith("science-"))) ids.unshift("science");
+  return ids;
 }
 
 function normalizeRequirementIds(course) {

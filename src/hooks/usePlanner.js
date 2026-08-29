@@ -670,7 +670,15 @@ export default function usePlanner(user, getToken) {
         ...req,
         coursesTaken: courses.length,
         creditsTaken,
-        fulfilled: courses.length >= req.coursesNeeded,
+        fulfilled:
+          courses.length >= req.coursesNeeded &&
+          (req.subcourses || []).every(
+            (subcourse) =>
+              !subcourse.requirementId ||
+              courses.some((course) =>
+                course.requirementIds?.includes(subcourse.requirementId),
+              ),
+          ),
       };
     });
 

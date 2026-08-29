@@ -243,7 +243,9 @@ function buildRequirements(
       // fulfills this requirement via requirementIds.
       const completed = sub.code
         ? isSubcourseCompleted(sub)
-        : planned.some((c) => fulfillsRequirementId(c, id));
+        : planned.some((c) =>
+            fulfillsRequirementId(c, sub.requirementId || id)
+          );
       coreItems.push({
         name: sub.name,
         completed,

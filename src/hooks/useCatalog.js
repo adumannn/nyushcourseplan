@@ -217,6 +217,7 @@ function toRuntimeCourse(remoteCourse, prerequisiteMap) {
       remoteCourse.prerequisite_note || localCourse?.prerequisiteNote || "",
     requirementIds: localCourse?.requirementIds || [],
     majors: localCourse?.majors || [],
+    equivalentCodes: localCourse?.equivalentCodes || {},
     campuses,
     offeringText: remoteCourse.offering_text || "",
     offeringTerms: Array.isArray(remoteCourse.offering_terms)

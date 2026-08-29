@@ -21,6 +21,16 @@ test("infers science requirements from ED fulfillment text", () => {
 
   assert.equal(course.category, "core");
   assert.ok(course.requirementIds.includes("science"));
+  assert.ok(course.requirementIds.includes("science-ed"));
+  assert.ok(!course.requirementIds.includes("science-sts"));
+});
+
+test("distinguishes STS from Experimental Discovery", () => {
+  const course = LOCAL_CATALOG_BY_ID.get("CCST-SHU-133");
+
+  assert.ok(course.requirementIds.includes("science"));
+  assert.ok(course.requirementIds.includes("science-sts"));
+  assert.ok(!course.requirementIds.includes("science-ed"));
 });
 
 test("infers algorithmic thinking requirements from AT fulfillment text", () => {
