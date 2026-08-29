@@ -170,7 +170,8 @@ Cloud saves expose `saving` / `synced` / `error` state from `usePlanner`. A fail
 - **Course search:** exact and prefix matches rank before substring matches. Core aliases `poh` and `gps` surface WRIT-SHU 201 and CCSF-SHU 101L respectively without changing either course's requirement metadata.
 - Search normalization ignores punctuation/diacritics and supports unordered terms across names, codes, departments, and cross-campus equivalent codes. Science courses carry `science-ed` / `science-sts` subtype IDs alongside `science`, so progress requires one of each type.
 - **CourseCard:** one pill per campus for multi-campus courses, using `abbreviateCampus()` short labels when ≥2 campuses; the `MapPin` icon renders once on the leading pill.
-- **StudyAwayPicker:** desktop two-panel modal (summary metrics, semester rows, quick site chips, policy sidebar); on mobile it behaves as a bottom sheet with sticky actions. Preserve the status-first flow: pick semesters → resolve pending sites → review warnings. The CS/DS advisory (max 3 major courses per study-away semester, advising notes) triggers when *either* major is `cs` or `data-science`, and per-major `studyAwayNotes` from both majors are shown.
+- **StudyAwayPicker:** desktop two-panel modal (readiness banner, semester rows, quick site chips, policy sidebar); on mobile it behaves as a bottom sheet with sticky actions. Preserve the status-first flow: pick semesters → resolve pending sites → review warnings. The CS/DS advisory (max 3 major courses per study-away semester, advising notes) triggers when *either* major is `cs` or `data-science`, and per-major `studyAwayNotes` from both majors are shown.
+- Study-away readiness is shown above the semester rows; inactive rows hide site controls, and the Done action stays disabled until at least one semester and all selected sites are set. The close button still allows dismissing an unfinished selection.
 
 ## Workflow (IMPORTANT)
 

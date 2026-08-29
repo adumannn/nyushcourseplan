@@ -1,11 +1,9 @@
 import { useEffect, useMemo, useRef } from "react";
 import {
   AlertTriangle,
-  CalendarDays,
   CheckCircle2,
   CircleDashed,
   Info,
-  ListChecks,
   MapPinned,
   PlaneTakeoff,
   RotateCcw,
@@ -120,7 +118,6 @@ export default function StudyAwayPicker({
     (semesterId) => !studyAway.locations[semesterId],
   ).length;
   const maxReached = selectedCount >= STUDY_AWAY.maxSemesters;
-  const readyCount = selectedCount - missingSiteCount;
   const issueCount = warnings.length;
   const selectionStatus =
     selectedCount === 0
@@ -264,58 +261,20 @@ export default function StudyAwayPicker({
 
         <div className="study-away-layout">
           <div className="study-away-main">
-            <div className="study-away-overview" aria-label="Study away status">
-              <div
-                className={`study-away-stat-card ${selectedCount > 0 ? "study-away-stat-card--success" : ""}`}
-              >
-                <div className="study-away-stat-icon">
-                  <CalendarDays className="h-4 w-4" />
-                </div>
-                <span className="study-away-stat-label">Semesters</span>
-                <strong className="study-away-stat-value">
-                  {selectedCount}/{STUDY_AWAY.maxSemesters}
-                </strong>
-                <span className="study-away-stat-meta">1 required</span>
-              </div>
-
-              <div
-                className={`study-away-stat-card ${
-                  missingSiteCount > 0
-                    ? "study-away-stat-card--warning"
-                    : selectedCount > 0
-                      ? "study-away-stat-card--success"
-                      : ""
-                }`}
-              >
-                <div className="study-away-stat-icon">
-                  <MapPinned className="h-4 w-4" />
-                </div>
-                <span className="study-away-stat-label">Sites ready</span>
-                <strong className="study-away-stat-value">{readyCount}</strong>
-                <span className="study-away-stat-meta">
-                  {missingSiteCount === 0
-                    ? "No gaps"
-                    : `${missingSiteCount} pending`}
-                </span>
-              </div>
-
-              <div
-                className={`study-away-stat-card ${
-                  issueCount > 0
-                    ? "study-away-stat-card--warning"
-                    : selectedCount > 0
-                      ? "study-away-stat-card--success"
-                      : ""
-                }`}
-              >
-                <div className="study-away-stat-icon">
-                  <ListChecks className="h-4 w-4" />
-                </div>
-                <span className="study-away-stat-label">Issues</span>
-                <strong className="study-away-stat-value">{issueCount}</strong>
-                <span className="study-away-stat-meta">
-                  {issueCount === 0 ? "Clear" : "Needs review"}
-                </span>
+            <div
+              className={`study-away-summary ${selectedCount > 0 && missingSiteCount === 0 ? "study-away-summary--ready" : ""}`}
+              role="status"
+              aria-live="polite"
+            >
+              {selectedCount > 0 && missingSiteCount === 0 ? (
+                <CheckCircle2 className="h-5 w-5" />
+              ) : (
+                <CircleDashed className="h-5 w-5" />
+              )}
+              <div>
+                <span className="study-away-summary-label">Next step</span>
+                <p className="study-away-summary-headline">{selectionStatus}</p>
+                <p className="study-away-summary-tip">{nextStep}</p>
               </div>
             </div>
 
@@ -389,8 +348,10 @@ export default function StudyAwayPicker({
                         className={`study-away-status ${isSelected ? "study-away-status--active" : ""} ${statusClass}`}
                       >
                         {isSelected
-                          ? location
-                            ? "Site chosen"
+                          ? hasWarnings
+                            ? "Review issue"
+                            : location
+                              ? "Ready"
                             : "Needs site"
                           : selectionDisabled
                             ? "Limit reached"
@@ -469,12 +430,7 @@ export default function StudyAwayPicker({
                             </div>
                           )}
                         </>
-                      ) : (
-                        <p className="study-away-inline-note study-away-inline-note--locked">
-                          <Info className="h-3.5 w-3.5" />
-                          Select this semester first to choose a site.
-                        </p>
-                      )}
+                      ) : null}
 
                       {semesterId === "Y2-Spring" && (
                         <p className="study-away-inline-note">
@@ -516,20 +472,19 @@ export default function StudyAwayPicker({
                 type="button"
                 className="study-away-action-btn study-away-action-btn--primary"
                 onClick={onClose}
+                disabled={selectedCount === 0 || missingSiteCount > 0}
               >
                 <CheckCircle2 className="h-4 w-4" />
-                Done
+                {selectedCount === 0
+                  ? "Select a semester"
+                  : missingSiteCount > 0
+                    ? `Choose ${missingSiteCount} site${missingSiteCount === 1 ? "" : "s"}`
+                    : "Done"}
               </button>
             </div>
           </div>
 
           <aside className="study-away-sidebar">
-            <div className="study-away-summary">
-              <span className="study-away-summary-label">Selection status</span>
-              <p className="study-away-summary-headline">{selectionStatus}</p>
-              <p className="study-away-summary-tip">{nextStep}</p>
-            </div>
-
             <div className="study-away-selected-strip">
               <span className="study-away-selected-title">
                 Selected semesters

@@ -936,88 +936,12 @@
     gap: 12px;
 }
 
-.study-away-overview {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 10px;
-    margin-bottom: 16px;
-}
-
 .study-away-summary-headline {
     margin-top: 6px;
     font-size: 16px;
     line-height: 1.35;
     font-weight: 700;
     color: var(--foreground);
-}
-
-.study-away-stat-card {
-    position: relative;
-    min-height: 118px;
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    background: color-mix(in oklab, var(--card) 88%, transparent);
-    padding: 12px;
-    overflow: hidden;
-}
-
-.study-away-stat-icon {
-    width: 30px;
-    height: 30px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 9px;
-    margin-bottom: 10px;
-    color: var(--primary);
-    background: color-mix(in oklab, var(--primary) 10%, transparent);
-    box-shadow: inset 0 0 0 1px
-        color-mix(in oklab, var(--primary) 13%, transparent);
-}
-
-.study-away-stat-label {
-    display: block;
-    font-size: 11px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.7px;
-    color: var(--muted-foreground);
-}
-
-.study-away-stat-value {
-    display: block;
-    margin-top: 8px;
-    font-size: 22px;
-    line-height: 1;
-    font-weight: 700;
-    color: var(--foreground);
-}
-
-.study-away-stat-meta {
-    margin-top: 6px;
-    font-size: 12px;
-    line-height: 1.45;
-    color: var(--muted-foreground);
-}
-
-.study-away-stat-card--warning {
-    border-color: color-mix(in oklab, #f59e0b 38%, var(--border));
-    background: color-mix(in oklab, #f59e0b 12%, transparent);
-}
-
-.study-away-stat-card--success {
-    border-color: color-mix(in oklab, #16a34a 28%, var(--border));
-    background: color-mix(in oklab, #16a34a 10%, transparent);
-}
-
-.study-away-stat-card--warning .study-away-stat-icon {
-    color: #b45309;
-    background: color-mix(in oklab, #f59e0b 14%, transparent);
-}
-
-.study-away-stat-card--success .study-away-stat-icon {
-    color: #15803d;
-    background: color-mix(in oklab, #16a34a 12%, transparent);
 }
 
 .study-away-semester-list {
@@ -1295,16 +1219,6 @@
     margin-top: 1px;
 }
 
-.study-away-inline-note--locked {
-    width: fit-content;
-    max-width: 100%;
-    border: 1px dashed
-        color-mix(in oklab, var(--muted-foreground) 30%, transparent);
-    border-radius: 10px;
-    padding: 9px 10px;
-    background: color-mix(in oklab, var(--accent) 17%, transparent);
-}
-
 .study-away-inline-warning {
     display: flex;
     align-items: flex-start;
@@ -1382,10 +1296,29 @@
 }
 
 .study-away-summary {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 16px;
     padding: 14px;
     border: 1px solid var(--border);
     border-radius: 12px;
     background: color-mix(in oklab, var(--accent) 32%, transparent);
+}
+
+.study-away-summary > svg {
+    flex-shrink: 0;
+    margin-top: 2px;
+    color: var(--primary);
+}
+
+.study-away-summary--ready {
+    border-color: color-mix(in oklab, #16a34a 30%, var(--border));
+    background: color-mix(in oklab, #16a34a 9%, transparent);
+}
+
+.study-away-summary--ready > svg {
+    color: #15803d;
 }
 
 .study-away-summary-label {
@@ -1397,14 +1330,10 @@
     color: var(--muted-foreground);
 }
 
-.study-away-summary p {
+.study-away-summary-tip {
     margin-top: 6px;
     font-size: 12px;
     line-height: 1.5;
-    color: var(--foreground);
-}
-
-.study-away-summary-tip {
     color: var(--muted-foreground);
 }
 
@@ -1494,6 +1423,11 @@
 
 .study-away-action-btn--primary:hover {
     opacity: 0.92;
+}
+
+.study-away-action-btn--primary:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
 }
 
 .study-away-notes {
@@ -1652,35 +1586,6 @@
     .study-away-sidebar {
         padding-left: 16px;
         padding-right: 16px;
-    }
-
-    .study-away-overview {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 8px;
-    }
-
-    .study-away-stat-card {
-        min-height: 102px;
-        padding: 10px;
-    }
-
-    .study-away-stat-icon {
-        width: 28px;
-        height: 28px;
-        margin-bottom: 8px;
-    }
-
-    .study-away-stat-label {
-        font-size: 10px;
-        letter-spacing: 0.45px;
-    }
-
-    .study-away-stat-value {
-        font-size: 20px;
-    }
-
-    .study-away-stat-meta {
-        font-size: 11px;
     }
 
     .study-away-semester-main {
