@@ -27,18 +27,7 @@ function sortSemesterIds(semesterIds) {
   );
 }
 
-function isBlockedLocation(semesterId, location) {
-  return (
-    semesterId === "Y2-Spring" &&
-    (location === "New York" || location === "Abu Dhabi")
-  );
-}
-
 function getSemesterHint(semesterId) {
-  if (semesterId === "Y2-Spring") {
-    return "Earliest eligible study-away term.";
-  }
-
   if (semesterId === "Y4-Fall") {
     return "Final eligible term before senior spring in Shanghai.";
   }
@@ -330,35 +319,16 @@ export default function StudyAwayPicker({
                               aria-label={`Study away site for ${getSemesterLabel(semesterId)}`}
                             >
                               <option value="">Select a site</option>
-                              {STUDY_AWAY.locations.map((option) => {
-                                const blocked = isBlockedLocation(
-                                  semesterId,
-                                  option,
-                                );
-                                return (
-                                  <option
-                                    key={option}
-                                    value={option}
-                                    disabled={blocked}
-                                  >
-                                    {blocked
-                                      ? `${option} (Unavailable this term)`
-                                      : option}
-                                  </option>
-                                );
-                              })}
+                              {STUDY_AWAY.locations.map((option) => (
+                                <option key={option} value={option}>
+                                  {option}
+                                </option>
+                              ))}
                             </select>
                           </label>
 
                         </>
                       ) : null}
-
-                      {semesterId === "Y2-Spring" && (
-                        <p className="study-away-inline-note">
-                          New York and Abu Dhabi are unavailable in Sophomore
-                          Spring.
-                        </p>
-                      )}
 
                       {semesterWarnings.length > 0 && (
                         <div className="study-away-row-warnings">

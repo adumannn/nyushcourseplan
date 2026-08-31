@@ -613,17 +613,6 @@ export default function usePlanner(user, getToken) {
         });
       }
 
-      if (
-        semesterId === "Y2-Spring" &&
-        (selectedLocation === "New York" || selectedLocation === "Abu Dhabi")
-      ) {
-        warnings.push({
-          id: `site-restriction-${semesterId}`,
-          semesterId,
-          message: `${semesterLabel}: New York and Abu Dhabi are not available during sophomore spring.`,
-        });
-      }
-
       if (!isCsDsMajor) return;
 
       const majorCourseCount = (plan[semesterId] || []).filter((course) =>
