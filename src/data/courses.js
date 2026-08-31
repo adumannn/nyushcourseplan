@@ -15,7 +15,7 @@ export const SEMESTERS = [
   { id: 'Y1-Fall', label: 'Year 1 — Fall', year: 1, location: 'Shanghai' },
   { id: 'Y1-Spring', label: 'Year 1 — Spring', year: 1, location: 'Shanghai' },
   { id: 'Y2-Fall', label: 'Year 2 — Fall', year: 2, location: 'Shanghai' },
-  { id: 'Y2-Spring', label: 'Year 2 — Spring', year: 2 },
+  { id: 'Y2-Spring', label: 'Year 2 — Spring', year: 2, studyAwayEligible: true },
   { id: 'Y3-Fall', label: 'Year 3 — Fall', year: 3, studyAwayEligible: true },
   {
     id: 'Y3-Spring',
@@ -29,7 +29,8 @@ export const SEMESTERS = [
 
 export const STUDY_AWAY = {
   maxSemesters: 2,
-  eligibleSemesters: ['Y3-Fall', 'Y3-Spring', 'Y4-Fall'],
+  eligibleSemesters: ['Y2-Spring', 'Y3-Fall', 'Y3-Spring', 'Y4-Fall'],
+  requirementSemesters: ['Y3-Fall', 'Y3-Spring', 'Y4-Fall'],
   locations: [
     'Abu Dhabi',
     'Accra',
@@ -51,7 +52,9 @@ export const STUDY_AWAY = {
   maxMajorCoursesPerSemester: 3,
   notes: [
     'Students are required to complete one semester of study away.',
-    'Students may study away for up to two semesters from junior fall through senior fall.',
+    'Sophomore Spring is optional and does not satisfy the required study-away semester.',
+    'The required semester must be completed from junior fall through senior fall; students may study away for up to two semesters total.',
+    'Students cannot study away in New York or Abu Dhabi during the spring of sophomore year.',
     'Students must be in attendance in Shanghai for the final semester.',
     'Students should maintain good academic standing; a suggested GPA is 3.0 or higher.',
     'Students must take a full load (at least 12 credits) in each semester of study away.',

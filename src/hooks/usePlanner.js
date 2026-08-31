@@ -592,6 +592,17 @@ export default function usePlanner(user, getToken) {
       (majorId) => majorId === "cs" || majorId === "data-science",
     );
 
+    if (
+      !studyAway.selectedSemesters.some((semesterId) =>
+        STUDY_AWAY.requirementSemesters.includes(semesterId),
+      )
+    ) {
+      warnings.push({
+        id: "missing-required-study-away",
+        message: "Choose at least one study-away semester from Junior Fall through Senior Fall.",
+      });
+    }
+
     if (studyAway.selectedSemesters.length > STUDY_AWAY.maxSemesters) {
       warnings.push({
         id: "too-many-study-away-semesters",
@@ -610,6 +621,17 @@ export default function usePlanner(user, getToken) {
           id: `missing-location-${semesterId}`,
           semesterId,
           message: `${semesterLabel}: choose a study-away site for this semester.`,
+        });
+      }
+
+      if (
+        semesterId === "Y2-Spring" &&
+        (selectedLocation === "New York" || selectedLocation === "Abu Dhabi")
+      ) {
+        warnings.push({
+          id: `site-restriction-${semesterId}`,
+          semesterId,
+          message: `${semesterLabel}: New York and Abu Dhabi are not available during sophomore spring.`,
         });
       }
 

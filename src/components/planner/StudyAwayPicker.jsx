@@ -27,7 +27,18 @@ function sortSemesterIds(semesterIds) {
   );
 }
 
+function isBlockedLocation(semesterId, location) {
+  return (
+    semesterId === "Y2-Spring" &&
+    (location === "New York" || location === "Abu Dhabi")
+  );
+}
+
 function getSemesterHint(semesterId) {
+  if (semesterId === "Y2-Spring") {
+    return "Optional; does not satisfy the required semester.";
+  }
+
   if (semesterId === "Y4-Fall") {
     return "Final eligible term before senior spring in Shanghai.";
   }
@@ -92,17 +103,22 @@ export default function StudyAwayPicker({
   const missingSiteCount = sortedSelectedSemesters.filter(
     (semesterId) => !studyAway.locations[semesterId],
   ).length;
+  const requiredCount = sortedSelectedSemesters.filter((semesterId) =>
+    STUDY_AWAY.requirementSemesters.includes(semesterId),
+  ).length;
   const maxReached = selectedCount >= STUDY_AWAY.maxSemesters;
   const issueCount = warnings.length;
   const selectionStatus =
-    selectedCount === 0
-      ? "Select at least 1 semester"
+    requiredCount === 0
+      ? selectedCount === 0
+        ? "Select a required semester"
+        : "Add a required semester"
       : missingSiteCount > 0
         ? `${missingSiteCount} site${missingSiteCount === 1 ? "" : "s"} still needed`
         : "Selections complete";
   const nextStep =
-    selectedCount === 0
-      ? "Pick one eligible semester to satisfy the study-away requirement."
+    requiredCount === 0
+      ? "Choose at least one term from Junior Fall through Senior Fall."
       : missingSiteCount > 0
         ? "Choose a site for each selected semester before finalizing the plan."
         : issueCount > 0
@@ -207,11 +223,11 @@ export default function StudyAwayPicker({
         <div className="study-away-layout">
           <div className="study-away-main">
             <div
-              className={`study-away-summary ${selectedCount > 0 && missingSiteCount === 0 ? "study-away-summary--ready" : ""}`}
+              className={`study-away-summary ${requiredCount > 0 && missingSiteCount === 0 ? "study-away-summary--ready" : ""}`}
               role="status"
               aria-live="polite"
             >
-              {selectedCount > 0 && missingSiteCount === 0 ? (
+              {requiredCount > 0 && missingSiteCount === 0 ? (
                 <CheckCircle2 className="h-5 w-5" />
               ) : (
                 <CircleDashed className="h-5 w-5" />
@@ -319,16 +335,35 @@ export default function StudyAwayPicker({
                               aria-label={`Study away site for ${getSemesterLabel(semesterId)}`}
                             >
                               <option value="">Select a site</option>
-                              {STUDY_AWAY.locations.map((option) => (
-                                <option key={option} value={option}>
-                                  {option}
-                                </option>
-                              ))}
+                              {STUDY_AWAY.locations.map((option) => {
+                                const blocked = isBlockedLocation(
+                                  semesterId,
+                                  option,
+                                );
+                                return (
+                                  <option
+                                    key={option}
+                                    value={option}
+                                    disabled={blocked}
+                                  >
+                                    {blocked
+                                      ? `${option} (Unavailable this term)`
+                                      : option}
+                                  </option>
+                                );
+                              })}
                             </select>
                           </label>
 
                         </>
                       ) : null}
+
+                      {semesterId === "Y2-Spring" && (
+                        <p className="study-away-inline-note">
+                          New York and Abu Dhabi are unavailable in Sophomore
+                          Spring.
+                        </p>
+                      )}
 
                       {semesterWarnings.length > 0 && (
                         <div className="study-away-row-warnings">
@@ -391,11 +426,11 @@ export default function StudyAwayPicker({
                 type="button"
                 className="study-away-action-btn study-away-action-btn--primary"
                 onClick={onClose}
-                disabled={selectedCount === 0 || missingSiteCount > 0}
+                disabled={requiredCount === 0 || missingSiteCount > 0}
               >
                 <CheckCircle2 className="h-4 w-4" />
-                {selectedCount === 0
-                  ? "Select a semester"
+                {requiredCount === 0
+                  ? "Add required semester"
                   : missingSiteCount > 0
                     ? `Choose ${missingSiteCount} site${missingSiteCount === 1 ? "" : "s"}`
                     : "Done"}
