@@ -34,18 +34,6 @@ function isBlockedLocation(semesterId, location) {
   );
 }
 
-function getSemesterHint(semesterId) {
-  if (semesterId === "Y2-Spring") {
-    return "Optional; does not satisfy the required semester.";
-  }
-
-  if (semesterId === "Y4-Fall") {
-    return "Final eligible term before senior spring in Shanghai.";
-  }
-
-  return "Common study-away window.";
-}
-
 export default function StudyAwayPicker({
   major,
   secondMajor = null,
@@ -84,6 +72,7 @@ export default function StudyAwayPicker({
   const globalWarnings = useMemo(
     () =>
       warnings.filter((warning) => {
+        if (warning.id === "missing-required-study-away") return false;
         const semesterId =
           warning.semesterId ||
           STUDY_AWAY.eligibleSemesters.find((id) => warning.id.includes(id));
@@ -207,7 +196,8 @@ export default function StudyAwayPicker({
           <div>
             <h2 id={dialogTitleId}>Study Away Planning</h2>
             <p id={dialogDescriptionId} className="study-away-header-copy">
-              Select 1 required semester, up to {STUDY_AWAY.maxSemesters} total.
+              Choose up to {STUDY_AWAY.maxSemesters} semesters. One must be
+              Junior Fall or later.
             </p>
           </div>
           <button
@@ -257,6 +247,8 @@ export default function StudyAwayPicker({
                 const location = studyAway.locations[semesterId] || "";
                 const semesterWarnings = warningsBySemester[semesterId] || [];
                 const selectionDisabled = !isSelected && maxReached;
+                const fulfillsRequirement =
+                  STUDY_AWAY.requirementSemesters.includes(semesterId);
                 const hasWarnings = semesterWarnings.length > 0;
                 const statusClass = isSelected
                   ? hasWarnings || !location
@@ -295,13 +287,12 @@ export default function StudyAwayPicker({
                               {getSemesterLabel(semesterId)}
                             </span>
                             <span className="study-away-semester-window">
-                              Eligible term
+                              {fulfillsRequirement
+                                ? "Fulfills requirement"
+                                : "Optional term"}
                             </span>
                           </span>
                         </button>
-                        <p className="study-away-semester-helper">
-                          {getSemesterHint(semesterId)}
-                        </p>
                       </div>
 
                       <span
@@ -315,7 +306,9 @@ export default function StudyAwayPicker({
                             : "Needs site"
                           : selectionDisabled
                             ? "Limit reached"
-                            : "Not selected"}
+                            : fulfillsRequirement
+                              ? "Required option"
+                              : "Optional"}
                       </span>
                     </div>
 
@@ -426,14 +419,12 @@ export default function StudyAwayPicker({
                 type="button"
                 className="study-away-action-btn study-away-action-btn--primary"
                 onClick={onClose}
-                disabled={requiredCount === 0 || missingSiteCount > 0}
+                disabled={missingSiteCount > 0}
               >
                 <CheckCircle2 className="h-4 w-4" />
-                {requiredCount === 0
-                  ? "Add required semester"
-                  : missingSiteCount > 0
-                    ? `Choose ${missingSiteCount} site${missingSiteCount === 1 ? "" : "s"}`
-                    : "Done"}
+                {missingSiteCount > 0
+                  ? `Choose ${missingSiteCount} site${missingSiteCount === 1 ? "" : "s"}`
+                  : "Done"}
               </button>
             </div>
           </div>

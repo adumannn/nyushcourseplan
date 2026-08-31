@@ -912,13 +912,6 @@
     flex: 1;
 }
 
-.study-away-semester-helper {
-    margin-top: 4px;
-    font-size: 12px;
-    line-height: 1.45;
-    color: var(--muted-foreground);
-}
-
 .study-away-semester-toggle {
     display: inline-flex;
     align-items: center;
