@@ -1644,22 +1644,22 @@
 
 [data-theme="dark"] .planner-year-block {
     border-bottom-color: rgba(181, 195, 220, 0.24);
-    box-shadow: inset 3px 0 0 rgba(163, 113, 255, 0.55);
+    box-shadow: inset 3px 0 0 rgba(197, 142, 255, 0.9);
 }
 
 [data-theme="dark"] .planner-year-heading {
     background: linear-gradient(
         90deg,
-        rgba(87, 6, 140, 0.34),
-        rgba(22, 28, 40, 0.97) 58%,
+        rgba(132, 65, 182, 0.62),
+        rgba(35, 30, 51, 0.97) 58%,
         rgba(22, 28, 40, 0.92)
     );
-    border-bottom-color: rgba(193, 164, 235, 0.25);
+    border-bottom-color: rgba(217, 184, 255, 0.45);
     box-shadow: 0 8px 20px -18px rgba(0, 0, 0, 0.9);
 }
 
 [data-theme="dark"] .planner-year-code {
-    color: #d9b8ff;
+    color: #f0ddff;
     font-weight: 700;
 }
 
@@ -1673,7 +1673,7 @@
 }
 
 [data-theme="dark"] .planner-semester-toggle:hover {
-    background: rgba(163, 113, 255, 0.07);
+    background: rgba(192, 132, 252, 0.12);
 }
 
 [data-theme="dark"] .planner-semester-empty,
