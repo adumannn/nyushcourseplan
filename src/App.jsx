@@ -31,6 +31,13 @@ function AppContent() {
 
   const {
     plan,
+    planId,
+    planName,
+    plans,
+    switchPlan,
+    createPlan,
+    renamePlan,
+    deletePlan,
     major,
     setMajor,
     secondMajor,
@@ -183,6 +190,13 @@ function AppContent() {
   return (
     <div className="planner-shell h-dvh min-h-screen flex flex-col bg-background text-foreground">
       <Header
+        plans={plans}
+        planId={planId}
+        planName={planName}
+        onSwitchPlan={switchPlan}
+        onCreatePlan={createPlan}
+        onRenamePlan={renamePlan}
+        onDeletePlan={deletePlan}
         major={major}
         setMajor={setMajor}
         secondMajor={secondMajor}

@@ -13,6 +13,7 @@ import {
 import { UserButton } from "@clerk/react";
 import { MAJORS } from "../../data/courses";
 import PlanMenu from "./PlanMenu";
+import PlanSwitcher from "./PlanSwitcher";
 import SupporterBadge from "../supporters/SupporterBadge";
 
 const clerkAppearance = {
@@ -48,6 +49,13 @@ const clerkProfileProps = {
 };
 
 export default function Header({
+  plans,
+  planId,
+  planName,
+  onSwitchPlan,
+  onCreatePlan,
+  onRenamePlan,
+  onDeletePlan,
   major,
   setMajor,
   secondMajor = null,
@@ -202,6 +210,17 @@ export default function Header({
         )}
 
         <div className="flex items-center gap-1.5">
+          <PlanSwitcher
+            plans={plans}
+            planId={planId}
+            planName={planName}
+            onSwitch={onSwitchPlan}
+            onCreate={onCreatePlan}
+            onRename={onRenamePlan}
+            onDelete={onDeletePlan}
+            compact
+          />
+
           <button
             onClick={onOpenStudyAway}
             className={`flex-1 inline-flex items-center justify-center gap-1.5 rounded-md border px-2 py-2 text-xs transition-colors cursor-pointer min-h-[36px] ${
@@ -312,6 +331,16 @@ export default function Header({
             </span>
             <h1 className="planner-brand-name text-lg">Course Planner</h1>
           </div>
+          <div className="h-4 w-px bg-border/60" />
+          <PlanSwitcher
+            plans={plans}
+            planId={planId}
+            planName={planName}
+            onSwitch={onSwitchPlan}
+            onCreate={onCreatePlan}
+            onRename={onRenamePlan}
+            onDelete={onDeletePlan}
+          />
           <div className="h-4 w-px bg-border/60" />
           <select
             className="min-w-0 max-w-44 lg:max-w-none text-sm text-muted-foreground bg-transparent border-none outline-none cursor-pointer appearance-none pr-4"

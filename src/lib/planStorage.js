@@ -1,7 +1,10 @@
-import { supabase, getSupabaseClientWithAuth } from "./supabase";
-import { SEMESTERS } from "../data/courses";
-import { getCourseCampuses } from "./campus";
-import { LOCAL_CATALOG_BY_ID, mergeCourseWithLocalCatalog } from "./localCatalog";
+import { supabase, getSupabaseClientWithAuth } from "./supabase.js";
+import { SEMESTERS } from "../data/courses.js";
+import { getCourseCampuses } from "./campus.js";
+import {
+  LOCAL_CATALOG_BY_ID,
+  mergeCourseWithLocalCatalog,
+} from "./localCatalog.js";
 
 function requireSupabase() {
   if (!supabase) throw new Error("Supabase is not configured");
@@ -177,11 +180,13 @@ export const localStoragePlan = {
     return null;
   },
 
-  async save({ plan, major, secondMajor, studentName, studyAway }) {
+  async save({ planId, planName, plan, major, secondMajor, studentName, studyAway }) {
     try {
       localStorage.setItem(
         STORAGE_KEY,
         JSON.stringify({
+          planId: planId || null,
+          planName: planName || "My Plan",
           plan,
           major,
           secondMajor: secondMajor || null,
@@ -268,12 +273,103 @@ export const supabasePlan = {
     return created;
   },
 
-  async load(userId, profileStudentName = "", getToken) {
+  async list(userId, profileStudentName = "", getToken) {
+    await this.ensurePlan(userId, profileStudentName, getToken);
+    const db = await getSupabaseDb(getToken);
+    const { data, error } = await db
+      .from("plans")
+      .select("id, name, created_at, updated_at")
+      .eq("user_id", userId)
+      .order("created_at", { ascending: true });
+
+    if (error) throw error;
+    return data || [];
+  },
+
+  async create(userId, name, defaults, getToken) {
+    const cleanedName = String(name || "").trim();
+    if (!cleanedName) throw new Error("Plan name is required");
+
+    const db = await getSupabaseDb(getToken);
+    const { data, error } = await db
+      .from("plans")
+      .insert({
+        user_id: userId,
+        name: cleanedName,
+        major: defaults?.major || "cs",
+        second_major: defaults?.secondMajor || null,
+        student_name: defaults?.studentName || "",
+      })
+      .select(
+        "id, name, major, second_major, student_name, study_away_semesters, study_away_locations, created_at, updated_at",
+      )
+      .single();
+
+    if (error) throw error;
+    return {
+      planId: data.id,
+      planName: data.name,
+      plan: createEmptyPlan(),
+      major: data.major || "cs",
+      secondMajor: data.second_major || null,
+      studentName: data.student_name || "",
+      studyAway: normalizeStudyAwayPayload(null),
+      createdAt: data.created_at,
+      updatedAt: data.updated_at,
+    };
+  },
+
+  async rename(userId, planId, name, getToken) {
+    const cleanedName = String(name || "").trim();
+    if (!cleanedName) throw new Error("Plan name is required");
+
+    const db = await getSupabaseDb(getToken);
+    const { data, error } = await db
+      .from("plans")
+      .update({ name: cleanedName })
+      .eq("id", planId)
+      .eq("user_id", userId)
+      .select("id, name, created_at, updated_at")
+      .single();
+
+    if (error) throw error;
+    return data;
+  },
+
+  async remove(userId, planId, getToken) {
+    const db = await getSupabaseDb(getToken);
+    const { error } = await db
+      .from("plans")
+      .delete()
+      .eq("id", planId)
+      .eq("user_id", userId);
+
+    if (error) throw error;
+  },
+
+  async load(userId, profileStudentName = "", getToken, requestedPlanId = null) {
     try {
-      const planRow = await this.ensurePlan(userId, profileStudentName, getToken);
+      const db = await getSupabaseDb(getToken);
+      let planRow;
+
+      if (requestedPlanId) {
+        const { data, error } = await db
+          .from("plans")
+          .select(
+            "id, name, major, second_major, student_name, study_away_semesters, study_away_locations",
+          )
+          .eq("id", requestedPlanId)
+          .eq("user_id", userId)
+          .maybeSingle();
+        if (error) throw error;
+        planRow = data;
+      } else {
+        planRow = await this.ensurePlan(userId, profileStudentName, getToken);
+      }
+
+      if (!planRow) return null;
       const planId = planRow.id;
 
-      const db = await getSupabaseDb(getToken);
       const { data: courses, error } = await db
         .from("plan_courses")
         .select("*")
@@ -291,6 +387,7 @@ export const supabasePlan = {
 
       return {
         planId,
+        planName: planRow.name || "My Plan",
         plan,
         major: planRow.major || "cs",
         secondMajor: planRow.second_major || null,

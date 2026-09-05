@@ -123,11 +123,13 @@ export default function usePlanner(user, getToken) {
   const [studentName, setStudentName] = useState("");
   const [studyAway, setStudyAway] = useState(createDefaultStudyAway);
   const [planId, setPlanId] = useState(null);
+  const [planName, setPlanName] = useState("My Plan");
+  const [plans, setPlans] = useState([]);
   const [loaded, setLoaded] = useState(false);
   const [syncStatus, setSyncStatus] = useState({ state: "synced", detail: "" });
   const saveTimeout = useRef(null);
   const pendingSave = useRef(null);
-  const saveInProgress = useRef(false);
+  const saveInProgress = useRef(null);
   const failedSave = useRef(null);
   const skipNextSave = useRef(false);
 
@@ -152,51 +154,50 @@ export default function usePlanner(user, getToken) {
     [major, secondMajor],
   );
 
-  const flushCloudSave = useCallback(async () => {
-    if (saveInProgress.current) return;
+  const flushCloudSave = useCallback(() => {
+    if (saveInProgress.current) return saveInProgress.current;
 
-    saveInProgress.current = true;
-    try {
+    const run = (async () => {
       while (pendingSave.current) {
         const snapshot = pendingSave.current;
         pendingSave.current = null;
 
-        if (snapshot.isCloud && snapshot.planId && snapshot.userId) {
-          setSyncStatus({ state: "saving", detail: "" });
-          try {
-            await supabasePlan.save(
-              snapshot.userId,
-              {
-                planId: snapshot.planId,
-                plan: snapshot.plan,
-                major: snapshot.major,
-                secondMajor: snapshot.secondMajor,
-                studentName: snapshot.studentName,
-                studyAway: snapshot.studyAway,
-              },
-              snapshot.getToken,
-            );
-            failedSave.current = null;
-            setSyncStatus({ state: "synced", detail: "" });
-          } catch (error) {
-            failedSave.current = snapshot;
-            setSyncStatus({
-              state: "error",
-              detail: formatPlanSyncError(error),
-            });
-            console.error(
-              "Cloud plan save failed; latest plan remains cached locally.",
-              error,
-            );
-          }
+        if (!snapshot.isCloud || !snapshot.planId || !snapshot.userId) continue;
+        setSyncStatus({ state: "saving", detail: "" });
+        try {
+          await supabasePlan.save(
+            snapshot.userId,
+            {
+              planId: snapshot.planId,
+              plan: snapshot.plan,
+              major: snapshot.major,
+              secondMajor: snapshot.secondMajor,
+              studentName: snapshot.studentName,
+              studyAway: snapshot.studyAway,
+            },
+            snapshot.getToken,
+          );
+          failedSave.current = null;
+          setSyncStatus({ state: "synced", detail: "" });
+        } catch (error) {
+          failedSave.current = snapshot;
+          setSyncStatus({
+            state: "error",
+            detail: formatPlanSyncError(error),
+          });
+          console.error(
+            "Cloud plan save failed; latest plan remains cached locally.",
+            error,
+          );
         }
       }
-    } finally {
-      saveInProgress.current = false;
-      if (pendingSave.current) {
-        void flushCloudSave();
-      }
-    }
+    })();
+
+    saveInProgress.current = run.finally(() => {
+      saveInProgress.current = null;
+      if (pendingSave.current) void flushCloudSave();
+    });
+    return saveInProgress.current;
   }, []);
 
   const retryCloudSave = useCallback(() => {
@@ -219,7 +220,29 @@ export default function usePlanner(user, getToken) {
 
       if (isCloud) {
         const profileStudentName = getUserProfileName(user);
-        const data = await supabasePlan.load(user.id, profileStudentName, getToken);
+        const cached = await localStoragePlan.load();
+        let planRows = [];
+        let data = null;
+        try {
+          planRows = await supabasePlan.list(
+            user.id,
+            profileStudentName,
+            getToken,
+          );
+          const requestedPlanId = planRows.some(
+            (item) => item.id === cached?.planId,
+          )
+            ? cached.planId
+            : planRows[0]?.id;
+          data = await supabasePlan.load(
+            user.id,
+            profileStudentName,
+            getToken,
+            requestedPlanId,
+          );
+        } catch (error) {
+          console.error("Failed to list cloud plans:", error);
+        }
         if (cancelled) return;
         if (data) {
           const storedStudentName =
@@ -233,13 +256,14 @@ export default function usePlanner(user, getToken) {
           setStudentName(resolvedStudentName);
           setStudyAway(normalizeStudyAway(data.studyAway));
           setPlanId(data.planId);
+          setPlanName(data.planName);
+          setPlans(planRows);
 
           // Allow one save so the first cloud sign-in persists profile name into plans.student_name.
           shouldSkipInitialSave = !didAutoFillName;
         } else {
           // Cloud load failed — fall back to localStorage cache so the user
           // sees their most recent plan instead of an empty grid.
-          const cached = await localStoragePlan.load();
           if (!cancelled && cached) {
             setPlan(deduplicatePlan(cached.plan || createEmptyPlan()));
             setMajorState(cached.major || "cs");
@@ -248,6 +272,9 @@ export default function usePlanner(user, getToken) {
             );
             setStudentName(cached.studentName || "");
             setStudyAway(normalizeStudyAway(cached.studyAway));
+            setPlanId(cached.planId || null);
+            setPlanName(cached.planName || "My Plan");
+            setPlans(planRows);
           }
         }
       } else {
@@ -261,8 +288,10 @@ export default function usePlanner(user, getToken) {
           );
           setStudentName(data.studentName || "");
           setStudyAway(normalizeStudyAway(data.studyAway));
+          setPlanName(data.planName || "My Plan");
         }
         setPlanId(null);
+        setPlans([]);
       }
 
       // Don't save the data we just loaded back to the database
@@ -289,7 +318,15 @@ export default function usePlanner(user, getToken) {
     }
 
     // Synchronous localStorage write — always happens immediately
-    localStoragePlan.save({ plan, major, secondMajor, studentName, studyAway });
+    localStoragePlan.save({
+      planId,
+      planName,
+      plan,
+      major,
+      secondMajor,
+      studentName,
+      studyAway,
+    });
 
     // Debounce the Supabase save
     const snapshot = {
@@ -313,12 +350,13 @@ export default function usePlanner(user, getToken) {
     return () => clearTimeout(saveTimeout.current);
   }, [
     plan,
+    planId,
+    planName,
     major,
     secondMajor,
     studentName,
     studyAway,
     isCloud,
-    planId,
     user,
     getToken,
     loaded,
@@ -336,6 +374,161 @@ export default function usePlanner(user, getToken) {
     window.addEventListener("beforeunload", handleBeforeUnload);
     return () => window.removeEventListener("beforeunload", handleBeforeUnload);
   }, [flushCloudSave]);
+
+  const currentSnapshot = useCallback(
+    () => ({
+      plan,
+      major,
+      secondMajor,
+      studentName,
+      studyAway,
+      isCloud,
+      planId,
+      userId: user?.id || null,
+      getToken,
+    }),
+    [
+      plan,
+      major,
+      secondMajor,
+      studentName,
+      studyAway,
+      isCloud,
+      planId,
+      user,
+      getToken,
+    ],
+  );
+
+  const saveCurrentNow = useCallback(async () => {
+    if (!loaded || !isCloud || !planId) return true;
+    clearTimeout(saveTimeout.current);
+    pendingSave.current = currentSnapshot();
+    await flushCloudSave();
+    return !failedSave.current;
+  }, [currentSnapshot, flushCloudSave, isCloud, loaded, planId]);
+
+  const activatePlan = useCallback(async (data) => {
+    const nextPlan = deduplicatePlan(data.plan || createEmptyPlan());
+    const nextMajor = data.major || "cs";
+    const nextSecondMajor = normalizeSecondMajor(data.secondMajor, nextMajor);
+    const nextStudyAway = normalizeStudyAway(data.studyAway);
+    const nextName = data.planName || "My Plan";
+
+    skipNextSave.current = true;
+    setPlan(nextPlan);
+    setMajorState(nextMajor);
+    setSecondMajorState(nextSecondMajor);
+    setStudentName(data.studentName || "");
+    setStudyAway(nextStudyAway);
+    setPlanId(data.planId);
+    setPlanName(nextName);
+    await localStoragePlan.save({
+      planId: data.planId,
+      planName: nextName,
+      plan: nextPlan,
+      major: nextMajor,
+      secondMajor: nextSecondMajor,
+      studentName: data.studentName || "",
+      studyAway: nextStudyAway,
+    });
+  }, []);
+
+  const switchPlan = useCallback(
+    async (nextPlanId) => {
+      if (!user || !nextPlanId || nextPlanId === planId) return;
+      if (!(await saveCurrentNow())) {
+        throw new Error("Save the current plan before switching.");
+      }
+
+      setLoaded(false);
+      try {
+        const data = await supabasePlan.load(
+          user.id,
+          getUserProfileName(user),
+          getToken,
+          nextPlanId,
+        );
+        if (!data) throw new Error("Plan could not be loaded.");
+        await activatePlan(data);
+      } finally {
+        setLoaded(true);
+      }
+    },
+    [activatePlan, getToken, planId, saveCurrentNow, user],
+  );
+
+  const createPlan = useCallback(
+    async (name) => {
+      if (!user) throw new Error("Sign in to create another plan.");
+      if (!(await saveCurrentNow())) {
+        throw new Error("Save the current plan before creating another one.");
+      }
+
+      const data = await supabasePlan.create(
+        user.id,
+        name,
+        { major, secondMajor, studentName },
+        getToken,
+      );
+      setPlans((items) => [
+        ...items,
+        {
+          id: data.planId,
+          name: data.planName,
+          created_at: data.createdAt,
+          updated_at: data.updatedAt,
+        },
+      ]);
+      await activatePlan(data);
+    },
+    [
+      activatePlan,
+      getToken,
+      major,
+      saveCurrentNow,
+      secondMajor,
+      studentName,
+      user,
+    ],
+  );
+
+  const renamePlan = useCallback(
+    async (name) => {
+      if (!user || !planId) return;
+      const updated = await supabasePlan.rename(
+        user.id,
+        planId,
+        name,
+        getToken,
+      );
+      setPlanName(updated.name);
+      setPlans((items) =>
+        items.map((item) => (item.id === planId ? updated : item)),
+      );
+    },
+    [getToken, planId, user],
+  );
+
+  const deletePlan = useCallback(async () => {
+    if (!user || !planId) return;
+    if (plans.length <= 1) throw new Error("Keep at least one plan.");
+    if (!(await saveCurrentNow())) {
+      throw new Error("Save the current plan before deleting it.");
+    }
+
+    const nextPlanId = plans.find((item) => item.id !== planId)?.id;
+    const data = await supabasePlan.load(
+      user.id,
+      getUserProfileName(user),
+      getToken,
+      nextPlanId,
+    );
+    if (!data) throw new Error("The next plan could not be loaded.");
+    await supabasePlan.remove(user.id, planId, getToken);
+    setPlans((items) => items.filter((item) => item.id !== planId));
+    await activatePlan(data);
+  }, [activatePlan, getToken, planId, plans, saveCurrentNow, user]);
 
   const addCourse = useCallback((semesterId, course) => {
     setPlan((prev) => {
@@ -837,6 +1030,13 @@ export default function usePlanner(user, getToken) {
 
   return {
     plan,
+    planId,
+    planName,
+    plans,
+    switchPlan,
+    createPlan,
+    renamePlan,
+    deletePlan,
     major,
     setMajor,
     secondMajor,
