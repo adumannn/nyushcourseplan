@@ -83,6 +83,7 @@ export default function SemesterCard({
     <div className="planner-semester-row border-b border-border/40 last:border-b-0">
       <button
         onClick={() => setIsExpanded(!isExpanded)}
+        aria-expanded={isExpanded}
         onDragOver={(event) =>
           onDragOverIndex(event, semesterKey, courses.length)
         }
@@ -119,7 +120,7 @@ export default function SemesterCard({
         <div className="flex items-center gap-1.5 sm:gap-4 shrink-0">
           {creditWarning && (
             <div
-              className="flex items-center gap-1 text-amber-500"
+              className="flex items-center gap-1 text-amber-700 dark:text-amber-300"
               title={creditWarning}
             >
               <AlertTriangle className="h-3.5 w-3.5" />
@@ -130,7 +131,7 @@ export default function SemesterCard({
           )}
           <div className="flex items-baseline gap-1 sm:gap-1.5">
             <span
-              className={`text-sm tabular-nums ${creditWarning ? "text-amber-500" : ""}`}
+              className={`text-sm tabular-nums ${creditWarning ? "text-amber-700 dark:text-amber-300" : ""}`}
             >
               {credits}
             </span>
@@ -209,7 +210,7 @@ export default function SemesterCard({
               <Plus className="h-4 w-4" />
               {isTouchMoveActive
                 ? "Tap to move selected course here"
-                : "Click to add courses"}
+                : "Add courses"}
             </button>
           ) : (
             <div className="space-y-2">

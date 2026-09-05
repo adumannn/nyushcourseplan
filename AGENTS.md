@@ -76,6 +76,7 @@ supabase/
   ingest-reviews.yml      Weekly cron + manual dispatch that runs scripts/ingest-reviews.mjs
 docs/
   clerk-setup.md          Clerk dashboard/OAuth/domain setup walkthrough
+  ui-check.md             Responsive viewport, overflow, and catalog interaction checks
 ```
 
 **npm scripts:** `dev`, `build`, `preview`, `lint`, `test` (Node test runner over `src` + `scripts`), `generate:catalog`, `validate:catalog`, `import:catalog`, `sync-credits`, `ingest:reviews`.
@@ -171,8 +172,9 @@ Cloud saves expose `saving` / `synced` / `error` state from `usePlanner`. A fail
 - Functional components only; hooks for all state logic. Named exports for hooks, default exports for components. One component per file.
 - Tailwind for styling; `App.css` holds the styles that outgrow utilities.
 - Dark mode uses a blue-charcoal surface hierarchy; year bands carry a bright lavender-purple structural accent so years remain visibly distinct from their semester rows.
+- **Readability and overflow:** Header layouts switch at `lg` and desktop controls wrap when space is tight. Anchor the plan switcher to its left edge; keep menus within the viewport. Course names wrap, metadata uses full muted contrast, course titles and catalog add actions are native buttons, and scrollable lists retain visible thin scrollbars. Modal headers/filters do not shrink; custom forms scroll within the modal. Mobile filters use a full-width department row plus two columns and 16px inputs to avoid focus zoom.
 - **Mobile breakpoint:** `lg:` (1024px) separates phone/tablet (single column + bottom sheet) from desktop (board + sidebar). The Header keeps TWO separate DOM layouts (mobile 2-row, desktop 1-row) — don't unify them via responsive classes; it clobbers `useRef`s. The requirements panel is a bottom sheet on mobile with a floating "Progress" pill.
-- **Course picker:** already-added courses stay visible with an inline remove button (`getCourseSemester(courseId)` + `removeCourse(semesterId, courseId)` from `usePlanner`). Rows show campus labels and a campus filter; custom course campus defaults to the semester's study-away site, else Shanghai.
+- **Course picker:** render matches in batches of 100 with “Show more courses”; filter/search changes reset the visible batch, while search and sorting still cover the full catalog. Already-added courses stay visible with an inline remove button (`getCourseSemester(courseId)` + `removeCourse(semesterId, courseId)` from `usePlanner`). Rows show campus labels and a campus filter; custom course campus defaults to the semester's study-away site, else Shanghai.
 - **Plan switcher:** keep the control openable when the cloud plan list is unavailable; loading failures must be visible instead of leaving a dead disabled button.
 - Incomplete requirement rows start a destination-selection mode on the existing semester grid; choosing a semester opens the normal course picker filtered to matching courses.
 - **Course search:** exact and prefix matches rank before substring matches. Core aliases `poh` and `gps` surface WRIT-SHU 201 and CCSF-SHU 101L respectively without changing either course's requirement metadata.

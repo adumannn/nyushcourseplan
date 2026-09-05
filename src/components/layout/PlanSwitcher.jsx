@@ -81,7 +81,7 @@ export default function PlanSwitcher({
       </button>
 
       {open && (
-        <div className="absolute right-0 top-full z-50 mt-2 w-64 rounded-lg border border-border bg-card p-2 text-foreground shadow-xl md:left-0 md:right-auto">
+        <div className="absolute left-0 top-full z-50 mt-2 w-64 max-w-[calc(100vw-24px)] rounded-lg border border-border bg-card p-2 text-foreground shadow-xl">
           <div className="px-2 pb-1.5 pt-1 text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
             Plans
           </div>
@@ -144,7 +144,7 @@ export default function PlanSwitcher({
               </div>
             </form>
           ) : mode === "delete" ? (
-            <div className="space-y-2 p-2 text-sm">
+            <div className="space-y-2 p-2 text-sm break-words">
               <p>Delete “{planName}”?</p>
               <div className="flex justify-end gap-2">
                 <button
@@ -191,7 +191,7 @@ export default function PlanSwitcher({
             </div>
           )}
 
-          {error && <p className="px-2 pb-1 pt-2 text-xs text-red-600">{error}</p>}
+          {error && <p className="px-2 pb-1 pt-2 text-xs text-red-600 break-words">{error}</p>}
         </div>
       )}
     </div>

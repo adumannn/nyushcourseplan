@@ -1,3 +1,33 @@
+/* Shared layout constraints: wrap content instead of clipping the viewport. */
+.planner-shell,
+.modal,
+.requirements-sheet-panel {
+    overflow-wrap: anywhere;
+}
+
+.planner-header {
+    flex-shrink: 0;
+}
+
+.planner-course-card,
+.planner-requirements,
+.modal,
+.custom-field {
+    min-width: 0;
+}
+
+:where(button, a, input, select, textarea, summary):focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 3px;
+}
+
+.planner-board,
+.planner-requirements-scroll,
+.modal-course-list {
+    scrollbar-width: thin;
+    scrollbar-color: var(--muted-foreground) transparent;
+}
+
 /* ── Mobile bottom sheet (Requirements) ── */
 
 .requirements-sheet-overlay {
@@ -87,7 +117,9 @@
     border-radius: 16px;
     width: 100%;
     max-width: 520px;
-    max-height: 80vh;
+    max-height: 80dvh;
+    min-height: 0;
+    overflow: hidden;
     display: flex;
     flex-direction: column;
     box-shadow:
@@ -108,6 +140,8 @@
 }
 
 .modal-header {
+    flex-shrink: 0;
+    gap: 12px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -121,8 +155,9 @@
 }
 
 .modal-close {
-    width: 28px;
-    height: 28px;
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
     border: none;
     background: none;
     font-size: 18px;
@@ -141,6 +176,7 @@
 }
 
 .modal-tabs {
+    flex-shrink: 0;
     display: flex;
     gap: 0;
     border-bottom: 1px solid var(--border);
@@ -169,6 +205,7 @@
 }
 
 .modal-filters {
+    flex-shrink: 0;
     padding: 12px 16px;
     display: flex;
     flex-direction: column;
@@ -234,6 +271,8 @@
 
 .modal-course-list {
     flex: 1;
+    min-height: 0;
+    overscroll-behavior: contain;
     overflow-y: auto;
     padding: 4px 0;
     max-height: 380px;
@@ -256,12 +295,26 @@
     transition: background 0.1s;
 }
 
+.modal-course-select {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    min-width: 0;
+    gap: 10px;
+    min-height: 44px;
+    text-align: left;
+    cursor: pointer;
+}
+
+.modal-course-select:disabled {
+    cursor: default;
+}
+
 .modal-course-item:hover {
     background: var(--accent);
 }
 
 .modal-course-item--added {
-    opacity: 0.72;
     cursor: default;
 }
 
@@ -283,7 +336,7 @@
 
 .modal-course-code {
     display: block;
-    font-size: 10px;
+    font-size: 12px;
     font-weight: 600;
     color: var(--muted-foreground);
     letter-spacing: 0.2px;
@@ -291,12 +344,10 @@
 
 .modal-course-name {
     display: block;
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 500;
     color: var(--foreground);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    line-height: 1.5;
 }
 
 .modal-course-campus {
@@ -306,7 +357,7 @@
     max-width: 100%;
     margin-top: 3px;
     color: var(--muted-foreground);
-    font-size: 10px;
+    font-size: 12px;
     font-weight: 500;
     line-height: 1.2;
 }
@@ -316,7 +367,9 @@
 }
 
 .modal-course-credits {
-    font-size: 10px;
+    flex-shrink: 0;
+    white-space: nowrap;
+    font-size: 12px;
     color: var(--muted-foreground);
     font-weight: 600;
 }
@@ -338,6 +391,7 @@
 }
 
 .modal-course-added-actions {
+    flex-shrink: 0;
     display: flex;
     align-items: center;
     gap: 6px;
@@ -347,8 +401,9 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 28px;
-    height: 28px;
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
     border-radius: 6px;
     color: var(--muted-foreground);
     transition:
@@ -364,6 +419,9 @@
 /* ── Custom course form ── */
 
 .modal-custom {
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
     padding: 20px 16px;
     display: flex;
     flex-direction: column;
@@ -377,7 +435,7 @@
 }
 
 .custom-field label {
-    font-size: 10px;
+    font-size: 12px;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.6px;
@@ -386,6 +444,9 @@
 
 .custom-field input,
 .custom-field select {
+    width: 100%;
+    min-width: 0;
+    color: var(--foreground);
     padding: 8px 12px;
     border: 1px solid var(--border);
     border-radius: 8px;
@@ -1706,7 +1767,7 @@
 @media (max-width: 1024px) {
     .modal {
         max-width: min(560px, 96vw);
-        max-height: 88vh;
+        max-height: 88dvh;
     }
 
     .modal-course-list {
@@ -1746,8 +1807,7 @@
     }
 
     .modal-tabs {
-        position: sticky;
-        top: 49px;
+        position: static;
         z-index: 1;
         background: var(--card);
     }
@@ -1768,14 +1828,19 @@
     }
 
     .modal-filter-row {
-        flex-direction: row;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 8px;
+    }
+
+    .modal-filter-row select:first-child {
+        grid-column: 1 / -1;
     }
 
     .modal-filter-row select {
         flex: 1 1 0;
-        font-size: 12px;
-        min-height: 40px;
+        font-size: 16px;
+        min-height: 44px;
     }
 
     .modal-search {
@@ -1805,11 +1870,7 @@
     }
 
     .modal-course-name {
-        font-size: 13px;
-    }
-
-    .modal-course-credits {
-        font-size: 11px;
+        font-size: 14px;
     }
 
     .modal-course-add-icon {
@@ -2070,5 +2131,40 @@
     .suggestion-modal .suggestion-textarea {
         min-height: 124px;
         max-height: 32dvh;
+    }
+}
+
+@media (max-width: 1023px) {
+    .planner-header select {
+        font-size: 16px;
+        min-height: 44px;
+    }
+
+    .planner-header button,
+    .planner-course-card button[aria-label^="Remove"],
+    .planner-course-card button[aria-label="Course details"] {
+        min-height: 44px;
+        min-width: 44px;
+    }
+
+    .planner-header button[aria-haspopup="dialog"] {
+        min-width: 9rem;
+    }
+
+    .planner-course-card button[aria-label^="Remove"] {
+        opacity: 1;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .modal-overlay,
+    .modal,
+    .requirements-sheet-overlay,
+    .requirements-sheet-panel {
+        animation: none;
+    }
+
+    .planner-course-card {
+        transition: none;
     }
 }

@@ -116,7 +116,7 @@ export default function Header({
   return (
     <header className="planner-header relative z-40 border-b border-border/40 px-3 sm:px-6 py-2.5 sm:py-4">
       {/* Mobile layout: 2 rows for breathing room */}
-      <div className="flex flex-col gap-2 md:hidden">
+      <div className="flex flex-col gap-2 lg:hidden">
         <div className="flex items-center gap-2">
           <div className="planner-brand shrink-0" aria-label="Course Planner">
             <span className="planner-logo-mark" aria-hidden="true">
@@ -209,7 +209,7 @@ export default function Header({
           </div>
         )}
 
-        <div className="flex items-center gap-1.5">
+        <div className="flex flex-wrap items-center gap-1.5">
           <PlanSwitcher
             plans={plans}
             planId={planId}
@@ -223,7 +223,7 @@ export default function Header({
 
           <button
             onClick={onOpenStudyAway}
-            className={`flex-1 inline-flex items-center justify-center gap-1.5 rounded-md border px-2 py-2 text-xs transition-colors cursor-pointer min-h-[36px] ${
+            className={`flex-1 whitespace-nowrap inline-flex items-center justify-center gap-1.5 rounded-md border px-2 py-2 text-xs transition-colors cursor-pointer min-h-[36px] ${
               isStudyAwayOpen
                 ? "border-[#57068c]/45 bg-[#57068c]/10 text-foreground"
                 : hasStudyAwayIssues
@@ -316,9 +316,9 @@ export default function Header({
         </div>
       </div>
 
-      {/* Desktop layout — unchanged */}
-      <div className="hidden md:flex items-center justify-between gap-3">
-        <div className="flex min-w-0 items-center gap-4">
+      {/* Desktop layout — wrap controls when both majors need more space */}
+      <div className="hidden lg:flex flex-wrap items-center justify-between gap-3">
+        <div className="flex min-w-0 flex-wrap items-center gap-3">
           <div className="planner-brand" aria-label="Course Planner">
             <span className="planner-logo-mark" aria-hidden="true">
               <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
@@ -343,7 +343,7 @@ export default function Header({
           />
           <div className="h-4 w-px bg-border/60" />
           <select
-            className="min-w-0 max-w-44 lg:max-w-none text-sm text-muted-foreground bg-transparent border-none outline-none cursor-pointer appearance-none pr-4"
+            className="min-w-0 max-w-64 text-sm text-muted-foreground bg-transparent border-none outline-none cursor-pointer appearance-none pr-4"
             value={major}
             onChange={(e) => setMajor(e.target.value)}
             aria-label="Select major"
@@ -361,7 +361,7 @@ export default function Header({
                 +
               </span>
               <select
-                className="min-w-0 max-w-44 lg:max-w-none text-sm text-muted-foreground bg-transparent border-none outline-none cursor-pointer appearance-none pr-4"
+                className="min-w-0 max-w-64 text-sm text-muted-foreground bg-transparent border-none outline-none cursor-pointer appearance-none pr-4"
                 value={secondMajor || ""}
                 onChange={(e) => handleSecondMajorChange(e.target.value)}
                 aria-label="Select second major"
@@ -401,7 +401,7 @@ export default function Header({
           )}
         </div>
 
-        <div className="flex items-center justify-end gap-3">
+        <div className="flex flex-wrap items-center justify-end gap-3">
           <div className="flex items-baseline gap-2">
             <span className="text-2xl tabular-nums">{totalCredits}</span>
             <span className="text-sm text-muted-foreground">credits</span>

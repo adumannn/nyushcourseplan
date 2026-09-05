@@ -248,7 +248,7 @@ function AppContent() {
       )}
 
       <div className="planner-main relative z-0 flex-1 min-h-0 flex flex-col lg:flex-row">
-        <div className="planner-board scrollbar-hidden flex-1 min-h-0 overflow-y-auto pb-20 lg:pb-0">
+        <div className="planner-board min-w-0 flex-1 min-h-0 overflow-y-auto pb-20 lg:pb-0">
           {pickerRequirement && !pickerSemester && (
             <div className="sticky top-0 z-20 mx-3 mt-3 flex items-center gap-3 rounded-lg border border-[#57068c]/25 bg-card px-3 py-2.5 shadow-sm sm:mx-6">
               <ListChecks className="h-4 w-4 shrink-0 text-[#57068c]" />

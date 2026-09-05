@@ -31,13 +31,13 @@ function RequirementCategory({ requirement, onFindCourses }) {
           aria-expanded={isExpanded}
           className="w-full flex items-start justify-between gap-3 mb-3 group"
         >
-          <div className="flex-1 text-left">
+          <div className="flex-1 min-w-0 text-left">
             <div className="flex items-center gap-2 mb-1.5">
               <h3 className="text-xs tracking-wider uppercase text-muted-foreground">
                 {requirement.category}
               </h3>
               <ChevronDown
-                className={`h-3.5 w-3.5 text-muted-foreground/60 transition-transform ${
+                className={`h-3.5 w-3.5 text-muted-foreground transition-transform ${
                   isExpanded ? 'rotate-180' : ''
                 }`}
               />
@@ -52,7 +52,7 @@ function RequirementCategory({ requirement, onFindCourses }) {
         </button>
       ) : (
         <div className="w-full flex items-start justify-between gap-3 mb-3">
-          <div className="flex-1 text-left">
+          <div className="flex-1 min-w-0 text-left">
             <div className="flex items-center gap-2 mb-1.5">
               <h3 className="text-xs tracking-wider uppercase text-muted-foreground">
                 {requirement.category}
@@ -121,18 +121,18 @@ function RequirementCategory({ requirement, onFindCourses }) {
                   {item.name}
                 </div>
                 {item.progress && (
-                  <div className={`text-xs mt-0.5 ${item.completed ? 'text-chart-2/70' : 'text-muted-foreground/60'}`}>
+                  <div className={`text-xs mt-0.5 ${item.completed ? 'text-chart-2' : 'text-muted-foreground'}`}>
                     {item.progress} selected
                   </div>
                 )}
                 {item.credits !== undefined && (
-                  <div className="text-xs text-muted-foreground/60 mt-0.5">
+                  <div className="text-xs text-muted-foreground mt-0.5">
                     {item.credits} credits
                   </div>
                 )}
               </div>
               {canFind && (
-                <span className="mt-0.5 inline-flex shrink-0 items-center gap-1 text-xs font-medium text-[#57068c]">
+                <span className="mt-0.5 inline-flex shrink-0 items-center gap-1 text-xs font-medium text-[#57068c] dark:text-purple-300">
                   <Search className="h-3.5 w-3.5" />
                   Find
                 </span>
@@ -460,7 +460,7 @@ export default function RequirementsSidebar({
       </div>
 
       {!collapsed && (
-        <div className="planner-requirements-scroll scrollbar-hidden flex-1 min-h-0 overflow-y-auto overscroll-contain">
+        <div className="planner-requirements-scroll flex-1 min-h-0 overflow-y-auto overscroll-contain">
           <div className="p-4 sm:p-6 space-y-6 sm:space-y-8">
             {requirements.map((requirement, index) => (
               <RequirementCategory
@@ -481,7 +481,7 @@ export default function RequirementsSidebar({
                       className="h-2.5 w-2.5 rounded-full shrink-0"
                       style={{ backgroundColor: cat.color }}
                     />
-                    <span className="text-[11px] text-muted-foreground truncate">
+                    <span className="text-xs text-muted-foreground">
                       {cat.label}
                     </span>
                   </div>

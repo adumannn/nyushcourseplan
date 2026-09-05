@@ -32,6 +32,7 @@ export default function CoursePicker({
 }) {
   const [tab, setTab] = useState("catalog");
   const [search, setSearch] = useState("");
+  const [resultLimit, setResultLimit] = useState(100);
   const [filterDept, setFilterDept] = useState("");
   const [filterCat, setFilterCat] = useState("");
   const [filterCampus, setFilterCampus] = useState("");
@@ -180,8 +181,11 @@ export default function CoursePicker({
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal" onClick={(e) => e.stopPropagation()}>
         <div className="modal-header">
-          <h2>{requirementFilter ? requirementFilter.label : "Add Course"}</h2>
-          <button className="modal-close" onClick={onClose}>
+          <div className="min-w-0">
+            <h2>{requirementFilter ? requirementFilter.label : "Add Course"}</h2>
+            <p className="text-sm text-muted-foreground mt-1">{semesterLabels.get(semesterId) || semesterId}</p>
+          </div>
+          <button className="modal-close" aria-label="Close course picker" onClick={onClose}>
             ×
           </button>
         </div>
@@ -210,14 +214,16 @@ export default function CoursePicker({
                 className="modal-search"
                 type="text"
                 placeholder="Search by name or code..."
+                aria-label="Search courses"
                 value={search}
-                onChange={(e) => setSearch(e.target.value)}
+                onChange={(e) => { setSearch(e.target.value); setResultLimit(100); }}
                 autoFocus
               />
               <div className="modal-filter-row">
                 <select
+                  aria-label="Filter by department"
                   value={filterDept}
-                  onChange={(e) => setFilterDept(e.target.value)}
+                  onChange={(e) => { setFilterDept(e.target.value); setResultLimit(100); }}
                 >
                   <option value="">All Departments</option>
                   {departments.length > 0
@@ -233,8 +239,9 @@ export default function CoursePicker({
                       ))}
                 </select>
                 <select
+                  aria-label="Filter by category"
                   value={filterCat}
-                  onChange={(e) => setFilterCat(e.target.value)}
+                  onChange={(e) => { setFilterCat(e.target.value); setResultLimit(100); }}
                 >
                   <option value="">All Categories</option>
                   {Object.entries(CATEGORIES).map(([key, cat]) => (
@@ -244,8 +251,9 @@ export default function CoursePicker({
                   ))}
                 </select>
                 <select
+                  aria-label="Filter by campus"
                   value={filterCampus}
-                  onChange={(e) => setFilterCampus(e.target.value)}
+                  onChange={(e) => { setFilterCampus(e.target.value); setResultLimit(100); }}
                 >
                   <option value="">All Campuses</option>
                   {campusOptions.map((campus) => (
@@ -257,13 +265,16 @@ export default function CoursePicker({
               </div>
             </div>
 
-            <div className="modal-course-list scrollbar-hidden">
+            <p className="px-4 py-2 text-xs text-muted-foreground shrink-0" role="status">
+              {filtered.length} courses found · Showing {Math.min(resultLimit, filtered.length)}
+            </p>
+            <div className="modal-course-list">
               {filtered.length === 0 ? (
                 <div className="modal-empty">
                   No courses match your filters.
                 </div>
               ) : (
-                filtered.map((course) => {
+                filtered.slice(0, resultLimit).map((course) => {
                   const placedSemesterId =
                     getCourseSemester?.(course.id) ||
                     (isCourseInPlan(course.id) ? semesterId : null);
@@ -280,24 +291,32 @@ export default function CoursePicker({
                     <div
                       key={course.id}
                       className={`modal-course-item ${inPlan ? "modal-course-item--added" : ""}`}
-                      onClick={() => handleAddCatalog(course)}
                     >
-                      <div
-                        className="modal-course-color"
-                        style={{ backgroundColor: cat.color }}
-                      />
-                      <div className="modal-course-info">
-                        <span className="modal-course-code">{course.code}</span>
-                        <span className="modal-course-name">{course.name}</span>
-                        <span className="modal-course-campus">
-                          <MapPin className="h-3 w-3" aria-hidden="true" />
-                          {formatCourseCampuses(course)}
+                      <button
+                        type="button"
+                        className="modal-course-select"
+                        disabled={inPlan}
+                        onClick={() => handleAddCatalog(course)}
+                        aria-label={`Add ${course.name} to ${semesterLabels.get(semesterId) || semesterId}`}
+                      >
+                        <span
+                          className="modal-course-color"
+                          style={{ backgroundColor: cat.color }}
+                        />
+                        <span className="modal-course-info">
+                          <span className="modal-course-code">{course.code}</span>
+                          <span className="modal-course-name">{course.name}</span>
+                          <span className="modal-course-campus">
+                            <MapPin className="h-3 w-3" aria-hidden="true" />
+                            {formatCourseCampuses(course)}
+                          </span>
                         </span>
-                      </div>
-                      <span className="modal-course-credits">
-                        {course.credits} cr
-                      </span>
-                      {inPlan ? (
+                        <span className="modal-course-credits">
+                          {course.credits} cr
+                        </span>
+                        {!inPlan && <span className="modal-course-add-icon" aria-hidden="true">+</span>}
+                      </button>
+                      {inPlan && (
                         <div className="modal-course-added-actions">
                           <span className="modal-course-added">
                             {placedSemesterId === semesterId
@@ -320,12 +339,19 @@ export default function CoursePicker({
                             <MinusCircle className="h-4 w-4" aria-hidden="true" />
                           </button>
                         </div>
-                      ) : (
-                        <span className="modal-course-add-icon">+</span>
                       )}
                     </div>
                   );
                 })
+              )}
+              {filtered.length > resultLimit && (
+                <button
+                  type="button"
+                  className="w-full px-4 py-3 text-sm font-medium hover:bg-accent"
+                  onClick={() => setResultLimit((limit) => limit + 100)}
+                >
+                  Show more courses
+                </button>
               )}
             </div>
           </>

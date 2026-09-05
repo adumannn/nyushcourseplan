@@ -62,7 +62,7 @@ export default function CourseCard({
   const categoryBadgeStyle = {
     backgroundColor: withAlpha(categoryColor, 0.14),
     borderColor: withAlpha(categoryColor, 0.36),
-    color: categoryColor,
+    color: 'var(--foreground)',
   };
   const courseCampuses = [...getCourseCampuses(course)].sort(compareCampuses);
   const useAbbreviations = courseCampuses.length >= 2;
@@ -97,8 +97,13 @@ export default function CourseCard({
 
       <div className="flex-1 min-w-0">
         <div className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
-          <span className="text-sm leading-snug">{course.name}</span>
-          <span className="text-[11px] sm:text-xs text-muted-foreground/60 font-mono">
+          <button
+            type="button"
+            className="text-sm font-medium leading-relaxed text-left hover:underline"
+            onClick={(event) => { event.stopPropagation(); onClick?.(); }}
+            aria-label={`View details for ${course.name}`}
+          >{course.name}</button>
+          <span className="text-xs text-muted-foreground font-mono">
             {course.code}
           </span>
         </div>
@@ -131,13 +136,13 @@ export default function CourseCard({
           </div>
         )}
         {course.prerequisiteNote && (
-          <div className="mt-1.5 flex items-start gap-1.5 text-[11px] text-muted-foreground/70">
+          <div className="mt-1.5 flex items-start gap-1.5 text-xs text-muted-foreground">
             <Info className="h-3 w-3 shrink-0 mt-0.5" />
             <span>Prereq: {course.prerequisiteNote}</span>
           </div>
         )}
         {hasPrereqWarning && (
-          <div className="mt-1.5 flex items-center gap-1.5 text-[11px] text-amber-500">
+          <div className="mt-1.5 flex items-center gap-1.5 text-xs text-amber-700 dark:text-amber-300">
             <AlertTriangle className="h-3 w-3 shrink-0" />
             <span>Prerequisites not met in earlier semesters</span>
           </div>
@@ -167,7 +172,7 @@ export default function CourseCard({
             onRemove(semesterKey, course.id);
           }}
           aria-label={`Remove ${course.name}`}
-          className={`${touchMode ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'} p-2 hover:bg-destructive/10 rounded transition-all min-h-[36px] min-w-[36px] flex items-center justify-center`}
+          className={`${touchMode ? 'opacity-100' : 'opacity-0 group-hover:opacity-100 group-focus-within:opacity-100'} p-2 hover:bg-destructive/10 rounded transition-all min-h-[36px] min-w-[36px] flex items-center justify-center`}
         >
           <X className="h-4 w-4 text-muted-foreground hover:text-destructive" />
         </button>

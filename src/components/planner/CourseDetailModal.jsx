@@ -79,7 +79,7 @@ export default function CourseDetailModal({
       >
         <div className="modal-header">
           <h2>{course.code}</h2>
-          <button className="modal-close" onClick={onClose}>
+          <button className="modal-close" aria-label="Close course details" onClick={onClose}>
             <X className="h-4 w-4" />
           </button>
         </div>
@@ -92,7 +92,7 @@ export default function CourseDetailModal({
           <h3 className="text-lg font-medium leading-snug">{course.name}</h3>
 
           {/* Info grid */}
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div className="flex items-center gap-2 text-sm">
               <GraduationCap className="h-4 w-4 text-muted-foreground/60" />
               <span className="text-muted-foreground">
