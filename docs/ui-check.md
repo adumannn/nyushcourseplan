@@ -42,3 +42,8 @@ picker shows **Add Course**, that semester, and a separate matching-requirement
 summary. Catalog/custom tabs and general filters should be absent. **Change
 semester** must return to semester selection with the same requirement; choose
 another semester and verify matching courses are added to that destination.
+
+While choosing a semester for a requirement, scroll through all four years. The
+instruction bar must remain above the scrolling board, and each sticky year
+heading must be fully visible below it. Check a long requirement label at 320px;
+**Cancel** must stay visible and restore the full board height when pressed.

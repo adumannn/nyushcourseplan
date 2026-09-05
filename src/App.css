@@ -21,7 +21,7 @@
     outline-offset: 3px;
 }
 
-.planner-board,
+.planner-board-scroll,
 .planner-requirements-scroll,
 .modal-course-list {
     scrollbar-width: thin;

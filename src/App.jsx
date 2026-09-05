@@ -248,47 +248,50 @@ function AppContent() {
       )}
 
       <div className="planner-main relative z-0 flex-1 min-h-0 flex flex-col lg:flex-row">
-        <div className="planner-board min-w-0 flex-1 min-h-0 overflow-y-auto pb-20 lg:pb-0">
+        <div className="planner-board min-w-0 flex-1 min-h-0 flex flex-col">
           {pickerRequirement && !pickerSemester && (
-            <div className="sticky top-0 z-20 mx-3 mt-3 flex items-center gap-3 rounded-lg border border-[#57068c]/25 bg-card px-3 py-2.5 shadow-sm sm:mx-6">
-              <ListChecks className="h-4 w-4 shrink-0 text-[#57068c]" />
-              <p className="min-w-0 flex-1 text-sm">
-                Choose a semester for <span className="font-medium">{pickerRequirement.label}</span>
-              </p>
+            <div className="shrink-0 flex items-start gap-3 border-b border-border bg-card px-3 py-3 sm:px-6" role="status">
+              <ListChecks className="mt-0.5 h-4 w-4 shrink-0 text-[#57068c] dark:text-purple-300" />
+              <div className="min-w-0 flex-1">
+                <p className="text-sm font-medium">Choose a semester</p>
+                <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{pickerRequirement.label}</p>
+              </div>
               <button
                 type="button"
                 onClick={() => setPickerRequirement(null)}
-                className="rounded-md p-1.5 text-muted-foreground hover:bg-accent"
+                className="shrink-0 min-h-11 rounded-md px-3 text-sm text-muted-foreground hover:bg-accent hover:text-foreground"
                 aria-label="Cancel requirement course selection"
               >
-                <X className="h-4 w-4" />
+                Cancel
               </button>
             </div>
           )}
-          {!loaded ? (
-            <div className="plan-loading">
-              <div className="spinner" />
-              <span>Loading your plan...</span>
-            </div>
-          ) : (
-            <SemesterGrid
-              plan={plan}
-              semesterCredits={semesterCredits}
-              onRemoveCourse={removeCourse}
-              onAddClick={setPickerSemester}
-              onMoveCourse={moveCourse}
-              studyAway={studyAway}
-              studyAwayWarnings={studyAwayWarningsBySemester}
-              prereqWarnings={prereqWarnings}
-              onCourseClick={setDetailCourse}
-              major={major}
-              secondMajor={secondMajor}
-              onOpenStudyAway={(semesterId) => {
-                setStudyAwayFocusSemester(semesterId);
-                setStudyAwayPickerOpen(true);
-              }}
-            />
-          )}
+          <div className="planner-board-scroll flex-1 min-h-0 overflow-y-auto pb-20 lg:pb-0">
+            {!loaded ? (
+              <div className="plan-loading">
+                <div className="spinner" />
+                <span>Loading your plan...</span>
+              </div>
+            ) : (
+              <SemesterGrid
+                plan={plan}
+                semesterCredits={semesterCredits}
+                onRemoveCourse={removeCourse}
+                onAddClick={setPickerSemester}
+                onMoveCourse={moveCourse}
+                studyAway={studyAway}
+                studyAwayWarnings={studyAwayWarningsBySemester}
+                prereqWarnings={prereqWarnings}
+                onCourseClick={setDetailCourse}
+                major={major}
+                secondMajor={secondMajor}
+                onOpenStudyAway={(semesterId) => {
+                  setStudyAwayFocusSemester(semesterId);
+                  setStudyAwayPickerOpen(true);
+                }}
+              />
+            )}
+          </div>
         </div>
 
         {/* Desktop sidebar — hidden on mobile, shown lg+ */}
