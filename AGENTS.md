@@ -8,6 +8,8 @@ A course planning tool for NYU Shanghai students, live at [nyushplanner.app](htt
 
 **Tech stack:** React 19, Vite 8, Tailwind CSS 4 · Clerk (OAuth) + Supabase (Postgres, RLS) · Node built-in test runner.
 
+Public search metadata (title, description, keywords, canonical URL, and social preview copy) lives in `index.html`.
+
 ## Repository Map
 
 ```
