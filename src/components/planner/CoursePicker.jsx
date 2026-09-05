@@ -23,6 +23,7 @@ export default function CoursePicker({
   onAdd,
   onRemove,
   onClose,
+  onChangeSemester,
   isCourseInPlan,
   getCourseSemester,
   major,
@@ -182,7 +183,7 @@ export default function CoursePicker({
       <div className="modal" onClick={(e) => e.stopPropagation()}>
         <div className="modal-header">
           <div className="min-w-0">
-            <h2>{requirementFilter ? requirementFilter.label : "Add Course"}</h2>
+            <h2>Add Course</h2>
             <p className="text-sm text-muted-foreground mt-1">{semesterLabels.get(semesterId) || semesterId}</p>
           </div>
           <button className="modal-close" aria-label="Close course picker" onClick={onClose}>
@@ -190,22 +191,36 @@ export default function CoursePicker({
           </button>
         </div>
 
-        <div className="modal-tabs">
+        {requirementFilter && (
+          <div className="mx-4 mt-4 rounded-lg border border-border bg-accent/30 p-3 shrink-0">
+            <p className="text-xs text-muted-foreground">Matching requirement</p>
+            <p className="mt-1 text-sm font-medium leading-relaxed">{requirementFilter.label}</p>
+            {onChangeSemester && (
+              <button
+                type="button"
+                className="mt-2 min-h-9 text-sm font-medium text-[#57068c] dark:text-purple-300 hover:underline"
+                onClick={onChangeSemester}
+              >
+                Change semester
+              </button>
+            )}
+          </div>
+        )}
+
+        {!requirementFilter && <div className="modal-tabs">
           <button
             className={`modal-tab ${tab === "catalog" ? "modal-tab--active" : ""}`}
             onClick={() => setTab("catalog")}
           >
             Course Catalog
           </button>
-          {!requirementFilter && (
             <button
               className={`modal-tab ${tab === "custom" ? "modal-tab--active" : ""}`}
               onClick={() => setTab("custom")}
             >
               Custom Course
             </button>
-          )}
-        </div>
+        </div>}
 
         {tab === "catalog" ? (
           <>
@@ -213,13 +228,13 @@ export default function CoursePicker({
               <input
                 className="modal-search"
                 type="text"
-                placeholder="Search by name or code..."
+                placeholder={requirementFilter ? "Search matching courses…" : "Search by name or code..."}
                 aria-label="Search courses"
                 value={search}
                 onChange={(e) => { setSearch(e.target.value); setResultLimit(100); }}
                 autoFocus
               />
-              <div className="modal-filter-row">
+              {!requirementFilter && <div className="modal-filter-row">
                 <select
                   aria-label="Filter by department"
                   value={filterDept}
@@ -262,11 +277,12 @@ export default function CoursePicker({
                     </option>
                   ))}
                 </select>
-              </div>
+              </div>}
             </div>
 
             <p className="px-4 py-2 text-xs text-muted-foreground shrink-0" role="status">
-              {filtered.length} courses found · Showing {Math.min(resultLimit, filtered.length)}
+              {filtered.length} course{filtered.length === 1 ? "" : "s"} found
+              {filtered.length > resultLimit && ` · Showing ${resultLimit}`}
             </p>
             <div className="modal-course-list">
               {filtered.length === 0 ? (

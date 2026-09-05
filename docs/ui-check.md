@@ -36,3 +36,9 @@ picker and open the course details from its title using the keyboard.
 
 Local component preview checked these cases with mocked auth; this does not
 verify live Clerk authentication or Supabase persistence.
+
+For a requirement shortcut, click **Find**, choose a semester, and verify the
+picker shows **Add Course**, that semester, and a separate matching-requirement
+summary. Catalog/custom tabs and general filters should be absent. **Change
+semester** must return to semester selection with the same requirement; choose
+another semester and verify matching courses are added to that destination.

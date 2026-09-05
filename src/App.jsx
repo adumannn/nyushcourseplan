@@ -389,6 +389,7 @@ function AppContent() {
           secondMajor={secondMajor}
           defaultCampus={getDefaultCampusForSemester(pickerSemester, studyAway)}
           requirementFilter={pickerRequirement}
+          onChangeSemester={() => setPickerSemester(null)}
         />
       )}
 
