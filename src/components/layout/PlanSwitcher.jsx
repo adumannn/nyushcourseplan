@@ -66,9 +66,8 @@ export default function PlanSwitcher({
     <div ref={rootRef} className="relative">
       <button
         type="button"
-        disabled={plans.length === 0}
         onClick={() => setOpen((current) => !current)}
-        className={`inline-flex items-center justify-center gap-1.5 rounded-md border border-border/60 text-muted-foreground hover:bg-accent hover:text-foreground disabled:opacity-40 ${
+        className={`inline-flex items-center justify-center gap-1.5 rounded-md border border-border/60 text-muted-foreground hover:bg-accent hover:text-foreground ${
           compact ? "h-9 w-9" : "max-w-44 px-2.5 py-1.5 text-sm"
         }`}
         title={`Current plan: ${planName}`}
@@ -87,6 +86,11 @@ export default function PlanSwitcher({
             Plans
           </div>
           <div className="max-h-48 overflow-y-auto">
+            {plans.length === 0 && (
+              <p className="px-2 py-2 text-xs text-muted-foreground">
+                Plans could not be loaded. You can retry by refreshing.
+              </p>
+            )}
             {plans.map((item) => (
               <button
                 key={item.id}

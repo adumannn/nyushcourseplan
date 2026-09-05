@@ -243,6 +243,16 @@ export default function usePlanner(user, getToken) {
         } catch (error) {
           console.error("Failed to list cloud plans:", error);
         }
+        if (!data) {
+          data = await supabasePlan.load(
+            user.id,
+            profileStudentName,
+            getToken,
+          );
+        }
+        if (data && planRows.length === 0) {
+          planRows = [{ id: data.planId, name: data.planName }];
+        }
         if (cancelled) return;
         if (data) {
           const storedStudentName =
