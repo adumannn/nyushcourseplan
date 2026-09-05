@@ -57,6 +57,7 @@ function AppContent() {
   } = usePlanner(user, getToken);
 
   const [pickerSemester, setPickerSemester] = useState(null);
+  const [pickerRequirement, setPickerRequirement] = useState(null);
   const [studyAwayPickerOpen, setStudyAwayPickerOpen] = useState(false);
   const [studyAwayFocusSemester, setStudyAwayFocusSemester] = useState(null);
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
@@ -239,7 +240,10 @@ function AppContent() {
               plan={plan}
               semesterCredits={semesterCredits}
               onRemoveCourse={removeCourse}
-              onAddClick={setPickerSemester}
+              onAddClick={(semesterId) => {
+                setPickerRequirement(null);
+                setPickerSemester(semesterId);
+              }}
               onMoveCourse={moveCourse}
               studyAway={studyAway}
               studyAwayWarnings={studyAwayWarningsBySemester}
@@ -269,6 +273,10 @@ function AppContent() {
             secondMajor={secondMajor}
             collapsed={isSidebarCollapsed}
             onToggleCollapsed={() => setIsSidebarCollapsed((prev) => !prev)}
+            onFindCourses={(filter) => {
+              setPickerSemester(null);
+              setPickerRequirement(filter);
+            }}
           />
         </div>
       </div>
@@ -330,23 +338,32 @@ function AppContent() {
                 major={major}
                 secondMajor={secondMajor}
                 collapsed={false}
+                onFindCourses={(filter) => {
+                  setRequirementsSheetOpen(false);
+                  setPickerSemester(null);
+                  setPickerRequirement(filter);
+                }}
               />
             </div>
           </div>
         </div>
       )}
 
-      {pickerSemester && (
+      {(pickerSemester || pickerRequirement) && (
         <CoursePicker
           semesterId={pickerSemester}
           onAdd={addCourse}
           onRemove={removeCourse}
-          onClose={() => setPickerSemester(null)}
+          onClose={() => {
+            setPickerSemester(null);
+            setPickerRequirement(null);
+          }}
           isCourseInPlan={isCourseInPlan}
           getCourseSemester={getCourseSemester}
           major={major}
           secondMajor={secondMajor}
           defaultCampus={getDefaultCampusForSemester(pickerSemester, studyAway)}
+          requirementFilter={pickerRequirement}
         />
       )}
 

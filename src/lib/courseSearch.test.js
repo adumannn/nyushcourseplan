@@ -1,6 +1,9 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { getCourseSearchRank } from "./courseSearch.js";
+import {
+  courseMatchesRequirement,
+  getCourseSearchRank,
+} from "./courseSearch.js";
 
 const poh = {
   id: "WRIT-SHU-201",
@@ -33,4 +36,25 @@ test("course search ignores punctuation and matches unordered metadata", () => {
   assert.equal(getCourseSearchRank(course, "CSCI-UA 102"), 0);
   assert.equal(getCourseSearchRank(course, "structures data"), 3);
   assert.equal(getCourseSearchRank(course, "computer structures"), 3);
+});
+
+test("requirement shortcuts match exact courses, requirement tags, and categories", () => {
+  const course = {
+    id: "MATH-SHU-131",
+    category: "core",
+    requirementIds: ["mathematics"],
+  };
+
+  assert.equal(
+    courseMatchesRequirement(course, { courseIds: ["MATH-SHU-131"] }, ["cs"]),
+    true,
+  );
+  assert.equal(
+    courseMatchesRequirement(course, { requirementId: "science-ed" }, ["cs"]),
+    false,
+  );
+  assert.equal(
+    courseMatchesRequirement(course, { category: "core" }, ["cs"]),
+    true,
+  );
 });

@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { ChevronDown, CheckCircle2, Circle, ChevronsLeft, ChevronsRight, AlertTriangle, Info } from 'lucide-react';
+import { ChevronDown, CheckCircle2, Circle, ChevronsLeft, ChevronsRight, AlertTriangle, Info, Search } from 'lucide-react';
 import {
   CORE_REQUIREMENTS,
   GRADUATION_CREDITS,
@@ -9,7 +9,7 @@ import {
 } from '../../data/courses';
 import { getEffectiveCategoryForMajors } from '../../lib/majorCourseRules';
 
-function RequirementCategory({ requirement }) {
+function RequirementCategory({ requirement, onFindCourses }) {
   const hasItems = Array.isArray(requirement.items) && requirement.items.length > 0;
   const [isExpanded, setIsExpanded] = useState(hasItems);
 
@@ -104,11 +104,9 @@ function RequirementCategory({ requirement }) {
 
       {hasItems && isExpanded && (
         <div className="space-y-2 ml-1">
-          {requirement.items.map((item, index) => (
-            <div
-              key={index}
-              className="flex items-start gap-2.5 text-sm group/item"
-            >
+          {requirement.items.map((item, index) => {
+            const canFind = !item.completed && item.filter && onFindCourses;
+            const content = <>
               {item.completed ? (
                 <CheckCircle2 className="h-4 w-4 text-chart-2 shrink-0 mt-0.5" />
               ) : (
@@ -133,8 +131,30 @@ function RequirementCategory({ requirement }) {
                   </div>
                 )}
               </div>
-            </div>
-          ))}
+              {canFind && (
+                <span className="mt-0.5 inline-flex shrink-0 items-center gap-1 text-xs font-medium text-[#57068c]">
+                  <Search className="h-3.5 w-3.5" />
+                  Find
+                </span>
+              )}
+            </>;
+
+            return canFind ? (
+              <button
+                key={index}
+                type="button"
+                onClick={() => onFindCourses(item.filter)}
+                className="flex w-full items-start gap-2.5 rounded-md px-2 py-1.5 -mx-2 text-sm text-left hover:bg-accent/20 transition-colors"
+                title={`Find courses for ${item.name}`}
+              >
+                {content}
+              </button>
+            ) : (
+              <div key={index} className="flex items-start gap-2.5 text-sm group/item">
+                {content}
+              </div>
+            );
+          })}
         </div>
       )}
     </div>
@@ -150,6 +170,7 @@ function buildMajorSection({ majorId, progress, planned, titlePrefix }) {
     majorItems.push({
       name: req.label,
       completed: planned.some((c) => c.id === req.courseId),
+      filter: { label: req.label, courseIds: [req.courseId] },
     });
   }
   for (const group of majorDef.selectOneCourses || []) {
@@ -161,12 +182,17 @@ function buildMajorSection({ majorId, progress, planned, titlePrefix }) {
       name: group.label,
       completed: matchedCount >= needed,
       progress: needed > 1 ? `${matchedCount}/${needed}` : undefined,
+      filter: { label: group.label, courseIds: group.courseIds },
     });
   }
   if (majorDef.capstone) {
     majorItems.push({
       name: majorDef.capstone.label,
       completed: planned.some((c) => c.id === majorDef.capstone.courseId),
+      filter: {
+        label: majorDef.capstone.label,
+        courseIds: [majorDef.capstone.courseId],
+      },
     });
   }
   if (!majorDef.isConfigured) {
@@ -250,6 +276,12 @@ function buildRequirements(
         name: sub.name,
         completed,
         credits: typeof sub.credits === 'number' ? sub.credits : undefined,
+        filter: {
+          label: sub.name,
+          ...(/^[A-Z]+-SHU\s+[A-Z0-9]+$/.test(sub.code || '')
+            ? { courseIds: [sub.code.replace(/\s/g, '-')] }
+            : { requirementId: sub.requirementId || id }),
+        },
       });
     }
   }
@@ -300,6 +332,10 @@ function buildRequirements(
         name: sub.name,
         completed: isSubcourseCompleted(sub),
         credits: typeof sub.credits === 'number' ? sub.credits : undefined,
+        filter: {
+          label: sub.name,
+          courseIds: [sub.code.replace(/\s/g, '-')],
+        },
       })),
     });
   }
@@ -349,6 +385,7 @@ export default function RequirementsSidebar({
   secondMajor = null,
   collapsed = false,
   onToggleCollapsed,
+  onFindCourses,
 }) {
   const requirements = useMemo(
     () =>
@@ -426,7 +463,11 @@ export default function RequirementsSidebar({
         <div className="planner-requirements-scroll scrollbar-hidden flex-1 min-h-0 overflow-y-auto overscroll-contain">
           <div className="p-4 sm:p-6 space-y-6 sm:space-y-8">
             {requirements.map((requirement, index) => (
-              <RequirementCategory key={index} requirement={requirement} />
+              <RequirementCategory
+                key={index}
+                requirement={requirement}
+                onFindCourses={onFindCourses}
+              />
             ))}
 
             <div className="pt-2 border-t border-border/30">

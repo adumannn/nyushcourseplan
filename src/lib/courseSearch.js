@@ -1,7 +1,21 @@
+import { getEffectiveCategoryForMajors } from "./majorCourseRules.js";
+
 const COURSE_ALIASES = {
   "CCSF-SHU-101L": ["gps"],
   "WRIT-SHU-201": ["poh"],
 };
+
+export function courseMatchesRequirement(course, filter, majorIds) {
+  if (!filter) return true;
+  if (filter.courseIds?.length) return filter.courseIds.includes(course.id);
+  if (filter.requirementId) {
+    return course.requirementIds?.includes(filter.requirementId) || false;
+  }
+  if (filter.category) {
+    return getEffectiveCategoryForMajors(course, majorIds) === filter.category;
+  }
+  return true;
+}
 
 function normalizeSearchValue(value) {
   return String(value || "")

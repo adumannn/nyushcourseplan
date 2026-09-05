@@ -13,7 +13,10 @@ import {
   isCourseRelevantToMajors,
 } from "../../lib/majorCourseRules";
 import { LOCAL_CATALOG_COURSES } from "../../lib/localCatalog";
-import { getCourseSearchRank } from "../../lib/courseSearch";
+import {
+  courseMatchesRequirement,
+  getCourseSearchRank,
+} from "../../lib/courseSearch";
 
 export default function CoursePicker({
   semesterId,
@@ -25,12 +28,15 @@ export default function CoursePicker({
   major,
   secondMajor = null,
   defaultCampus = "Shanghai",
+  requirementFilter = null,
 }) {
   const [tab, setTab] = useState("catalog");
   const [search, setSearch] = useState("");
   const [filterDept, setFilterDept] = useState("");
   const [filterCat, setFilterCat] = useState("");
   const [filterCampus, setFilterCampus] = useState("");
+  const [targetSemester, setTargetSemester] = useState(semesterId || "");
+  const activeSemester = semesterId || targetSemester;
 
   // Custom course form
   const [customName, setCustomName] = useState("");
@@ -73,6 +79,12 @@ export default function CoursePicker({
     const activeMajors = [major, secondMajor];
     let list = availableCourses;
     const searchRanks = new Map();
+
+    if (requirementFilter) {
+      list = list.filter((course) =>
+        courseMatchesRequirement(course, requirementFilter, activeMajors),
+      );
+    }
 
     if (filterDept) {
       list = list.filter((c) => c.department === filterDept);
@@ -133,11 +145,12 @@ export default function CoursePicker({
     major,
     secondMajor,
     courseSortCollator,
+    requirementFilter,
   ]);
 
   const handleAddCatalog = (course) => {
-    if (isCourseInPlan(course.id)) return;
-    onAdd(semesterId, course);
+    if (!activeSemester || isCourseInPlan(course.id)) return;
+    onAdd(activeSemester, course);
   };
 
   const handleRemoveCatalog = (event, courseId, placedSemesterId) => {
@@ -157,7 +170,8 @@ export default function CoursePicker({
       department: "Custom",
       campuses: normalizeCampuses([customCampus || defaultCampus || "Shanghai"]),
     };
-    onAdd(semesterId, course);
+    if (!activeSemester) return;
+    onAdd(activeSemester, course);
     setCustomName("");
     setCustomCode("");
     setCustomCredits(4);
@@ -169,7 +183,7 @@ export default function CoursePicker({
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal" onClick={(e) => e.stopPropagation()}>
         <div className="modal-header">
-          <h2>Add Course</h2>
+          <h2>{requirementFilter ? requirementFilter.label : "Add Course"}</h2>
           <button className="modal-close" onClick={onClose}>
             ×
           </button>
@@ -182,24 +196,41 @@ export default function CoursePicker({
           >
             Course Catalog
           </button>
-          <button
-            className={`modal-tab ${tab === "custom" ? "modal-tab--active" : ""}`}
-            onClick={() => setTab("custom")}
-          >
-            Custom Course
-          </button>
+          {!requirementFilter && (
+            <button
+              className={`modal-tab ${tab === "custom" ? "modal-tab--active" : ""}`}
+              onClick={() => setTab("custom")}
+            >
+              Custom Course
+            </button>
+          )}
         </div>
 
         {tab === "catalog" ? (
           <>
             <div className="modal-filters">
+              {!semesterId && (
+                <select
+                  value={targetSemester}
+                  onChange={(event) => setTargetSemester(event.target.value)}
+                  aria-label="Semester to add courses to"
+                  autoFocus
+                >
+                  <option value="">Choose a semester to add courses…</option>
+                  {SEMESTERS.map((semester) => (
+                    <option key={semester.id} value={semester.id}>
+                      {semester.label}
+                    </option>
+                  ))}
+                </select>
+              )}
               <input
                 className="modal-search"
                 type="text"
                 placeholder="Search by name or code..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                autoFocus
+                autoFocus={Boolean(semesterId)}
               />
               <div className="modal-filter-row">
                 <select
@@ -253,8 +284,9 @@ export default function CoursePicker({
                 filtered.map((course) => {
                   const placedSemesterId =
                     getCourseSemester?.(course.id) ||
-                    (isCourseInPlan(course.id) ? semesterId : null);
+                    (isCourseInPlan(course.id) ? activeSemester : null);
                   const inPlan = Boolean(placedSemesterId);
+                  const needsSemester = !inPlan && !activeSemester;
                   const effectiveCategory = getEffectiveCategoryForMajors(
                     course,
                     [major, secondMajor],
@@ -266,8 +298,10 @@ export default function CoursePicker({
                   return (
                     <div
                       key={course.id}
-                      className={`modal-course-item ${inPlan ? "modal-course-item--added" : ""}`}
+                      className={`modal-course-item ${inPlan ? "modal-course-item--added" : ""} ${needsSemester ? "cursor-not-allowed opacity-60" : ""}`}
                       onClick={() => handleAddCatalog(course)}
+                      aria-disabled={needsSemester}
+                      title={needsSemester ? "Choose a semester before adding" : undefined}
                     >
                       <div
                         className="modal-course-color"
@@ -287,7 +321,7 @@ export default function CoursePicker({
                       {inPlan ? (
                         <div className="modal-course-added-actions">
                           <span className="modal-course-added">
-                            {placedSemesterId === semesterId
+                            {placedSemesterId === activeSemester
                               ? "Added"
                               : "In plan"}
                           </span>
@@ -383,7 +417,7 @@ export default function CoursePicker({
             <button
               className="btn-primary"
               onClick={handleAddCustom}
-              disabled={!customName.trim()}
+              disabled={!activeSemester || !customName.trim()}
             >
               Add Custom Course
             </button>
