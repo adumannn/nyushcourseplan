@@ -288,10 +288,10 @@ export default function SemesterGrid({
         >
           <div className="planner-year-heading sticky top-0 z-10 backdrop-blur-md bg-card/85 px-4 sm:px-6 py-2.5 sm:py-3 border-b border-border/30">
             <div className="flex items-center gap-3">
-              <span className="text-xs tracking-wider uppercase text-muted-foreground font-medium">
+              <span className="planner-year-code text-xs tracking-wider uppercase text-muted-foreground font-medium">
                 {year.label}
               </span>
-              <span className="text-sm text-muted-foreground/80">
+              <span className="planner-year-name text-sm text-muted-foreground/80">
                 {year.name}
               </span>
             </div>

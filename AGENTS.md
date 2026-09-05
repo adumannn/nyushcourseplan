@@ -170,6 +170,7 @@ Cloud saves expose `saving` / `synced` / `error` state from `usePlanner`. A fail
 
 - Functional components only; hooks for all state logic. Named exports for hooks, default exports for components. One component per file.
 - Tailwind for styling; `App.css` holds the styles that outgrow utilities.
+- Dark mode uses a blue-charcoal surface hierarchy; year bands carry the purple structural accent so years remain visually distinct from their semester rows.
 - **Mobile breakpoint:** `lg:` (1024px) separates phone/tablet (single column + bottom sheet) from desktop (board + sidebar). The Header keeps TWO separate DOM layouts (mobile 2-row, desktop 1-row) — don't unify them via responsive classes; it clobbers `useRef`s. The requirements panel is a bottom sheet on mobile with a floating "Progress" pill.
 - **Course picker:** already-added courses stay visible with an inline remove button (`getCourseSemester(courseId)` + `removeCourse(semesterId, courseId)` from `usePlanner`). Rows show campus labels and a campus filter; custom course campus defaults to the semester's study-away site, else Shanghai.
 - **Plan switcher:** keep the control openable when the cloud plan list is unavailable; loading failures must be visible instead of leaving a dead disabled button.
