@@ -20,10 +20,30 @@
             property="og:description"
             content="Plan eight semesters, explore NYUSH courses, and track requirements, study away, and graduation credits."
         />
+        <script type="application/ld+json">
+            {
+                "@context": "https://schema.org",
+                "@type": "WebApplication",
+                "name": "NYU Shanghai Course Planner",
+                "alternateName": ["NYUSH Planner", "NYUSH Course Planner", "NYUSHPlanner"],
+                "url": "https://nyushplanner.app/",
+                "applicationCategory": "EducationalApplication",
+                "description": "Plan eight semesters at NYU Shanghai and track courses, majors, requirements, study away, and graduation credits."
+            }
+        </script>
         <title>NYU Shanghai Course Planner | NYUSH</title>
     </head>
     <body>
-        <div id="root"></div>
+        <div id="root">
+            <main>
+                <h1>NYU Shanghai Course Planner</h1>
+                <p>
+                    NYUSH Planner helps NYU Shanghai students plan courses across
+                    eight semesters and track major requirements, study away, and
+                    graduation credits.
+                </p>
+            </main>
+        </div>
         <script type="module" src="/src/main.jsx"></script>
     </body>
 </html>
