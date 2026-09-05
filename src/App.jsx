@@ -174,6 +174,11 @@ function AppContent() {
     100,
   );
   const canViewSuggestionInbox = isFeedbackAdmin(user);
+  const findCoursesForRequirement = (filter) => {
+    setRequirementsSheetOpen(false);
+    setPickerSemester(null);
+    setPickerRequirement(filter);
+  };
 
   return (
     <div className="planner-shell h-dvh min-h-screen flex flex-col bg-background text-foreground">
@@ -230,6 +235,22 @@ function AppContent() {
 
       <div className="planner-main relative z-0 flex-1 min-h-0 flex flex-col lg:flex-row">
         <div className="planner-board scrollbar-hidden flex-1 min-h-0 overflow-y-auto pb-20 lg:pb-0">
+          {pickerRequirement && !pickerSemester && (
+            <div className="sticky top-0 z-20 mx-3 mt-3 flex items-center gap-3 rounded-lg border border-[#57068c]/25 bg-card px-3 py-2.5 shadow-sm sm:mx-6">
+              <ListChecks className="h-4 w-4 shrink-0 text-[#57068c]" />
+              <p className="min-w-0 flex-1 text-sm">
+                Choose a semester for <span className="font-medium">{pickerRequirement.label}</span>
+              </p>
+              <button
+                type="button"
+                onClick={() => setPickerRequirement(null)}
+                className="rounded-md p-1.5 text-muted-foreground hover:bg-accent"
+                aria-label="Cancel requirement course selection"
+              >
+                <X className="h-4 w-4" />
+              </button>
+            </div>
+          )}
           {!loaded ? (
             <div className="plan-loading">
               <div className="spinner" />
@@ -240,10 +261,7 @@ function AppContent() {
               plan={plan}
               semesterCredits={semesterCredits}
               onRemoveCourse={removeCourse}
-              onAddClick={(semesterId) => {
-                setPickerRequirement(null);
-                setPickerSemester(semesterId);
-              }}
+              onAddClick={setPickerSemester}
               onMoveCourse={moveCourse}
               studyAway={studyAway}
               studyAwayWarnings={studyAwayWarningsBySemester}
@@ -273,10 +291,7 @@ function AppContent() {
             secondMajor={secondMajor}
             collapsed={isSidebarCollapsed}
             onToggleCollapsed={() => setIsSidebarCollapsed((prev) => !prev)}
-            onFindCourses={(filter) => {
-              setPickerSemester(null);
-              setPickerRequirement(filter);
-            }}
+            onFindCourses={findCoursesForRequirement}
           />
         </div>
       </div>
@@ -338,18 +353,14 @@ function AppContent() {
                 major={major}
                 secondMajor={secondMajor}
                 collapsed={false}
-                onFindCourses={(filter) => {
-                  setRequirementsSheetOpen(false);
-                  setPickerSemester(null);
-                  setPickerRequirement(filter);
-                }}
+                onFindCourses={findCoursesForRequirement}
               />
             </div>
           </div>
         </div>
       )}
 
-      {(pickerSemester || pickerRequirement) && (
+      {pickerSemester && (
         <CoursePicker
           semesterId={pickerSemester}
           onAdd={addCourse}
