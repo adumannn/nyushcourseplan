@@ -23,7 +23,8 @@ src/
                           PlanSwitcher (multi-plan create/switch/rename/delete),
                           SuggestionModal (feedback form), SuggestionInbox (admin)
     planner/              SemesterGrid → SemesterCard → CourseCard,
-                          CoursePicker, CourseDetailModal, StudyAwayPicker
+                          CoursePicker, CourseDetailModal, StudyAwayPicker,
+                          OnboardingWalkthrough (first-visit sample tour)
     reviews/ReviewSummary.jsx
     supporters/            SupporterBadge (wall/profile badge), SupportThanksToast
                           (post-checkout name/opt-in), SupportersView (donate + wall)
@@ -42,6 +43,7 @@ src/
     majorCourseRules.js   Active-major(s) effective category resolution (+ tests)
     planStorage.js        localStorage + Supabase multi-plan storage abstraction (+ tests)
     planSyncError.js      User-visible Supabase save error formatting (+ tests)
+    onboarding.js         Catalog-backed sample semester and tour eligibility (+ tests)
     planTransfer.js       Thin re-export barrel for planTransfer/* (+ tests)
     planTransfer/         CSV (csv.js), PDF (pdf.js), legacy-JSON (json.js)
                           export/import; shared.js holds common helpers; index.js re-exports
@@ -102,6 +104,12 @@ Tables: `plans` (id, user_id text = Clerk ID, name, major, second_major, student
 Each signed-in user can own multiple rows in `plans`. `PlanSwitcher` creates, switches, renames, and deletes plans through `usePlanner`; switching flushes the current debounced save first, and the active `planId` is cached locally so refresh restores the last-opened plan. The final plan cannot be deleted.
 
 Cloud saves expose `saving` / `synced` / `error` state from `usePlanner`. A failed Supabase save keeps the failed snapshot available for retry and shows a non-blocking warning below the header; the warning states that the latest changes are only cached locally and includes the Supabase message, code, details, and hint when present. A later successful save clears it.
+
+### First-visit walkthrough
+
+- After a successful plan load, `OnboardingWalkthrough` shows a three-step native dialog for an empty single plan with no study-away selections. Existing populated/multiple plans skip it. Completion/skip is stored per Clerk user on this browser under `nyush-planner:onboarding:<userId>`; clearing browser storage can show it again for an empty plan.
+- The preview uses four hydrated catalog courses (16 credits) in Year 1 Fall, with all other semesters empty. It stays separate from saved state until **Use sample** calls the existing merge import; major, second major, student name, study away, and existing courses are preserved. **Start blank**, **Skip tour**, and Escape only dismiss the preview. The example is illustrative and explicitly subject to placement, availability, and advising.
+- Native `showModal()` contains keyboard focus; step headings receive focus, the body is scroll-locked, and the dialog scrolls on short mobile screens. If localStorage is unavailable, dismissal still works for the current mounted visit.
 
 ### Double major
 

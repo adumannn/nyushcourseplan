@@ -1,5 +1,16 @@
 # Responsive UI regression check
 
+For a first visit with one empty plan and no study-away selections, check the
+three-step sample walkthrough. Next/Back must move between steps; Skip tour,
+Escape, and Start blank must dismiss without adding courses. Use sample must add
+four catalog courses (16 credits) to Year 1 Fall, preserving the selected majors.
+Reload after dismissal: the tour must stay hidden for that user on this browser.
+Existing populated plans and accounts with multiple plans must skip the tour.
+At 320 × 400px in both themes, scroll the dialog and verify every action remains
+reachable, text wraps without horizontal overflow, and Tab stays inside it.
+Component preview checks cover these interactions in React StrictMode; live
+Clerk/Supabase persistence is not covered by the preview.
+
 Run `npm run dev`, sign in, and use the browser's responsive viewport at 320, 375,
 768, 1024, and 1440px. Check light and dark themes with two majors, a long plan
 name, and a course with a long name/code/prerequisite note.

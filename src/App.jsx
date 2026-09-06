@@ -11,6 +11,7 @@ import RequirementsSidebar from "./components/layout/RequirementsSidebar";
 import CoursePicker from "./components/planner/CoursePicker";
 import StudyAwayPicker from "./components/planner/StudyAwayPicker";
 import CourseDetailModal from "./components/planner/CourseDetailModal";
+import OnboardingWalkthrough from "./components/planner/OnboardingWalkthrough";
 import SuggestionInbox from "./components/layout/SuggestionInbox";
 import SuggestionModal from "./components/layout/SuggestionModal";
 import SupportersView from "./components/supporters/SupportersView";
@@ -457,6 +458,16 @@ function AppContent() {
         </>
       )}
 
+      {loaded && planId && plans.length > 0 && (
+        <OnboardingWalkthrough
+          key={user.id}
+          userId={user.id}
+          plan={plan}
+          plans={plans}
+          studyAway={studyAway}
+          onUseSample={importPlan}
+        />
+      )}
       <Analytics />
     </div>
   );
