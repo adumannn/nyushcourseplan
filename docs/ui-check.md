@@ -47,3 +47,8 @@ While choosing a semester for a requirement, scroll through all four years. The
 instruction bar must remain above the scrolling board, and each sticky year
 heading must be fully visible below it. Check a long requirement label at 320px;
 **Cancel** must stay visible and restore the full board height when pressed.
+
+Open **Plan → Import File** at desktop and mobile widths in both themes. The
+backdrop must cover the viewport, not just the header; the dialog must be centered
+on desktop and sit at the bottom on mobile. **choose a file** must open the file
+chooser, and Escape / the close button must dismiss the dialog.

@@ -151,6 +151,7 @@ Cloud saves expose `saving` / `synced` / `error` state from `usePlanner`. A fail
 
 ### Plan transfer
 
+- The import dialog is portaled to `document.body`; never nest its fixed overlay under the header, whose backdrop filter creates a containing block and mispositions the dialog.
 - UI exposes **CSV and PDF only**. JSON import/export helpers stay available for legacy compatibility and tests.
 - `planTransfer.js` is a thin re-export barrel; the implementation lives under `planTransfer/` split by concern — `csv.js`, `pdf.js`, `json.js`, with shared helpers in `shared.js` and the public API re-exported from `index.js`. Import from `../../lib/planTransfer` (the export names are unchanged).
 - `exportPlanAsPDF` builds a print document (summary header, credit progress, category/campus pills, study-away summary) then opens the browser print dialog. With a double major the PDF shows both major labels.

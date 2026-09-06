@@ -1,4 +1,5 @@
 import { useRef, useState, useEffect, useMemo, useCallback } from "react";
+import { createPortal } from "react-dom";
 import {
   AlertTriangle,
   CheckCircle2,
@@ -341,7 +342,7 @@ export default function PlanMenu({
         </div>
       )}
 
-      {importOpen && (
+      {importOpen && createPortal(
         <div className="modal-overlay" onClick={() => setImportOpen(false)}>
           <div
             className="modal plan-transfer-modal"
@@ -487,7 +488,8 @@ export default function PlanMenu({
               )}
             </div>
           </div>
-        </div>
+        </div>,
+        document.body,
       )}
     </div>
   );
