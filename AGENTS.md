@@ -109,7 +109,7 @@ Cloud saves expose `saving` / `synced` / `error` state from `usePlanner`. A fail
 - Persistence: localStorage payload field `secondMajor`; Supabase column `plans.second_major` (migration `018_add_second_major.sql`). The migration also extends `save_plan_with_courses` with `p_second_major` — `null` (stale clients that omit the param) preserves the stored value, `''` explicitly clears it. **Apply migration 018 before deploying the client**, since `planStorage` selects `second_major` explicitly.
 - Requirement tracking: `requirementProgress['second-major']` mirrors the `major` entry and carries `doubleCountedCourses` (courses that are major courses for *both* majors). The sidebar renders a "2nd Major" section and a double-count note; NYU Shanghai allows at most `DOUBLE_MAJOR_MAX_DOUBLE_COUNT` (2) double-counted courses between majors, so the note turns into an amber warning beyond that.
 - Free electives count only courses that are elective under the *combined* category; course cards, the picker, and the detail modal color by the combined category, so a course required by the second major shows as Major Required.
-- Header UI: "+ 2nd major" ghost button (desktop) / "+" icon (mobile) reveals the second select; "×" removes it. Each major select excludes the other's current value.
+- Header UI: "+ 2nd major" ghost button (desktop) / "+" icon (mobile) reveals the second select; "×" removes it. Each major select excludes the other's current value. Keep 20px between desktop header control groups, 12px around the second-major separator/remove action, and 12px between mobile selector rows so double-major controls do not crowd each other.
 
 ### Catalog pipeline
 

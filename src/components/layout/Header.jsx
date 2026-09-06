@@ -116,7 +116,7 @@ export default function Header({
   return (
     <header className="planner-header relative z-40 border-b border-border/40 px-3 sm:px-6 py-2.5 sm:py-4">
       {/* Mobile layout: 2 rows for breathing room */}
-      <div className="flex flex-col gap-2 lg:hidden">
+      <div className="flex flex-col gap-3 lg:hidden">
         <div className="flex items-center gap-2">
           <div className="planner-brand shrink-0" aria-label="Course Planner">
             <span className="planner-logo-mark" aria-hidden="true">
@@ -170,7 +170,7 @@ export default function Header({
         </div>
 
         {showSecondMajorSelect && (
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-3">
             <span className="shrink-0 text-[11px] uppercase tracking-wider text-muted-foreground">
               2nd major
             </span>
@@ -317,8 +317,8 @@ export default function Header({
       </div>
 
       {/* Desktop layout — wrap controls when both majors need more space */}
-      <div className="hidden lg:flex flex-wrap items-center justify-between gap-3">
-        <div className="flex min-w-0 flex-wrap items-center gap-3">
+      <div className="hidden lg:flex flex-wrap items-center justify-between gap-4">
+        <div className="flex min-w-0 flex-wrap items-center gap-x-5 gap-y-3">
           <div className="planner-brand" aria-label="Course Planner">
             <span className="planner-logo-mark" aria-hidden="true">
               <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
@@ -356,7 +356,7 @@ export default function Header({
           </select>
 
           {showSecondMajorSelect ? (
-            <div className="flex min-w-0 items-center gap-1">
+            <div className="flex min-w-0 items-center gap-3">
               <span className="text-sm text-muted-foreground/70" aria-hidden="true">
                 +
               </span>
@@ -380,7 +380,7 @@ export default function Header({
               <button
                 type="button"
                 onClick={removeSecondMajor}
-                className="p-1 rounded-md hover:bg-accent transition-colors text-muted-foreground cursor-pointer"
+                className="shrink-0 p-2 rounded-md hover:bg-accent transition-colors text-muted-foreground cursor-pointer"
                 title="Remove second major"
                 aria-label="Remove second major"
               >
